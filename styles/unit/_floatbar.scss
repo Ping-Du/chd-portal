@@ -1,0 +1,20 @@
+.float-bar{
+  background-color: rgba($font-black,0.8);
+  width: 100%;
+  position: fixed;
+  z-index: 16;
+  bottom: 0;
+  left: 0;
+  min-height: 160px;
+  .icon-close2{
+    width: 22px;
+    height: 22px;
+    display: block;
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color:rgba($white,0.5);
+    font-size: 30px;
+    cursor: pointer;
+  }
+}

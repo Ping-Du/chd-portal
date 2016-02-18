@@ -1,0 +1,104 @@
+<div class="title">
+    <i class="icon-city"></i><h2>Destinations</h2>
+</div>
+<div id="jssor_1" class="city-slider">
+    <div data-u="loading" class="loading">
+        <div class="loading-icon"></div>
+    </div>
+    <div class="row c-s-list" data-u="slides">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 1</span>
+                    <img data-u="image" src="images/temp/city-img1.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 2</span>
+                    <img data-u="image" src="images/temp/city-img2.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 3</span>
+                    <img data-u="image" src="images/temp/city-img3.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 4</span>
+                    <img data-u="image" src="images/temp/city-img1.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 5</span>
+                    <img data-u="image" src="images/temp/city-img2.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a href="city.html" class="flo-layer">
+                    <span class="flo-layer-c text">City 6</span>
+                    <img data-u="image" src="images/temp/city-img3.jpg" alt="...">
+                </a>
+            </div>
+        </div>
+    </div>
+    <span data-u="arrowleft" class="jssora03l" data-autocenter="2"><i class="icon-chevron-thin-left "></i> </span>
+    <span data-u="arrowright" class="jssora03r" data-autocenter="2"><i class="icon-chevron-thin-right "></i></span>
+</div>
+
+<script type="text/javascript" src="scripts/libs/jssor.slider.mini.js"></script>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        var jssor_1_options = {
+            $AutoPlay: true,
+            $AutoPlaySteps: 3,
+            $SlideDuration: 160,
+            $SlideWidth: 400,
+            $SlideSpacing: 0,
+            $Cols: 3,
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$,
+                $Steps: 3
+            },
+            $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$,
+                $SpacingX: 1,
+                $SpacingY: 1
+            }
+        };
+
+        var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+        //responsive code begin
+        //you can remove responsive code if you don't want the slider scales while window resizing
+        function ScaleSlider() {
+            var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+            if (refSize) {
+                refSize = Math.min(refSize, 400*3 + 30*2);
+                jssor_1_slider.$ScaleWidth(refSize);
+            }
+            else {
+                window.setTimeout(ScaleSlider, 30);
+            }
+        }
+
+        ScaleSlider();
+        $(window).bind("load", ScaleSlider);
+        $(window).bind("resize", ScaleSlider);
+        $(window).bind("orientationchange", ScaleSlider);
+        //responsive code end
+    });
+</script>

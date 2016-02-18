@@ -1,0 +1,54 @@
+.city-info-wrap, .text-info-wrap{
+  margin-bottom: 50px;
+  h1{font-size: 38px; font-weight: 600; text-align: center;margin: 30px 0 40px 0; }
+  .info-c{font-size: 16px; line-height: 30px;}
+}
+
+.h2{font-size: 34px; font-weight: 600; text-align: center; margin: 30px auto;}
+
+.text-info-wrap{
+  .lead{font-weight: 600;font-size: 18px; line-height: 30px;}
+  .icon-check-alt{color: $main-red; margin-right: 10px;}
+  h3{font-weight: 600; font-size: 16px; margin: 20px 0;}
+  h4{font-weight: 600; font-size: 15px; margin: 20px 0 15px 0;}
+  .sitemap-list{a{margin-right: 10px; line-height: 26px;}}
+}
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  z-index: 2;
+  color: $white;
+  background-color: $main-red;
+  }
+.list-group-item {
+  margin-bottom: 2px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 0;}
+.list-group-item:first-child {
+  border-radius: 4px;
+}
+a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover {
+  color: $white;
+  text-decoration: none;
+  background-color: rgba($main-red, 0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

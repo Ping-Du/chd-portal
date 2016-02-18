@@ -1,0 +1,11 @@
+<div class="carousel slide" data-ng-controller="advertisementController">
+    <uib-carousel interval="slideInterval" no-wrap="noWrapSlides" template-url="templates/carousel.html">
+        <uib-slide ng-repeat="slide in slides" active="slide.active" index="slide.id" template-url="templates/slide.html">
+            <img ng-src="{{slide.image}}" style="margin:auto;">
+            <div class="carousel-caption">
+                <h1>{{slide.caption}}</h1>
+                <p>{{slide.description}}</p>
+            </div>
+        </uib-slide>
+    </uib-carousel>
+</div>

@@ -1,0 +1,408 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+h1,h2,h3,h4,h5,h6{margin: 0; padding: 0}
+//h2{font-size: 30px;  color: $font-normal;}
+//h3{font-size: 16px;}
+//h1{font-size: 28px;}
+.container-bg{ background-color: $page-bg;}//page backgound gary
+.container-padding{padding: 20px 0;}
+a{color: $blue;}
+.container {
+  padding-right: 10px;
+  padding-left: 10px;}
+@media (min-width: 1200px){
+  .container {
+    width: 1190px;
+  }
+}
+
+.banner{width: 100%; background-position: center center;}
+.banner.city{min-height: 360px;}
+.banner.aboutus{ background-image: url('../images/aboutus.jpg'); min-height: 280px;}
+.banner.b-hotel{
+  background-image: url('../images/temp/banner-city.jpg');
+  height: 420px;
+  h1,p{text-align: center;color: $white; text-shadow: 0 0 5px $font-darkgray;}
+  p{ font-size: 18px; margin-bottom: 20px;}
+}
+.line,.dark-line{
+  height: 1px;
+  font-size: 0;
+  overflow: hidden;
+  border-width: 0;
+}
+.line{ border-top:1px solid $light-border;  }
+.dark-line{ border-top:1px solid $main-border;}
+.path{
+  .breadcrumb {
+    background-color:transparent;
+  }
+  h1{margin-bottom: 15px; line-height: 30px; font-size: 30px;}
+}
+.thumbnail-part{
+  /*begin  the title style of thumbnail list*/
+  .header-container{ overflow: hidden; margin-bottom: 10px;}
+  .title{
+    height: 50px;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+  }
+  .title.t-line{background: url("../images/bg-line-tit.png") repeat-x;
+  h2{text-align: center; background-color: $page-bg; width: 200px; margin: 5px auto;}
+  }
+  .title.position{width: 240px; float: left;}
+  h2{margin-top: 15px; font-size: 30px;  color: $font-normal;}
+  .icon-building, .icon-ticket, .icon-show, .icon-city{ width: 50px;  height: 50px; display:block; float: left}
+  .icon-building{ background: url("../images/icon-all.png") no-repeat -15px 8px;}
+  .icon-ticket{background: url("../images/icon-all.png") no-repeat -10px -50px;}
+  .icon-show{background: url("../images/icon-all.png") no-repeat -10px -105px;}
+  .icon-city{background: url("../images/icon-all.png") no-repeat -73px 2px;}
+  .head-menu{
+    margin-top: 17px;
+    border-bottom: 3px solid $main-border;
+    >a{
+      font-size: 16px;
+      color: $font-darkgray;
+      display: inline-block;
+      padding: 10px;
+      margin-bottom: -3px;
+      border-bottom: 3px solid transparent;
+    }
+    >a:hover, >a:focus, .active{ border-bottom: 3px solid $main-red; text-decoration: none; color: $main-red;}
+  }
+}
+[class^="icon-star-"], [class*=" icon-star-"] {
+  display: inline-block; height: 10px;
+  background: url("../images/icon-all.png") no-repeat 0 -175px;
+}
+.icon-star-1{ width: 15px;}
+.icon-star-2{ width: 27px;}
+.icon-star-3{ width: 39px;}
+.icon-star-4{ width: 51px;}
+.icon-star-5{ width: 63px;}
+[class^="icon-star-lg-"], [class*=" icon-star-lg-"] {
+  display: inline-block;
+  height: 15px;
+  background: url("../images/icon-all.png") no-repeat -63px -175px;
+}
+.icon-star-lg-1{ width: 20px;}
+.icon-star-lg-2{ width: 34px;}
+.icon-star-lg-3{ width: 51px;}
+.icon-star-lg-4{ width: 67px;}
+.icon-star-lg-5{ width: 84px;}
+.thumbnail {
+  position: relative;
+  img{width: 100%; height: 100%;}
+  margin-bottom: 30px;
+  @extend %box-layout;
+  .caption{
+    padding:15px 20px 12px;
+    overflow: hidden;
+    >h3{ font-size: 16px; margin-bottom:8px; white-space:nowrap;a{color: $font-black;}}
+    >ul.hotel{
+      @extend %li-clear-default;
+      border-top: 1px solid $main-border;
+      padding-top: 5px;
+      margin-top: 5px;
+    >li{float: left; width: 50%; color: $font-lightgray; font-size: 12px;}
+      .price{@extend %price;}
+      s{color: $font-lightgray; margin-right: 5px; font-size: 18px; font-weight: 200}
+    }
+
+    >ul.ticket{
+      @extend %li-clear-default;
+      h3{
+        font-size: 16px;
+        line-height: 24px;
+        a{color: $font-black;}
+      }
+      >li{float: left;}
+      >li.title{width: 70%;}
+      >li.text-right{width: 30%; color: $font-lightgray;}
+
+    }
+    >a{color: $font-lightgray;
+      span{
+        color: $blue;
+        margin-right: 15px;
+        font-size: 16px;
+      }
+    }
+    >a:hover{text-decoration: none; color: $font-darkgray;}
+  }
+  .flo-layer{
+    display: block; position: relative;
+    .text{font-size: 26px; font-weight: 600;}
+    .text,.text-d{  color: $white; text-shadow: 0 2px 6px $font-black;}
+    .text-d{font-size: 16px;}
+  }
+  .flo-layer-c,  .flo-layer-d{position: absolute; width: 100%; height: 100%; text-align: center;  background-color: rgba($font-black,0.2);}
+  .flo-layer-c{padding-top: 100px;}
+  .flo-layer-d{ padding-top: 140px;}
+}
+.thumbnail:hover {
+  @extend %box-layout-hover;
+  .flo-layer-c, .flo-layer-d{background-color:rgba($font-black,0);}
+  .flo-layer{ .text{color:darken($white,5%)}}
+}
+
+.search-main{
+  background-color: $main-red;
+  padding: 3px 0;
+  a, input{ width: 100%;
+    height: 40px;}
+  input{
+    border: 0;
+    padding: 9px 30px;
+    color:$font-lightgray;
+    margin-bottom: 2px;
+  }
+  .input-date{padding: 9px 10px 9px 35px;}
+  [class^="icon-"], [class*=" icon-"] {
+    @extend %icon-position;
+  }
+  .icon-location2{font-size: 20px; top:10px; left:25px;}
+  .icon-caret-down{right: 30px; top:15px;}
+  .icon-search{top:5px; color: $white; font-size: 26px;}
+  .icon-calendar{top:8px; left: 25px; font-size: 20px;}
+  a{ display: block; padding-left:10px}
+  a:hover{display: block; background-color: rgba($white,0.2)}
+}
+.filter-box {
+  background: $special-bg;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: 1px solid $main-border;
+  >dl.filter-item{border-bottom: 1px dashed $light-border;}
+  >dl {
+    padding: 10px 20px 10px 20px;
+    clear: both;
+    margin-bottom: 0;
+    overflow: hidden;
+    >dt{float: left;width: 80px; i{color: $main-red; margin-right: 5px;}}
+    >dd a {
+      margin: 0 15px;
+      color: $font-darkgray;
+      white-space: nowrap;
+      line-height: 26px;
+      float: left;
+      width: 70px;
+    }
+    >dd a:hover, >dd a:active, >dd a:focus, >dd a.active{
+      color: $main-red;
+      text-decoration: none;
+    }
+  }
+}
+.relative, .input-icon{position: relative;}
+.input-icon{
+  .icon-calendar{left: 10px;}
+  .icon-caret-down{right: 15px;}
+}
+
+.list-product {
+  @extend %box-layout;
+  overflow: hidden;
+  .product-img {
+    margin: 2px;
+    min-height: inherit;
+    overflow: hidden;
+    z-index: 10;
+    text-align: center;
+  }
+  .pro-detail {
+    margin: 0 20px 0 375px;
+    h2{font-size: 20px; line-height: 28px; margin: 20px 0 10px 0;
+      a{color:$font-black;}
+    }
+  }
+  .desc{color: $font-lightgray; }
+  .comment{
+    color: $font-lightgray;
+    font-size: 12px;
+    span{font-size: 20px; color: $blue;}
+  }
+  .pro-separator{
+    .price{font-size: 28px; color:$main-red;}
+    [class^="icon-"], [class*=" icon-"] {font-size: 24px;color: #5a4b4b;}
+    padding:0 20px;
+    ul{
+      margin-top: 10px;
+      @extend %li-clear-default;
+      li{
+        background: transparent url("../images/icon-shadow.png") no-repeat scroll center bottom;
+        display: inline-block;
+        text-align: center;
+        line-height: 1em;
+        vertical-align: bottom;
+        padding: 0 0 15px 0;
+        margin-right: 15px;
+      }
+    }
+    span{margin-right: 10px; color: $font-lightgray;}
+  }
+  .por-title {
+    display: block;
+    margin: 0 0 0 375px;
+  }
+}
+.list-product:hover {
+@extend %box-layout-hover;
+}
+
+.pro-pagination{
+  /*page style for hotel.html*/
+  text-align: center;
+}
+.pagination {
+  border-radius: 0;
+    >li{
+      >a, >span {
+        margin: 0 5px;
+        color: $font-normal;
+        border: 1px solid $main-border;
+      }
+    }
+  >li.active{
+    >a,>a:focus, >a:hover,>span,>span:focus,>span:hover{background-color: $main-red; color: #fff;border-color: darken($main-red,10%);}
+  }
+}
+.detail-nav-wrap, .sortbar{
+  overflow: hidden;
+  border: 1px solid $main-border;
+  margin-bottom: 20px;
+  ul{
+    @extend %li-clear-default;
+    li{
+      float: left;
+      border-right: 1px solid $main-border;
+    }
+  }
+}
+.detail-nav-wrap{
+  background-color: $special-bg;
+  color: $font-lightgray;
+  box-shadow: 1px 3px 5px darken($main-border,10%);
+  li{
+    a{
+      color: $font-normal;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    //a:hover,a:active, a:focus{ color: $main-red; text-decoration: none;background-color: $white;}
+  }
+ .active{
+   >a, >a:focus{color: $main-red; text-decoration: none;background-color: $white;}
+   }
+}
+.is-stuck {
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+.sortbar{
+  background-color: $white;
+  padding: 0 20px;
+  color: $font-lightgray;
+  li{
+    i{margin-left: 15px;}
+    a{color: $font-black;font-weight: 600;}
+    a:hover{color:$font-lightgray; text-decoration: none;}
+  }
+  span{float: right; margin-top:15px; b{color: $main-red; margin-right: 5px;}}
+}
+.breadcrumb {
+  padding:0;
+  margin-bottom: 10px;
+}
+
+
+.detail-wrap{
+  /*product detail*/
+  @extend %box-layout;
+  h3{font-size: 24px; margin: 30px 0 15px 30px;}
+  h4{font-size: 18px; padding: 15px 0; font-weight: 600;}
+  .h4{ padding-left: 15px;}
+  h5{font-size: 16px; font-weight: 600; margin: 10px 0;}
+  .content{
+    margin:0 12% 30px 12%;
+    .img{padding: 5px; border: 1px solid $main-border; margin-bottom: 20px; width: 100%; height: 100%; max-width: 700px;}
+    p{line-height: 24px;}
+  }
+  .table-content{ margin:20px 30px 30px}
+  .sub-part-bg,.sub-part{
+    margin: 30px 0;
+    padding-bottom: 10px;
+    overflow: hidden;
+  }
+  .map-box{ width: 100%; margin:20px 0 50px 0;}
+  .sub-part-bg{background-color: $page-bg; border: 1px solid $main-border;}
+  .more{width: 100%; text-align: center; margin: 20px auto;}
+}
+.comment-media{
+  border-bottom: 1px solid $light-border;
+  .icon-score {
+    display: inline-block;
+    width: 92px;
+    height: 14px;
+    background: url("../images/small_c.png") no-repeat;
+    overflow: hidden;
+    margin-right: 15px;
+  }
+  .icon-score .b {
+    display: inline-block;
+    height: 14px;
+    background: url("../images/small_c.png") no-repeat 0 -21px;
+    overflow: hidden;}
+  .score{color: $font-lightgray;}
+  .date{ font-size: 12px; color: $font-lightgray;}
+  .comment-con{margin: 15px 0; color:$font-darkgray;}
+  .user-img{padding-right: 20px; width: 110px; text-align: center;a{display: block;}}
+  .media-body{width: auto}
+}
+
+.dl-horizontal{
+  margin: 0 15px;
+  dd{
+    margin-bottom: 5px;
+    span{margin-right: 15px; color: $font-darkgray; line-height: 28px;}
+  }
+  .icon-check-alt{color: $main-red; margin-right: 3px}
+}
+.comment-score{
+  color: $font-lightgray;
+  span{font-size: 18px; color: $blue; margin-right: 10px;}
+}
+.price{@extend %price;}
+.main-red{@extend %red;}
+.new-layer,.hot-layer,.sales-layer{ position: absolute; right: 0; top: 0; background: url("../images/icon-all.png") no-repeat; font-weight: 600; color: $white; display: block; text-align: center;}
+.new-layer{background-position: -290px 0; width: 106px; height: 100px; font-size: 24px; padding-top: 15px; }
+.hot-layer{background-position: -199px -86px; width: 68px; height: 68px; font-size: 24px; padding-top: 15px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.sales-layer{background-position: -201px 0;  width: 57px; height: 80px; padding: 10px 5px 0 5px;  font-size: 18px;}
+
+/*  order page for show/ticket/ect. detail page*/
+.modal-content{
+  .modal-body{
+    .sel-time{
+      span{display: inline-block; margin: 0 10px 2px 0; padding: 5px 5px; background-color: $page-bg; border: 1px solid $main-border; cursor: pointer;}
+      span:hover, span:active, .active{ background-color: $main-red; color: $white;}
+    }
+    .m-total{font-size: 16px;}
+    .icon-calendar{left:22px;}
+    .m-info{ font-size: 16px; color: $font-lightgray; margin-left: 10px;}
+    .input-group-addon{border: 1px solid $main-border;
+      cursor: pointer;
+      font-size: 20px;
+      color: $font-darkgray;}
+  }
+  .modal-footer{text-align: center;  border-top-width: 0; padding: 0 0 30px 0;}
+  .modal-header{
+    .close{font-size: 28px;}
+    border-bottom-style: dashed;
+    h4{font-size: 16px; font-weight: 600; color: $font-darkgray;}}
+}
+

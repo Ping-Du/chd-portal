@@ -1,0 +1,201 @@
+@media (max-width: 559px) {
+  .list-product {
+    position: relative;
+    ul{display: none;}
+    .product-img {
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .pro-detail {
+      margin: 0 20px 0 20px;
+    }
+  }
+  .sortbar{
+    ul{
+      li{padding: 15px 10px;}
+    }
+    span{display: none;}
+  }
+  .cdh-logo{width: 100%; height: 100%; min-width:180px; }
+  .detail-nav-wrap{
+    li {
+      a {
+        padding:17px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+@media (min-width: 560px) {
+  .list-product {
+    position: relative;
+    .product-img {
+      float: left;
+      width: 345px;
+      height: 220px;
+    }
+    .pro-detail {
+      margin: 0 20px 0 375px;
+    }
+    .pro-elem{ float: left;}
+    .pro-price{ float: right;}
+  }
+  .sortbar{
+    ul{
+      li{padding: 15px 20px;}
+    }
+  }
+  .detail-nav-wrap{
+    li {
+      a {
+        padding:17px 30px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+@media (min-width: 768px) {
+  .list-product {
+    position: relative;
+    .desc{line-height: 24px;}
+  }
+  .search-position{
+    position: absolute; top:6px; left: 40%;
+    .input-text{min-width:200px; }
+  }
+  .banner.b-hotel{
+    h1{font-size: 38px; margin: 100px auto 15px auto;}
+  }
+  .shopping-car{
+    .icon-cart{ bottom:12px; right: 36px;}
+    .s-car-amount{bottom:20px; right: 12px;}
+  }
+}
+@media (max-width: 767px) {
+  .list-product {
+    .comment{display: none;}
+    .desc, .address{font-size: 12px;}
+    .desc{line-height: 20px;}
+  }
+  header{
+    .top-tel{display: none;}
+  }
+  .search-position{
+    position: absolute; bottom:4px; left: 10px;
+    width: 65%;
+    .input-text{width:100%; }
+  }
+  .head-crumb{
+    [class^="pos-"], [class*=" pos-"] {
+      margin-bottom: 10px;
+    }
+  }
+  .banner.b-hotel{
+    h1{font-size: 30px; margin: 20px auto 15px auto;}
+  }
+  .quick-search{
+    width: 90%;
+    margin: 0 auto;
+    [class^="pos-"], [class*=" pos-"] {
+      margin-bottom: 3px;
+    }
+  }
+  .media-roomlist{
+    .media-left, .media-body .p-detail{display: none;}
+  }
+  .shopping-car{
+    .icon-cart{ bottom:12px; right: 86px;}
+    .s-car-amount{bottom:20px; right: 62px;}
+  }
+}
+@media (max-width: 991px) {
+  .list-product {
+    .pro-separator{ clear: both; margin:10px 0 20px; overflow: hidden;}
+  }
+  .nav{
+    > li{
+      > a {
+        padding: 10px 15px;
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .search-position{
+    position: absolute; top:6px; left: 35%;
+    .input-text{min-width:400px; }
+  }
+  .list-product {
+    .pro-separator{margin:10px 0 20px 345px; overflow: hidden;}
+  }
+  .nav{
+    > li{
+      > a {
+        padding: 10px 20px;
+      }
+    }
+  }
+  .head-crumb{
+    [class^="pos-"], [class*=" pos-"] {
+      width: 17.85%;
+    }
+  }
+  .quick-search{
+    .pos-location{width: 39%;}
+    .pos-date{width: 15%;}
+    .pos-number{width: 15%;}
+    .pos-button{width: 10.7%;}
+  }
+  .order-form{
+    .content{
+      margin:0 5% 0 20%;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .search-position{
+    position: absolute; top:6px; left: 37%;
+    .input-text{min-width:480px; }
+  }
+  .list-product {
+    .comment{
+      /*comment for list part*/
+      text-align: right;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      span{display: block;  margin-bottom: 5px}
+    }
+  }
+  .nav{
+    > li{
+      > a {
+        padding: 10px 25px;
+      }
+    }
+  }
+  .footer-coop li:nth-child(7n){ margin-right:0; }
+}
+
+@media (min-width: 768px) and (max-width: 1199px){
+  .head-crumb{
+    .pos-date{ width:35%; clear: both; margin-bottom: 5px }
+    .pos-number{width:35%; }
+    .pos-button{width:15%; }
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px){
+  .quick-search{
+    .pos-location{width: 36%;}
+  }
+}
+@media (min-width: 767px) and (max-width: 991px){
+  .quick-search{
+    .pos-location{width: 99%; clear: both; margin-bottom: 3px}
+    .pos-date{width: 25%;}
+    .pos-number{width: 29%;}
+    .pos-button{width: 14.2%;}
+  }
+}

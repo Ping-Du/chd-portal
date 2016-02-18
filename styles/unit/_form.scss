@@ -1,0 +1,33 @@
+.form-control{
+border-radius: 0;
+-webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.075);
+box-shadow: inset 0 0 0 rgba(0,0,0,.075);
+}
+.input-text{
+  /*quick search on page top*/
+  border: 2px solid $form-border;
+  font-size: 15px;
+}
+.input-date {
+  font-size: 13px;
+  color: #999; }
+
+.input-default{
+  border: 1px solid $form-border;
+  box-shadow: inset 0 2px 2px rgba(0,0,0,.060);
+  -webkit-box-shadow: inset 0 2px 2px rgba(0,0,0,.060);
+  min-height: 40px;
+}
+.input-log{ border: 1px solid rgba($light-border, 0.6);
+background-color: rgba($light-border, 0.5);
+  min-height: 40px;}
+
+.input-hotel-lg{border: 1px solid darken($form-border,10%); min-height: 45px;font-size: 15px;}
+
+/*setting inputs padding when they have a icon */
+.input-date{ padding-left: 30px;}
+.input-r-icon{ padding-right: 30px;}
+.input-l-r-icon{ padding-left: 30px; padding-right: 30px;}
+
+/*setting login input  when they have a icon  */
+.input-login{ padding-left:50px;}

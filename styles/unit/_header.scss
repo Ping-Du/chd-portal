@@ -1,0 +1,100 @@
+/*nav*/
+.navbar-default{
+  background-color: $white;
+  border-bottom: 2px solid $main-red;
+  .navbar-nav{
+    >li{
+      >a {
+        color:$font-darkgray;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 40px;
+      }
+      >a:hover{color: $main-red;}
+    }
+    >.active{
+      >a,>a:focus,>a:hover {
+        color: $white;
+        background-color: $main-red;}
+    }
+  }
+
+}
+
+/*header-top*/
+header{
+  margin-top: 15px;
+  ul.top-menu{
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li{
+      float: right;
+      margin-left: 30px;
+    }
+  }
+  .top-tel{
+    width: 100%;
+    text-align: right;
+  }
+  .search-wrap{
+    position: relative;
+    i{ font-size: 20px; position: absolute; right: 15px; top: 10px; cursor: pointer}
+  }
+  .top-menu{
+    a{color: $font-black;}
+    .icon-caret-down{margin-left: 6px}
+  }
+  .language-cn{background: url("../images/language.png") no-repeat -6px -3px;  }
+  .language-en{background: url("../images/language.png") no-repeat -6px -29px;}
+  .language-cn, .language-en{
+    display: block;
+    width: 24px;
+    height: 20px;
+    float: left;
+  }
+  .top-tel{
+    color: $main-red;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    margin: 10px 0;
+    .icon-phone-hang-up{ font-size: 30px; position: absolute; top:2px; right:170px}
+  }
+  .shopping-car{
+    cursor: pointer;
+    .icon-cart, .s-car-amount{position: absolute;}
+    .icon-cart{font-size: 22px; margin-top: 5px; color: $font-darkgray;}
+    .s-car-amount{font-size:14px; font-weight: 600;
+      width: 28px; height: 28px; line-height: 28px; border-radius: 14px; background-color:$main-red; text-align: center; color: $white;}
+  }
+}
+
+/*content slider*/
+.carousel-indicators li {
+  width: 20px;
+  height: 20px;
+  border-width: 3px;
+}
+.carousel-indicators .active {
+  width: 20px;
+  height: 20px;}
+
+/*content slider arrows*/
+.carousel-control{
+  .icon-chevron-thin-left,.icon-chevron-thin-right {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: inline-block;
+    margin-top: -10px;
+    font-size: 80px;
+  }
+  .icon-chevron-thin-left{left:40%;}
+  .icon-chevron-thin-right{right:40%;}
+}
+
+

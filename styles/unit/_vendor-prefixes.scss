@@ -1,0 +1,25 @@
+%li-clear-default{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+%box-layout{
+  padding: 0;
+  border:1px solid $main-border;
+  border-radius: 0;
+  background-color: $white;
+  box-shadow: 1px 3px 5px darken($main-border,10%);
+  margin-bottom: 20px;
+}
+%box-layout-hover{
+  border:1px solid rgba($main-red,0.7);
+  box-shadow: 2px 5px 8px darken($main-border,25%);
+}
+%price{
+  font-size: 24px; color: $main-red;
+}
+%icon-position{
+  position: absolute;
+  color: rgba($font-lightgray, 0.8);
+}
+%red{color: $main-red;}
