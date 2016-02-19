@@ -18,13 +18,16 @@ define([ 'app/message/message-service'], function (module) {
 
         $scope.message = emptyMessage;
 
-        var promise = messageService.getMessage();
-        promise.then(function(data){
-            $scope.message = data;
-        }, function(/*data*/){
-            $scope.message = emptyMessage;
-        });
+        $scope.getMessage = function() {
+            var promise = messageService.getMessage();
+            promise.then(function(data){
+                $scope.message = data;
+            }, function(/*data*/){
+                $scope.message = emptyMessage;
+            });
+        };
 
+        //$scope.getMessage();
     }]);
 
     return module;

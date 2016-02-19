@@ -4,14 +4,13 @@
         <ul class="top-menu">
             <li>
                 <span uib-dropdown dropdown-append-to-body data-ng-controller="languageController">
-                      <a href uib-dropdown-toggle><i
-                              data-ng-class="{true:'language-cn', false:'language-en'}[language.isChinese]"></i>{{"CURRENT_LANGUAGE"|translate}}<i
-                              class="icon-caret-down"></i></a>
-                      <ul class="uib-dropdown-menu" style="min-width: 80px; margin-left:-20px">
-                          <li role="menuitem"><a href data-ng-click="changeLanguage('CHI')">{{"CN"|translate}}</a></li>
-                          <li class="divider"></li>
-                          <li role="menuitem"><a href data-ng-click="changeLanguage('ENG')">{{"EN"|translate}}</a></li>
-                      </ul>
+                    <a href uib-dropdown-toggle>
+                        <i class="language-icon" style="background: url({{currentLanguage.FlagImageURI}}) no-repeat -5px -3px;"></i>{{currentLanguage.LocalName==''?currentLanguage.Name:currentLanguage.LocalName}}
+                        <i class="icon-caret-down"></i>
+                    </a>
+                    <ul class="uib-dropdown-menu" style="min-width: 80px; margin-left:-20px">
+                        <li role="menuitem" data-ng-repeat="item in availableLanguages"><a href data-ng-click="changeLanguage(item.Id)">{{item.LocalName==''?item.Name:item.LocalName}}</a></li>
+                    </ul>
                 </span>
             </li>
             <li><a href data-toggle="modal" data-target="#register">{{"REGISTER"|translate}}</a></li>

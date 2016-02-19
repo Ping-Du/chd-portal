@@ -94,7 +94,7 @@ define(['config'], function (cfg) {
         $.support.cors = true;
 
         // get token
-        $.removeCookie('api_token');
+        //$.removeCookie('api_token');
         var token = $.cookie('api_token');
         if(token === undefined) {
             $.ajax({

@@ -73,7 +73,7 @@ header {
     background: url("../images/language.png") no-repeat -6px -3px; }
   header .language-en {
     background: url("../images/language.png") no-repeat -6px -29px; }
-  header .language-cn, header .language-en {
+  header .language-icon {
     display: block;
     width: 24px;
     height: 20px;
