@@ -1,20 +1,17 @@
-define(['angular', 'app/common/common-controller',
-        'app/message/message-controller',
-        'app/advertisement/advertisement-controller'],
-    function (angular,
-              common,
-              message,
-              advertisement) {
+define(['app/modules',
+        'app/controllers/i18n-controller',
+        'app/controllers/navbar-controller',
+        'app/controllers/message-controller',
+        'app/controllers/advertisement-controller'],
+    function (modules) {
         'use strict';
 
-        var app = angular.module('chdApp', [common.name, message.name, advertisement.name]);
-
         // config
-        app.config(['navbarServiceProvider', function (navbarServiceProvider) {
-            navbarServiceProvider.setActiveItem('home');
+        modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
+            NavbarServiceProvider.setActiveItem('home');
         }]);
 
         // boot app
-        angular.bootstrap(document, [app.name]);
+        modules.angular.bootstrap(document, [modules.app.name]);
 
     });

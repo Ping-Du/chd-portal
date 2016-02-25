@@ -1,9 +1,9 @@
 <div class="row">
-    <div class="col-xs-5 col-md-5"><img data-ng-src="{{app.root}}images/logo.png" class="cdh-logo"></div>
+    <div class="col-xs-5 col-md-5"><img data-ng-src="images/logo.png" class="cdh-logo"></div>
     <div class="col-xs-7 col-md-7">
         <ul class="top-menu">
             <li>
-                <span uib-dropdown dropdown-append-to-body data-ng-controller="languageController">
+                <span uib-dropdown dropdown-append-to-body data-ng-controller="LanguageController">
                     <a href uib-dropdown-toggle>
                         <i class="language-icon" style="background: url({{currentLanguage.FlagImageURI}}) no-repeat -5px -3px;"></i>{{currentLanguage.LocalName==''?currentLanguage.Name:currentLanguage.LocalName}}
                         <i class="icon-caret-down"></i>

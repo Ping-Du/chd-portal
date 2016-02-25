@@ -1,11 +1,10 @@
-define(['config', 'angular', 'angular-translate-storage-local'],
-    function (config, angular) {
-        'use strict';
-        var module = angular.module('chd.i18n', ['ngCookies', 'ngSanitize', 'pascalprecht.translate', 'angular.css.injector']);
-        module.config(['$translateProvider', function ($translateProvider) {
+define(['app/modules'], function (modules) {
+    'use strict';
+    modules.services
+        .config(['$translateProvider', 'Config', function ($translateProvider, Config) {
             $translateProvider.useStaticFilesLoader({
                 files: [{
-                    prefix: config.webRoot + 'i18n/',
+                    prefix: Config.webRoot + 'i18n/',
                     suffix: '.json'
                 }]
             });
@@ -21,10 +20,9 @@ define(['config', 'angular', 'angular-translate-storage-local'],
             if ($translateProvider.preferredLanguage() === undefined) {
                 $translateProvider.preferredLanguage('CHI');
             }
-        }]);
-
-        module.service('languageService', ['$http', '$q', 'config', function ($http, $q, config) {
-            function retrieveLanguage(){
+        }])
+        .service('LanguageService', ['$http', '$q', 'Config', function ($http, $q, Config) {
+            function retrieveLanguage() {
                 var languageId = '';
                 if (arguments.length == 1) {
                     languageId = '/' + arguments[0];
@@ -32,7 +30,7 @@ define(['config', 'angular', 'angular-translate-storage-local'],
                 var deferred = $q.defer();
                 $http({
                     method: 'GET',
-                    url: (config.apiRoot + 'languages' + languageId)
+                    url: (Config.apiRoot + 'languages' + languageId)
                 }).success(function (data/*, status, headers, cfg*/) {
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
@@ -45,11 +43,12 @@ define(['config', 'angular', 'angular-translate-storage-local'],
                 getLanguages: function () {
                     return retrieveLanguage();
                 },
-                getLanguageById: function(languageId) {
+                getLanguageById: function (languageId) {
                     return retrieveLanguage(languageId);
                 }
             };
         }]);
 
-        return module;
-    });
+    return modules;
+});
+

@@ -10,6 +10,7 @@ define(['config'], function (cfg) {
         paths: {
             'jquery':'libs/jquery.min',
             'jquery.cookie':'libs/jquery.cookie',
+            'jquery.storageapi':'libs/jquery.storageapi.min',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
             'angular': 'libs/angular',
@@ -29,6 +30,12 @@ define(['config'], function (cfg) {
         shim: {
             'jquery':{
                 exports:'$'
+            },
+            'jquery.cookie': {
+                deps:['jquery']
+            },
+            'jquery.storageapi':{
+                deps:['jquery.cookie']
             },
             'bootstrap':{
                 deps:['jquery'],
@@ -50,7 +57,7 @@ define(['config'], function (cfg) {
                 exports:'angular'
             },
             'angular-local-storage': {
-                deps: ['angular-cookie'],
+                deps: ['angular-cookies'],
                 exports:'angular'
             },
             'angular-resource': {
@@ -82,25 +89,33 @@ define(['config'], function (cfg) {
                 deps: ['angular-cookies', 'angular-translate-loader-static-files']
             },
             'angular-translate-storage-local':{
-                deps: ['angular-translate-storage-cookie']
+                deps: ['angular-local-storage', 'angular-translate-storage-cookie']
             }
         }
     };
 
     require.config(libs);
 
-    require(['bootstrap', 'jquery.cookie'], function($){
-        // eanble cors
+    require(['bootstrap', 'jquery.storageapi'], function($){
+        // enable cors
         $.support.cors = true;
 
+        function boot(apiToken) {
+            cfg.token = apiToken;
+
+            // bootstrap page
+            var bootstrapName = $('script[data-bootstrap]').attr('data-bootstrap');
+            require([bootstrapName + '-bootstrap']);
+        }
+
         // get token
-        //$.removeCookie('api_token');
-        var token = $.cookie('api_token');
-        if(token === undefined) {
+        var storage = $.sessionStorage;
+        var token = storage.get('api_token');
+        if(token == null) {
             $.ajax({
                 url: cfg.apiRoot + 'account/Login',
                 type: 'POST',
-                async: false,
+                //async: false,
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
@@ -109,20 +124,17 @@ define(['config'], function (cfg) {
                 }),
                 success: function (data/*, status*/) {
                     //{"access_token": "string","token_type": "bearer","expires_in": 0,"userName": "string","issued": "2016-02-17T11:39:45.637Z","expires": "2016-02-17T11:39:45.639Z"}
-                    $.cookie('token', data.access_token, {path:'/'});
+                    storage.set('api_token', data.access_token);
                     token = data.access_token;
+                    boot(token);
                 },
                 error: function (request/*, status, error*/) {
                     console.error('readyState:' + request.readyState + ' statusText:' + request.statusText);
                     document.location.href = cfg.webRoot + 'error.html?code=1';
                 }
             });
+        } else {
+            boot(token);
         }
-
-        cfg.token = token;
-
-        // bootstrap page
-        var bootstrapName = $('script[data-bootstrap]').attr('data-bootstrap');
-        require([bootstrapName + '-bootstrap']);
     });
 });
