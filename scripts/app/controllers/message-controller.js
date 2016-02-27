@@ -14,7 +14,9 @@ define(['app/services/message-service'], function (modules) {
                 MediumImageURI: '',
                 SmallImageURI: '',
                 ThumbnailImageURI: '',
-                ImageCaption: ''
+                ImageCaption: '',
+                ConsentRequired: true,
+                Severity: 0
             };
 
             $scope.message = emptyMessage;

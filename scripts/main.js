@@ -100,8 +100,8 @@ define(['config'], function (cfg) {
         // enable cors
         $.support.cors = true;
 
-        function boot(apiToken) {
-            cfg.token = apiToken;
+        function bootstrap(apiToken) {
+            cfg.apiToken = apiToken;
 
             // bootstrap page
             var bootstrapName = $('script[data-bootstrap]').attr('data-bootstrap');
@@ -110,7 +110,7 @@ define(['config'], function (cfg) {
 
         // get token
         var storage = $.sessionStorage;
-        var token = storage.get('api_token');
+        var token = storage.get('apiToken');
         if(token == null) {
             $.ajax({
                 url: cfg.apiRoot + 'account/Login',
@@ -124,9 +124,9 @@ define(['config'], function (cfg) {
                 }),
                 success: function (data/*, status*/) {
                     //{"access_token": "string","token_type": "bearer","expires_in": 0,"userName": "string","issued": "2016-02-17T11:39:45.637Z","expires": "2016-02-17T11:39:45.639Z"}
-                    storage.set('api_token', data.access_token);
+                    storage.set('apiToken', data.access_token);
                     token = data.access_token;
-                    boot(token);
+                    bootstrap(token);
                 },
                 error: function (request/*, status, error*/) {
                     console.error('readyState:' + request.readyState + ' statusText:' + request.statusText);
@@ -134,7 +134,7 @@ define(['config'], function (cfg) {
                 }
             });
         } else {
-            boot(token);
+            bootstrap(token);
         }
     });
 });

@@ -1,4 +1,5 @@
-define(['app/modules',
+define(['app/interceptors/security-interceptor',
+        'app/controllers/session-controller',
         'app/controllers/i18n-controller',
         'app/controllers/navbar-controller',
         'app/controllers/message-controller',
@@ -6,7 +7,6 @@ define(['app/modules',
     function (modules) {
         'use strict';
 
-        // config
         modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
             NavbarServiceProvider.setActiveItem('home');
         }]);

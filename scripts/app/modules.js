@@ -1,20 +1,20 @@
-define(['config', 'underscore', 'ui-bootstrap', 'angular-translate-storage-local'], function (cfg, _, angular) {
+define(['underscore', 'ui-bootstrap', 'angular-translate-storage-local'], function (_, angular) {
 
     var services = angular.module('chd.services', ['ngCookies', 'ngSanitize', 'pascalprecht.translate', 'angular.css.injector']);
     var filters = angular.module('chd.filters', []);
+    var interceptors = angular.module('chd.interceptors',[services.name]);
     var directives = angular.module('chd.directives', []);
-    var controllers = angular.module('chd.controllers', [services.name]);
-    var app = angular.module('chd', ['ui.bootstrap', directives.name, services.name, controllers.name]);
-
-    services.constant('Config', cfg);
+    var controllers = angular.module('chd.controllers', ['ui.bootstrap', services.name]);
+    var app = angular.module('chd', [filters.name, directives.name, services.name, interceptors.name, controllers.name]);
 
     services.factory('_', ['$window', function ($window) {
         return $window._;
     }]);
 
-    app.run(['$http', 'Config', function ($http, config) {
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + config.token;
-    }]);
+    //app.run(['$http', 'Config', function ($http, Config) {
+    //    $http.defaults.headers.common['Authorization'] = 'Bearer ' + Config.token;
+    //    $http.defaults.headers.post[]
+    //}]);
 
     return {
         angular: angular,
@@ -22,6 +22,7 @@ define(['config', 'underscore', 'ui-bootstrap', 'angular-translate-storage-local
         filters: filters,
         directives: directives,
         services: services,
-        controllers: controllers
+        controllers: controllers,
+        interceptors:interceptors
     };
 });

@@ -1,10 +1,11 @@
-define(['app/modules'], function (modules) {
+define(['config', 'app/services/session-service'], function (config, modules) {
     'use strict';
     modules.services
-        .config(['$translateProvider', 'Config', function ($translateProvider, Config) {
+        .config(['$translateProvider', function ($translateProvider) {
+
             $translateProvider.useStaticFilesLoader({
                 files: [{
-                    prefix: Config.webRoot + 'i18n/',
+                    prefix:  config.webRoot + 'i18n/',
                     suffix: '.json'
                 }]
             });
@@ -21,7 +22,7 @@ define(['app/modules'], function (modules) {
                 $translateProvider.preferredLanguage('CHI');
             }
         }])
-        .service('LanguageService', ['$http', '$q', 'Config', function ($http, $q, Config) {
+        .service('LanguageService', ['$http', '$q', 'SessionService', function ($http, $q, SessionService) {
             function retrieveLanguage() {
                 var languageId = '';
                 if (arguments.length == 1) {
@@ -30,7 +31,7 @@ define(['app/modules'], function (modules) {
                 var deferred = $q.defer();
                 $http({
                     method: 'GET',
-                    url: (Config.apiRoot + 'languages' + languageId)
+                    url: ( SessionService.config().apiRoot + 'languages' + languageId)
                 }).success(function (data/*, status, headers, cfg*/) {
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {

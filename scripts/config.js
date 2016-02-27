@@ -5,7 +5,8 @@ define([], function(){
         webRoot:'/chd-portal/',
         apiRoot:'https://chdtracelink.azurewebsites.net/', //'/api/proxy/',
         apiUser:'apiuser',
-        apiPassword:'I^Rf23i!VoV6'
+        apiPassword:'I^Rf23i!VoV6',
+        secretCode:'T0pS3cr3t'
     };
 
 });

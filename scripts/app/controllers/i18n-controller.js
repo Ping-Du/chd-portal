@@ -2,8 +2,8 @@ define(['app/services/i18n-service'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller("LanguageController", ['$scope', '$translate', 'cssInjector', 'Config', 'LanguageService',
-            function ($scope, $translate, cssInjector, Config, LanguageService) {
+        .controller("LanguageController", ['$scope', '$translate', 'cssInjector', 'SessionService', 'LanguageService',
+            function ($scope, $translate, cssInjector, SessionService, LanguageService) {
 
                 var currentLanguage = $translate.proposedLanguage() || $translate.use(); // $translate.preferredLanguage();
 
@@ -14,7 +14,7 @@ define(['app/services/i18n-service'], function (modules) {
 
                 function addCss(language) {
                     cssInjector.removeAll();
-                    cssInjector.add(Config.webRoot + 'styles/font-' + language + '.css');
+                    cssInjector.add(SessionService.config().webRoot + 'styles/font-' + language + '.css');
                 }
 
                 function setCurrentLanguage(languageKey) {
