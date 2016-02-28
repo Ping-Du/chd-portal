@@ -3,7 +3,7 @@ define(['app/interceptors/security-interceptor',
         'app/controllers/i18n-controller',
         'app/controllers/navbar-controller',
         'app/controllers/message-controller',
-        'app/controllers/advertisement-controller'],
+        'app/controllers/banner-controller'],
     function (modules) {
         'use strict';
 

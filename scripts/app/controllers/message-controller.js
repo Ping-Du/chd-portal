@@ -30,7 +30,7 @@ define(['app/services/message-service'], function (modules) {
                 });
             };
 
-            //$scope.getMessage();
+            $scope.getMessage();
         }]);
 
     return modules;

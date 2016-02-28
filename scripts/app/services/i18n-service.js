@@ -33,6 +33,8 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                     method: 'GET',
                     url: ( SessionService.config().apiRoot + 'languages' + languageId)
                 }).success(function (data/*, status, headers, cfg*/) {
+                    if(languageId != '')
+                        SessionService.languageId(languageId);
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
                     deferred.reject(data);

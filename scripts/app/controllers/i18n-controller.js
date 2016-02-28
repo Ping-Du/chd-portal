@@ -2,8 +2,8 @@ define(['app/services/i18n-service'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller("LanguageController", ['$scope', '$translate', 'cssInjector', 'SessionService', 'LanguageService',
-            function ($scope, $translate, cssInjector, SessionService, LanguageService) {
+        .controller("LanguageController", ['$rootScope', '$scope', '$translate', 'cssInjector', 'SessionService', 'LanguageService',
+            function ($rootScope, $scope, $translate, cssInjector, SessionService, LanguageService) {
 
                 var currentLanguage = $translate.proposedLanguage() || $translate.use(); // $translate.preferredLanguage();
 
@@ -47,8 +47,9 @@ define(['app/services/i18n-service'], function (modules) {
                     var promise = LanguageService.getLanguageById(languageId);
                     promise.then(function (data) {
                         $scope.currentLanguage = data;
+                        $rootScope.$broadcast('LanguageChanged', data);
                     }, function (/*data*/) {
-                        $scope.currentLanguage = null;
+                        //$scope.currentLanguage = null;
                     });
                 };
 

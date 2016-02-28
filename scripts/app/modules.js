@@ -11,11 +11,6 @@ define(['underscore', 'ui-bootstrap', 'angular-translate-storage-local'], functi
         return $window._;
     }]);
 
-    //app.run(['$http', 'Config', function ($http, Config) {
-    //    $http.defaults.headers.common['Authorization'] = 'Bearer ' + Config.token;
-    //    $http.defaults.headers.post[]
-    //}]);
-
     return {
         angular: angular,
         app: app,

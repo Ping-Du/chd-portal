@@ -7,7 +7,8 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 config:cfg,
                 token:token,
                 user:(token?$cookies.get('user'):''),
-                password:(token?$cookies.get('password'):'')
+                password:(token?$cookies.get('password'):''),
+                languageId:'CHI'
             };
 
             function setCookie(key, value) {
@@ -57,6 +58,14 @@ define(['config', 'app/modules'], function (cfg, modules) {
                             setCookie('password', value);
                         }
                         session.password = value;
+                    }
+                },
+                languageId:function(value) {
+                    if(arguments.length == 0) {
+                        return session.languageId;
+                    }
+                    else {
+                        session.languageId = value;
                     }
                 }
             }

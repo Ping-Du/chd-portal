@@ -4,7 +4,7 @@ define(['app/services/session-service'], function (modules) {
         .factory('SecurityInterceptor', ['SessionService', function (SessionService) {
             var tokenInjector = {
                 request: function (cfg) {
-                    cfg.headers['Authorization'] = 'Bearer ' + SessionService.token()?SessionService.token():SessionService.config().apiToken;
+                    cfg.headers.Authorization = ('Bearer ' + (SessionService.token()?SessionService.token():SessionService.config().apiToken));
                     return cfg;
                 }
             };
