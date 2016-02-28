@@ -1,6 +1,6 @@
 define(['app/interceptors/security-interceptor',
         'app/controllers/session-controller',
-        'app/controllers/i18n-controller',
+        'app/controllers/language-controller',
         'app/controllers/navbar-controller',
         'app/controllers/message-controller',
         'app/controllers/banner-controller'],

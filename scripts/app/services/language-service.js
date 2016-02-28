@@ -23,17 +23,13 @@ define(['config', 'app/services/session-service'], function (config, modules) {
             }
         }])
         .service('LanguageService', ['$http', '$q', 'SessionService', function ($http, $q, SessionService) {
-            function retrieveLanguage() {
-                var languageId = '';
-                if (arguments.length == 1) {
-                    languageId = '/' + arguments[0];
-                }
+            function invoke(url, method, languageId) {
                 var deferred = $q.defer();
                 $http({
-                    method: 'GET',
-                    url: ( SessionService.config().apiRoot + 'languages' + languageId)
+                    method: method,
+                    url: ( SessionService.config().apiRoot + 'languages' + url)
                 }).success(function (data/*, status, headers, cfg*/) {
-                    if(languageId != '')
+                    if(languageId)
                         SessionService.languageId(languageId);
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
@@ -44,10 +40,10 @@ define(['config', 'app/services/session-service'], function (config, modules) {
 
             return {
                 getLanguages: function () {
-                    return retrieveLanguage();
+                    return invoke('', 'GET');
                 },
                 getLanguageById: function (languageId) {
-                    return retrieveLanguage(languageId);
+                    return invoke('/' + languageId, 'GET', languageId);
                 }
             };
         }]);

@@ -1,4 +1,4 @@
-define(['app/services/i18n-service'], function (modules) {
+define(['app/services/language-service'], function (modules) {
     'use strict';
 
     modules.controllers

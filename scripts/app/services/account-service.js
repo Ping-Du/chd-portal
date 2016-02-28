@@ -3,25 +3,50 @@ define(['app/services/session-service'], function (modules) {
     modules.services
         .service('AccountService', ['$http', '$q', 'SessionService', function ($http, $q, SessionService) {
 
+            function invoke(url, method, requestData, type, userName, password) {
+                var deferred = $q.defer();
+                $http({
+                    method: method,
+                    url: SessionService.config().apiRoot + 'account' + url,
+                    data: requestData
+                }).success(function (data/*, status, headers, cfg*/) {
+                    switch(type){
+                        case 1:// getUserName
+                            SessionService.user(data);
+                            break;
+                        case 2:// Register
+                            SessionService.user(userName);
+                            break;
+                        case 3:// Login
+                            SessionService.user(userName);
+                            SessionService.password(password);
+                            SessionService.token(data.access_token);
+                            break;
+                        case 4://logout
+                        case 6://reset password
+                            SessionService.user(null);
+                            SessionService.password(null);
+                            SessionService.token(null);
+                            break;
+                        case 5://set password
+                            SessionService.password(newPassword);
+                            break;
+                    }
+                    deferred.resolve(data);
+                }).error(function (data/*, status, headers, cfg*/) {
+                    deferred.reject(data);
+                });
+                return deferred.promise;
+            }
+
             return {
                 isAuthorized: function () {
                     return ( SessionService.token() != null);
                 },
                 getUserName: function () {
-                    var deferred = $q.defer();
-                    $http({
-                        method: 'GET',
-                        url:  SessionService.config().apiRoot + 'account/UserName'
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.user(data)
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/UserName', 'GET', null, 1);
                 },
                 register: function (userName, email, firstName, lastName, password, confirmPassword, secretCode, role, agency) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "Email": email,
@@ -34,111 +59,41 @@ define(['app/services/session-service'], function (modules) {
                         "Agency": agency,
                         "UrlToConfirmationPage": SessionService.config().webRoot + 'account/confirm-email.html'
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/Register',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.user(userName);
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/Register', 'POST', requestData, 2, userName);
                 },
                 login: function (userName, password) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "Password": password
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/Login',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.user(data.userName);
-                        SessionService.password(password);
-                        SessionService.userToken(data.access_token);
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/Login', 'POST', requestData, 3, userName, password);
                 },
                 logout: function () {
-                    var deferred = $q.defer();
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/Logout'
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.user(null);
-                        SessionService.password(null);
-                        SessionService.userToken(null);
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/Logout', 'POST', null, 4);
                 },
                 setPassword: function (newPassword, confirmPassword) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "NewPassword": newPassword,
                         "ConfirmPassword": confirmPassword
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/SetPassword',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.password(newPassword);
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/SetPassword', 'POST', requestData, 5);
                 },
                 forgotPassword: function (userName) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "SecretCode": SessionService.config().secretCode,
                         "UrlToResetPage": SessionService.config().webRoot + 'account/reset-password.html'
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/ForgotPassword',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        SessionService.user(null);
-                        SessionService.password(null);
-                        SessionService.userToken(null);
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/ForgotPassword', 'POST', requestData, 6);
                 },
                 confirmEmail: function (userId, code) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "UserID": userId,
                         "Code": code
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/ConfirmEmail',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/ConfirmEmail', 'POST', requestData, 7);
                 },
                 resetPassword: function (userName, newPassowrd, confirmPassword, code, redirectUrl) {
-                    var deferred = $q.defer();
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "Password": newPassowrd,
@@ -146,19 +101,8 @@ define(['app/services/session-service'], function (modules) {
                         "Code": code,
                         "RedirectToUrl": redirectUrl
                     });
-                    $http({
-                        method: 'POST',
-                        url: SessionService.config().apiRoot + 'account/ConfirmEmail',
-                        data: requestData
-                    }).success(function (data/*, status, headers, cfg*/) {
-                        deferred.resolve(data);
-                    }).error(function (data/*, status, headers, cfg*/) {
-                        deferred.reject(data);
-                    });
-                    return deferred.promise;
+                    return invoke('/ResetPassword', 'POST', requestData, 8);
                 }
-
-
             };
         }]);
 

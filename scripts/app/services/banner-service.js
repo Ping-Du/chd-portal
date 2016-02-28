@@ -2,14 +2,11 @@ define(['app/services/session-service'], function (modules) {
     'use strict';
     modules.services
         .service('BannerService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
-            function retrieve() {
-                var languageId = '';
-                if(arguments.length == 1)
-                    languageId = '/' + arguments[0];
+            function invoke(url, method) {
                 var deferred = $q.defer();
                 $http({
-                    method: 'GET',
-                    url: ( SessionService.config().apiRoot + 'banners' + languageId)
+                    method: method,
+                    url: ( SessionService.config().apiRoot + 'banners' + url)
                 }).success(function (data/*, status, headers, cfg*/) {
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
@@ -20,10 +17,10 @@ define(['app/services/session-service'], function (modules) {
 
             return {
                 getBanners: function () {
-                    return retrieve();
+                    return invoke('', 'GET');
                 },
-                getBannersByLanguageId:function(languageId) {
-                    return retrieve(languageId);
+                getBannersByLanguageId:function() {
+                    return invoke('languages/'+SessionService.languageId(), 'GET');
                 }
             };
         }]);
