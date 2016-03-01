@@ -1,8 +1,30 @@
 body {
-  font-family: Lato,'sans-serif','Microsoft YaHei',SimHei; }
+  font-family: Lato, 'sans-serif', 'Microsoft YaHei', SimHei; }
 
+@media (min-width: 768px) {
+  .search-position {
+    display: none; } }
+@media (max-width: 767px) {
+  .search-position {
+    display: none; } }
+@media (min-width: 992px) {
+  .search-position {
+    position: absolute;
+    display: block;
+    top: 6px;
+    left: 35%; }
+    .search-position .input-text {
+      min-width: 300px; } }
 @media (min-width: 1200px) {
   .nav > li > a {
-    padding: 10px 16px; } }
+    padding: 10px 16px; }
+
+  .search-position {
+    position: absolute;
+    display: block;
+    top: 6px;
+    left: 30%; }
+    .search-position .input-text {
+      min-width: 480px; } }
 
 /*# sourceMappingURL=font-ENG.css.map */

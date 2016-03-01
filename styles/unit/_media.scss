@@ -1,4 +1,7 @@
 @media (max-width: 559px) {
+  .search-position{
+    display: none;
+  }
   .list-product {
     position: relative;
     ul{display: none;}
@@ -29,6 +32,9 @@
   }
 }
 @media (min-width: 560px) {
+  .search-position{
+    display: none;
+  }
   .list-product {
     position: relative;
     .product-img {
@@ -63,6 +69,7 @@
   }
   .search-position{
     position: absolute; top:6px; left: 40%;
+    display: block;
     .input-text{min-width:200px; }
   }
   .banner.b-hotel{
@@ -85,6 +92,7 @@
   .search-position{
     position: absolute; bottom:4px; left: 10px;
     width: 65%;
+    display: none;
     .input-text{width:100%; }
   }
   .head-crumb{
@@ -111,6 +119,7 @@
   }
 }
 @media (max-width: 991px) {
+
   .list-product {
     .pro-separator{ clear: both; margin:10px 0 20px; overflow: hidden;}
   }
@@ -125,6 +134,7 @@
 @media (min-width: 992px) {
   .search-position{
     position: absolute; top:6px; left: 35%;
+    display: block;
     .input-text{min-width:400px; }
   }
   .list-product {
@@ -157,6 +167,7 @@
 @media (min-width: 1200px) {
   .search-position{
     position: absolute; top:6px; left: 37%;
+    display: block;
     .input-text{min-width:480px; }
   }
   .list-product {
