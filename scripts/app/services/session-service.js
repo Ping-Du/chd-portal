@@ -29,7 +29,7 @@ define(['config', 'app/modules'], function (cfg, modules) {
                         if(value == null) {
                             $cookies.remove('token');
                         } else {
-                            setCookie('user', value);
+                            setCookie('token', value);
                         }
                         session.token = value;
                     }

@@ -24,7 +24,7 @@ define(['config'], function (cfg) {
             'angular-translate-storage-cookie': 'libs/angular-translate-storage-cookie.min',
             'angular-translate-storage-local': 'libs/angular-translate-storage-local.min',
             'angular-messages':'libs/angular-messages.min',
-            'ui-bootstrap':'libs/ui-bootstrap.min',
+            'ui-bootstrap':'libs/ui-bootstrap-tpls.min',
             'angular-css-injector':'libs/angular-css-injector.min'
         },
         shim: {

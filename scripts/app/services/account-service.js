@@ -9,7 +9,7 @@ define(['app/services/session-service'], function (modules) {
                     method: method,
                     url: SessionService.config().apiRoot + 'account' + url,
                     data: requestData
-                }).success(function (data/*, status, headers, cfg*/) {
+                }).success(function (data/*, status, headers, cfg, statuesText*/) {
                     switch(type){
                         case 1:// getUserName
                             SessionService.user(data);
@@ -33,8 +33,8 @@ define(['app/services/session-service'], function (modules) {
                             break;
                     }
                     deferred.resolve(data);
-                }).error(function (data/*, status, headers, cfg*/) {
-                    deferred.reject(data);
+                }).error(function (data, status/*, headers, cfg, statusText*/) {
+                    deferred.reject(status);
                 });
                 return deferred.promise;
             }
@@ -46,7 +46,7 @@ define(['app/services/session-service'], function (modules) {
                 getUserName: function () {
                     return invoke('/UserName', 'GET', null, 1);
                 },
-                register: function (userName, email, firstName, lastName, password, confirmPassword, secretCode, role, agency) {
+                register: function (userName, email, firstName, lastName, password, confirmPassword, role) {
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "Email": email,
@@ -54,16 +54,16 @@ define(['app/services/session-service'], function (modules) {
                         "LastName": lastName,
                         "Password": password,
                         "ConfirmPassword": confirmPassword,
-                        "SecretCode": secretCode,
+                        "SecretCode": 'T0pS3cr3t',
                         "Role": role,
-                        "Agency": agency,
+                        "Agency": SessionService.user(),
                         "UrlToConfirmationPage": SessionService.config().webRoot + 'account/confirm-email.html'
                     });
                     return invoke('/Register', 'POST', requestData, 2, userName);
                 },
                 login: function (userName, password) {
                     var requestData = modules.angular.toJson({
-                        "UserName": userName,
+                        "Username": userName,
                         "Password": password
                     });
                     return invoke('/Login', 'POST', requestData, 3, userName, password);

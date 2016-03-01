@@ -46,8 +46,10 @@ define(['app/services/language-service'], function (modules) {
                 $scope.getLanguageById = function (languageId) {
                     var promise = LanguageService.getLanguageById(languageId);
                     promise.then(function (data) {
-                        $scope.currentLanguage = data;
-                        $rootScope.$broadcast('LanguageChanged', data);
+                        //if(languageId != $scope.currentLanguage) {
+                            $scope.currentLanguage = data;
+                            $rootScope.$broadcast('LanguageChanged', data);
+                        //}
                     }, function (/*data*/) {
                         //$scope.currentLanguage = null;
                     });

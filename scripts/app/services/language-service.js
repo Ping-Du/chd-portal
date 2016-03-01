@@ -44,7 +44,7 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                 },
                 getLanguageById: function (languageId) {
                     return invoke('/' + languageId, 'GET', languageId);
-                }
+                },
             };
         }]);
 

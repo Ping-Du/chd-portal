@@ -1266,6 +1266,9 @@ a {
 .input-login {
   padding-left: 50px; }
 
+.validate-error {
+  color: #ed685b; }
+
 .slider-wrap .loading, .city-slider .loading, .slider-wrap .loading-icon, .city-slider .loading-icon, .slider-wrap .thum-wrap .p, .slider-wrap .thum-wrap .thum, .slider-wrap .thum-wrap .layer {
   position: absolute;
   top: 0;

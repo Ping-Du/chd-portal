@@ -31,3 +31,7 @@ background-color: rgba($light-border, 0.5);
 
 /*setting login input  when they have a icon  */
 .input-login{ padding-left:50px;}
+
+.validate-error {
+  color:$main-red;
+}

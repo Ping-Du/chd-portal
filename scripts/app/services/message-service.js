@@ -7,7 +7,7 @@ define(['app/services/session-service'], function (modules) {
                     var deferred = $q.defer();
                     $http({
                         method:'GET',
-                        url: SessionService.config().apiRoot + 'messages'
+                        url: SessionService.config().apiRoot + 'messages/languages/' + SessionService.languageId()
                     }).success(function(data/*, status, headers, cfg*/){
                         deferred.resolve(data);
                     }).error(function(data/*, status, headers, cfg*/){

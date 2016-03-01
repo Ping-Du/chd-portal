@@ -1,19 +1,25 @@
 define(['app/services/account-service'], function (modules) {
     'use strict';
     modules.controllers
-        .controller('AccountController', ['$rootScope', '$scope', '$window', '$location', 'AccountService', function ($rootScope, $scope, $window, $location, AccountService) {
+        .controller('AccountController', ['$rootScope', '$scope', 'AccountService', function ($rootScope, $scope, AccountService) {
 
-            $scope.isAuthorized = AccountService.isAuthorized();
+            $scope.openLoginModal = function(size){
+                $rootScope.$broadcast('OpenLoginModal', size);
+            };
 
-            $scope.login = function(userName, password) {
-                var promise = AccountService.login(userName, password);
-                promise.then(function (data) {
-                    $scope.isAuthorized = true;
-                    //$rootScope.$broadcast('login', data.access_token)
-                }, function (/*data*/) {
-                    $scope.isAuthorized = false;
+            $scope.openRegisterModal = function(size) {
+                $rootScope.$broadcast('OpenRegisterModal', size);
+            };
+
+            $scope.logout = function() {
+                var promise = AccountService.logout();
+                promise.then(function(){
+                    $rootScope.$broadcast('LOGOUT');
                 });
-            }
+            };
 
+            $scope.changePassword = function(size) {
+                $rootScope.$broadcast('OpenChangePasswordModal', size);
+            }
         }]);
 });

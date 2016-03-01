@@ -3,7 +3,10 @@ define(['app/interceptors/security-interceptor',
         'app/controllers/language-controller',
         'app/controllers/navbar-controller',
         'app/controllers/message-controller',
-        'app/controllers/banner-controller'],
+        'app/controllers/banner-controller',
+        'app/controllers/account-controller',
+        'app/controllers/login-modal-controller',
+        'app/controllers/change-password-modal-controller'],
     function (modules) {
         'use strict';
 
