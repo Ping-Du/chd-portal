@@ -11,6 +11,7 @@ define(['config'], function (cfg) {
             'jquery':'libs/jquery.min',
             'jquery.cookie':'libs/jquery.cookie',
             'jquery.storageapi':'libs/jquery.storageapi.min',
+            'jssor.slider':'libs/jssor.slider.mini',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
             'angular': 'libs/angular',
@@ -25,7 +26,8 @@ define(['config'], function (cfg) {
             'angular-translate-storage-local': 'libs/angular-translate-storage-local.min',
             'angular-messages':'libs/angular-messages.min',
             'ui-bootstrap':'libs/ui-bootstrap-tpls.min',
-            'angular-css-injector':'libs/angular-css-injector.min'
+            'angular-css-injector':'libs/angular-css-injector.min',
+            'angular-ui-router':'libs/angular-ui-router.min'
         },
         shim: {
             'jquery':{
@@ -36,6 +38,9 @@ define(['config'], function (cfg) {
             },
             'jquery.storageapi':{
                 deps:['jquery.cookie']
+            },
+            'jssor.slider':{
+                deps:['jquery']
             },
             'bootstrap':{
                 deps:['jquery'],
@@ -85,11 +90,14 @@ define(['config'], function (cfg) {
             'angular-translate-loader-static-files':{
                 deps: ['angular-translate']
             },
-            'angular-translate-storage-cookie':{
-                deps: ['angular-cookies', 'angular-translate-loader-static-files']
-            },
-            'angular-translate-storage-local':{
-                deps: ['angular-local-storage', 'angular-translate-storage-cookie']
+            //'angular-translate-storage-cookie':{
+            //    deps: ['angular-cookies', 'angular-translate-loader-static-files']
+            //},
+            //'angular-translate-storage-local':{
+            //    deps: ['angular-local-storage', 'angular-translate-storage-cookie']
+            //},
+            'angular-ui-router':{
+                deps:['angular']
             }
         }
     };
@@ -130,7 +138,7 @@ define(['config'], function (cfg) {
                 },
                 error: function (request/*, status, error*/) {
                     console.error('readyState:' + request.readyState + ' statusText:' + request.statusText);
-                    document.location.href = cfg.webRoot + 'error.html?code=1';
+                    document.location.href = cfg.webRoot + 'info.html?code=1';
                 }
             });
         } else {

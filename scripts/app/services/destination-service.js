@@ -28,7 +28,7 @@ define(['app/services/session-service'], function (modules) {
                 getFeaturedDestinations:function() {
                     return invoke('/featured/languages/'+SessionService.languageId(), 'GET');
                 },
-                getTopDestinations:function(languageId) {
+                getTopDestinations:function() {
                     return invoke('/top/languages/'+SessionService.languageId(), 'GET');
                 }
 

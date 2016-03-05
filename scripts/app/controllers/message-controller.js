@@ -30,7 +30,11 @@ define(['app/services/message-service'], function (modules) {
                 });
             };
 
-            $scope.getMessage();
+            $scope.$on('LanguageChanged', function(event, data){
+                $scope.getMessage();
+            });
+
+            //$scope.getMessage();
         }]);
 
     return modules;

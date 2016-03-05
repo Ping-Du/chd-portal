@@ -20,7 +20,7 @@ define(['app/services/account-service'], function (modules) {
                 });
             }])
         .controller('ChangePasswordModalInstanceController', ['$rootScope', '$scope', '$uibModalInstance', '$translate', 'SessionService', 'AccountService', function($rootScope, $scope, $uibModalInstance, $translate, SessionService, AccountService){
-            $scope.oldPassword = "";
+            //$scope.oldPassword = "";
             $scope.newPassword = "";
             $scope.confirmPassword = "";
 
@@ -31,10 +31,10 @@ define(['app/services/account-service'], function (modules) {
             }
 
             $scope.ok = function(){
-                if($scope.oldPassword != SessionService.password()) {
-                    translate("OLD_PASSWORD_WRONG");
-                    return;
-                }
+                //if($scope.oldPassword != SessionService.password()) {
+                //    translate("OLD_PASSWORD_WRONG");
+                //    return;
+                //}
                 if($scope.newPassword == '' || $scope.newPassword != $scope.confirmPassword){
                     translate('PASSWORD_NOT_MATCH');
                     return;

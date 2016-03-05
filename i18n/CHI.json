@@ -21,6 +21,7 @@
   "OLD_PASSWORD_WRONG":"原密码不对！",
   "CHANGE_PASSWORD_FAILED":"修改密码时出错，请稍后重试!",
   "KEYWORD":"请输入关键字",
+  "DESTINATION":"目的地",
   "HOME":"首页",
   "HOME_TITLE":"中美旅游欢迎您",
   "HOTEL":"酒店",

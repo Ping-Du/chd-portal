@@ -86,9 +86,8 @@ header {
     margin: 10px 0; }
     header .top-tel .icon-phone-hang-up {
       font-size: 30px;
-      position: absolute;
-      top: 2px;
-      right: 170px; }
+      position: relative;
+      top: 3px; }
   header .shopping-car {
     cursor: pointer; }
     header .shopping-car .icon-cart, header .shopping-car .s-car-amount {

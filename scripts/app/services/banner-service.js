@@ -20,7 +20,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('', 'GET');
                 },
                 getBannersByLanguageId:function() {
-                    return invoke('/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/'+SessionService.languageId(), 'GET');
                 }
             };
         }]);
