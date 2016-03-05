@@ -19,13 +19,11 @@ define(['app/services/session-service'], function (modules) {
                             break;
                         case 3:// Login
                             SessionService.user(userName);
-                            SessionService.password(password);
                             SessionService.token(data.access_token);
                             break;
                         case 4://logout
                         case 6://reset password
                             SessionService.user(null);
-                            SessionService.password(null);
                             SessionService.token(null);
                             break;
                         case 5://set password

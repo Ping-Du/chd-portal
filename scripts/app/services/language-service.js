@@ -14,14 +14,18 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                 'zh_*': 'CHI'
             });
             $translateProvider.useSanitizeValueStrategy('escape');
-            //$translateProvider.useLocalStorage();
 
+            var languageId = $.cookie('languageId');
+            if(languageId){
+                $translateProvider.preferredLanguage(languageId);
+            } else {
                 if ($translateProvider.preferredLanguage() === undefined) {
                     $translateProvider.determinePreferredLanguage();
                 }
                 if ($translateProvider.preferredLanguage() === undefined) {
                     $translateProvider.preferredLanguage('CHI');
                 }
+            }
 
         }])
         .service('LanguageService', ['$http', '$q', 'SessionService', function ($http, $q, SessionService) {

@@ -13,11 +13,11 @@
                     </ul>
                 </span>
             </li>
-            <li data-ng-show="token != null">
+            <li data-ng-show="isAuthorized">
                 <a href data-ng-click="changePassword()">{{"CHANGE_PASSWORD"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href data-ng-click="logout()">{{"LOGOUT"|translate}}</a>
             </li>
-            <li data-ng-show="token == null">
+            <li data-ng-show="!isAuthorized">
                 <a href data-ng-click="openRegisterModal()">{{"REGISTER"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href data-ng-click="openLoginModal()">{{"LOGIN"|translate}}</a>
             </li>

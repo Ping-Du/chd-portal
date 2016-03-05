@@ -1,0 +1,31 @@
+<header class="header-container" >
+    <div class="title position"><i class="icon-building"></i><h2>{{"HOTEL"|translate}}</h2></div>
+    <div class="head-menu">
+        <a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>
+        <a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/{{languageId}}?destination={{item.Id}}">{{item.Name}}</a>
+    </div>
+</header>
+<div class="row">
+    <div class="col-sm-6 col-md-4" data-ng-repeat="item in hotels">
+        <div class="thumbnail">
+            <a data-ng-href="hotels.html#/{{item.Id}}/{{languageId}}">
+                <!--
+                <span class="sales-layer">Pref</span>
+                -->
+                <img data-ng-src="{{item.MainInformation.MediumImageURI}}">
+            </a>
+            <div class="caption">
+                <h3><a data-ng-href="hotels.html#/{{item.Id}}/{{languageId}}">{{item.Name}}</a><i data-ng-class="item.StarClass"></i></h3>
+                <!--
+                <a data-ng-href="hotels.html#/{{item.Id}}/comment/{{languageId}}"><span>8.3</span>451 comments</a>
+                -->
+                <ul class="hotel">
+                    <li>{{item.Location.Name}}</li>
+                    <!--
+                    <li class="text-right price"><s class="aa">$200</s><span>$89.00</span></li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

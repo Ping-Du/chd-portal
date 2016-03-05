@@ -1,9 +1,9 @@
-<div class="container relative">
-    <div class="shopping-car">
+<div class="container relative" data-ng-controller="NavbarController">
+    <div class="shopping-car" data-ng-show="isAuthorized">
         <i class="icon-cart"></i>
-        <span class="s-car-amount">30</span>
+        <span class="s-car-amount">0</span>
     </div>
-    <div data-ng-controller="NavbarController">
+    <div>
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-click="navigator.isCollapsed = !navigator.isCollapsed">
@@ -15,17 +15,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="example-navbar-collapse" uib-collapse="navigator.isCollapsed">
             <ul class="nav navbar-nav" >
-                <li data-ng-class="{'active':navigator.active=='home'}"><a href="../home.html" translate="{{'HOME'}}">首页</a></li>
-                <li data-ng-class="{'active':navigator.active=='hotel'}"><a href="hotel.html" translate="{{'HOTEL'}}">酒店</a></li>
-                <li data-ng-class="{'active':navigator.active=='show'}"><a href="show.html" translate="{{'SHOW'}}">表演</a></li>
-                <li data-ng-class="{'active':navigator.active=='things to do'}"><a href="things-to-do.html" translate="{{'THINGS_TO_DO'}}">当地玩乐</a></li>
-                <li data-ng-class="{'active':navigator.active=='local tour'}"><a href="local-tour.html" translate="{{'LOCAL_TOUR'}}">当地参团</a></li>
-                <li data-ng-class="{'active':navigator.active=='ground transportation'}"><a href="ground-transportation.html" translate="{{'GROUND_TRANSPORTATION'}}">车票</a></li>
-                <li data-ng-class="{'active':navigator.active=='cruise'}"><a href="cruise.html" translate="{{'CRUISE'}}">游轮</a></li>
-                <li data-ng-class="{'active':navigator.active=='dining'}"><a href="dining.html" translate="{{'DINING'}}">美食</a></li>
-                <li data-ng-class="{'active':navigator.active=='shopping'}"><a href="shopping.html" translate="{{'SHOPPING'}}">购物</a></li>
-                <li data-ng-class="{'active':navigator.active=='mice'}"><a href="mice.html" translate="{{'MICE'}}">会展</a></li>
-                <li data-ng-class="{'active':navigator.active=='bus charter'}"><a href="bus-charter.html" translate="{{'BUS_CHARTER'}}">租车</a></li>
+                <li data-ng-class="{'active':navigator.active=='home'}"><a data-ng-href="{{webRoot}}home.html">{{'HOME'|translate}}</a></li>
+                <li data-ng-class="{'active':navigator.active=='hotel'}"><a data-ng-href="{{webRoot}}hotels.html" >{{'HOTEL'|translate}}</a></li>
+                <li data-ng-class="{'active':navigator.active=='show'}"><a data-ng-href="{{webRoot}}services.html#/shows" >{{'SHOW'|translate}}</a></li>
+                <li data-ng-class="{'active':navigator.active=='activity'}"><a data-ng-href="{{webRoot}}services.html#/activities" >{{'THINGS_TO_DO'|translate}}</a></li>
+                <li data-ng-class="{'active':navigator.active=='tour'}"><a data-ng-href="{{webRoot}}services.html#/tours" >{{'LOCAL_TOUR'|translate}}</a></li>
+                <li data-ng-class="{'active':navigator.active=='transportation'}"><a data-ng-href="{{webRoot}}services.html#/transportation" >{{'GROUND_TRANSPORTATION'|translate}}</a></li>
+                <!--<li data-ng-class="{'active':navigator.active=='cruise'}"><a href="cruise.html" translate="{{'CRUISE'}}">游轮</a></li>-->
+                <li data-ng-class="{'active':navigator.active=='dining'}"><a data-ng-href="{{webRoot}}services.html#/dining" >{{'DINING'|translate}}</a></li>
+                <!--<li data-ng-class="{'active':navigator.active=='shopping'}"><a href="shopping.html" translate="{{'SHOPPING'}}">购物</a></li>-->
+                <!--<li data-ng-class="{'active':navigator.active=='mice'}"><a href="mice.html" translate="{{'MICE'}}">会展</a></li>-->
+                <!--<li data-ng-class="{'active':navigator.active=='bus charter'}"><a href="bus-charter.html" translate="{{'BUS_CHARTER'}}">租车</a></li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>

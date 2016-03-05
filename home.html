@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Others must follow above three meta -->
-    <title translate="{{'HOME_TITLE'}}">中美旅游欢迎您</title>
+    <title translate="{{'HOME_TITLE'}}"></title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" >
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href="styles/bootstrap.min.css" rel="stylesheet">
@@ -22,8 +22,61 @@
 </head>
 <body>
 
+<!-- header start here -->
+<header class="relative">
+    <div class="container" data-ng-include="'templates/partials/header.html'"  role="banner">
+    </div>
+    <div class="line"></div>
+    <nav class="navbar-default" role="navigation" data-ng-include="'templates/partials/navigator.html'">
+    </nav>
+</header>
+<!-- header end here -->
+
 <div data-ng-view>
 </div>
+
+<!-- footer start here -->
+<footer role="contentinfo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-xs-12" data-ng-include="'templates/partials/home-news.html'">
+            </div>
+            <div class="col-md-3 col-xs-12" data-ng-include="'templates/partials/home-links.html'">
+            </div>
+        </div>
+    </div>
+    <div class="container" data-ng-include="'templates/partials/home-partner1.html'">
+    </div>
+    <div class="container-bg">
+        <div class="container" data-ng-include="'templates/partials/home-partner2.html'">
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container" data-ng-include="'templates/partials/footer.html'">
+        </div>
+    </div>
+</footer>
+<!-- footer end here -->
+
+<!-- message start here -->
+<div data-ng-include="'templates/partials/home-message.html'">
+</div>
+<!-- message end here -->
+
+<!-- login modal start here -->
+<div data-ng-include="'templates/partials/login.html'">
+</div>
+<!-- login modal end here -->
+
+<!-- change password modal start here -->
+<div data-ng-include="'templates/partials/change-password.html'">
+</div>
+<!-- change password modal end here -->
+
+<!-- register modal start here -->
+<div data-ng-include="'templates/partials/register.html'">
+</div>
+<!-- register modal end here -->
 
 </body>
 </html>

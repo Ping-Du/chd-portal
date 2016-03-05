@@ -22,7 +22,7 @@ define(['config', 'app/modules'], function (cfg, modules) {
 
             this.setReloadOnChangeLanguage = function(value){
                 session.reloadOnChangeLanguage = value;
-            }
+            };
 
             this.$get = function () {
                 var self = this;

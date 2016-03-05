@@ -1,5 +1,5 @@
-<div class="carousel slide" data-ng-controller="BannerController">
-    <uib-carousel interval="slideInterval" no-wrap="noWrapSlides" template-url="templates/ui-bootstrap/carousel.html" >
+<div class="carousel slide">
+    <uib-carousel interval="slide.slideInterval" no-wrap="slide.noWrapSlides" template-url="templates/ui-bootstrap/carousel.html" >
         <uib-slide ng-repeat="slide in slides" active="slide.active" index="slide.id" template-url="templates/ui-bootstrap/slide.html" >
             <img ng-src="{{slide.ImageURI}}" style="margin:auto;">
             <div class="carousel-caption">

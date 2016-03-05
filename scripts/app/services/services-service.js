@@ -1,7 +1,7 @@
 define(['app/services/session-service'], function (modules) {
     'use strict';
     modules.services
-        .service('TripService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
+        .service('ServicesService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
             function invoke(url, method, requestData) {
                 var deferred = $q.defer();
                 $http({
