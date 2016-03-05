@@ -50,7 +50,7 @@ define(['config'], function (cfg) {
                 exports:'_'
             },
             'angular':{
-                //deps:['bootstrap'],
+                deps:['bootstrap'],
                 exports:'angular'
             },
             'angular-cookies': {
@@ -104,7 +104,7 @@ define(['config'], function (cfg) {
 
     require.config(libs);
 
-    require(['bootstrap', 'jquery.storageapi'], function($){
+    require(['jquery', 'ui-bootstrap', 'jquery.storageapi', 'angular-route', 'angular-translate-loader-static-files', 'angular-cookies'], function($){
         // enable cors
         $.support.cors = true;
 

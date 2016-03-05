@@ -1,29 +1,31 @@
 define(['config', 'app/modules'], function (cfg, modules) {
     'use strict';
     modules.services
-        .service('SessionService', ['$cookies','$log', function ($cookies, $log) {
-            var token = $cookies.get('token');
+        .provider('SessionService', function () {
+            //var token = $.cookie('token');
             var session = {
                 config: cfg,
-                token: token,
-                user: (token ? $cookies.get('user') : ''),
+                token: $.cookie('token'),
+                user: (this.token ? $.cookie('user') : ''),
                 //password:(token?$cookies.get('password'):''),
-                languageId: $cookies.get('languageId')
+                languageId:  $.cookie('languageId'),
+                reloadOnChangeLanguage:false
             };
-            $log.debug('saved language:' + session.languageId);
 
             function setCookie(key, value) {
                 if (value != null) {
-                    var expireDate = new Date();
-                    expireDate.setDate(expireDate.getDate() + 14);
-                    $cookies.put(key, value, {'expires': expireDate});
+                    $.cookie(key, value, {expires: 14});
                 } else {
-                    $cookies.remove(key);
+                    $.removeCookie(key);
                 }
             }
 
-            //this.$get = function () {
-            //    var self = this;
+            this.setReloadOnChangeLanguage = function(value){
+                session.reloadOnChangeLanguage = value;
+            }
+
+            this.$get = function () {
+                var self = this;
                 return {
                     config: function () {
                         return session.config;
@@ -54,12 +56,14 @@ define(['config', 'app/modules'], function (cfg, modules) {
                             setCookie('languageId', null);
                             setCookie('languageId', value);
                             session.languageId = value;
-                            $log.debug('change language:' + value);
                         }
+                    },
+                    reloadOnChangeLanguage:function() {
+                            return session.reloadOnChangeLanguage;
                     }
                 };
-            //};
-        }]);
+            };
+        });
 
     return modules;
 });

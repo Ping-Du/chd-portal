@@ -11,23 +11,26 @@ define(['app/interceptors/security-interceptor',
     function (modules) {
         'use strict';
 
+        modules.app.config(['SessionServiceProvider', function(SessionServiceProvider){
+            SessionServiceProvider.setReloadOnChangeLanguage(true);
+        }]);
         modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
             NavbarServiceProvider.setActiveItem('home');
         }]);
 
         // config route
-        //modules.app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
-        //    $urlRouterProvider.otherwise("/CHI");
-        //    $stateProvider
-        //        .state('CHI', {
-        //            url:'CHI',
-        //            templateUrl:'templates/home1.html'
-        //        })
-        //        .state('ENG', {
-        //            url:'ENG',
-        //            templateUrl:'templates/home2.html'
-        //        });
-        //}]);
+        modules.app.config(['$routeProvider', function($routeProvider){
+            $routeProvider
+                .when('/:languageId', {
+                    templateUrl:'templates/home-view.html'
+                })
+                //.when('/ENG',{
+                //    templateUrl:'templates/home.html'
+                //})
+                .otherwise({
+                    redirectTo: '/' + $.cookie('languageId')
+                });
+        }]);
 
         // boot app
         modules.angular.bootstrap(document, [modules.app.name]);
