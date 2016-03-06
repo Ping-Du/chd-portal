@@ -2,7 +2,7 @@
     <div class="title position"><i class="icon-building"></i><h2>{{"HOTEL"|translate}}</h2></div>
     <div class="head-menu">
         <a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>
-        <a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/{{languageId}}?destination={{item.Id}}">{{item.Name}}</a>
+        <a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.Id}}/{{languageId}}">{{item.Name}}</a>
     </div>
 </header>
 <div class="row">

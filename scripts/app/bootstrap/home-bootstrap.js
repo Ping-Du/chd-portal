@@ -20,7 +20,8 @@ define(['app/interceptors/security-interceptor',
         modules.app.config(['$routeProvider', function($routeProvider){
             $routeProvider
                 .when('/:languageId', {
-                    templateUrl:'templates/home-view.html'
+                    templateUrl:'templates/home-view.html',
+                    controller:'HomeController'
                 })
                 //.when('/ENG',{
                 //    templateUrl:'templates/home.html'

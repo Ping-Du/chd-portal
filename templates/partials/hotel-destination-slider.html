@@ -1,0 +1,23 @@
+<div class="title t-line">
+    <h2>{{'DESTINATION'|translate}}</h2>
+</div>
+<div id="jssor_destination" class="city-slider">
+    <div data-u="loading" class="loading">
+        <div class="loading-icon"></div>
+    </div>
+    <div class="row c-s-list" data-u="slides">
+        <div class="col-sm-6 col-md-4" data-ng-repeat="item in destinations">
+            <div class="thumbnail">
+                <a data-ng-href="hotels.html#/{{item.Id}}/{{languageId}}" class="flo-layer">
+                    <span class="flo-layer-c text">{{item.Name}}</span>
+                    <!--
+                    <span class="flo-layer-d text-d">350 Hotels</span>
+                    -->
+                    <img data-u="image" data-ng-src="{{item.MainInformation.MediumImageURI}}">
+                </a>
+            </div>
+        </div>
+    </div>
+    <span data-u="arrowleft" class="jssora03l" data-autocenter="2"><i class="icon-chevron-thin-left "></i> </span>
+    <span data-u="arrowright" class="jssora03r" data-autocenter="2"><i class="icon-chevron-thin-right "></i></span>
+</div>

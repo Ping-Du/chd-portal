@@ -3,13 +3,17 @@ define(['app/services/language-service'], function (modules) {
 
     modules.controllers
         .controller("LanguageController", ['$rootScope', '$scope', '$translate', '$log', 'cssInjector',
-            'SessionService', 'LanguageService', '$location', '$routeParams',
-            function ($rootScope, $scope, $translate, $log, cssInjector, SessionService, LanguageService, $location, $rootParams) {
+            'SessionService', 'LanguageService', '$location',
+            function ($rootScope, $scope, $translate, $log, cssInjector, SessionService, LanguageService, $location) {
 
-                if($rootParams.languageId)
-                    SessionService.languageId($rootParams.languageId);
-
-                var lang = SessionService.languageId();
+                var path = $location.path();
+                var lang = null;
+                if(path.indexOf('/CHI') >= 0)
+                    lang = 'CHI';
+                if(path.indexOf('/ENG') >= 0)
+                    lang = 'ENG';
+                if(!lang)
+                    lang = SessionService.languageId();
                 if(!lang)
                     lang = $translate.proposedLanguage() || $translate.use();
 
@@ -33,9 +37,9 @@ define(['app/services/language-service'], function (modules) {
                     }
                 }
 
-                $scope.changeLanguage = function (languageKey, noReload) {
+                $scope.changeLanguage = function (languageKey, reload, boardcast) {
                     SessionService.languageId(languageKey);
-                    if(!noReload && SessionService.reloadOnChangeLanguage()) {
+                    if(reload && SessionService.reloadOnChangeLanguage()) {
                         var url = $location.absUrl();
                         $log.debug('original:' + url);
                         url = url.replace('/'+$scope.currentLanguage.Id, '/'+languageKey);
@@ -47,7 +51,8 @@ define(['app/services/language-service'], function (modules) {
                         setCurrentLanguage(languageKey);
                         addCss(languageKey);
                         SessionService.languageId(languageKey);
-                        $rootScope.$broadcast('LanguageChanged', languageKey);
+                        if(boardcast)
+                            $rootScope.$broadcast('LanguageChanged', languageKey);
                         $log.debug('use language:' + languageKey);
                     }
                 };
@@ -56,7 +61,7 @@ define(['app/services/language-service'], function (modules) {
                     var promise = LanguageService.getLanguages();
                     promise.then(function (data) {
                         $scope.availableLanguages = data;
-                        $scope.changeLanguage($scope.currentLanguage, true);
+                        $scope.changeLanguage($scope.currentLanguage);
                     }, function (/*data*/) {
                         $scope.availableLanguages = null;
                     });

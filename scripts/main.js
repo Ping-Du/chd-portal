@@ -138,7 +138,7 @@ define(['config'], function (cfg) {
                 },
                 error: function (request/*, status, error*/) {
                     console.error('readyState:' + request.readyState + ' statusText:' + request.statusText);
-                    document.location.href = cfg.webRoot + 'info.html?code=1';
+                    //document.location.href = cfg.webRoot + 'info.html#/api';
                 }
             });
         } else {

@@ -21,6 +21,7 @@
   "PASSWORD_NOT_MATCH":"Password and confirm password must match and not null!",
   "CHANGE_PASSWORD_FAILED":"Can't change password, please try later!",
   "KEYWORD":"Please input keywords",
+  "SEARCH":"Search",
   "DESTINATION":"Destination",
   "HOME":"Home",
   "HOME_TITLE":"Welcome To CHD",
