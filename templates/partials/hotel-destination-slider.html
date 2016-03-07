@@ -1,14 +1,14 @@
 <div class="title t-line">
     <h2>{{'DESTINATION'|translate}}</h2>
 </div>
-<div id="jssor_destination" class="city-slider">
+<div class="slides-container city-slider">
     <div data-u="loading" class="loading">
         <div class="loading-icon"></div>
     </div>
     <div class="row c-s-list" data-u="slides">
-        <div class="col-sm-6 col-md-4" data-ng-repeat="item in destinations">
+        <div class="col-sm-6 col-md-4" data-ng-repeat="item in destinations" data-enable-jssor data-jssor-options="jssorOptions" data-jssor-trigger="{{$last}}">
             <div class="thumbnail">
-                <a data-ng-href="hotels.html#/{{item.Id}}/{{languageId}}" class="flo-layer">
+                <a data-ng-href="hotels.html#/destination/{{item.Id}}/{{languageId}}" class="flo-layer">
                     <span class="flo-layer-c text">{{item.Name}}</span>
                     <!--
                     <span class="flo-layer-d text-d">350 Hotels</span>

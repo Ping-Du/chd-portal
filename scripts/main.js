@@ -14,7 +14,7 @@ define(['config'], function (cfg) {
             'jssor.slider':'libs/jssor.slider.mini',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
-            'angular': 'libs/angular',
+            'angular': 'libs/angular.min',
             'angular-cookies': 'libs/angular-cookies.min',
             'angular-sanitize': 'libs/angular-sanitize.min',
             'angular-local-storage': 'libs/angular-local-storage.min',
@@ -27,7 +27,8 @@ define(['config'], function (cfg) {
             'angular-messages':'libs/angular-messages.min',
             'ui-bootstrap':'libs/ui-bootstrap-tpls.min',
             'angular-css-injector':'libs/angular-css-injector.min',
-            'angular-ui-router':'libs/angular-ui-router.min'
+            'angular-ui-router':'libs/angular-ui-router.min',
+            'dang-jssor':'libs/dang-jssor.min'
         },
         shim: {
             'jquery':{
@@ -98,6 +99,9 @@ define(['config'], function (cfg) {
             //},
             'angular-ui-router':{
                 deps:['angular']
+            },
+            'dang-jssor':{
+                deps:['jquery', 'angular', 'jssor.slider']
             }
         }
     };

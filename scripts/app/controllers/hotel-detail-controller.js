@@ -7,7 +7,7 @@ define(['app/services/hotel-service',
         .controller('HotelDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService', 'HotelService', 'ServicesService','DestinationService',
             function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, ServicesService, DestinationService) {
 
-                $scope.name = "Hotel Detail Controller:" + $routeParams.id;
+                $scope.name = "Hotel Detail Controller:";
 
             }]);
 });

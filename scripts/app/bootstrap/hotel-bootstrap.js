@@ -10,9 +10,6 @@ define(['app/interceptors/security-interceptor',
     function (modules) {
         'use strict';
 
-        modules.app.config(['SessionServiceProvider', function(SessionServiceProvider){
-            SessionServiceProvider.setReloadOnChangeLanguage(true);
-        }]);
         modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
             NavbarServiceProvider.setActiveItem('hotel');
         }]);
@@ -30,16 +27,16 @@ define(['app/interceptors/security-interceptor',
                     controller:'HotelDetailController',
                     reloadOnSearch: true
                 })
-                //.when('/destination/:destinationId/:languageId',{
-                //    templateUrl:'templates/hotel-list-view.html',
-                //    controller:'HotelListController',
-                //    reloadOnSearch: false
-                //})
-                //.when('/destination/:destinationId/star/:star/:languageId',{
-                //    templateUrl:'templates/hotel-list-view.html',
-                //    controller:'HotelListController',
-                //    reloadOnSearch: false
-                //})
+                .when('/destination/:destinationId/:languageId',{
+                    templateUrl:'templates/hotel-list-view.html',
+                    controller:'HotelListController',
+                    reloadOnSearch: false
+                })
+                .when('/destination/:destinationId/star/:star/:languageId',{
+                    templateUrl:'templates/hotel-list-view.html',
+                    controller:'HotelListController',
+                    reloadOnSearch: false
+                })
                 .otherwise({
                     redirectTo: '/' + $.cookie('languageId')
                 });

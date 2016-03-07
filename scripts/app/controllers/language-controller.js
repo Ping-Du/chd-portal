@@ -8,13 +8,13 @@ define(['app/services/language-service'], function (modules) {
 
                 var path = $location.path();
                 var lang = null;
-                if(path.indexOf('/CHI') >= 0)
+                if (path.indexOf('/CHI') >= 0)
                     lang = 'CHI';
-                if(path.indexOf('/ENG') >= 0)
+                if (path.indexOf('/ENG') >= 0)
                     lang = 'ENG';
-                if(!lang)
+                if (!lang)
                     lang = SessionService.languageId();
-                if(!lang)
+                if (!lang)
                     lang = $translate.proposedLanguage() || $translate.use();
 
                 $scope.currentLanguage = lang;
@@ -37,24 +37,21 @@ define(['app/services/language-service'], function (modules) {
                     }
                 }
 
-                $scope.changeLanguage = function (languageKey, reload, boardcast) {
+                $scope.changeLanguage = function (languageKey, reload, broadcast) {
                     SessionService.languageId(languageKey);
-                    if(reload && SessionService.reloadOnChangeLanguage()) {
-                        var url = $location.absUrl();
+                    if (reload) {
+                        var url = $location.path();
                         $log.debug('original:' + url);
-                        url = url.replace('/'+$scope.currentLanguage.Id, '/'+languageKey);
+                        url = url.replace('/' + $scope.currentLanguage.Id, '/' + languageKey);
                         $log.debug('redirect:' + url);
-                        window.location.href = url;
-                        window.location.reload();
-                    } else {
-                        $translate.use(languageKey);
-                        setCurrentLanguage(languageKey);
-                        addCss(languageKey);
-                        SessionService.languageId(languageKey);
-                        if(boardcast)
-                            $rootScope.$broadcast('LanguageChanged', languageKey);
-                        $log.debug('use language:' + languageKey);
+                        $location.path(url);
                     }
+                    $translate.use(languageKey);
+                    setCurrentLanguage(languageKey);
+                    addCss(languageKey);
+                    if(broadcast)
+                        $rootScope.$broadcast('LanguageChanged', languageKey);
+                    $log.debug('use language:' + languageKey);
                 };
 
                 $scope.getLanguages = function () {

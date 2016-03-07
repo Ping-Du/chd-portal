@@ -20,10 +20,6 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 }
             }
 
-            this.setReloadOnChangeLanguage = function(value){
-                session.reloadOnChangeLanguage = value;
-            };
-
             this.$get = function () {
                 var self = this;
                 return {
@@ -57,9 +53,6 @@ define(['config', 'app/modules'], function (cfg, modules) {
                             setCookie('languageId', value);
                             session.languageId = value;
                         }
-                    },
-                    reloadOnChangeLanguage:function() {
-                            return session.reloadOnChangeLanguage;
                     }
                 };
             };

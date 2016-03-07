@@ -9,9 +9,6 @@ define(['app/interceptors/security-interceptor',
     function (modules) {
         'use strict';
 
-        modules.app.config(['SessionServiceProvider', function(SessionServiceProvider){
-            SessionServiceProvider.setReloadOnChangeLanguage(true);
-        }]);
         modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
             NavbarServiceProvider.setActiveItem('home');
         }]);

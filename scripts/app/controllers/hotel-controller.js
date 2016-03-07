@@ -13,11 +13,30 @@ define(['app/services/hotel-service',
                     noWrapSlides: false
                 };
 
+                $scope.jssorOptions = {
+                    $AutoPlay: true,
+                    $AutoPlaySteps: 3,
+                    $SlideDuration: 160,
+                    $SlideWidth: 400,
+                    $SlideSpacing: 0,
+                    $Cols: 3,
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$,
+                        $Steps: 3
+                    },
+                    $BulletNavigatorOptions: {
+                        $Class: $JssorBulletNavigator$,
+                        $SpacingX: 1,
+                        $SpacingY: 1
+                    },
+                    onReady:function(){
+                        $log.debug('slider ready');
+                    }
+                };
                 $scope.destinations = [];
                 function loadDestinations() {
                     //DestinationService.getFeaturedDestinations().then(function (data) {
                     //    $scope.destinations = data;
-                    //    require(['app/slider/hotel-destination-slider']);
                     //});
                     $scope.destinations.push({
                         Id: "1",
@@ -47,7 +66,6 @@ define(['app/services/hotel-service',
                             MediumImageURI: 'images/temp/city-img1.jpg'
                         }
                     });
-                    require(['app/slider/hotel-destination-slider']);
                 }
 
                 $scope.hotels = [];
@@ -85,7 +103,6 @@ define(['app/services/hotel-service',
                 });
 
                 load();
-
 
             }]);
 });
