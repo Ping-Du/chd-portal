@@ -2,25 +2,25 @@
 <main role="main">
 
     <!-- begin content slider -->
-    <div data-ng-include="'templates/partials/home-banner.html'">
+    <div data-ng-include="'templates/partials/home-banner.html'" data-ng-show="banners">
     </div>
     <!-- end content slider -->
 
     <!-- begin go123 & Shuttle -->
-    <div data-ng-include="'templates/partials/home-go123.html'">
-    </div>
+    <!--<div data-ng-include="'templates/partials/home-go123.html'">-->
+    <!--</div>-->
     <!-- end go123 & Shuttle -->
 
     <div class="container-bg container-padding">
         <div class="container">
 
-            <section class="thumbnail-part" data-ng-include="'templates/partials/home-destination-slider.html'">
+            <section class="thumbnail-part" data-ng-show="destinations" data-ng-include="'templates/partials/home-destination-slider.html'">
             </section>
 
-            <section class="thumbnail-part" data-ng-include="'templates/partials/home-hotel.html'">
+            <section class="thumbnail-part" data-ng-show="hotels" data-ng-include="'templates/partials/home-hotel.html'">
             </section>
 
-            <section class="thumbnail-part" data-ng-include="'templates/partials/home-show.html'">
+            <section class="thumbnail-part" data-ng-show="shows" data-ng-include="'templates/partials/home-show.html'">
             </section>
 
         </div>

@@ -8,8 +8,7 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 token: $.cookie('token'),
                 user: (this.token ? $.cookie('user') : ''),
                 //password:(token?$cookies.get('password'):''),
-                languageId:  $.cookie('languageId'),
-                reloadOnChangeLanguage:false
+                languageId: null// $.cookie('languageId')
             };
 
             function setCookie(key, value) {
@@ -19,6 +18,13 @@ define(['config', 'app/modules'], function (cfg, modules) {
                     $.removeCookie(key);
                 }
             }
+
+            this.languageId = function (languageId) {
+                if(languageId)
+                    session.languageId = languageId;
+                else
+                    return session.languageId;
+            };
 
             this.$get = function () {
                 var self = this;
@@ -49,7 +55,6 @@ define(['config', 'app/modules'], function (cfg, modules) {
                             return session.languageId;
                         }
                         else {
-                            setCookie('languageId', null);
                             setCookie('languageId', value);
                             session.languageId = value;
                         }

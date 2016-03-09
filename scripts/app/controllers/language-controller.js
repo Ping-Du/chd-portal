@@ -6,12 +6,10 @@ define(['app/services/language-service'], function (modules) {
             'SessionService', 'LanguageService', '$location',
             function ($rootScope, $scope, $translate, $log, cssInjector, SessionService, LanguageService, $location) {
 
+                $log.debug('LanguageController:'+$location.path());
+
                 var path = $location.path();
-                var lang = null;
-                if (path.indexOf('/CHI') >= 0)
-                    lang = 'CHI';
-                if (path.indexOf('/ENG') >= 0)
-                    lang = 'ENG';
+                var lang = LanguageService.determineLanguageIdFromPath(path);
                 if (!lang)
                     lang = SessionService.languageId();
                 if (!lang)
@@ -38,6 +36,9 @@ define(['app/services/language-service'], function (modules) {
                 }
 
                 $scope.changeLanguage = function (languageKey, reload, broadcast) {
+                    //if($scope.languageId == languageKey)
+                    //    return;
+
                     SessionService.languageId(languageKey);
                     if (reload) {
                         var url = $location.path();
@@ -72,6 +73,10 @@ define(['app/services/language-service'], function (modules) {
                         //$scope.currentLanguage = null;
                     });
                 };
+
+                $scope.$on('RequireChangeLanguage', function(event, languageId){
+                    $scope.changeLanguage(languageId, false, true);
+                });
 
                 $scope.getLanguages();
 

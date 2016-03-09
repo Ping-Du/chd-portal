@@ -23,7 +23,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/languages/'+SessionService.languageId(), 'GET');
                 },
                 getDestinationDetail:function(destinationId){
-                    return invoke('/destinations/'+ destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/'+ destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getFeaturedDestinations:function() {
                     return invoke('/featured/languages/'+SessionService.languageId(), 'GET');

@@ -1,7 +1,7 @@
 define(['config', 'app/services/session-service'], function (config, modules) {
     'use strict';
     modules.services
-        .config(['$translateProvider', function ($translateProvider) {
+        .config(['$translateProvider', 'SessionServiceProvider', function ($translateProvider, SessionServiceProvider) {
 
             $translateProvider.useStaticFilesLoader({
                 files: [{
@@ -15,7 +15,7 @@ define(['config', 'app/services/session-service'], function (config, modules) {
             });
             $translateProvider.useSanitizeValueStrategy('escape');
 
-            var languageId = $.cookie('languageId');
+            var languageId = null; //$.cookie('languageId');
             if(languageId){
                 $translateProvider.preferredLanguage(languageId);
             } else {
@@ -26,10 +26,11 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                     $translateProvider.preferredLanguage('CHI');
                 }
             }
+            SessionServiceProvider.languageId($translateProvider.preferredLanguage());
 
         }])
-        .service('LanguageService', ['$http', '$q', 'SessionService', function ($http, $q, SessionService) {
-            function invoke(url, method, languageId) {
+        .service('LanguageService', ['$http', '$q', 'SessionService', '$translate', function ($http, $q, SessionService, $translate) {
+            function invoke(url, method) {
                 var deferred = $q.defer();
                 $http({
                     method: method,
@@ -47,7 +48,15 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                     return invoke('', 'GET');
                 },
                 getLanguageById: function (languageId) {
-                    return invoke('/' + languageId, 'GET', languageId);
+                    return invoke('/' + languageId, 'GET');
+                },
+                determineLanguageIdFromPath: function(path) {
+                    var lang = null;
+                    if (path.indexOf('/CHI') >= 0)
+                        lang = 'CHI';
+                    if (path.indexOf('/ENG') >= 0)
+                        lang = 'ENG';
+                    return lang;
                 }
             };
         }]);

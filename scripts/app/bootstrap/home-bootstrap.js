@@ -14,7 +14,7 @@ define(['app/interceptors/security-interceptor',
         }]);
 
         // config route
-        modules.app.config(['$routeProvider', function($routeProvider){
+        modules.app.config(['$routeProvider', 'SessionServiceProvider', function($routeProvider, SessionServiceProvider){
             $routeProvider
                 .when('/:languageId', {
                     templateUrl:'templates/home-view.html',
@@ -24,7 +24,7 @@ define(['app/interceptors/security-interceptor',
                 //    templateUrl:'templates/home.html'
                 //})
                 .otherwise({
-                    redirectTo: '/' + $.cookie('languageId')
+                    redirectTo: '/' + SessionServiceProvider.languageId() //$.cookie('languageId')
                 });
         }]);
 

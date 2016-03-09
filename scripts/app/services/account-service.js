@@ -32,7 +32,11 @@ define(['app/services/session-service'], function (modules) {
                     }
                     deferred.resolve(data);
                 }).error(function (data, status/*, headers, cfg, statusText*/) {
-                    deferred.reject(status);
+                    switch(type) {
+                        case 3: // login
+                            SessionService.user(null);
+                            SessionService.token(null);
+                    }
                 });
                 return deferred.promise;
             }
@@ -100,6 +104,9 @@ define(['app/services/session-service'], function (modules) {
                         "RedirectToUrl": redirectUrl
                     });
                     return invoke('/ResetPassword', 'POST', requestData, 8);
+                },
+                getFinanceInfo:function(){
+                    return invoke('/FinanceInfo', 'GET', null, 9);
                 }
             };
         }]);
