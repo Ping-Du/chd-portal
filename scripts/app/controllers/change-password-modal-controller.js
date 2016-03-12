@@ -44,7 +44,7 @@ define(['app/services/account-service'], function (modules) {
                 promise.then(function(data) {
                     $uibModalInstance.close('ok');
                 }, function(status){
-                    translate('CHANGE_PASSWORD_FAILED');
+                    translate('API_FAILED');
                 });
             };
 

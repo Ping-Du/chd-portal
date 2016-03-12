@@ -32,7 +32,7 @@ define(['app/services/account-service'], function (modules) {
 
             $scope.ok = function(){
                 if($scope.userName == '' || $scope.password == ''){
-                    translate('LOGIN_REQUIRED');
+                    translate('FIELDS_REQUIRED');
                 }
                 var promise = AccountService.login($scope.userName, $scope.password);
                 promise.then(function(data) {
@@ -42,7 +42,7 @@ define(['app/services/account-service'], function (modules) {
                     if(status == '400')
                         translate('LOGIN_WRONG');
                     else
-                        translate('LOGIN_FAILED');
+                        translate('API_FAILED');
                 });
             };
 

@@ -37,6 +37,7 @@ define(['app/services/session-service'], function (modules) {
                             SessionService.user(null);
                             SessionService.token(null);
                     }
+                    deferred.reject(data);
                 });
                 return deferred.promise;
             }
@@ -48,7 +49,7 @@ define(['app/services/session-service'], function (modules) {
                 getUserName: function () {
                     return invoke('/UserName', 'GET', null, 1);
                 },
-                register: function (userName, email, firstName, lastName, password, confirmPassword, role) {
+                register: function (userName, email, firstName, lastName, password, confirmPassword) {
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "Email": email,
@@ -57,9 +58,9 @@ define(['app/services/session-service'], function (modules) {
                         "Password": password,
                         "ConfirmPassword": confirmPassword,
                         "SecretCode": 'T0pS3cr3t',
-                        "Role": role,
+                        "Role": (SessionService.user?'agent':'consumer'),
                         "Agency": SessionService.user(),
-                        "UrlToConfirmationPage": SessionService.config().webRoot + 'account/confirm-email.html'
+                        "UrlToConfirmationPage": (SessionService.config().webRoot + 'account.html#/confirm-email/'+SessionService.languageId())
                     });
                     return invoke('/Register', 'POST', requestData, 2, userName);
                 },
@@ -84,7 +85,7 @@ define(['app/services/session-service'], function (modules) {
                     var requestData = modules.angular.toJson({
                         "UserName": userName,
                         "SecretCode": SessionService.config().secretCode,
-                        "UrlToResetPage": SessionService.config().webRoot + 'account/reset-password.html'
+                        "UrlToResetPage": (SessionService.config().webRoot + 'account.html#/reset-password/'+SessionService.languageId())
                     });
                     return invoke('/ForgotPassword', 'POST', requestData, 6);
                 },

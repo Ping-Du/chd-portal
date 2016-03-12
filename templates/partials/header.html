@@ -1,9 +1,10 @@
+<div data-ng-controller="HeaderController">
 <div class="row">
     <div class="col-xs-5 col-md-5"><img data-ng-src="images/logo.png" class="cdh-logo"></div>
     <div class="col-xs-7 col-md-7" >
-        <ul class="top-menu" data-ng-controller="AccountController">
+        <ul class="top-menu" data-ng-controller="AccountController" data-ng-show="showAccount">
             <li>
-                <span uib-dropdown dropdown-append-to-body data-ng-controller="LanguageController">
+                <span uib-dropdown dropdown-append-to-body data-ng-controller="LanguageController" data-ng-show="showLanguage">
                     <a href uib-dropdown-toggle>
                         <i class="language-icon" style="background: url({{currentLanguage.FlagImageURI}}) no-repeat -5px -3px;"></i>{{currentLanguage.LocalName==''?currentLanguage.Name:currentLanguage.LocalName}}
                         <i class="icon-caret-down"></i>
@@ -27,9 +28,10 @@
         </div>
     </div>
 </div>
-<div class="search-position">
+<div class="search-position" data-ng-show="showSearchBox">
     <form class="search-wrap">
         <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}"/>
         <i class="icon-search"></i>
     </form>
+</div>
 </div>

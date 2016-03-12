@@ -28,7 +28,9 @@ define(['config'], function (cfg) {
             'ui-bootstrap':'libs/ui-bootstrap-tpls.min',
             'angular-css-injector':'libs/angular-css-injector.min',
             'angular-ui-router':'libs/angular-ui-router.min',
-            'dang-jssor':'libs/dang-jssor.min'
+            'dang-jssor':'libs/dang-jssor.min',
+            'bootstrap-datepicker':'libs/bootstrap-datepicker.min',
+            'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min'
         },
         shim: {
             'jquery':{
@@ -102,6 +104,12 @@ define(['config'], function (cfg) {
             },
             'dang-jssor':{
                 deps:['jquery', 'angular', 'jssor.slider']
+            },
+            'bootstrap-datepicker':{
+                deps:['bootstrap']
+            },
+            'bootstrap-datepicker.zh-CN':{
+                deps:['bootstrap-datepicker']
             }
         }
     };

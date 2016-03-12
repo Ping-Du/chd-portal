@@ -14,12 +14,10 @@
   "OLD_PASSWORD":"原密码",
   "NEW_PASSWORD":"新密码",
   "CONFIRM_PASSWORD":"确认密码",
-  "LOGIN_REQUIRED":"请输入用户名和密码！",
+  "FIELDS_REQUIRED":"请输入所有信息！",
   "LOGIN_WRONG":"用户名或密码错！",
-  "LOGIN_FAILED":"无法登录，请稍后重试！",
   "PASSWORD_NOT_MATCH":"密码不能为空且必须一致!",
   "OLD_PASSWORD_WRONG":"原密码不对！",
-  "CHANGE_PASSWORD_FAILED":"修改密码时出错，请稍后重试!",
   "KEYWORD":"请输入关键字",
   "SEARCH":"查找",
   "DESTINATION":"目的地",
@@ -55,5 +53,11 @@
   "NEWSLETTER":"产品快讯",
   "LINKS":"快速入口",
   "ALL":"全部",
-  "FEATURED":"推荐"
+  "FEATURED":"推荐",
+  "FIRST_NAME":"名",
+  "LAST_NAME":"姓",
+  "EMAIL":"电子邮箱",
+  "PASSWORD_LENGTH":"密码最小长度为6位！",
+  "API_FAILED":"调用服务出错，请稍后重试！",
+  "CONFIRM_EMAIL":"确认邮件将发送到注册邮箱，请尽快确认注册。"
 }

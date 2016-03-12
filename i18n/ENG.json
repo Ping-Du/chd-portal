@@ -14,12 +14,10 @@
   "OLD_PASSWORD":"Old Password",
   "NEW_PASSWORD":"New Password",
   "CONFIRM_PASSWORD":"Confirm Password",
-  "LOGIN_REQUIRED":"Both user name and password are required!",
+  "FIELDS_REQUIRED":"All fields are required!",
   "LOGIN_WRONG":"Wrong user name or password!",
-  "LOGIN_FAILED":"Can't login now, please try later!",
   "OLD_PASSWORD_WRONG":"Old password is wrong!",
   "PASSWORD_NOT_MATCH":"Password and confirm password must match and not null!",
-  "CHANGE_PASSWORD_FAILED":"Can't change password, please try later!",
   "KEYWORD":"Please input keywords",
   "SEARCH":"Search",
   "DESTINATION":"Destination",
@@ -55,5 +53,11 @@
   "NEWS_RELEASE":"News Release",
   "LINKS":"Links",
   "ALL":"All",
-  "FEATURED":"Featured"
+  "FEATURED":"Featured",
+  "FIRST_NAME":"First Name",
+  "LAST_NAME":"Last Name",
+  "EMAIL":"Email",
+  "PASSWORD_LENGTH":"The Password must be at least 6 characters long.",
+  "API_FAILED":"Can't invoke API, please try later!",
+  "CONFIRM_EMAIL":"The confirmation mail will be sent to you."
 }

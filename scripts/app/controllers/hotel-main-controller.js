@@ -1,18 +1,58 @@
 define(['app/services/hotel-service',
     'app/services/destination-service',
-    'app/services/services-service'], function (modules) {
+    'app/services/services-service',
+    'app/directives/datepicker-directive'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller('HotelController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService', 'HotelService', 'ServicesService','DestinationService',
+        .controller('HotelMainController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
+            'HotelService', 'ServicesService','DestinationService',
             function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, ServicesService, DestinationService) {
 
                 $scope.webRoot = SessionService.config().webRoot;
-                $scope.slide = {
-                    slideInterval: 5000,
-                    noWrapSlides: false
+
+                $scope.dest = null;
+                $scope.startDate = null;
+                $scope.endDate = null;
+                $scope.rooms = null;
+
+
+                // Disable weekend selection
+                function disabled(data) {
+                    var date = data.date,
+                        mode = data.mode;
+                    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+                }
+                $scope.dateOptions = {
+                    dateDisabled: disabled,
+                    formatYear: 'yyyy',
+                    maxDate: new Date(2099, 12, 31),
+                    minDate: new Date(),
+                    startingDay: 1,
+                    showWeeks:true
                 };
 
+                $scope.openStartDate = function(){
+                    $scope.startDateOpened = true;
+                };
+
+                $scope.openEndDate = function() {
+                    $scope.endDateOpend = true;
+                };
+
+
+                var jssorObject = null;
+                var slides = 3;
+                function ScaleSlider() {
+                    var refSize = jssorObject.$Elmt.parentNode.clientWidth;
+                    if (refSize) {
+                        refSize = Math.min(refSize, 400 * slides + 30 * (slides - 1));
+                        jssorObject.$ScaleWidth(refSize);
+                    }
+                    else {
+                        window.setTimeout(ScaleSlider, 30);
+                    }
+                }
                 $scope.jssorOptions = {
                     $AutoPlay: true,
                     $AutoPlaySteps: 3,
@@ -30,7 +70,11 @@ define(['app/services/hotel-service',
                         $SpacingY: 1
                     },
                     onReady:function(){
-                        $log.debug('slider ready');
+                        jssorObject = this.handle.slider;
+                        ScaleSlider();
+                        $(window).bind("load", ScaleSlider);
+                        $(window).bind("resize", ScaleSlider);
+                        $(window).bind("orientationchange", ScaleSlider);
                     }
                 };
                 $scope.destinations = [];
@@ -95,6 +139,29 @@ define(['app/services/hotel-service',
                     loadDestinations();
                     loadHotels();
                 }
+
+                $scope.search = function(){
+                    //$log.debug('dest:'+$scope.dest + ' startDate:'+$scope.startDate + ' endDate:'+$scope.endDate);
+                    //var start = $('#startDate').datepicker('getDate');
+                    //var end = $('#endDate').datepicker('getDate');
+                    var dest = ($scope.dest && $scope.dest != '')?$scope.dest:'all';
+                    var path = '/destination/'+dest+'/'+SessionService.languageId();
+                    var param = '';
+                    if($scope.startDate != '') {
+                        param += 'startDate='+$scope.startDate+'&endDate='+$scope.endDate;
+                    }
+                    if($scope.rooms != null){
+                        if(param != null)
+                            param += "&";
+                        param += 'rooms='+$scope.rooms;
+                    }
+                    //if(param != '')
+                    //    path += '?'+param;
+                    $location.search(param);
+                    $location.path(path);
+
+                };
+
                 $scope.$on('LanguageChanged', function (event, data) {
                     if($scope.languageId != data) {
                         $scope.languageId = data;
@@ -103,6 +170,7 @@ define(['app/services/hotel-service',
                 });
 
                 load();
+
 
             }]);
 });
