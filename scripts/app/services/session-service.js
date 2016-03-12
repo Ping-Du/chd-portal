@@ -2,14 +2,16 @@ define(['config', 'app/modules'], function (cfg, modules) {
     'use strict';
     modules.services
         .provider('SessionService', function () {
-            //var token = $.cookie('token');
+            var token = $.cookie('token');
             var session = {
                 config: cfg,
-                token: $.cookie('token'),
-                user: (this.token ? $.cookie('user') : ''),
+                token: token,
+                user: (token ? $.cookie('user') : null),
                 //password:(token?$cookies.get('password'):''),
-                languageId: null// $.cookie('languageId')
+                languageId: (token? $.cookie('languageId') :null)
             };
+
+            console.log('user:' + session.user + ' languageId:'+session.languageId);
 
             function setCookie(key, value) {
                 if (value != null) {
@@ -20,45 +22,45 @@ define(['config', 'app/modules'], function (cfg, modules) {
             }
 
             this.languageId = function (languageId) {
-                if(languageId)
+                if(languageId) {
+                    setCookie('languageId', languageId);
                     session.languageId = languageId;
+                }
                 else
                     return session.languageId;
+            };
+
+            this.user = function (value) {
+                if (arguments.length == 0) {
+                    return session.user;
+                }
+                else {
+                    setCookie('user', value);
+                    session.user = value;
+                }
+            };
+
+            this.config = function(){
+                return session.config;
+            };
+
+            this.token = function (value) {
+                if (arguments.length == 0) {
+                    return session.token;
+                }
+                else {
+                    setCookie('token', value);
+                    session.token = value;
+                }
             };
 
             this.$get = function () {
                 var self = this;
                 return {
-                    config: function () {
-                        return session.config;
-                    },
-                    token: function (value) {
-                        if (arguments.length == 0) {
-                            return session.token;
-                        }
-                        else {
-                            setCookie('token', value);
-                            session.token = value;
-                        }
-                    },
-                    user: function (value) {
-                        if (arguments.length == 0) {
-                            return session.user;
-                        }
-                        else {
-                            setCookie('user', value);
-                            session.user = value;
-                        }
-                    },
-                    languageId: function (value) {
-                        if (arguments.length == 0) {
-                            return session.languageId;
-                        }
-                        else {
-                            setCookie('languageId', value);
-                            session.languageId = value;
-                        }
-                    }
+                    config: self.config,
+                    token: self.token,
+                    user: self.user,
+                    languageId: self.languageId
                 };
             };
         });

@@ -15,7 +15,7 @@ define(['config', 'app/services/session-service'], function (config, modules) {
             });
             $translateProvider.useSanitizeValueStrategy('escape');
 
-            var languageId = null; //$.cookie('languageId');
+            var languageId = $.cookie('languageId');
             if(languageId){
                 $translateProvider.preferredLanguage(languageId);
             } else {
@@ -26,6 +26,7 @@ define(['config', 'app/services/session-service'], function (config, modules) {
                     $translateProvider.preferredLanguage('CHI');
                 }
             }
+            console.log('preferredLanguage:'+$translateProvider.preferredLanguage());
             SessionServiceProvider.languageId($translateProvider.preferredLanguage());
 
         }])

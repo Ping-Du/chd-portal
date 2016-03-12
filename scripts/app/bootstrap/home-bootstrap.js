@@ -15,6 +15,7 @@ define(['app/interceptors/security-interceptor',
 
         // config route
         modules.app.config(['$routeProvider', 'SessionServiceProvider', function($routeProvider, SessionServiceProvider){
+            console.log('user:' + SessionServiceProvider.user() + ' languageId:'+ SessionServiceProvider.languageId());
             $routeProvider
                 .when('/:languageId', {
                     templateUrl:'templates/home-view.html',
