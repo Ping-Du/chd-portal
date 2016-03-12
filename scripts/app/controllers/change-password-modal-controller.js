@@ -23,6 +23,7 @@ define(['app/services/account-service'], function (modules) {
             //$scope.oldPassword = "";
             $scope.newPassword = "";
             $scope.confirmPassword = "";
+            $scope.user = SessionService.user();
 
             function translate(key) {
                 $translate(key).then(function(translation){
