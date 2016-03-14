@@ -50,6 +50,18 @@ define(['app/services/account-service'], function (modules) {
                 $uibModalInstance.dismiss('cancel');
             };
 
-            //$scope.forgotPassword()
+            $scope.forgotPassword = function() {
+                if($scope.userName == "") {
+                    $scope.message = "Please input your user name!";
+                    return;
+                }
+
+                AccountService.forgotPassword($scope.userName).then(function(){
+                    $scope.message = "The reset password email will be sent to you."
+                }, function(){
+                    translate('API_FAILED');
+                });
+            };
+
         }]);
 });

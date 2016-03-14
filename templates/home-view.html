@@ -2,7 +2,7 @@
 <main role="main">
 
     <!-- begin content slider -->
-    <div data-ng-include="'templates/partials/home-banner.html'" data-ng-show="banners">
+    <div data-ng-include="'templates/partials/home-banner.html'" data-ng-show="banners.length > 0">
     </div>
     <!-- end content slider -->
 
@@ -14,13 +14,13 @@
     <div class="container-bg container-padding">
         <div class="container">
 
-            <section class="thumbnail-part" data-ng-show="destinations" data-ng-include="'templates/partials/home-destination-slider.html'">
+            <section class="thumbnail-part" data-ng-show="destinations.length > 0" data-ng-include="'templates/partials/home-destination-slider.html'">
             </section>
 
-            <section class="thumbnail-part" data-ng-show="hotels" data-ng-include="'templates/partials/home-hotel.html'">
+            <section class="thumbnail-part" data-ng-show="hotels.length > 0" data-ng-include="'templates/partials/home-hotel.html'">
             </section>
 
-            <section class="thumbnail-part" data-ng-show="shows" data-ng-include="'templates/partials/home-show.html'">
+            <section class="thumbnail-part" data-ng-show="shows.length > 0" data-ng-include="'templates/partials/home-show.html'">
             </section>
 
         </div>

@@ -718,8 +718,7 @@ a {
       color: #666;
       white-space: nowrap;
       line-height: 26px;
-      float: left;
-      width: 70px; }
+      float: left; }
     .filter-box > dl > dd a:hover, .filter-box > dl > dd a:active, .filter-box > dl > dd a:focus, .filter-box > dl > dd a.active {
       color: #ed685b;
       text-decoration: none; }
@@ -881,6 +880,7 @@ a {
     overflow: hidden; }
   .detail-wrap .map-box {
     width: 100%;
+    height: 320px;
     margin: 20px 0 50px 0; }
   .detail-wrap .sub-part-bg {
     background-color: #f6f6f6;
@@ -1690,6 +1690,37 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
   color: #fff;
   text-decoration: none;
   background-color: rgba(237, 104, 91, 0.8); }
+
+.hotel-search-box {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.51); }
+  .hotel-search-box label {
+    color: white; }
+  .hotel-search-box .input-number {
+    width: 50px; }
+
+.hotel-search-form {
+  background-color: #ed685b;
+  padding: 5px; }
+  .hotel-search-form label {
+    color: whitesmoke; }
+  .hotel-search-form input, .hotel-search-form select {
+    color: #999; }
+  .hotel-search-form .input-number {
+    width: 50px; }
+  .hotel-search-form a {
+    display: block;
+    padding-left: 10px; }
+  .hotel-search-form a:hover {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.2);
+    text-decoration: none; }
+  .hotel-search-form .icon-search {
+    top: 5px;
+    color: #fff;
+    font-size: 26px; }
 
 .login-wrap .btn {
   width: 100%; }

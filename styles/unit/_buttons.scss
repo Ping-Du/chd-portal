@@ -5,16 +5,38 @@
   font-size: 14px;
   font-weight: 600;
 }
+
 .btn-lg {
   font-size: 16px;
   min-height: 50px;
 }
+
 .btn-xl {
   font-size: 20px;
   min-height: 60px;
 }
-.btn-default {color:$font-darkgray;background-color:darken($page-bg, 10%); border-color:darken($page-bg, 20%); background-image: linear-gradient(to bottom, #F7F7F7, #EEE);}
-.btn-default:focus,.btn-default:hover{color:$font-normal;background-color:darken($page-bg, 15%); border-color:darken($page-bg, 20%);}
 
-.btn-red{color:$white;background-color:$main-red;border-color:$main-red;}
-.btn-red:focus,.btn-red:hover{color:$white;background-color:darken($main-red,5%);border-color:darken($main-red,10%)}
+.btn-default {
+  color: $font-darkgray;
+  background-color: darken($page-bg, 10%);
+  border-color: darken($page-bg, 20%);
+  background-image: linear-gradient(to bottom, #F7F7F7, #EEE);
+}
+
+.btn-default:focus, .btn-default:hover {
+  color: $font-normal;
+  background-color: darken($page-bg, 15%);
+  border-color: darken($page-bg, 20%);
+}
+
+.btn-red {
+  color: $white;
+  background-color: $main-red;
+  border-color: $main-red;
+}
+
+.btn-red:focus, .btn-red:hover {
+  color: $white;
+  background-color: darken($main-red, 5%);
+  border-color: darken($main-red, 10%)
+}

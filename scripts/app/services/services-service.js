@@ -65,6 +65,12 @@ define(['app/services/session-service'], function (modules) {
                 getFeaturedServicesByDestination:function(destinationId){
                     return invoke('/featured/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
+                getServiceByType:function(serviceType){
+                    return invoke('/'+serviceType+'/languages/'+SessionService.languageId(), 'GET');
+                },
+                getFeaturedServiceByType:function(serviceType){
+                    return invoke('/'+serviceType+'/featured/languages/'+SessionService.languageId(), 'GET');
+                },
                 getAvailability:function(requestData){
                     //{
                     //    "Guests": {

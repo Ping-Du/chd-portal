@@ -21,15 +21,18 @@ define(['app/interceptors/security-interceptor',
             $routeProvider
                 .when('/:languageId', {
                     templateUrl:'templates/hotel-main-view.html',
-                    controller:'HotelMainController'
+                    controller:'HotelMainController',
+                    reloadOnSearch:true
                 })
                 .when('/destination/:destination/:languageId',{
                     templateUrl:'templates/hotel-search-view.html',
-                    controller:'HotelSearchController'
+                    controller:'HotelSearchController',
+                    reloadOnSearch:true
                 })
                 .when('/:hotelId/:languageId',{
                     templateUrl:'templates/hotel-detail-view.html',
-                    controller:'HotelDetailController'
+                    controller:'HotelDetailController',
+                    reloadOnSearch:true
                 })
                 .otherwise({
                     redirectTo: '/' + $.cookie('languageId')

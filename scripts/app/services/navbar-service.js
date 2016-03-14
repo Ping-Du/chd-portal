@@ -15,6 +15,9 @@ define(['app/modules'], function (modules) {
                     },
                     getActiveItem: function () {
                         return self.activeItem;
+                    },
+                    setActiveItem: function(item) {
+                        self.activeItem = item;
                     }
                 };
             };

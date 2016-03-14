@@ -17,7 +17,7 @@ body {
 @media (min-width: 992px) {
   .search-position {
     position: absolute;
-    display:block;
+    display: block;
     top: 6px;
     left: 35%;
     .input-text {
@@ -45,4 +45,10 @@ body {
   }
 }
 
-
+.filter-box {
+  > dl {
+    > dt {
+      width: 130px;
+    }
+  }
+}

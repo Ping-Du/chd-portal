@@ -1,1 +1,47 @@
+.hotel-search-box {
+  background-color: rgba($white, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.51);
+
+  label {
+    color: white;
+  }
+
+  .input-number {
+    width: 50px;
+  }
+
+}
+
+.hotel-search-form {
+  background-color: $main-red;
+  padding: 5px;
+
+  label {
+    color: whitesmoke;
+  }
+
+  input, select {
+    color: $font-lightgray;
+  }
+
+  .input-number {
+    width: 50px;
+  }
+  a {
+    display: block;
+    padding-left: 10px
+  }
+  a:hover {
+    display: block;
+    background-color: rgba($white, 0.2);
+    text-decoration:none;
+  }
+  .icon-search {
+    top: 5px;
+    color: $white;
+    font-size: 26px;
+  }
+}
 

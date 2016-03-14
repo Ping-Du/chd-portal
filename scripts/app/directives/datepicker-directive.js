@@ -2,6 +2,9 @@ define(['app/services/session-service', 'bootstrap-datepicker.zh-CN'], function 
     modules.directives.directive('datePicker', ['SessionService', function(SessionServiceProvider){
         return {
             restrict:'A',
+            scope:{
+                initDate:'='
+            },
             link:function(scope, element, attrs) {
                 var languageId = 'en';
                 if(SessionServiceProvider.languageId() == 'CHI'){
@@ -11,6 +14,9 @@ define(['app/services/session-service', 'bootstrap-datepicker.zh-CN'], function 
                     format:"yyyy-mm-dd",
                     language:languageId
                 });
+
+                if(scope.initDate)
+                    $('#'+attrs.id).datepicker('update', scope.initDate);
 
             }
         };

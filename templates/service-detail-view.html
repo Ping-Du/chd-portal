@@ -1,0 +1,166 @@
+<div class="container-bg container-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="relative">
+                    <div class="slides-container slider-wrap" >
+                        <!-- Loading Screen -->
+                        <div data-u="loading" class="loading">
+                            <div class="loading-icon"></div>
+                        </div>
+                        <div data-u="slides" class="slider-list-wrap">
+                            <div data-p="112.50" data-ng-repeat="item in serviceItem.SliderImages" data-enable-jssor data-jssor-options="jssorOptions1" data-jssor-trigger="{{$last}}">
+                                <img data-u="image" data-ng-src="{{item.ImagePath}}" />
+                            </div>
+                        </div>
+
+                        <!-- Thumbnail Navigator -->
+                        <div u="thumbnavigator" class="thum-wrap" data-autocenter="1">
+                            <div class="text-wrap"></div>
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div u="slides">
+                                <div u="prototype" class="p">
+                                    <div class="thum-list">
+                                        <div u="thumbnailtemplate" class="thum"></div>
+                                    </div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                            <!-- Thumbnail Item Skin End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="col-md-4">
+                <div class="price-bg-part">
+                    <div class="col-md-12"><span class="price w"><i class="dollar">$</i>42-<i class="dollar">$</i>80</span><span class="info">Original Price：<del>$100</del></span></div>
+                </div>
+                <div class="row tab-list">
+                    <div class="col-xs-6 col-md-6"> <span>Product No：</span>89-168218</div>
+                    <div class="col-xs-6 col-md-6"> <span>Type：</span>Show</div>
+                    <div class="col-xs-6 col-md-6"> <span>City：</span>Las Vegas</div>
+                    <div class="col-xs-6 col-md-6"> <span>Language：</span>English</div>
+                </div>
+                <div class="tax-com-part">
+                    <div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>
+                    <div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pos-map">
+                    <a href="#map"><i class="icon-location2"></i>Location</a>
+                </div>
+                <div class="row">
+                    <div class="price-btn-part">
+                        <p class="col-xs-12 col-md-12 info">Click button below to see more choices</p>
+                        <div class="col-xs-12 col-md-12"><a href="#" class="btn btn-red btn-xl btn-w"  data-toggle="modal" data-target="#myModal">Book Now</a></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- begin Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content open-order">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4>Reservation Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group input-icon">
+                                <label class="col-xs-3 col-sm-3 control-label">Date：</label>
+                                <div class="col-xs-7 col-sm-7 ">
+                                    <i class="icon-calendar"></i>
+                                    <input type="date" class="input-date input-default form-control" placeholder="2015-10-15">
+                                </div>
+                            </div>
+                            <div class="form-group sel-time">
+                                <label class="col-xs-3 col-sm-3 control-label">Time：</label>
+                                <div class="col-xs-7 col-sm-7">
+                                    <span>16:30</span> <span class="active">16:30</span> <span>16:30</span> <span>16:30</span><span>16:30</span> <span>16:30</span> <span>16:30</span> <span>16:30</span>
+                                </div>
+                            </div>
+                            <div class="form-group sel-time">
+                                <label class="col-xs-3 col-sm-3 control-label">Suite：</label>
+                                <div class="col-xs-7 col-sm-7">
+                                    <span>Suite A</span><span>Suite B</span> <span class="active">Suite C</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 col-sm-3 control-label">Adult：</label>
+                                <div class="col-xs-7 col-sm-7">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">-</div>
+                                        <input type="text" class="input-date input-default form-control" id="exampleInputAmount1" placeholder="1">
+                                        <div class="input-group-addon">+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 col-sm-3 control-label">Child：</label>
+                                <div class="col-xs-7 col-sm-7">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">-</div>
+                                        <input type="text" class="input-date input-default form-control" id="exampleInputAmount2" placeholder="1">
+                                        <div class="input-group-addon">+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 col-sm-3 control-label"><span class="m-total">Total：</span> </label>
+                                <div class="col-xs-7 col-sm-7">
+                                    <b class="price m-fontsite">$654</b><span class="m-info">$23 saved</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-red btn-lg">Check Out</button>
+                        <button type="button" class="btn btn-default btn-lg"><i class="icon-cart "></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Modal -->
+        <!--<div class="detail-nav-wrap is-stuck">-->
+            <!--<nav class="container">-->
+                <!--<ul>-->
+                    <!--<li class="menu-item"><a href="##detail">Details</a><i class="line"></i></li>-->
+                    <!--<li class="menu-item"><a href="##map">Location</a></li>-->
+                <!--</ul>-->
+            <!--</nav>-->
+        <!--</div>-->
+        <section class="detail-wrap" id="detail">
+            <h3>Details</h3>
+            <div class="content" data-ng-repeat="item in serviceItem.AdditionalInformation">
+                <h4>{{item.Title}}</h4>
+                <p data-ng-bind-html="item.FormattedText"></p>
+            </div>
+        </section>
+        <section class="detail-wrap" id="map">
+            <h3>Location</h3>
+            <div class="content">
+                <p><strong>Address：</strong>{{serviceItem.Address.Address1 + ', ' + serviceItem.Address.City + ', ' + serviceItem.Address.State}}</p>
+                <!--ui-map="myMap" ui-options="mapOptions"-->
+                <div class="map-box" id="map_canvas" data-ng-show="showMap">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+    function initMap(lat, lng, title) {
+        var myLatLng = {lat: lat, lng: lng};
+
+        var map = new google.maps.Map(document.getElementById('map_canvas'), {
+            zoom: 15,
+            center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: title
+        });
+    }
+</script>

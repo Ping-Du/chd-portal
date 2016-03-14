@@ -4,27 +4,35 @@
         <div class="container">
             <h1>Hundreds of hotels - 数百家酒店任君选择</h1>
             <p>从青年旅舍到古堡豪宅，从星级酒店到当地人家，总有一家适合你！</p>
-            <div class="quick-search text-center">
-                <form class="form-inline" style="overflow: hidden">
-                    <div class="form-group pos-location">
-                        <i class="icon-location2"></i>
-                        <input type="text" class="input-l-r-icon input-hotel-lg form-control" data-ng-model="dest"
-                               placeholder="{{'DESTINATION'|translate}}">
-                        <!--<i class="icon-caret-down "></i>-->
+            <div class="hotel-search-box text-center">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>Destination:</label>
+                        <select class="form-control" style="width:180px;" data-ng-model="dest" data-ng-options="item.ProductId as item.Name for item in destinations">
+                            <!--<option value="{{item.ProductId}}" data-ng-repeat="item in destinations">{{item.Name}}</option>-->
+                        </select>
                     </div>
-                    <div class="form-group pos-date">
-                        <i class="icon-calendar"></i>
-                        <input id="startDate" type="text" class="input-date input-hotel-lg form-control" data-date-picker ng-model="startDate" placeholder="Start Date"/>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input id="startDate" type="text" class="form-control" data-date-picker ng-model="startDate" data-init-date="startDate">
                     </div>
-                    <div class="form-group pos-date">
-                        <i class="icon-calendar"></i>
-                        <input id="endDate" type="text" class="input-date input-hotel-lg form-control" data-date-picker ng-model="endDate" placeholder="End Date"/>
+                    <div class="form-group">
+                        <label>Nights:</label>
+                        <input type="text" class="form-control input-number" data-ng-model="nights">
                     </div>
-                    <div class="form-group pos-number">
-                        <input type="text" class="input-r-icon input-hotel-lg form-control" data-ng-model="rooms" placeholder="1 room">
-                        <!--<i class="icon-caret-down "></i>-->
+                    <div class="form-group">
+                        <label>Rooms:</label>
+                        <input type="text" class="form-control input-number" data-ng-model="rooms">
                     </div>
-                    <div class="form-group pos-button">
+                    <div class="form-group">
+                        <label>Adults:</label>
+                        <input type="text" class="form-control input-number" data-ng-model="adults">
+                    </div>
+                    <div class="form-group">
+                        <label>Children:</label>
+                        <input type="text" class="form-control input-number" data-ng-model="children">
+                    </div>
+                    <div class="form-group">
                         <button type="button" class="btn btn-red" data-ng-click="search()">{{"SEARCH"|translate}}</button>
                     </div>
                 </form>

@@ -1,0 +1,62 @@
+<div class="container-bg container-padding">
+    <div class="container">
+        <div class="filter-box">
+            <dl class="filter-item">
+                <dt><i class="icon-location2"></i>&nbsp;{{"LOCATION"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedLocation==null}"
+                       data-ng-click="filterByLocation(null)">All</a>
+                    <a href data-ng-repeat="item in locations | orderBy:'+Name':false" data-ng-class="{'active':selectedLocation==item.Id}"
+                       data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+        </div>
+        <section class="thumbnail-part" data-ng-show="featuredServices.length > 0">
+            <div class="title">
+                <h2>{{"FEATURED"|translate}}</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in featuredServices">
+                    <div class="thumbnail">
+                        <a href data-ng-href="{{item.DetailsURI}}"><img
+                                data-ng-src="{{item.MainInformation.ThumbnailImageURI}}"></a>
+                        <div class="caption">
+                            <ul class="ticket">
+                                <li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>
+                                <!--<li class="text-right"><s>$120</s>-->
+                                <!--<p class="price">$89.00</p></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="sortbar" data-ng-show="featuredServices.length > 0">
+            <!--<ul>-->
+            <!--<li><a href="#">Price</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Sale Volumn</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Score</a><i class="icon-caret-down"></i></li>-->
+            <!--</ul>-->
+        </div>
+        <section class="thumbnail-part">
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in showServices">
+                    <div class="thumbnail">
+                        <a data-ng-href="{{item.DetailsURI}}">
+                            <!--<span class="new-layer"></span>-->
+                            <img data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                        </a>
+
+                        <div class="caption">
+                            <ul class="ticket">
+                                <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
+                                <!--<li class="text-right"><s>$120</s>-->
+                                <!--<p class="price">$89.00</p></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
