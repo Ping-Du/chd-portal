@@ -73,6 +73,9 @@ function($) {
 			if(menuSize != null){
 				for(var i=0;i < menuSize;i++)
 				{
+					var ele = $('#'+content[i]+'');
+					if(ele.length == 0)
+						return;
 					contentTop[i] = $('#'+content[i]+'').offset().top;
 					function bottomView(i) {
 						contentView = $('#'+content[i]+'').height()*.4;

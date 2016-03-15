@@ -10,8 +10,8 @@ define(['app/services/services-service',
 
     modules.controllers
         .controller('ServiceDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'ServicesService', 'LanguageService','$translate','ImageService',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, ImageService) {
+            'ServicesService', 'LanguageService','$translate','ImageService', '$window',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, ImageService, $window) {
 
                 console.info('path:' + $location.path());
                 $scope.path = $location.path();
@@ -64,6 +64,8 @@ define(['app/services/services-service',
                 });
 
                 loadService();
+
+                $window.scrollTo(0, 0);
 
 
             }]);
