@@ -1,6 +1,7 @@
 {
   "LANGUAGE_CODE":"en",
   "CURRENT_LANGUAGE":"English",
+  "ENG":"English",
   "REGISTER":"Register",
   "LOGIN":"Login",
   "MY_ACCOUNT":"My Account",

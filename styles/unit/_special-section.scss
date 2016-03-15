@@ -1,124 +1,247 @@
 /*for home page*/
-.cdh-product{
+.cdh-product {
   margin: 20px auto;
-  .media{ margin:15px 0;}
-  .media-body{
-    h2{color: $font-normal;}
+  .media {
+    margin: 15px 0;
+  }
+  .media-body {
+    h2 {
+      color: $font-normal;
+    }
     color: $font-darkgray;
     font-size: 15px;
     font-weight: 600;
     line-height: 26px;
     padding: 0 15px;
-    a{color: $main-red;}
+    a {
+      color: $main-red;
+    }
   }
-  p{ margin-top: 10px;}
-  .media2{
+  p {
+    margin-top: 10px;
+  }
+  .media2 {
     background: url("../images/mlmq.png");
     width: 100%;
     height: 165px;
     text-align: center;
     padding-top: 20px;
     color: $font-normal;
-    p{font-size: 24px;
+    p {
+      font-size: 24px;
       font-weight: 600;
-      text-shadow:1px 1px 2px $white;
-      b{color: darken($main-red, 15%); font-size: 30px}
+      text-shadow: 1px 1px 2px $white;
+      b {
+        color: darken($main-red, 15%);
+        font-size: 30px
+      }
     }
-    button{padding: 12px 30px;}
+    button {
+      padding: 12px 30px;
+    }
   }
 }
 
 /*hotel-detail*/
-.tax-com-part{
+.tax-com-part {
   /*part1*/
-  div{background-color: #f1f1f1; border: 1px solid $main-border; margin-left: -1px; padding: 15px 0;}
-  span{font-size: 34px; text-align: center; display: block; color: $font-black;}
-  p,a{ text-align: center; display: block; margin: 5px 0 10px 0;}
-  p{color: $font-lightgray;}
+  div {
+    background-color: #f1f1f1;
+    border: 1px solid $main-border;
+    margin-left: -1px;
+    padding: 15px 0;
+  }
+  span {
+    font-size: 34px;
+    text-align: center;
+    display: block;
+    color: $font-black;
+  }
+  p, a {
+    text-align: center;
+    display: block;
+    margin: 5px 0 10px 0;
+  }
+  p {
+    color: $font-lightgray;
+  }
 }
-.price-bg-part, .xlbtn-wrap{overflow: hidden; padding:15px 0 ;
-  .price{font-size: 44px; margin-right: 5px;}
-  .dollar{font-size: 20px; font-weight: 600; font-style: normal ;}
-}
-.price-btn-part{ margin: 15px 0;
-  .info{color: $font-lightgray;}
-  .btn-w{width: 100%; padding: 15px 0;}
-}
-.tab-list{
-  color: $font-normal;
+.service-detail-info {
   margin-bottom: 15px;
-  span{color: $font-darkgray; line-height: 26px;}
-}
-//.price-bg-part{margin-bottom: 15px;  background-color:rgba($main-red,0.1);}
-.price-bg-part{
-  margin-bottom: 15px;
-  background-color: rgba($main-red,0.1);
-  border: 1px solid $main-border;
-}
-.pos-map{
-  /*part1*/
-  margin-top: 15px;
-  a{background-color: $blue; color: $white; font-weight: 600; padding: 8px;}
-  a:hover{text-decoration: none; color: darken($white, 10%)}
+  padding: 15px 5px;
+  background-color: rgba($main-red, 0.1);
+  //border: 1px solid $main-border;
+  .caption {
+    font-size: 30px;
+    color:$main-red;
+  }
 }
 
-.order-form, .head-crumb, .input-icon{
+.price-bg-part, .xlbtn-wrap {
+  overflow: hidden;
+  padding: 15px 0;
+  .price {
+    font-size: 44px;
+    margin-right: 5px;
+  }
+  .dollar {
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+  }
+}
+
+.price-btn-part {
+  margin: 15px 0;
+  .info {
+    color: $font-lightgray;
+  }
+  .btn-w {
+    width: 100%;
+    padding: 15px 0;
+  }
+}
+
+.tab-list {
+  color: $font-normal;
+  margin-bottom: 15px;
+  span {
+    color: $font-darkgray;
+    line-height: 26px;
+  }
+}
+
+//.price-bg-part{margin-bottom: 15px;  background-color:rgba($main-red,0.1);}
+.price-bg-part {
+  margin-bottom: 15px;
+  background-color: rgba($main-red, 0.1);
+  border: 1px solid $main-border;
+}
+
+.pos-map {
+  /*part1*/
+  margin-top: 15px;
+  a {
+    background-color: $blue;
+    color: $white;
+    font-weight: 600;
+    padding: 8px;
+  }
+  a:hover {
+    text-decoration: none;
+    color: darken($white, 10%)
+  }
+}
+
+.order-form, .head-crumb, .input-icon {
   /*position the icon in the input*/
   [class^="icon-"], [class*=" icon-"] {
     @extend %icon-position;
     font-size: 20px;
-    top:8px;
+    top: 8px;
   }
 }
 
-.head-crumb{
+.head-crumb {
   background-color: $special-bg;
   padding: 15px 30px;
   [class^="pos-"], [class*=" pos-"] {
     margin: 0 10px;
-    button{min-width: 150px;}
+    button {
+      min-width: 150px;
+    }
   }
 }
-.quick-search{
-  background-color: rgba($white,0.5);
+
+.quick-search {
+  background-color: rgba($white, 0.5);
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.51);
-  .icon-location2{left: 8px;}
+  .icon-location2 {
+    left: 8px;
+  }
   [class^="icon-"], [class*=" icon-"] {
     @extend %icon-position;
     font-size: 20px;
-    top:12px;
+    top: 12px;
   }
   [class^="pos-"], [class*=" pos-"] {
     margin: 0 5px;
-    button{min-width: 100%; min-height: 45px; font-size: 16px;}
+    button {
+      min-width: 100%;
+      min-height: 45px;
+      font-size: 16px;
+    }
   }
 }
-.head-crumb, .quick-search{
+
+.head-crumb, .quick-search {
   /*room list of hotel detail*/
   overflow: hidden;
-  .icon-calendar{left: 10px;}
-  .icon-caret-down{right: 15px;}
+  .icon-calendar {
+    left: 10px;
+  }
+  .icon-caret-down {
+    right: 15px;
+  }
 
   [class^="pos-"], [class*=" pos-"] {
     position: relative;
-    input,{width: 100%;}
+    input, {
+      width: 100%;
+    }
   }
 }
-.thead{font-weight: 600;}
-.media-roomlist{
-  .media-body{width: auto;}
-  .p-detail{width: 95%; color: $font-darkgray;}
-  h5{font-weight: 600; font-size: 15px; line-height: 30px; color: $font-black;}
+
+.thead {
+  font-weight: 600;
 }
-.table-content{
-  .tlist-1{width: 40%;}
-  .tlist-2{width: 17.5%;}
-  .tlist-3{width: 17.5%;}
-  .tlist-4{width: 12%;}
-  .tlist-5{width: 12%;}
-  .tax{font-size: 12px; color: $font-lightgray; margin-top: 5px;i{color: $main-red;font-style: normal;}}
-  .icon-checkmark{color: $main-red; margin-right: 5px}
+
+.media-roomlist {
+  .media-body {
+    width: auto;
+  }
+  .p-detail {
+    width: 95%;
+    color: $font-darkgray;
+  }
+  h5 {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 30px;
+    color: $font-black;
+  }
+}
+
+.table-content {
+  .tlist-1 {
+    width: 40%;
+  }
+  .tlist-2 {
+    width: 17.5%;
+  }
+  .tlist-3 {
+    width: 17.5%;
+  }
+  .tlist-4 {
+    width: 12%;
+  }
+  .tlist-5 {
+    width: 12%;
+  }
+  .tax {
+    font-size: 12px;
+    color: $font-lightgray;
+    margin-top: 5px;
+    i {
+      color: $main-red;
+      font-style: normal;
+    }
+  }
+  .icon-checkmark {
+    color: $main-red;
+    margin-right: 5px
+  }
 }
 

@@ -11,7 +11,8 @@ define(['config'], function (cfg) {
             'jquery':'libs/jquery.min',
             'jquery.cookie':'libs/jquery.cookie',
             'jquery.storageapi':'libs/jquery.storageapi.min',
-            'jssor.slider':'libs/jssor.slider.mini',
+            'jssor.slider':'libs/jssor.slider.min',
+            'stickup':'libs/stickup',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
             'angular': 'libs/angular',
@@ -28,10 +29,8 @@ define(['config'], function (cfg) {
             'ui-bootstrap':'libs/ui-bootstrap-tpls.min',
             'angular-css-injector':'libs/angular-css-injector.min',
             'angular-ui-router':'libs/angular-ui-router.min',
-            'dang-jssor':'libs/dang-jssor.min',
             'bootstrap-datepicker':'libs/bootstrap-datepicker.min',
-            'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min',
-            'ui-map':'libs/ui-map.min'
+            'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min'
         },
         shim: {
             'jquery':{
@@ -44,6 +43,9 @@ define(['config'], function (cfg) {
                 deps:['jquery.cookie']
             },
             'jssor.slider':{
+                deps:['jquery']
+            },
+            'stickup':{
                 deps:['jquery']
             },
             'bootstrap':{
@@ -103,17 +105,11 @@ define(['config'], function (cfg) {
             'angular-ui-router':{
                 deps:['angular']
             },
-            'dang-jssor':{
-                deps:['jquery', 'angular', 'jssor.slider']
-            },
             'bootstrap-datepicker':{
                 deps:['bootstrap']
             },
             'bootstrap-datepicker.zh-CN':{
                 deps:['bootstrap-datepicker']
-            },
-            'ui-map':{
-                deps:['angular']
             }
         }
     };

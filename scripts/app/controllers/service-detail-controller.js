@@ -3,7 +3,9 @@ define(['app/services/services-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
-    'app/services/image-service'], function (modules) {
+    'app/services/image-service',
+    'jssor.slider',
+    'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
@@ -12,6 +14,7 @@ define(['app/services/services-service',
             function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, ImageService) {
 
                 console.info('path:' + $location.path());
+                $scope.path = $location.path();
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
@@ -31,45 +34,21 @@ define(['app/services/services-service',
 
                 $scope.webRoot = SessionService.config().webRoot;
 
-                /* jssor slider  - start */
-                var jssorObject1 = null;
-                function ScaleSlider1() {
-                    var refSize = jssorObject1.$Elmt.parentNode.clientWidth;
-                    if (refSize) {
-                        refSize = Math.min(refSize, 770);
-                        jssorObject1.$ScaleWidth(refSize);
-                    }
-                    else {
-                        window.setTimeout(ScaleSlider1, 30);
-                    }
-                }
-                $scope.jssorOptions1 = {
-                    $AutoPlay: true,
-                    $ArrowNavigatorOptions: {
-                        $Class: $JssorArrowNavigator$
-                    },
-                    $ThumbnailNavigatorOptions: {
-                        $Class: $JssorThumbnailNavigator$,
-                        $Cols: 9,
-                        $SpacingX: 3,
-                        $SpacingY: 3,
-                        $Align: 260
-                    },
-                    onReady: function () {
-                        jssorObject1 = this.handle.slider;
-                        ScaleSlider1();
-                        $(window).bind("load", ScaleSlider1);
-                        $(window).bind("resize", ScaleSlider1);
-                        $(window).bind("orientationchange", ScaleSlider1);
-                    }
-                };
-                /* jssor slider - end */
-
                 $scope.serviceItem = null;
                 $scope.showMap = false;
                 function loadService() {
                     ServicesService.getServiceDetail($routeParams.serviceId).then(function(data){
                         $scope.serviceItem = data;
+                        var sliderImageData = [];
+                        modules.angular.forEach(data.SliderImages, function(item, index){
+                            sliderImageData.push({
+                                image:item.ImagePath,
+                                thumb:item.ImagePath
+                            });
+                        });
+                        if(sliderImageData.length > 0) {
+                            initSlider(sliderImageData);
+                        }
                         if(data.Latitude != 0 && data.Longitude != 0) {
                             $scope.showMap = true;
                             initMap(data.Latitude, data.Longitude, data.Name);
@@ -88,4 +67,6 @@ define(['app/services/services-service',
 
 
             }]);
+
+    return modules;
 });

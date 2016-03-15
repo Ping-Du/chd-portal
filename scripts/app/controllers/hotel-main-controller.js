@@ -55,9 +55,9 @@ define(['app/services/hotel-service',
                     onReady:function(){
                         jssorObject = this.handle.slider;
                         ScaleSlider();
-                        $(window).bind("load", ScaleSlider);
-                        $(window).bind("resize", ScaleSlider);
-                        $(window).bind("orientationchange", ScaleSlider);
+                        $Jssor$.$AddEvent(window, "load", ScaleSlider);
+                        $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+                        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
                     }
                 };
                 $scope.featuredDestinations = [];

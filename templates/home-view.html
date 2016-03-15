@@ -2,25 +2,218 @@
 <main role="main">
 
     <!-- begin content slider -->
-    <div data-ng-include="'templates/partials/home-banner.html'" data-ng-show="banners.length > 0">
+    <div class="carousel slide" data-ng-show="banners.length > 0">
+        <uib-carousel interval="slide.slideInterval" no-wrap="slide.noWrapSlides"
+                      template-url="templates/ui-bootstrap/carousel.html">
+            <uib-slide ng-repeat="item in banners" active="item.active" index="item.ProductId"
+                       template-url="templates/ui-bootstrap/slide.html">
+                <img ng-src="{{item.ImageURI}}" style="margin:auto;">
+
+                <div class="carousel-caption">
+                    <h1>{{item.Title}}</h1>
+
+                    <p>{{item.SubTitle}}</p>
+                </div>
+            </uib-slide>
+        </uib-carousel>
     </div>
     <!-- end content slider -->
 
     <!-- begin go123 & Shuttle -->
-    <!--<div data-ng-include="'templates/partials/home-go123.html'">-->
-    <!--</div>-->
+    <div class="container cdh-product">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <section class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object" src="images/go123.png" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2>Go123 Packages</h2>
+
+                        <p>Go123，是我们最新推出的一款自由路线定制，客户可以
+                            自由组合行程，可根据客户需求量身定制</p>
+                        <a href="#">View Detail</a>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <section class="media2">
+                    <p><b>Go123 Shuttles</b>&nbsp;set out every day</p>
+                    <button type="button" class="btn btn-red btn-lg">View Detail</button>
+                </section>
+            </div>
+        </div>
+    </div>
     <!-- end go123 & Shuttle -->
 
     <div class="container-bg container-padding">
         <div class="container">
+            <section class="thumbnail-part" data-ng-show="destinations.length > 0">
+                <header class="header-container">
+                    <div class="title position"><i class="icon-city"></i>
 
-            <section class="thumbnail-part" data-ng-show="destinations.length > 0" data-ng-include="'templates/partials/home-destination-slider.html'">
+                        <h2>{{"DESTINATION"|translate}}</h2></div>
+                    <div class="head-menu text-right">
+                        <a data-ng-href="destinations.html#/{{languageId}}">{{"MORE"|translate}}</a>
+                        <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
+                        <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
+                    </div>
+                </header>
+                <!--<div class="title">-->
+                    <!--<i class="icon-city"></i>-->
+
+                    <!--<h2>{{"DESTINATION"|translate}}</h2>-->
+                <!--</div>-->
+                <div class="slides-container city-slider">
+                    <div data-u="loading" class="loading">
+                        <div class="loading-icon"></div>
+                    </div>
+                    <div class="row c-s-list" data-u="slides" id="slides">
+                        <!--<div class="col-sm-6 col-md-4">-->
+                            <!--<div class="thumbnail" >-->
+                                <!--<a data-ng-href="destinations.html#/{{item.ProductId}}/{{languageId}}" class="flo-layer">-->
+                                <!--<span class="flo-layer-c text">{{item.Name}}</span>-->
+                                <!--<img data-u="image" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                    <span data-u="arrowleft" class="jssora03l" data-autocenter="2"><i
+                            class="icon-chevron-thin-left "></i> </span>
+                    <span data-u="arrowright" class="jssora03r" data-autocenter="2"><i
+                            class="icon-chevron-thin-right "></i></span>
+                </div>
+                <script type="text/javascript">
+                    function initSlider(imageData) {
+                        var jssorOptions = {
+                            $AutoPlay: true,
+                            $AutoPlaySteps: 3,
+                            $SlideDuration: 160,
+                            $SlideWidth: 400,
+                            $SlideSpacing: 0,
+                            $Cols: 3,
+                            $ArrowNavigatorOptions: {
+                                $Class: $JssorArrowNavigator$,
+                                $Steps: 3
+                            },
+                            $BulletNavigatorOptions: {
+                                $Class: $JssorBulletNavigator$,
+                                $SpacingX: 1,
+                                $SpacingY: 1
+                            }
+                        };
+                        var slides = $('#slides');
+                        var container = slides.closest('.slides-container');
+                        if (!container.attr("id"))
+                            container.attr("id", new Date().getTime());
+
+                        var innerHtml = '';
+                        for (var i = 0; i < imageData.length; i++) {
+                            innerHtml += '<div class="col-sm-6 col-md-4"><div class="thumbnail">';
+                            innerHtml += '<a href="' + imageData.url + '" class="flo-layer">';
+                            innerHtml += '<span class="flo-layer-c text">' + imageData[i].caption + '</span>';
+                            innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
+                            innerHtml += '</a>';
+                            innerHtml += '</div></div>';
+                        }
+                        slides.html(innerHtml);
+
+                        var jssorObject = new $JssorSlider$(container.attr("id"), jssorOptions);
+
+                        function ScaleSlider() {
+                            var refSize = jssorObject.$Elmt.parentNode.clientWidth;
+                            if (refSize) {
+                                refSize = Math.min(refSize, 400 * 3 + 30 * 2);
+                                jssorObject.$ScaleWidth(refSize);
+                            }
+                            else {
+                                window.setTimeout(ScaleSlider, 30);
+                            }
+                        }
+
+                        ScaleSlider();
+                        $Jssor$.$AddEvent(window, "load", ScaleSlider);
+                        $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+                        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+                    }
+                </script>
             </section>
 
-            <section class="thumbnail-part" data-ng-show="hotels.length > 0" data-ng-include="'templates/partials/home-hotel.html'">
+            <section class="thumbnail-part" data-ng-show="hotels.length > 0">
+                <header class="header-container">
+                    <div class="title position"><i class="icon-building"></i>
+
+                        <h2>{{"HOTEL"|translate}}</h2></div>
+                    <div class="head-menu text-right">
+                        <a data-ng-href="hotels.html#/{{languageId}}">{{"MORE"|translate}}</a>
+                        <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
+                        <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in hotels">
+                        <div class="thumbnail">
+                            <a data-ng-href="hotels.html#/{{item.ProductId}}/{{languageId}}">
+                                <!--
+                                <span class="sales-layer">Pref</span>
+                                -->
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}">
+                            </a>
+
+                            <div class="caption">
+                                <h3><a data-ng-href="hotels.html#/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a><i
+                                        data-ng-class="item.StarClass"></i></h3>
+                                <!--
+                                <a data-ng-href="hotels.html#/{{item.Id}}/comment/{{languageId}}"><span>8.3</span>451 comments</a>
+                                -->
+                                <ul class="hotel">
+                                    <li>{{item.Location.Name}}</li>
+                                    <!--
+                                    <li class="text-right price"><s class="aa">$200</s><span>$89.00</span></li>
+                                    -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section class="thumbnail-part" data-ng-show="shows.length > 0" data-ng-include="'templates/partials/home-show.html'">
+            <section class="thumbnail-part" data-ng-show="shows.length > 0">
+                <!--<div class="title">-->
+                <!--<i class="icon-show"></i>-->
+                <!--<h2>{{"SHOW"|translate}}</h2>-->
+                <!--</div>-->
+                <header class="header-container">
+                    <div class="title position"><i class="icon-show"></i>
+
+                        <h2>{{"SHOWS"|translate}}</h2></div>
+                    <div class="head-menu text-right">
+                        <a data-ng-href="services.html#/shows/{{languageId}}">{{"MORE"|translate}}</a>
+                        <!--<a data-ng-href="services.html#/shows/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
+                        <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in shows">
+                        <div class="thumbnail">
+                            <a data-ng-href="services.html#/shows/{{item.ProductId}}/{{languageId}}">
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}">
+                            </a>
+
+                            <div class="caption">
+                                <ul class="ticket">
+                                    <li class="title"><h3><a
+                                            data-ng-href="services.html#/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>
+                                    </h3></li>
+                                    <!--<li class="text-right"><s>$120</s>-->
+                                    <!--<p class="price">$89.00</p></li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
         </div>

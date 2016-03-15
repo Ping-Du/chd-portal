@@ -8,10 +8,11 @@
                         <div data-u="loading" class="loading">
                             <div class="loading-icon"></div>
                         </div>
-                        <div data-u="slides" class="slider-list-wrap">
-                            <div data-p="112.50" data-ng-repeat="item in serviceItem.SliderImages" data-enable-jssor data-jssor-options="jssorOptions1" data-jssor-trigger="{{$last}}">
-                                <img data-u="image" data-ng-src="{{item.ImagePath}}" />
-                            </div>
+                        <div id='slides' data-u="slides" class="slider-list-wrap">
+                            <!--<div data-p="112.50" data-ng-repeat="item in serviceItem.SliderImages" data-enable-jssor data-jssor-options="jssorOptions1" data-jssor-trigger="{{$last}}">-->
+                                <!--<img data-u="image" data-ng-src="{{item.ImagePath}}" />-->
+                                <!--<img data-u="thumb" data-ng-src="{{item.ImagePath}}" />-->
+                            <!--</div>-->
                         </div>
 
                         <!-- Thumbnail Navigator -->
@@ -32,104 +33,41 @@
                 </div>
             </div>
             <section class="col-md-4">
-                <div class="price-bg-part">
-                    <div class="col-md-12"><span class="price w"><i class="dollar">$</i>42-<i class="dollar">$</i>80</span><span class="info">Original Price：<del>$100</del></span></div>
+                <div class="service-detail-info">
+                        <span class="caption">{{serviceItem.Name}}</span>
                 </div>
                 <div class="row tab-list">
-                    <div class="col-xs-6 col-md-6"> <span>Product No：</span>89-168218</div>
-                    <div class="col-xs-6 col-md-6"> <span>Type：</span>Show</div>
-                    <div class="col-xs-6 col-md-6"> <span>City：</span>Las Vegas</div>
-                    <div class="col-xs-6 col-md-6"> <span>Language：</span>English</div>
+                    <div class="col-xs-6 col-md-6"> <span>Product No：</span>{{serviceItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Type：</span>{{serviceItem.ServiceType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>City：</span>{{serviceItem.Address.City}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Language：</span>{{serviceItem.LanguageId | translate}}</div>
                 </div>
-                <div class="tax-com-part">
-                    <div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>
-                    <div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>
-                </div>
-                <div class="clearfix"></div>
+                <!--<div class="tax-com-part">-->
+                    <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
+                    <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
-                    <a href="#map"><i class="icon-location2"></i>Location</a>
+                    <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Details</a>
+                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-globe"></i>&nbsp;Location</a>
                 </div>
                 <div class="row">
                     <div class="price-btn-part">
-                        <p class="col-xs-12 col-md-12 info">Click button below to see more choices</p>
-                        <div class="col-xs-12 col-md-12"><a href="#" class="btn btn-red btn-xl btn-w"  data-toggle="modal" data-target="#myModal">Book Now</a></div>
+                        <div class="col-xs-12 col-md-12 text-right">
+                            <a href class="btn btn-red">Book Now</a></div>
                     </div>
                 </div>
             </section>
         </div>
-        <!-- begin Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content open-order">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4>Reservation Information</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="form-group input-icon">
-                                <label class="col-xs-3 col-sm-3 control-label">Date：</label>
-                                <div class="col-xs-7 col-sm-7 ">
-                                    <i class="icon-calendar"></i>
-                                    <input type="date" class="input-date input-default form-control" placeholder="2015-10-15">
-                                </div>
-                            </div>
-                            <div class="form-group sel-time">
-                                <label class="col-xs-3 col-sm-3 control-label">Time：</label>
-                                <div class="col-xs-7 col-sm-7">
-                                    <span>16:30</span> <span class="active">16:30</span> <span>16:30</span> <span>16:30</span><span>16:30</span> <span>16:30</span> <span>16:30</span> <span>16:30</span>
-                                </div>
-                            </div>
-                            <div class="form-group sel-time">
-                                <label class="col-xs-3 col-sm-3 control-label">Suite：</label>
-                                <div class="col-xs-7 col-sm-7">
-                                    <span>Suite A</span><span>Suite B</span> <span class="active">Suite C</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-3 col-sm-3 control-label">Adult：</label>
-                                <div class="col-xs-7 col-sm-7">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">-</div>
-                                        <input type="text" class="input-date input-default form-control" id="exampleInputAmount1" placeholder="1">
-                                        <div class="input-group-addon">+</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-3 col-sm-3 control-label">Child：</label>
-                                <div class="col-xs-7 col-sm-7">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">-</div>
-                                        <input type="text" class="input-date input-default form-control" id="exampleInputAmount2" placeholder="1">
-                                        <div class="input-group-addon">+</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-3 col-sm-3 control-label"><span class="m-total">Total：</span> </label>
-                                <div class="col-xs-7 col-sm-7">
-                                    <b class="price m-fontsite">$654</b><span class="m-info">$23 saved</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-red btn-lg">Check Out</button>
-                        <button type="button" class="btn btn-default btn-lg"><i class="icon-cart "></i></button>
-                    </div>
-                </div>
-            </div>
+        <div class="detail-nav-wrap is-stuck">
+            <nav class="container">
+                <ul>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('detail')">Details</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                </ul>
+            </nav>
         </div>
-        <!-- end Modal -->
-        <!--<div class="detail-nav-wrap is-stuck">-->
-            <!--<nav class="container">-->
-                <!--<ul>-->
-                    <!--<li class="menu-item"><a href="##detail">Details</a><i class="line"></i></li>-->
-                    <!--<li class="menu-item"><a href="##map">Location</a></li>-->
-                <!--</ul>-->
-            <!--</nav>-->
-        <!--</div>-->
         <section class="detail-wrap" id="detail">
             <h3>Details</h3>
             <div class="content" data-ng-repeat="item in serviceItem.AdditionalInformation">
@@ -149,18 +87,69 @@
     </div>
 </div>
 <script type="text/javascript">
-    function initMap(lat, lng, title) {
-        var myLatLng = {lat: lat, lng: lng};
 
-        var map = new google.maps.Map(document.getElementById('map_canvas'), {
-            zoom: 15,
-            center: myLatLng
-        });
+    function initSlider(imageData) {
+        var jssorOptions = {
+            $AutoPlay: true,
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+            },
+            $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 9,
+                $SpacingX: 3,
+                $SpacingY: 3,
+                $Align: 260
+            }
+        };
+        var slides = $('#slides');
+        var container = slides.closest('.slides-container');
+        if (!container.attr("id"))
+            container.attr("id", new Date().getTime());
 
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: title
-        });
+        var innerHtml = '';
+        for(var i = 0; i < imageData.length; i++ ) {
+            innerHtml += '<div data-p="112.50">';
+            innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
+            if(imageData[i].thumb) {
+                innerHtml += '<img data-u="thumb" src="' + imageData[i].thumb + '" />';
+            }
+            innerHtml += '</div>';
+        }
+        slides.html(innerHtml);
+
+        var jssorObject1 = new $JssorSlider$(container.attr("id"), jssorOptions);
+
+        function ScaleSlider1() {
+            var refSize = jssorObject1.$Elmt.parentNode.clientWidth;
+            if (refSize) {
+                refSize = Math.min(refSize, 770);
+                jssorObject1.$ScaleWidth(refSize);
+            }
+            else {
+                window.setTimeout(ScaleSlider1, 30);
+            }
+        }
+
+        ScaleSlider1();
+        $Jssor$.$AddEvent(window, "load", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "resize", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider1);
+
     }
+
+    //initiating jQuery
+    jQuery(function($) {
+        $(document).ready( function() {
+            // 为 '.navbar-wrapper' class 启用stickUp插件
+            $('.detail-nav-wrap').stickUp({
+                parts: {
+                    0:'top',
+                    1:'detail',
+                    2: 'map'},
+                itemClass: 'menu-item',
+                itemHover: 'active' });
+        });
+    });
+
 </script>

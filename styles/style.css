@@ -1063,6 +1063,14 @@ a {
   .tax-com-part p {
     color: #999; }
 
+.service-detail-info {
+  margin-bottom: 15px;
+  padding: 15px 5px;
+  background-color: rgba(237, 104, 91, 0.1); }
+  .service-detail-info .caption {
+    font-size: 30px;
+    color: #ed685b; }
+
 .price-bg-part, .xlbtn-wrap {
   overflow: hidden;
   padding: 15px 0; }

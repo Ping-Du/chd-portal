@@ -30,23 +30,23 @@ define(['app/interceptors/security-interceptor',
             $routeProvider
                 .when('/shows/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController',
-                    reloadOnSearch: true
+                    controller: 'ServiceMainController'
+                    //,reloadOnSearch: true
                 })
                 .when('/shows/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController',
-                    reloadOnSearch: true
+                    controller: 'ServiceDetailController'
+                    //,reloadOnSearch: true
                 })
                 .when('/activities/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController',
-                    reloadOnSearch: true
+                    controller: 'ServiceMainController'
+                    //,reloadOnSearch: true
                 })
                 .when('/activities/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController',
-                    reloadOnSearch: true
+                    controller: 'ServiceDetailController'
+                    //,reloadOnSearch: true
                 })
                 .when('/tours/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
@@ -55,28 +55,28 @@ define(['app/interceptors/security-interceptor',
                 })
                 .when('/tours/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController',
-                    reloadOnSearch: true
+                    controller: 'ServiceDetailController'
+                    //,reloadOnSearch: true
                 })
                 .when('/transportation/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController',
-                    reloadOnSearch: true
+                    controller: 'ServiceMainController'
+                    //,reloadOnSearch: true
                 })
                 .when('/transportation/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController',
-                    reloadOnSearch: true
+                    controller: 'ServiceDetailController'
+                    //,reloadOnSearch: true
                 })
                 .when('/dining/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController',
-                    reloadOnSearch: true
+                    controller: 'ServiceMainController'
+                    //,reloadOnSearch: true
                 })
                 .when('/dining/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController',
-                    reloadOnSearch: true
+                    controller: 'ServiceDetailController'
+                    //,reloadOnSearch: true
                 })
                 .otherwise({
                     redirectTo: '/shows/' + $.cookie('languageId')

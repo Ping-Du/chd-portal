@@ -1,6 +1,7 @@
 {
   "LANGUAGE_CODE":"zh-CN",
   "CURRENT_LANGUAGE":"中文",
+  "CHI":"中文",
   "REGISTER":"注册",
   "LOGIN":"登录",
   "MY_ACCOUNT":"我的账号",
