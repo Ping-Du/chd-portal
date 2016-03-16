@@ -36,12 +36,15 @@
                 <div class="service-detail-info">
                         <span class="caption">{{serviceItem.Name}}</span>
                 </div>
+                <div><span >{{serviceItem.AdditionalInformation[0].PlainText | limitTo: 150}}...</span></div>
+                <br/>
                 <div class="row tab-list">
                     <div class="col-xs-6 col-md-6"> <span>ID：</span>{{serviceItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"> <span>Type：</span>{{serviceItem.ServiceType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Address：</span>{{serviceItem.Address.Address1}}</div>
                     <div class="col-xs-6 col-md-6"> <span>City：</span>{{serviceItem.Address.City}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Language：</span>{{serviceItem.LanguageId | translate}}</div>
                 </div>
+                <br/>
                 <!--<div class="tax-com-part">-->
                     <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                     <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
@@ -70,9 +73,9 @@
         </div>
         <section class="detail-wrap" id="detail">
             <h3>Details</h3>
-            <div class="content" data-ng-repeat="item in serviceItem.AdditionalInformation">
-                <h4>{{item.Title}}</h4>
-                <p data-ng-bind-html="item.FormattedText"></p>
+            <div class="content">
+                <!--<h4>{{item.Title}}</h4>-->
+                <p data-ng-bind-html="serviceItem.AdditionalInformation[1].FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="map">

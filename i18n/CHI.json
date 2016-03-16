@@ -62,5 +62,6 @@
   "API_FAILED":"调用服务出错，请稍后重试！",
   "CONFIRM_EMAIL":"确认邮件将发送到注册邮箱，请尽快确认注册。",
   "MORE":"更多",
-  "LOCATION":"地点"
+  "LOCATION":"地点",
+  "TYPE":"类型"
 }

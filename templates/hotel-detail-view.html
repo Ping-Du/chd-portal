@@ -36,12 +36,15 @@
                 <div class="service-detail-info">
                     <span class="caption">{{hotelItem.Name}}</span>
                 </div>
+                <div><span data-ng-bind-html="hotelItem.AdditionalInformation[0].FormattedText"></span></div>
+                <br/>
                 <div class="row tab-list">
                     <div class="col-xs-6 col-md-6"> <span>ID：</span>{{hotelItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"> <span>Type：</span>{{hotelItem.HotelType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Address：</span>{{hotelItem.Address.Address1}}</div>
                     <div class="col-xs-6 col-md-6"> <span>City：</span>{{hotelItem.Address.City}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Language：</span>{{hotelItem.LanguageId | translate}}</div>
                 </div>
+                <br/>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                 <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
@@ -70,9 +73,9 @@
         </div>
         <section class="detail-wrap" id="detail">
             <h3>Details</h3>
-            <div class="content" data-ng-repeat="item in hotelItem.AdditionalInformation">
-                <h4>{{item.Title}}</h4>
-                <p data-ng-bind-html="item.FormattedText"></p>
+            <div class="content">
+                <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
+                <p data-ng-bind-html="hotelItem.AdditionalInformation[1].FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="map">

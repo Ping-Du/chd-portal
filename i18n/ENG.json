@@ -62,5 +62,6 @@
   "API_FAILED":"Can't invoke API, please try later!",
   "CONFIRM_EMAIL":"The confirmation mail will be sent to you.",
   "MORE":"More",
-  "LOCATION":"Location"
+  "LOCATION":"Location",
+  "TYPE":"Type"
 }

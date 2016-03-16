@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Others must follow above three meta -->
-    <title></title>
+    <title translate="{{'HOME_TITLE'}}"></title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" >
     <!--<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
-    <!--<link type="text/css" href="styles/latin-ext.css" rel="stylesheet">-->
+    <link type="text/css" href="styles/latin-ext.css" rel="stylesheet">
     <link href="styles/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
     <link type="text/css" href="styles/style.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,10 +17,8 @@
     <script src="scripts/libs/html5shiv.min.js"></script>
     <script src="scripts/libs/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="http://maps.google.cn/maps/api/js?sensor=false">
-    </script>
     <script type="text/javascript" src="scripts/libs/require.min.js" data-main="scripts/main"
-            data-bootstrap="app/bootstrap/services"></script>
+            data-bootstrap="app/bootstrap/static"></script>
     <!-- other js -->
 </head>
 <body>
@@ -36,31 +33,24 @@
 </header>
 <!-- header end here -->
 
-<div data-ng-view>
+<div class="banner aboutus"><!-- /此处背景图片高度280px，宽度1920px以上--></div>
+
+<div class="container-bg container-padding" data-ng-include="'templates/about-us-view.html'">
 </div>
 
 <!-- footer start here -->
 <footer role="contentinfo">
-    <!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-9 col-xs-12" data-ng-include="'templates/partials/home-news.html'">-->
-            <!--</div>-->
-            <!--<div class="col-md-3 col-xs-12" data-ng-include="'templates/partials/home-links.html'">-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="container" data-ng-include="'templates/partials/home-partner1.html'">-->
-    <!--</div>-->
-    <!--<div class="container-bg">-->
-        <!--<div class="container" data-ng-include="'templates/partials/home-partner2.html'">-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="copyright">
         <div class="container" data-ng-include="'templates/partials/footer.html'">
         </div>
     </div>
 </footer>
 <!-- footer end here -->
+
+<!-- message start here -->
+<div data-ng-include="'templates/partials/home-message.html'">
+</div>
+<!-- message end here -->
 
 <!-- login modal start here -->
 <div data-ng-include="'templates/partials/login.html'">
