@@ -2,7 +2,7 @@ define([], function(){
     'use strict';
 
     return {
-        webRoot:'/chd-portal/',
+        webRoot:'http://localhost:63342/chd-portal/',
         apiRoot:'https://flexservices.chdestination.com/tracelink/', // production
         //apiRoot:'https://chdtracelink.azurewebsites.net/', // development
         apiUser:'apiuser',

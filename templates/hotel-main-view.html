@@ -1,54 +1,80 @@
-<!-- content start here -->
-<main role="main">
-    <div class="banner b-hotel">
-        <div class="container">
-            <h1>Hundreds of hotels - 数百家酒店任君选择</h1>
-            <p>从青年旅舍到古堡豪宅，从星级酒店到当地人家，总有一家适合你！</p>
-            <div class="hotel-search-box text-center">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label>Destination:</label>
-                        <select class="form-control" style="width:180px;" data-ng-model="dest" data-ng-options="item.ProductId as item.Name for item in destinations">
-                            <!--<option value="{{item.ProductId}}" data-ng-repeat="item in destinations">{{item.Name}}</option>-->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input id="startDate" type="text" class="form-control" data-date-picker ng-model="startDate" data-init-date="startDate">
-                    </div>
-                    <div class="form-group">
-                        <label>Nights:</label>
-                        <input type="text" class="form-control input-number" data-ng-model="nights">
-                    </div>
-                    <div class="form-group">
-                        <label>Rooms:</label>
-                        <input type="text" class="form-control input-number" data-ng-model="rooms">
-                    </div>
-                    <div class="form-group">
-                        <label>Adults:</label>
-                        <input type="text" class="form-control input-number" data-ng-model="adults">
-                    </div>
-                    <div class="form-group">
-                        <label>Children:</label>
-                        <input type="text" class="form-control input-number" data-ng-model="children">
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-red" data-ng-click="search()">{{"SEARCH"|translate}}</button>
-                    </div>
-                </form>
+<div class="container-bg container-padding">
+    <div class="container">
+        <div class="filter-box">
+            <dl class="filter-item">
+                <dt><i class="icon-location2"></i>&nbsp;{{"LOCATION"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedLocation==null}"
+                       data-ng-click="filterByLocation(null)">All</a>
+                    <a href data-ng-repeat="item in locations | orderBy:'+Name':false" data-ng-class="{'active':selectedLocation==item.Id}"
+                       data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+            <dl class="filter-item" data-ng-show="stars.length > 0">
+                <dt><i class="icon-star-full"></i>&nbsp;{{"STAR"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedStar==null}"
+                       data-ng-click="filterByStar(null)">All</a>
+                    <a href data-ng-repeat="item in stars | orderBy:'+Name':false" data-ng-class="{'active':selectedStar==item.Id}"
+                       data-ng-click="filterByStar(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+            <dl class="filter-item">
+                <dt><i class="icon-bed"></i>&nbsp;{{"TYPE"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedType==null}"
+                       data-ng-click="filterByType(null)">All</a>
+                    <a href data-ng-repeat="item in types | orderBy:'+Name':false" data-ng-class="{'active':selectedType==item.Id}"
+                       data-ng-click="filterByType(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+        </div>
+        <section class="thumbnail-part" data-ng-show="featuredHotels.length > 0">
+            <div class="title">
+                <h2>{{"FEATURED"|translate}}</h2>
             </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in featuredHotels">
+                    <div class="thumbnail">
+                        <a href data-ng-href="{{item.DetailsURI}}"><img
+                                data-ng-src="{{item.MainInformation.LargeImageURI}}"></a>
+                        <div class="caption">
+                            <ul class="ticket">
+                                <li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>
+                                <!--<li class="text-right"><s>$120</s>-->
+                                <!--<p class="price">$89.00</p></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="sortbar" data-ng-show="featuredHotels.length > 0">
+            <!--<ul>-->
+            <!--<li><a href="#">Price</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Sale Volumn</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Score</a><i class="icon-caret-down"></i></li>-->
+            <!--</ul>-->
         </div>
+        <section class="thumbnail-part">
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in showHotels">
+                    <div class="thumbnail">
+                        <a data-ng-href="{{item.DetailsURI}}">
+                            <!--<span class="new-layer"></span>-->
+                            <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
+                        </a>
+
+                        <div class="caption">
+                            <ul class="ticket">
+                                <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
+                                <!--<li class="text-right"><s>$120</s>-->
+                                <!--<p class="price">$89.00</p></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <div class="container-bg container-padding">
-        <div class="container">
-
-            <section class="thumbnail-part" style="margin-top: 30px;" data-ng-include="'templates/partials/hotel-destination-slider.html'">
-            </section>
-
-            <section class="thumbnail-part" style="margin-top: 30px;" data-ng-include="'templates/partials/hotel-featured-list.html'">
-            </section>
-
-        </div>
-    </div>
-</main>
+</div>

@@ -7,8 +7,7 @@ define(['app/interceptors/security-interceptor',
         'app/controllers/change-password-modal-controller',
         'app/controllers/hotel-main-controller',
         'app/controllers/hotel-detail-controller',
-        'app/controllers/register-modal-controller',
-        'app/controllers/hotel-search-controller'],
+        'app/controllers/register-modal-controller'],
     function (modules) {
         'use strict';
 
@@ -22,11 +21,6 @@ define(['app/interceptors/security-interceptor',
                 .when('/:languageId', {
                     templateUrl:'templates/hotel-main-view.html',
                     controller:'HotelMainController',
-                    reloadOnSearch:true
-                })
-                .when('/destination/:destination/:languageId',{
-                    templateUrl:'templates/hotel-search-view.html',
-                    controller:'HotelSearchController',
                     reloadOnSearch:true
                 })
                 .when('/:hotelId/:languageId',{

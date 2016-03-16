@@ -12,6 +12,7 @@ define(['app/services/account-service'], function (modules) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
                 }
 
+                $scope.message = "Wrong URL, Please make sure the URL is right!";
 
             }]);
 

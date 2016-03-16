@@ -1,5 +1,25 @@
 <!-- content start here -->
-<main role="main" class="container relative text-center">
-    <h2 class="text-warning" style="padding-top: 50px;">{{message}}</h2>
+<main role="main" class="container relative" style="margin-top: 20px; margin-bottom: 20px;">
+    <div class="center-block" style="width: 500px;">
+        <form>
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Reset Password</h3></div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" data-ng-model="newPassword" placeholder="New Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" data-ng-model="confirmPassword" placeholder="Confirm Password">
+                </div>
+                <h4 class="text-danger" data-ng-show="message">{{message}}</h4>
+            </div>
+            <div class="panel-footer text-right">
+                <button type="button" class="btn btn-red" data-ng-click="resetPassword()">{{"OK"|translate}}</button>
+            </div>
+        </div>
+        </form>
+    </div>
 </main>
 <!-- content end here -->

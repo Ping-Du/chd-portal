@@ -3,8 +3,8 @@ define(['app/services/account-service'], function (modules) {
 
     modules.controllers
         .controller("AccountResetPasswordController", ['$rootScope', '$scope', 'SessionService',
-            '$log', '$location','LanguageService',
-            function ($rootScope, $scope, SessionService, $log, $location, LanguageService) {
+            '$log', '$location','LanguageService', '$routeParams', 'AccountService', '$translate',
+            function ($rootScope, $scope, SessionService, $log, $location, LanguageService, $routeParams, AccountService, $translate) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -16,21 +16,37 @@ define(['app/services/account-service'], function (modules) {
 
                 $scope.userName = null;
                 $scope.code = null;
-                $scope.newPassword = null;
-                $scope.confirmPassword = null;
+                $scope.newPassword = "";
+                $scope.confirmPassword = "";
                 $scope.url = $location.absUrl();
 
-                var search = $location.search();
-                if(search.userName && search.code) {
-                    $scope.userName = search.userName;
-                    $scope.code = search.code;
-                    //AccountService.resetPassword(search.userId, search.code).then(function () {
-                    //    $scope.message = 'Your email is confirmed!';
-                    //}, function (data) {
-                    //    $scope.message = 'There is an error when confirming email!';
-                    //});
+                if($routeParams.userName && $routeParams.code) {
+                    $scope.userName = $routeParams.userName;
+                    $scope.code = $routeParams.code;
                 } else {
-                    $scope.message = 'Wrong url!'
+                    $scope.message = "Wrong URL!";
+                }
+
+                function translate(key) {
+                    $translate(key).then(function (translation) {
+                        $scope.message = translation;
+                    });
+                }
+
+                $scope.resetPassword = function() {
+                    if ($scope.newPassword == '' || $scope.newPassword != $scope.confirmPassword) {
+                        translate('PASSWORD_NOT_MATCH');
+                        return;
+                    }
+                    if ($scope.newPassword.length < 6) {
+                        translate('PASSWORD_LENGTH');
+                        return;
+                    }
+                    AccountService.resetPassword($scope.userName, $scope.newPassword, $scope.confirmPassword, $scope.code, "").then(function () {
+                        $scope.message = 'Your password is reset!';
+                    }, function (data) {
+                        $scope.message = data.ModelState.ResetPassword;
+                    });
                 }
 
             }]);

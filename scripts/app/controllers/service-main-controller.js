@@ -6,8 +6,8 @@ define(['app/services/services-service',
 
     modules.controllers
         .controller('ServiceMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate',
-            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate) {
+            'ServicesService', 'LanguageService', '$translate', '$cookieStore',
+            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -22,6 +22,7 @@ define(['app/services/services-service',
                     else
                         return null;
                 }
+
                 var serviceType = parseService($location.path());
                 $rootScope.$broadcast('ServiceChanged', serviceType);
                 $translate(modules.angular.uppercase(serviceType) + '_TITLE').then(function (data) {
@@ -30,63 +31,69 @@ define(['app/services/services-service',
 
                 $scope.webRoot = SessionService.config().webRoot;
 
-                $scope.selectedLocation = null;
+                var filter = $cookieStore.get(serviceType + 'Filter');
+
+                function saveFilters() {
+                    $cookieStore.put(serviceType + 'Filter', {
+                        location: $scope.selectedLocation
+                    });
+                }
+
+                $scope.selectedLocation = (filter?filter.location:null);
                 $scope.locations = [];
                 function fillLocations(value) {
-                    if(!_.find($scope.locations, function(item){
+                    if (!_.find($scope.locations, function (item) {
                             return item.Id == value.Id;
                         })) {
                         $scope.locations.push(value);
                     }
                 }
-                $scope.filterByLocation = function(id) {
+
+                $scope.filterByLocation = function (id) {
                     $scope.selectedLocation = id;
-                   fillServices();
+                    saveFilters();
+                    fillServices();
                 };
 
                 $scope.featuredServices = [];
                 $scope.showServices = [];
                 $scope.allServices = [];
-                function fillServices(){
+                function fillServices() {
                     $scope.featuredServices = [];
                     $scope.showServices = [];
-                    _.each($scope.allServices, function(item, key){
-                        if(item.Featured) {
-                            if($scope.selectedLocation) {
-                                if (item.Location.Id == $scope.selectedLocation)
-                                    $scope.featuredServices.push(item);
-                            } else {
+                    _.each($scope.allServices, function (item, key) {
+                        var locationed = (item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
+                        if(locationed) {
+                            if(item.Featured)
                                 $scope.featuredServices.push(item);
-                            }
-                        } else {
-                            if(item.Location.Id == $scope.selectedLocation || !$scope.selectedLocation){
+                            else
                                 $scope.showServices.push(item);
-                            }
                         }
                     });
                 }
+
                 function loadAllServices() {
-                    ServicesService.getServiceByType(serviceType).then(function(data){
+                    ServicesService.getServiceByType(serviceType).then(function (data) {
                         $scope.allServices = data;
-                        _.each($scope.allServices, function(item, index){
+                        _.each($scope.allServices, function (item, index) {
                             //if(index % 2 == 0)
                             //    item.Featured = true;
-                            item.DetailsURI = 'services.html#/'+serviceType+'/'+item.ProductId+'/'+$scope.languageId;
+                            item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
                             fillLocations(item.Location);
                         });
                         fillServices();
-                    }, function(){
+                    }, function () {
                         $scope.allServices = [];
                     });
                 }
 
-                function load(){
+                function load() {
                     loadAllServices();
                 }
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
-                    if($scope.languageId != data) {
+                    if ($scope.languageId != data) {
                         $scope.languageId = data;
                         load();
                     }

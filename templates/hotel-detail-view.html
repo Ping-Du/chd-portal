@@ -1,1 +1,162 @@
-<p>{{name}}</p>
+<div class="container-bg container-padding" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="relative">
+                    <div class="slides-container slider-wrap" >
+                        <!-- Loading Screen -->
+                        <div data-u="loading" class="loading">
+                            <div class="loading-icon"></div>
+                        </div>
+                        <div id='slides' data-u="slides" class="slider-list-wrap">
+                            <!--<div data-p="112.50" data-ng-repeat="item in serviceItem.SliderImages" data-enable-jssor data-jssor-options="jssorOptions1" data-jssor-trigger="{{$last}}">-->
+                            <!--<img data-u="image" data-ng-src="{{item.ImagePath}}" />-->
+                            <!--<img data-u="thumb" data-ng-src="{{item.ImagePath}}" />-->
+                            <!--</div>-->
+                        </div>
+
+                        <!-- Thumbnail Navigator -->
+                        <div u="thumbnavigator" class="thum-wrap" data-autocenter="1">
+                            <div class="text-wrap"></div>
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div u="slides">
+                                <div u="prototype" class="p">
+                                    <div class="thum-list">
+                                        <div u="thumbnailtemplate" class="thum"></div>
+                                    </div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                            <!-- Thumbnail Item Skin End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="col-md-4">
+                <div class="service-detail-info">
+                    <span class="caption">{{hotelItem.Name}}</span>
+                </div>
+                <div class="row tab-list">
+                    <div class="col-xs-6 col-md-6"> <span>ID：</span>{{hotelItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Type：</span>{{hotelItem.HotelType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>City：</span>{{hotelItem.Address.City}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Language：</span>{{hotelItem.LanguageId | translate}}</div>
+                </div>
+                <!--<div class="tax-com-part">-->
+                <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
+                <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
+                <div class="pos-map">
+                    <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Details</a>
+                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-globe"></i>&nbsp;Location</a>
+                </div>
+                <div class="row">
+                    <div class="price-btn-part">
+                        <div class="col-xs-12 col-md-12 text-right">
+                            <a href class="btn btn-red">Book Now</a></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="detail-nav-wrap is-stuck">
+            <nav class="container">
+                <ul>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('detail')">Details</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                </ul>
+            </nav>
+        </div>
+        <section class="detail-wrap" id="detail">
+            <h3>Details</h3>
+            <div class="content" data-ng-repeat="item in hotelItem.AdditionalInformation">
+                <h4>{{item.Title}}</h4>
+                <p data-ng-bind-html="item.FormattedText"></p>
+            </div>
+        </section>
+        <section class="detail-wrap" id="map">
+            <h3>Location</h3>
+            <div class="content">
+                <!--<p><strong>Address：</strong>{{hotelItem.Address.Address1 + ', ' + hotelItem.Address.City + ', ' + hotelItem.Address.State}}</p>-->
+                <p><strong>Address 1：</strong>{{hotelItem.Address.Address1}}</p>
+                <p><strong>Address 2：</strong>{{hotelItem.Address.Address2}}</p>
+                <p><strong>Address 3：</strong>{{hotelItem.Address.Address3}}</p>
+                <p><strong>City：</strong>{{hotelItem.Address.City}}</p>
+                <p><strong>State：</strong>{{hotelItem.Address.State}}</p>
+                <p><strong>Country：</strong>{{hotelItem.Address.Country}}</p>
+                <p><strong>Zip：</strong>{{hotelItem.Address.Zip}}</p>
+                <!--ui-map="myMap" ui-options="mapOptions"-->
+                <div class="map-box" id="map_canvas" data-ng-show="showMap">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function initSlider(imageData) {
+        var jssorOptions = {
+            $AutoPlay: true,
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+            },
+            $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 9,
+                $SpacingX: 3,
+                $SpacingY: 3,
+                $Align: 260
+            }
+        };
+        var slides = $('#slides');
+        var container = slides.closest('.slides-container');
+        if (!container.attr("id"))
+            container.attr("id", new Date().getTime());
+
+        var innerHtml = '';
+        for(var i = 0; i < imageData.length; i++ ) {
+            innerHtml += '<div data-p="112.50">';
+            innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
+            if(imageData[i].thumb) {
+                innerHtml += '<img data-u="thumb" src="' + imageData[i].thumb + '" />';
+            }
+            innerHtml += '</div>';
+        }
+        slides.html(innerHtml);
+
+        var jssorObject1 = new $JssorSlider$(container.attr("id"), jssorOptions);
+
+        function ScaleSlider1() {
+            var refSize = jssorObject1.$Elmt.parentNode.clientWidth;
+            if (refSize) {
+                refSize = Math.min(refSize, 770);
+                jssorObject1.$ScaleWidth(refSize);
+            }
+            else {
+                window.setTimeout(ScaleSlider1, 30);
+            }
+        }
+
+        ScaleSlider1();
+        $Jssor$.$AddEvent(window, "load", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "resize", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider1);
+
+    }
+
+    //initiating jQuery
+    jQuery(function($) {
+        $(document).ready( function() {
+            // 为 '.navbar-wrapper' class 启用stickUp插件
+            $('.detail-nav-wrap').stickUp({
+                parts: {
+                    0:'top',
+                    1:'detail',
+                    2: 'map'},
+                itemClass: 'menu-item',
+                itemHover: 'active' });
+        });
+    });
+
+</script>

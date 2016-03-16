@@ -78,7 +78,14 @@
         <section class="detail-wrap" id="map">
             <h3>Location</h3>
             <div class="content">
-                <p><strong>Address：</strong>{{serviceItem.Address.Address1 + ', ' + serviceItem.Address.City + ', ' + serviceItem.Address.State}}</p>
+                <!--<p><strong>Address：</strong>{{serviceItem.Address.Address1 + ', ' + serviceItem.Address.City + ', ' + serviceItem.Address.State}}</p>-->
+                <p><strong>Address 1：</strong>{{serviceItem.Address.Address1}}</p>
+                <p><strong>Address 2：</strong>{{serviceItem.Address.Address2}}</p>
+                <p><strong>Address 3：</strong>{{serviceItem.Address.Address3}}</p>
+                <p><strong>City：</strong>{{serviceItem.Address.City}}</p>
+                <p><strong>State：</strong>{{serviceItem.Address.State}}</p>
+                <p><strong>Country：</strong>{{serviceItem.Address.Country}}</p>
+                <p><strong>Zip：</strong>{{serviceItem.Address.Zip}}</p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>

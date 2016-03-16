@@ -69,6 +69,8 @@ function($) {
 		};
 
 		$(document).on('scroll', function() {
+			if($('.stuckMenu').length == 0)
+				return;
 			varscroll = parseInt($(document).scrollTop());
 			if(menuSize != null){
 				for(var i=0;i < menuSize;i++)
