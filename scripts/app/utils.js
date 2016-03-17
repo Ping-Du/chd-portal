@@ -32,3 +32,17 @@ function initMap(lat, lng, title) {
     });
 }
 
+function getServiceType(serviceTypeId) {
+    var serviceTypes = {
+        "SHOW": 'shows',
+        "ATTAD": 'activities',
+        'DINE': 'dining',
+        'SHTTL': 'tours'
+    };
+
+    if(serviceTypes[serviceTypeId])
+        return serviceTypes[serviceTypeId];
+    else
+        return 'unknown';
+}
+

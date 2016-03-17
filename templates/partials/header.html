@@ -30,8 +30,8 @@
 </div>
 <div class="search-position" data-ng-show="showSearchBox">
     <form class="search-wrap">
-        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}"/>
-        <i class="icon-search"></i>
+        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-model="keyword"/>
+        <i class="icon-search" data-ng-click="search()"></i>
     </form>
 </div>
 </div>

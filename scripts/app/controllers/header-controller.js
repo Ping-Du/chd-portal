@@ -1,10 +1,23 @@
-define(['app/services/header-service'], function (modules) {
+define(['app/services/header-service', 'app/StringUtils'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['$scope', 'HeaderService', function($scope, HeaderService){
-            $scope.showLanguage = HeaderService.showLanguage;
-            $scope.showAccount = HeaderService.showAccount;
-            $scope.showSearchBox = HeaderService.showSearchBox;
-        }]);
+        .controller('HeaderController', ['$scope', 'HeaderService', '$location', 'SessionService','$window',
+            function ($scope, HeaderService, $location, SessionService, $window) {
+                $scope.showLanguage = HeaderService.showLanguage;
+                $scope.showAccount = HeaderService.showAccount;
+                $scope.showSearchBox = HeaderService.showSearchBox;
+
+                $scope.keyword = ($location.search().keyword ? $location.search().keyword : '');
+                $scope.results = null;
+                $scope.webRoot = SessionService.config().webRoot;
+                $scope.languageId = SessionService.languageId();
+
+                $scope.search = function () {
+                    var word = $scope.keyword.Trim();
+                    if (word != '') {
+                        $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId + '?keyword=' + word;
+                    }
+                }
+            }]);
 });

@@ -58,19 +58,12 @@ define(['app/services/language-service',
                     }
 
                     $scope.services = [];
-                    var serviceTypes = {
-                        "SHOW": 'shows',
-                        "ATTAD": 'activities',
-                        'DINE': 'dining',
-                        'SHTTL': 'tours'
-                    };
-
                     function loadServices() {
                         $scope.hotels = [];
                         ServicesService.getFeaturedServicesByDestination($routeParams.destinationId).then(function (data) {
                             _.each(data, function (item, index) {
                                 if (serviceType[data.ServiceType.Id]) {
-                                    item.DetailsURI = $scope.webRoot + 'services.html#/' + serviceType[data.ServiceType.Id] + '/' + item.ProductId + '/' + $scope.languageId;
+                                    item.DetailsURI = $scope.webRoot + 'services.html#/' + getServiceType(data.ServiceType.Id) + '/' + item.ProductId + '/' + $scope.languageId;
                                     $scope.hotels.push(item);
                                 }
                             });
