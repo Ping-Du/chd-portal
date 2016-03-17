@@ -64,5 +64,7 @@
   "CONFIRM_EMAIL":"确认邮件将发送到注册邮箱，请尽快确认注册。",
   "MORE":"更多",
   "LOCATION":"地点",
-  "TYPE":"类型"
+  "TYPE":"类型",
+  "MY_ACCOUNT":"我的账户",
+  "STAR":"星级"
 }

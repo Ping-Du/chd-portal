@@ -6,16 +6,29 @@
                 <dd>
                     <a href data-ng-class="{'active':selectedLocation==null}"
                        data-ng-click="filterByLocation(null)">All</a>
-                    <a href data-ng-repeat="item in locations | orderBy:'+Name':false" data-ng-class="{'active':selectedLocation==item.Id}"
+                    <a href data-ng-repeat="item in locations | orderBy:'+Name':false"
+                       data-ng-class="{'active':selectedLocation==item.Id}"
                        data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
+                    <a href data-ng-click="isCollapsed = !isCollapsed" data-ng-show="moreLocations.length > 0">
+                        <i class="main-red"
+                           data-ng-class="{'icon-caret-down':isCollapsed, 'icon-caret-up':!isCollapsed}"
+                           style="font-size: 24px;"></i>
+                    </a>
+
+                    <div uib-collapse="isCollapsed">
+                        <a href data-ng-repeat="item in moreLocations | orderBy:'+Name':false"
+                           data-ng-class="{'active':selectedLocation==item.Id}"
+                           data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
+                    </div>
                 </dd>
             </dl>
-            <dl class="filter-item" data-ng-show="stars.length > 0">
+            <dl class="filter-item">
                 <dt><i class="icon-star-full"></i>&nbsp;{{"STAR"|translate}}</dt>
                 <dd>
                     <a href data-ng-class="{'active':selectedStar==null}"
                        data-ng-click="filterByStar(null)">All</a>
-                    <a href data-ng-repeat="item in stars | orderBy:'+Name':false" data-ng-class="{'active':selectedStar==item.Id}"
+                    <a href data-ng-repeat="item in stars | orderBy:'+Name':false"
+                       data-ng-class="{'active':selectedStar==item.Id}"
                        data-ng-click="filterByStar(item.Id)">{{item.Name}}</a>
                 </dd>
             </dl>
@@ -24,7 +37,8 @@
                 <dd>
                     <a href data-ng-class="{'active':selectedType==null}"
                        data-ng-click="filterByType(null)">All</a>
-                    <a href data-ng-repeat="item in types | orderBy:'+Name':false" data-ng-class="{'active':selectedType==item.Id}"
+                    <a href data-ng-repeat="item in types | orderBy:'+Name':false"
+                       data-ng-class="{'active':selectedType==item.Id}"
                        data-ng-click="filterByType(item.Id)">{{item.Name}}</a>
                 </dd>
             </dl>
@@ -38,6 +52,7 @@
                     <div class="thumbnail">
                         <a href data-ng-href="{{item.DetailsURI}}"><img
                                 data-ng-src="{{item.MainInformation.LargeImageURI}}"></a>
+
                         <div class="caption">
                             <ul class="ticket">
                                 <li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>

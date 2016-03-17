@@ -14,11 +14,11 @@ define(['app/interceptors/security-interceptor',
             NavbarServiceProvider.setActiveItem('');
         }]);
 
-        modules.app.config(['HeaderServiceProvider', function (HeaderServiceProvider) {
-            HeaderServiceProvider.showLanguage(false);
-            HeaderServiceProvider.showSearchBox(false);
-            HeaderServiceProvider.showAccount(false);
-        }]);
+        //modules.app.config(['HeaderServiceProvider', function (HeaderServiceProvider) {
+        //    HeaderServiceProvider.showLanguage(false);
+        //    HeaderServiceProvider.showSearchBox(false);
+        //    HeaderServiceProvider.showAccount(false);
+        //}]);
 
         // config route
         modules.app.config(['$routeProvider', 'SessionServiceProvider', function($routeProvider, SessionServiceProvider){

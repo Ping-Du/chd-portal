@@ -64,5 +64,7 @@
   "CONFIRM_EMAIL":"The confirmation mail will be sent to you.",
   "MORE":"More",
   "LOCATION":"Location",
-  "TYPE":"Type"
+  "TYPE":"Type",
+  "MY_ACCOUNT":"My Account",
+  "STAR":"Star"
 }

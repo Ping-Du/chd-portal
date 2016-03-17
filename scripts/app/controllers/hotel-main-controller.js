@@ -6,8 +6,8 @@ define(['app/services/hotel-service',
 
     modules.controllers
         .controller('HotelMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'HotelService', 'LanguageService', '$translate', '$cookieStore',
-            function (_, $rootScope, $scope, $location, SessionService, HotelService, LanguageService, $translate, $cookieStore) {
+            'HotelService', 'LanguageService', '$translate', '$cookieStore', '$filter',
+            function (_, $rootScope, $scope, $location, SessionService, HotelService, LanguageService, $translate, $cookieStore, $filter) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -26,13 +26,25 @@ define(['app/services/hotel-service',
                     });
                 }
 
+                $scope.isCollapsed = true;
                 $scope.selectedLocation = (filter?filter.location:null);
                 $scope.locations = [];
+                $scope.moreLocations = [];
+                var allLocations = [];
                 function fillLocations(value) {
-                    if(!_.find($scope.locations, function(item){
+                    if(!_.find(allLocations, function(item){
                             return item.Id == value.Id;
                         })) {
-                        $scope.locations.push(value);
+                        allLocations.push(value);
+                    }
+                }
+                function splitLocations(){
+                    allLocations = $filter('orderBy')(allLocations, '+Name', false);
+                    if(allLocations.length > 20) {
+                        $scope.locations = _.first(allLocations, 6);
+                        $scope.moreLocations = _.last(allLocations, allLocations.length - 6);
+                    } else {
+                        $scope.destinations = allLocations;
                     }
                 }
                 $scope.filterByLocation = function(id) {
@@ -104,6 +116,7 @@ define(['app/services/hotel-service',
                             fillTypes(item.HotelType);
                         });
                         fillHotels();
+                        splitLocations();
                     }, function(){
                         $scope.allHotels = [];
                     });

@@ -3,15 +3,14 @@ define(['app/services/services-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
-    'app/services/image-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('ServiceDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'ServicesService', 'LanguageService','$translate','ImageService', '$window',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, ImageService, $window) {
+            'ServicesService', 'LanguageService','$translate', '$window',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, $window) {
 
                 console.info('path:' + $location.path());
                 $scope.path = $location.path();

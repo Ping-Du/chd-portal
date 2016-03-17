@@ -393,6 +393,9 @@ a {
         margin-right: 5px;
       }
     }
+    > dd {
+      margin-left: 120px;
+    }
     > dd a {
       margin: 0 15px;
       color: $font-darkgray;
@@ -632,7 +635,7 @@ a {
   }
   .map-box {
     width: 100%;
-    height:320px;
+    height: 320px;
     margin: 20px 0 50px 0;
   }
   .sub-part-bg {

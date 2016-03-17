@@ -16,8 +16,8 @@ define(['app/services/session-service'], function (modules) {
             }
 
             return {
-                getCities: function () {
-                    return invoke('/cities/languages/'+SessionService.languageId(), 'GET');
+                getLocations: function () {
+                    return invoke('/locations/languages/'+SessionService.languageId(), 'GET');
                 },
                 getAllSearchableProducts:function() {
                     return invoke('/languages/'+SessionService.languageId(), 'GET');
