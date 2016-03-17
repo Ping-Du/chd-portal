@@ -66,7 +66,7 @@ define(['app/services/services-service',
                         if(locationed) {
                             if(item.Featured)
                                 $scope.featuredServices.push(item);
-                            else
+                            //else
                                 $scope.showServices.push(item);
                         }
                     });

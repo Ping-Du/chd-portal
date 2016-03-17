@@ -89,7 +89,7 @@ define(['app/services/hotel-service',
                         if(stared && typed && locationed) {
                             if(item.Featured)
                                 $scope.featuredHotels.push(item);
-                            else
+                            //else
                                 $scope.showHotels.push(item);
                         }
                     });

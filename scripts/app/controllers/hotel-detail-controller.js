@@ -3,15 +3,14 @@ define(['app/services/hotel-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
-    'app/services/image-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('HotelDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'HotelService', 'LanguageService','$translate','ImageService', '$window',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, ImageService, $window) {
+            'HotelService', 'LanguageService','$translate', '$window',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate,  $window) {
 
                 console.info('path:' + $location.path());
                 $scope.path = $location.path();
