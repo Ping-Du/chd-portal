@@ -30,7 +30,8 @@ define(['config'], function (cfg) {
             'angular-css-injector':'libs/angular-css-injector.min',
             'angular-ui-router':'libs/angular-ui-router.min',
             'bootstrap-datepicker':'libs/bootstrap-datepicker.min',
-            'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min'
+            'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min',
+            'angucomplete':'libs/angucomplete'
         },
         shim: {
             'jquery':{
@@ -110,6 +111,9 @@ define(['config'], function (cfg) {
             },
             'bootstrap-datepicker.zh-CN':{
                 deps:['bootstrap-datepicker']
+            },
+            'angucomplete':{
+                deps:['angular']
             }
         }
     };

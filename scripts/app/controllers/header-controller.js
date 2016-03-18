@@ -18,6 +18,13 @@ define(['app/services/header-service', 'app/StringUtils'], function (modules) {
                     if (word != '') {
                         $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId + '?keyword=' + word;
                     }
+                };
+
+                $scope.onKeyPressed = function(e) {
+                    var keyCode = window.event?e.keyCode:e.which;
+                    if(keyCode == 13) {
+                        $scope.search();
+                    }
                 }
             }]);
 });

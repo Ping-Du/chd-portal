@@ -26,9 +26,9 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                             modules.angular.forEach(data, function(item, index){
                                 if(item.ProductType == 'HTL') {
                                     item.DetailsURI = 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
-                                } else {
-                                    // TODO waiting for service type to be added
-                                    item.DetailsURI = 'services.html#/' + getServiceType('') + '/' + item.ProductId + '/' + $scope.languageId;
+                                    _.extend(item, {starClass:"icon-star-lg-" + item.StarRating * 10});
+                                } else if(item.ProductType == 'OPT') {
+                                    item.DetailsURI = 'services.html#/' + getServiceType(item.ServiceType.Id) + '/' + item.ProductId + '/' + $scope.languageId;
                                 }
                                 $scope.results.push(item);
                             });

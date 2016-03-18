@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Others must follow above three meta -->
     <title translate="{{'HOME_TITLE'}}"></title>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" >
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <!--<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
     <link type="text/css" href="styles/latin-ext.css" rel="stylesheet">
     <link href="styles/bootstrap.min.css" rel="stylesheet">
@@ -14,8 +14,8 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="scripts/libs/html5shiv.min.js"></script>
-        <script src="scripts/libs/respond.min.js"></script>
+    <script src="scripts/libs/html5shiv.min.js"></script>
+    <script src="scripts/libs/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript" src="scripts/libs/require.min.js" data-main="scripts/main"
             data-bootstrap="app/bootstrap/home"></script>
@@ -25,11 +25,10 @@
 
 <!-- header start here -->
 <header class="relative">
-    <div class="container" data-ng-include="'templates/partials/header.html'"  role="banner">
+    <div class="container" data-ng-include="'templates/partials/header.html'" role="banner">
     </div>
-    <div class="line"></div>
-    <nav class="navbar-default" role="navigation" data-ng-include="'templates/partials/navigator.html'">
-    </nav>
+    <div role="navigation" data-ng-include="'templates/partials/navigator.html'">
+    </div>
 </header>
 <!-- header end here -->
 
@@ -40,22 +39,21 @@
 <!-- footer start here -->
 <footer role="contentinfo">
     <!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-9 col-xs-12" data-ng-include="'templates/partials/home-news.html'">-->
-            <!--</div>-->
-            <!--<div class="col-md-3 col-xs-12" data-ng-include="'templates/partials/home-links.html'">-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-9 col-xs-12" data-ng-include="'templates/partials/home-news.html'">-->
     <!--</div>-->
-    <div class="container" data-ng-include="'templates/partials/home-partner1.html'">
+    <!--<div class="col-md-3 col-xs-12" data-ng-include="'templates/partials/home-links.html'">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div data-ng-include="'templates/partials/home-partner1.html'">
     </div>
-    <div class="container-bg">
-        <div class="container" data-ng-include="'templates/partials/home-partner2.html'">
-        </div>
+
+    <div data-ng-include="'templates/partials/home-partner2.html'">
     </div>
-    <div class="copyright">
-        <div class="container" data-ng-include="'templates/partials/footer.html'">
-        </div>
+
+    <div data-ng-include="'templates/partials/footer.html'">
     </div>
 </footer>
 <!-- footer end here -->

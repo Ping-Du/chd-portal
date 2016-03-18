@@ -6,7 +6,7 @@ define(['config', 'app/services/session-service'], function (config, modules) {
             $translateProvider.useStaticFilesLoader({
                 files: [{
                     prefix:  config.webRoot + 'i18n/',
-                    suffix: '.json'
+                    suffix: '.txt'
                 }]
             });
             $translateProvider.registerAvailableLanguageKeys(['ENG', 'CHI'], {

@@ -1,27 +1,86 @@
+<form class="search-main">
+    <div class="container">
+        <div class=" row">
+            <div class="col-md-4 relative">
+                <i class="icon-location2"></i>
+                <!--<input type="text" class="form-control" placeholder="Location">-->
+                <angucomplete id="searchLocation"
+                              placeholder="Location"
+                              pause="1000"
+                              selectedobject="selectedSearchLocation"
+                              localdata="searchLocations"
+                              searchfields="Name"
+                              titlefield="Name"
+                              minlength="1"
+                              inputclass="form-control input"/>
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
+                       placeholder="Check In Date" data-ng-model="checkInDate">
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
+                       placeholder="Check Out Date" data-ng-model="checkOutDate">
+            </div>
+            <div class="col-md-3 relative">
+                <i class="icon-users"></i>
+                <input type="text" class="form-control input" placeholder="0 rooms 0 adults 0 children"
+                       data-ng-model="roomsInfo"
+                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       popover-is-open="showGuests" ng-click="showGuests = true"
+                       popover-trigger="none" popover-placement="bottom">
+            </div>
+            <div class="col-md-1 relative">
+                <a href data-ng-click="searchHotels()" uib-tooltip="{{tooltips}}"
+                   tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
+                   tooltip-trigger="none"><i class="icon-search"></i></a>
+            </div>
+        </div>
+    </div>
+</form>
+<!--<script type="text/ng-template" id="GuestsTemplate.html">-->
+<!--<div style="width:550px;height:330px;padding: 0 10px;">-->
+<!--<form class="form-inline">-->
+<!--<div class="form-group">-->
+<!--<label class="control-label" for="roomQty">Rooms:</label>-->
+<!--<input type="text" class="form-control" style="width:50px;" id="roomQty" data-ng-model="$parent.rooms">-->
+<!--<input type="button" class="btn btn-default btn-xs" value="Update" data-ng-click="$parent.updateRooms(rooms)">-->
+<!--</div>-->
+<!--</form>-->
+<!--<br>-->
+<!--<div style="height: 200px;overflow: scroll" >-->
+<!--<table class="table table-bordered table-striped">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>Room</th>-->
+<!--<th>First Name</th>-->
+<!--<th>Last Name</th>-->
+<!--<th>Age</th>-->
+<!--<th uib-tooltip="Age range 0-17, Use comma to separate. For example: 10,12">Minor Ages</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr data-ng-repeat="item in $parent.guests">-->
+<!--<td>{{$index+1}}</td>-->
+<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.firstName"></td>-->
+<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.lastName"></td>-->
+<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.age"></td>-->
+<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.minors"></td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--<br>-->
+<!--<div class="text-right">-->
+<!--<span><input class="btn btn-primary" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</script>-->
 <div class="container-bg container-padding">
     <div class="container">
         <div class="filter-box">
-            <dl class="filter-item">
-                <dt><i class="icon-location2"></i>&nbsp;{{"LOCATION"|translate}}</dt>
-                <dd>
-                    <a href data-ng-class="{'active':selectedLocation==null}"
-                       data-ng-click="filterByLocation(null)">All</a>
-                    <a href data-ng-repeat="item in locations | orderBy:'+Name':false"
-                       data-ng-class="{'active':selectedLocation==item.Id}"
-                       data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
-                    <a href data-ng-click="isCollapsed = !isCollapsed" data-ng-show="moreLocations.length > 0">
-                        <i class="main-red"
-                           data-ng-class="{'icon-caret-down':isCollapsed, 'icon-caret-up':!isCollapsed}"
-                           style="font-size: 24px;"></i>
-                    </a>
-
-                    <div uib-collapse="isCollapsed">
-                        <a href data-ng-repeat="item in moreLocations | orderBy:'+Name':false"
-                           data-ng-class="{'active':selectedLocation==item.Id}"
-                           data-ng-click="filterByLocation(item.Id)">{{item.Name}}</a>
-                    </div>
-                </dd>
-            </dl>
             <dl class="filter-item">
                 <dt><i class="icon-star-full"></i>&nbsp;{{"STAR"|translate}}</dt>
                 <dd>
@@ -81,10 +140,12 @@
                         </a>
 
                         <div class="caption">
-                            <ul class="ticket">
-                                <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
-                                <!--<li class="text-right"><s>$120</s>-->
-                                <!--<p class="price">$89.00</p></li>-->
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a>
+                                <i data-ng-class="item.starClass"></i></h3>
+                            <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
+                            <ul class="hotel">
+                                <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
+                                <!--<li class="text-right price"><span>$89.00</span></li>-->
                             </ul>
                         </div>
                     </div>

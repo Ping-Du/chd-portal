@@ -1,0 +1,38 @@
+<!--<script type="text/ng-template" id="GuestsTemplate.html">-->
+    <div style="width:550px;height:330px;padding: 0 10px;">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="control-label" for="roomQty">Rooms:</label>
+                <input type="text" class="form-control" style="width:50px;" id="roomQty" data-ng-model="$parent.rooms" data-ng-change="updateRooms()">
+                <!--<input type="button" class="btn btn-default btn-xs" value="Update" data-ng-click="$parent.updateRooms()">-->
+            </div>
+        </form>
+        <br>
+        <div style="height: 200px;overflow: scroll" >
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th uib-tooltip="Age range 0-17, Use comma to separate. For example: 10,12">Minor Ages</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="item in $parent.guests">
+                    <td>{{$index+1}}</td>
+                    <td><input class="form-control input-sm" type="text" data-ng-model="item.firstName" placeholder="first name"></td>
+                    <td><input class="form-control input-sm" type="text" data-ng-model="item.lastName" placeholder="last name"></td>
+                    <td><input class="form-control input-sm" type="text" data-ng-model="item.age" placeholder="age: 30"></td>
+                    <td class="has-error"><input class="form-control input-sm" type="text" data-ng-model="item.minors" placeholder="minors: 2,3"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="text-right">
+            <span><input class="btn btn-primary" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>
+        </div>
+    </div>
+<!--</script>-->

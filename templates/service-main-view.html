@@ -48,10 +48,16 @@
                         </a>
 
                         <div class="caption">
-                            <ul class="ticket">
-                                <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
-                                <!--<li class="text-right"><s>$120</s>-->
-                                <!--<p class="price">$89.00</p></li>-->
+                            <!--<ul class="ticket">-->
+                                <!--<li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>-->
+                                <!--&lt;!&ndash;<li class="text-right"><s>$120</s>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<p class="price">$89.00</p></li>&ndash;&gt;-->
+                            <!--</ul>-->
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>
+                            <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
+                            <ul class="hotel">
+                                <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
+                                <!--<li class="text-right price"><span>$89.00</span></li>-->
                             </ul>
                         </div>
                     </div>

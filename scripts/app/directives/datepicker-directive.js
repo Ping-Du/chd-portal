@@ -3,20 +3,24 @@ define(['app/services/session-service', 'bootstrap-datepicker.zh-CN'], function 
         return {
             restrict:'A',
             scope:{
-                initDate:'='
+                initDate:'=',
+                startDate:'@'
             },
-            link:function(scope, element, attrs) {
+            link:function($scope, element, attrs) {
                 var languageId = 'en';
                 if(SessionServiceProvider.languageId() == 'CHI'){
                     languageId = 'zh-CN';
                 }
                 $('#'+attrs.id).datepicker({
                     format:"yyyy-mm-dd",
-                    language:languageId
+                    language:languageId,
+                    startDate:$scope.startDate,
+                    autoclose:true,
+                    todayBtn:false
                 });
 
-                if(scope.initDate)
-                    $('#'+attrs.id).datepicker('update', scope.initDate);
+                if($scope.initDate)
+                    $('#'+attrs.id).datepicker('update', $scope.initDate);
 
             }
         };
