@@ -37,7 +37,7 @@ define(['app/services/hotel-service',
                 $scope.roomsHasError = false;
                 $scope.checkInDate = criteria ? criteria.checkInDate : "";
                 $scope.checkOutDate = criteria ? criteria.checkOutDate : "";
-                $scope.roomsInfo = ValidateGuestsInfo($scope.guests).message;
+                $scope.roomsInfo = ValidateHotelGuestsInfo($scope.guests).message;
                 $scope.selectedLocation = criteria ? criteria.locationId : null;
                 $scope.selectedLocationName = criteria ? criteria.locationName : '';
                 $scope.selectedSearchLocation = null;
@@ -55,7 +55,7 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.showGuests = false;
-                $scope.guestsTemplateUrl = "templates/partials/guests-popover.html";//"GuestsTemplate.html";
+                $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 
 
                 $scope.closeGuests = function () {

@@ -1,13 +1,13 @@
 define(['app/services/services-service',
     'app/services/language-service',
     'app/services/navbar-service',
-    'app/directives/datepicker-directive'], function (modules) {
+    'app/directives/datepicker-directive', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('ServiceMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate', '$cookieStore',
-            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore) {
+            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout',
+            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -30,16 +30,24 @@ define(['app/services/services-service',
                 });
 
                 $scope.webRoot = SessionService.config().webRoot;
+                $scope.languageId = SessionService.languageId();
+                $scope.$on('LanguageChanged', function (event, data) {
+                    if ($scope.languageId != data) {
+                        $scope.languageId = data;
+                        load();
+                    }
+                });
 
-                var filter = $cookieStore.get(serviceType + 'Filter');
+                var criteria = $cookieStore.get('serviceCriteria');
+                $scope.guests = criteria?criteria.guests:[];
+                $scope.adults = ''+$scope.guests.length;
+                $scope.adultsHasError = false;
+                $scope.startDate = criteria?criteria.startDate:"";
+                $scope.guestsInfo = ValidateServiceGuestsInfo($scope.guests).message;
+                $scope.selectedLocation = criteria?criteria.locationId:null;
+                $scope.selectedLocationName = criteria?criteria.locationName:'';
+                $scope.selectedSearchLocation = null;
 
-                function saveFilters() {
-                    $cookieStore.put(serviceType + 'Filter', {
-                        location: $scope.selectedLocation
-                    });
-                }
-
-                $scope.selectedLocation = (filter?filter.location:null);
                 $scope.locations = [];
                 function fillLocations(value) {
                     if (!_.find($scope.locations, function (item) {
@@ -50,8 +58,6 @@ define(['app/services/services-service',
                 }
 
                 $scope.filterByLocation = function (id) {
-                    $scope.selectedLocation = id;
-                    saveFilters();
                     fillServices();
                 };
 
@@ -72,12 +78,126 @@ define(['app/services/services-service',
                     });
                 }
 
+                $scope.showTooltip = false;
+                $scope.tooltips = "";
+
+                function showError(message) {
+                    $scope.tooltips = message;
+                    $scope.showTooltip = true;
+                    $timeout(function(){
+                        $scope.tooltips = "";
+                        $scope.showTooltip = false;
+                    }, 5000);
+                }
+
+                $scope.showGuests = false;
+                $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
+
+                $scope.closeGuests = function(){
+                    var result = ValidateServiceGuestsInfo($scope.guests, false, false);
+
+                    if(!result.hasError) {
+                        $scope.showGuests = false;
+                        $scope.guestsInfo = result.message;
+                    }
+                };
+
+                $scope.updateGuests = function() {
+                    if(!IsInteger($scope.adults)) {
+                        $scope.adultsHasError = true;
+                        return;
+                    } else {
+                        $scope.adultsHasError = false;
+                    }
+
+                    var adults = parseInt($scope.adults);
+                    if(adults < $scope.guests.length) {
+                        $scope.guests = _.first($scope.guests, adults)
+                    } else if(adults > $scope.guests.length){
+                        var more = adults - $scope.guests.length;
+                        for(var i = 0; i < more; i++) {
+                            $scope.guests.push({
+                                firstName: '',
+                                lastName: '',
+                                ages: '',
+                                minors: '',
+                                firstNameError:false,
+                                lastNameError:false,
+                                agesError:false,
+                                minorsError:false
+                            });
+                        }
+                    }
+                };
+
+                $scope.searchServices = function() {
+                    $scope.selectedLocation = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Id:$scope.selectedLocation;
+                    $scope.selectedLocationName = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Name:$scope.selectedLocationName;
+
+                    if($scope.selectedLocation == null) {
+                        showError("Please select a location!");
+                        return;
+                    }
+
+                    var result = ValidateServiceGuestsInfo($scope.guests);
+                    if(result.adults == 0) {
+                        $scope.filterByLocation($scope.selectedLocation);
+                    } else {
+
+                        if($scope.startDate == "") {
+                            showError("Start date is required!");
+                            return;
+                        }
+
+                        var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
+                        var now = new Date();
+                        if(startDate < now.getTime()){
+                            showError("Start date must be later than now!");
+                            return;
+                        }
+
+                        if(result.adults > 0 &&  result.hasError) {
+                            showError("Guests is required!");
+                            return;
+                        }
+
+                        //check availability
+                        $cookieStore.put('serviceCriteria', {
+                            locationId: $scope.selectedLocation,
+                            locationName:$scope.selectedLocationName,
+                            startDate:$scope.startDate,
+                            guests: $scope.guests
+                        });
+
+                        var param = {
+                            ProductId:null,
+                            ServiceTime:null,
+                            DestinationId:$scope.selectedLocation,
+                            LanguageId:$scope.languageId,
+                            CategoryId:null,
+                            StartDate:$scope.startDate+'T00:00:00.000Z',
+                            Guests:GuestsToServiceCriteria($scope.guests)
+                        };
+
+                        ServicesService.getAvailability(param).then(function(data){
+                            $scope.allServices = [];
+                            _.each($scope.allServices, function (item, index) {
+                                if(getServiceType(item.ServiceType.Id) == serviceType) {
+                                    item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
+                                    //fillLocations(item.Location);
+                                    $scope.allServices.push(item);
+                                }
+                            });
+                            fillServices();
+                        },function(){
+                        });
+                    }
+                };
+
                 function loadAllServices() {
                     ServicesService.getServiceByType(serviceType).then(function (data) {
                         $scope.allServices = data;
                         _.each($scope.allServices, function (item, index) {
-                            //if(index % 2 == 0)
-                            //    item.Featured = true;
                             item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
                             fillLocations(item.Location);
                         });
@@ -90,14 +210,6 @@ define(['app/services/services-service',
                 function load() {
                     loadAllServices();
                 }
-
-                $scope.languageId = SessionService.languageId();
-                $scope.$on('LanguageChanged', function (event, data) {
-                    if ($scope.languageId != data) {
-                        $scope.languageId = data;
-                        load();
-                    }
-                });
 
                 load();
 
