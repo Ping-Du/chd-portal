@@ -1,4 +1,4 @@
-define(['app/services/header-service', 'app/StringUtils'], function (modules) {
+define(['app/services/header-service', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers

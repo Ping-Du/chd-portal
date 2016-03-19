@@ -1,3 +1,14 @@
+
+String.prototype.Trim = function(){
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+};
+String.prototype.LTrim = function(){
+    return this.replace(/(^\s*)/g, "");
+};
+String.prototype.RTrim = function() {
+    return this.replace(/(\s*$)/g, "");
+};
+
 function elementPosition(obj) {
     var curleft = 0, curtop = 0;
     if (obj.offsetParent) {
@@ -40,9 +51,126 @@ function getServiceType(serviceTypeId) {
         'SHTTL': 'tours'
     };
 
-    if(serviceTypes[serviceTypeId])
+    if (serviceTypes[serviceTypeId])
         return serviceTypes[serviceTypeId];
     else
         return 'unknown';
 }
+
+function IsInteger(s) {
+    if (s != null) {
+        var r, re;
+        re = /\d+/i; //\d表示数字,*表示匹配多个数字
+        r = s.match(re);
+        return (r == s) ? true : false;
+    } else {
+        return false;
+    }
+}
+
+function ValidateGuestsInfo(guests, lastNameRequired, firstNameRequired) {
+    var result = {
+        hasError:false,
+        rooms:0,
+        adults:0,
+        children: 0,
+        message:""
+    };
+
+    for (var g = 0; g < guests.length; g++) {
+        result.rooms++;
+        if(lastNameRequired) {
+            guests[g].lastName = guests[g].lastName.Trim();
+            if(guests[g].lastName == '') {
+                guests[g].lastNameError = true;
+                result.hasError = true;
+            } else{
+                guests[g].lastNameError=false;
+            }
+        } else {
+            guests[g].lastNameError = false;
+        }
+
+        if(firstNameRequired) {
+            guests[g].firstName = guests[g].firstName.Trim();
+            if(guests[g].firstName == '') {
+                guests[g].firstNameError = true;
+                result.hasError = true;
+            } else{
+                guests[g].firstNameError=false;
+            }
+        } else {
+            guests[g].firstNameError = false;
+        }
+
+        guests[g].ages = guests[g].ages.replace(/\s/g,'');
+        if(guests[g].ages != '') {
+            var ages = guests[g].ages.split(',');
+            for(var j = 0; j < ages.length; j++) {
+                if (!IsInteger(ages[j])) {
+                    guests[g].agesError = true;
+                    result.hasError = true;
+                } else {
+                    if (parseInt(ages[j]) <= 17 || parseInt(ages[j]) > 100) {
+                        guests[g].agesError = true;
+                        result.hasError = true;
+                    }
+                    else {
+                        guests[g].agesError = false;
+                    }
+                }
+            }
+            result.adults += ages.length;
+        } else {
+            result.hasError = true;
+            guests[g].agesError = true;
+        }
+
+        guests[g].minors = guests[g].minors.replace(/\s/g,'');
+        if (guests[g].minors != '') {
+            var minors = guests[g].minors.split(',');
+            for (var i = 0; i < minors.length; i++) {
+                if (!IsInteger(minors[i])) {
+                    guests[g].minorsError = true;
+                    result.hasError = true;
+                } else {
+                    if (parseInt(minors) > 17) {
+                        guests[g].minorsError = true;
+                        result.hasError = true;
+                    } else {
+                        guests[g].minorsError = false;
+                    }
+                }
+            }
+            result.children += minors.length;
+        }
+    }
+    result.message = result.rooms + ' room(s) ' + result.adults + ' adult(s) ' + result.children + ' minor(s)';
+    return result;
+}
+
+function GuestsToArray(guests) {
+    var rooms = [];
+    for(var i = 0; i < guests.length; i++) {
+        var item = guests[i];
+        var minors = [];
+        if(item.minors != '')
+            minors = item.minors.split(',');
+        for(var j = 0; j < minors.length; j++) {
+            minors[j] = parseInt(minors[j]);
+        }
+        rooms.push({
+            Guests: {
+                Adults: item.ages.split(',').length,
+                MinorAges: minors
+            }
+        });
+    }
+    return rooms;
+}
+
+function DayDiff(startDate, endDate) {
+    return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
+}
+
 

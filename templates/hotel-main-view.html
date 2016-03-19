@@ -4,29 +4,32 @@
             <div class="col-md-4 relative">
                 <i class="icon-location2"></i>
                 <!--<input type="text" class="form-control" placeholder="Location">-->
-                <angucomplete id="searchLocation"
-                              placeholder="Location"
-                              pause="1000"
-                              selectedobject="selectedSearchLocation"
-                              localdata="searchLocations"
-                              searchfields="Name"
-                              titlefield="Name"
-                              minlength="1"
-                              inputclass="form-control input"/>
+                <div angucomplete-alt id="searchLocation"
+                     placeholder="Location"
+                     pause="1000"
+                     selected-object="selectedSearchLocation"
+                     local-data="searchLocations"
+                     search-fields="ProductId,Name"
+                     title-field="Name"
+                     minlength="1"
+                     input-class="form-control input"
+                     match-class="highlight"
+                     initial-value="selectedLocationName">
+                </div>
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Check In Date" data-ng-model="checkInDate">
+                       placeholder="Check In Date" data-ng-model="checkInDate" data-init-date="checkInDate">
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
-                       placeholder="Check Out Date" data-ng-model="checkOutDate">
+                       placeholder="Check Out Date" data-ng-model="checkOutDate" data-init-date="checkOutDate">
             </div>
             <div class="col-md-3 relative">
                 <i class="icon-users"></i>
-                <input type="text" class="form-control input" placeholder="0 rooms 0 adults 0 children"
+                <input type="text" class="form-control input" placeholder="0 rooms 0 adults 0 minors"
                        data-ng-model="roomsInfo"
                        uib-popover-template="guestsTemplateUrl" popover-title="Guests"
                        popover-is-open="showGuests" ng-click="showGuests = true"
@@ -40,44 +43,6 @@
         </div>
     </div>
 </form>
-<!--<script type="text/ng-template" id="GuestsTemplate.html">-->
-<!--<div style="width:550px;height:330px;padding: 0 10px;">-->
-<!--<form class="form-inline">-->
-<!--<div class="form-group">-->
-<!--<label class="control-label" for="roomQty">Rooms:</label>-->
-<!--<input type="text" class="form-control" style="width:50px;" id="roomQty" data-ng-model="$parent.rooms">-->
-<!--<input type="button" class="btn btn-default btn-xs" value="Update" data-ng-click="$parent.updateRooms(rooms)">-->
-<!--</div>-->
-<!--</form>-->
-<!--<br>-->
-<!--<div style="height: 200px;overflow: scroll" >-->
-<!--<table class="table table-bordered table-striped">-->
-<!--<thead>-->
-<!--<tr>-->
-<!--<th>Room</th>-->
-<!--<th>First Name</th>-->
-<!--<th>Last Name</th>-->
-<!--<th>Age</th>-->
-<!--<th uib-tooltip="Age range 0-17, Use comma to separate. For example: 10,12">Minor Ages</th>-->
-<!--</tr>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr data-ng-repeat="item in $parent.guests">-->
-<!--<td>{{$index+1}}</td>-->
-<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.firstName"></td>-->
-<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.lastName"></td>-->
-<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.age"></td>-->
-<!--<td><input class="form-control input-sm" type="text" data-ng-model="item.minors"></td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--<br>-->
-<!--<div class="text-right">-->
-<!--<span><input class="btn btn-primary" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</script>-->
 <div class="container-bg container-padding">
     <div class="container">
         <div class="filter-box">

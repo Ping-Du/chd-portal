@@ -1,3 +1,49 @@
+<form class="search-main">
+    <div class="container">
+        <div class=" row">
+            <div class="col-md-4 relative">
+                <i class="icon-location2"></i>
+                <!--<input type="text" class="form-control" placeholder="Location">-->
+                <div angucomplete-alt id="searchLocation"
+                     placeholder="Location"
+                     pause="1000"
+                     selected-object="selectedSearchLocation"
+                     local-data="searchLocations"
+                     search-fields="ProductId,Name"
+                     title-field="Name"
+                     minlength="1"
+                     input-class="form-control input"
+                     match-class="highlight"
+                     initial-value="selectedLocationName"
+                     disable-input="true" >
+                </div>
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
+                       placeholder="Check In Date" data-ng-model="checkInDate" data-init-date="checkInDate">
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
+                       placeholder="Check Out Date" data-ng-model="checkOutDate" data-init-date="checkOutDate">
+            </div>
+            <div class="col-md-3 relative">
+                <i class="icon-users"></i>
+                <input type="text" class="form-control input" placeholder="0 rooms 0 adults 0 minors"
+                       data-ng-model="roomsInfo"
+                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       popover-is-open="showGuests" ng-click="showGuests = true"
+                       popover-trigger="none" popover-placement="bottom">
+            </div>
+            <div class="col-md-1 relative">
+                <a href data-ng-click="load(true)" uib-tooltip="{{tooltips}}"
+                   tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
+                   tooltip-trigger="none" ><i class="icon-search"></i></a>
+            </div>
+        </div>
+    </div>
+</form>
 <div class="container-bg container-padding" id="top">
     <div class="container">
         <div class="row">
@@ -34,7 +80,7 @@
             </div>
             <section class="col-md-4">
                 <div class="service-detail-info">
-                    <span class="caption">{{hotelItem.Name}}</span>
+                    <span class="caption">{{hotelItem.Name}}</span><i data-ng-class="starClass" style="position:absolute;"></i>
                 </div>
                 <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
                 <br/>
@@ -51,31 +97,80 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
+                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Rooms</a>
                     <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
+                    <a href onclick="scrollToControl('term')"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Terms</a>
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
                 </div>
-                <div class="row">
-                    <div class="price-btn-part">
-                        <div class="col-xs-12 col-md-12 text-right">
-                            <a href class="btn btn-red">Check Availability</a></div>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="price-btn-part">-->
+                        <!--<div class="col-xs-12 col-md-12 text-right">-->
+                            <!--<a href class="btn btn-red">Check Availability</a></div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </section>
         </div>
         <div class="detail-nav-wrap is-stuck">
             <nav class="container">
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('category')">Rooms</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('detail')">Detail</a></li>
+                    <li class="menu-item" ><a href onclick="scrollToControl('category')">Terms</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
             </nav>
         </div>
+        <section class="detail-wrap" id="category">
+            <h3>Rooms</h3>
+            <div class="table-content">
+                <div class="table-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="thead">
+                                <td class="tlist-1">Category</td>
+                                <td class="tlist-3">Price</td>
+                                <td class="tlist-4">Available</td>
+                                <td class="tlist-5">Operation</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in hotelItem.AvailabilityCategories" data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
+                                <td>
+                                    <div class="media media-roomlist">
+                                        <div class="media-left media-middle">
+                                            <img class="media-object" src="images/na.png">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{item.Name}}</h5>
+                                            <p class="p-detail">Product ID: {{item.Id}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="price">${{item.Price}}</span></td>
+                                <td>{{item.AvailabilityLevel}}</td>
+                                <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}">Book Now</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="detail-wrap" id="detail">
             <h3>Detail</h3>
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-bind-html="hotelItem.AdditionalInformation[1].FormattedText"></p>
+            </div>
+        </section>
+        <section class="detail-wrap" id="term">
+            <h3>Terms</h3>
+            <div class="content">
+                <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
+                <p data-ng-repeat="item in hotelItem.Warnings" data-ng-bind-html="item.FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="map">
@@ -155,8 +250,10 @@
             $('.detail-nav-wrap').stickUp({
                 parts: {
                     0:'top',
-                    1:'detail',
-                    2: 'map'},
+                    1: 'category',
+                    2: 'detail',
+                    3:'term',
+                    4: 'map'},
                 itemClass: 'menu-item',
                 itemHover: 'active' });
         });
