@@ -126,6 +126,8 @@ define(['app/services/services-service',
                 function loadService(reload) {
                     ServicesService.getServiceDetail($routeParams.serviceId).then(function(data){
                         $scope.serviceItem = data;
+                        $scope.selectedLocation = data.Location.Id;
+                        $scope.selectedLocationName = data.Location.Name;
                         if(!reload)
                             doAdditionalProcess(data);
                     });
@@ -162,14 +164,6 @@ define(['app/services/services-service',
                             return;
                         }
 
-                        //check availability
-                        $cookieStore.put('serviceCriteria', {
-                            locationId: $scope.selectedLocation,
-                            locationName:$scope.selectedLocationName,
-                            startDate:$scope.startDate,
-                            guests: $scope.guests
-                        });
-
                         var param = {
                             ProductId:$routeParams.serviceId,
                             ServiceTime:null,
@@ -196,6 +190,14 @@ define(['app/services/services-service',
                 };
 
                 $scope.load = function(reload) {
+
+                    $cookieStore.put('serviceCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName:$scope.selectedLocationName,
+                        startDate:$scope.startDate,
+                        guests: $scope.guests
+                    });
+
                     if ($scope.adults != '0' && $scope.adults != '')
                         $scope.checkAvailability(reload);
                     else

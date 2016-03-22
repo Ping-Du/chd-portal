@@ -117,6 +117,8 @@ define(['app/services/hotel-service',
                 function loadHotel(reload) {
                     HotelService.getHotelDetail($routeParams.hotelId).then(function (data) {
                         $scope.hotelItem = data;
+                        $scope.selectedLocation = data.Location.Id;
+                        $scope.selectedLocationName = data.Location.Name;
                         if(!reload)
                             doAdditionalProcess(data);
                     });
