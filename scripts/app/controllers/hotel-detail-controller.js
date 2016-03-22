@@ -59,7 +59,7 @@ define(['app/services/hotel-service',
 
 
                 $scope.closeGuests = function () {
-                    var result = ValidateGuestsInfo($scope.guests, false, false);
+                    var result = ValidateHotelGuestsInfo($scope.guests, false, false);
 
                     if (!result.hasError) {
                         $scope.showGuests = false;
@@ -123,7 +123,7 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.checkAvailability = function (reload) {
-                    var result = ValidateGuestsInfo($scope.guests);
+                    var result = ValidateHotelGuestsInfo($scope.guests);
                     if ($scope.checkInDate == "") {
                         showError("Check in date is required!");
                         return;
@@ -169,6 +169,8 @@ define(['app/services/hotel-service',
                             $scope.hotelItem = data[0];
                             if(!reload)
                                 doAdditionalProcess(data[0]);
+                            else
+                                scrollToControl('category');
                         }
                     }, function () {
                     });

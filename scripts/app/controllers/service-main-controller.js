@@ -24,6 +24,7 @@ define(['app/services/services-service',
                 }
 
                 var serviceType = parseService($location.path());
+                var serviceTypeId = getServiceType(serviceType, true);
                 $rootScope.$broadcast('ServiceChanged', serviceType);
                 $translate(modules.angular.uppercase(serviceType) + '_TITLE').then(function (data) {
                     $('title').text(data);
@@ -175,14 +176,15 @@ define(['app/services/services-service',
                             DestinationId:$scope.selectedLocation,
                             LanguageId:$scope.languageId,
                             CategoryId:null,
+                            ServiceType:serviceTypeId,
                             StartDate:$scope.startDate+'T00:00:00.000Z',
                             Guests:GuestsToServiceCriteria($scope.guests)
                         };
 
                         ServicesService.getAvailability(param).then(function(data){
                             $scope.allServices = [];
-                            _.each($scope.allServices, function (item, index) {
-                                if(getServiceType(item.ServiceType.Id) == serviceType) {
+                            _.each(data, function (item, index) {
+                                if(item.ServiceType.Id == serviceTypeId) {
                                     item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
                                     //fillLocations(item.Location);
                                     $scope.allServices.push(item);
@@ -208,7 +210,10 @@ define(['app/services/services-service',
                 }
 
                 function load() {
-                    loadAllServices();
+                    if($scope.adults != '0' && $scope.adults != '')
+                        $scope.searchServices();
+                    else
+                        loadAllServices();
                 }
 
                 load();

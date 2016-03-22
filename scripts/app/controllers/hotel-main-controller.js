@@ -217,7 +217,7 @@ define(['app/services/hotel-service',
                 };
 
                 $scope.closeGuests = function(){
-                    var result = ValidateGuestsInfo($scope.guests, false, false);
+                    var result = ValidateHotelGuestsInfo($scope.guests, false, false);
 
                     if(!result.hasError) {
                         $scope.showGuests = false;

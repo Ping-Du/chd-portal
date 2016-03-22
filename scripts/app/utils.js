@@ -43,18 +43,26 @@ function initMap(lat, lng, title) {
     });
 }
 
-function getServiceType(serviceTypeId) {
-    var serviceTypes = {
-        "SHOW": 'shows',
-        "ATTAD": 'activities',
-        'DINE': 'dining',
-        'SHTTL': 'tours'
-    };
+function getServiceType(serviceTypeId, byName) {
+    var serviceTypes = [
+        {id:"SHOW",name: 'shows'},
+        {id:"ATTAD",name: 'activities'},
+        {id:'DINE',name:'dining'},
+        {id:'SHTTL',name:'tours'}
+    ];
 
-    if (serviceTypes[serviceTypeId])
-        return serviceTypes[serviceTypeId];
-    else
-        return 'unknown';
+    for(var i = 0; i < serviceTypes.length; i++) {
+        if(!byName) {
+            if (serviceTypes[i].id == serviceTypeId)
+                return serviceTypes[i].name;
+        } else {
+            if(serviceTypes[i].name == serviceTypeId) {
+                return serviceTypes[i].id;
+            }
+        }
+    }
+
+    return "unknown";
 }
 
 function IsInteger(s) {
