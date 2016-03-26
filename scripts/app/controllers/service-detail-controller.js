@@ -9,8 +9,8 @@ define(['app/services/services-service',
 
     modules.controllers
         .controller('ServiceDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'ServicesService', 'LanguageService','$translate', '$window', '$cookieStore',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, $window, $cookieStore) {
+            'ServicesService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, $window, $cookieStore, $timeout) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -42,14 +42,16 @@ define(['app/services/services-service',
                     }
                 });
 
+                $scope.searchLocations = [];
+
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria?criteria.guests:[];
-                $scope.adults = ''+$scope.guests.length;
+                $scope.guests = criteria ? criteria.guests : [];
+                $scope.adults = '' + $scope.guests.length;
                 $scope.adultsHasError = false;
-                $scope.startDate = criteria?criteria.startDate:"";
+                $scope.startDate = criteria ? criteria.startDate : "";
                 $scope.guestsInfo = ValidateServiceGuestsInfo($scope.guests).message;
-                $scope.selectedLocation = criteria?criteria.locationId:null;
-                $scope.selectedLocationName = criteria?criteria.locationName:'';
+                $scope.selectedLocation = criteria ? criteria.locationId : null;
+                $scope.selectedLocationName = criteria ? criteria.locationName : '';
                 $scope.selectedSearchLocation = null;
 
                 $scope.showTooltip = false;
@@ -58,7 +60,7 @@ define(['app/services/services-service',
                 function showError(message) {
                     $scope.tooltips = message;
                     $scope.showTooltip = true;
-                    $timeout(function(){
+                    $timeout(function () {
                         $scope.tooltips = "";
                         $scope.showTooltip = false;
                     }, 5000);
@@ -67,17 +69,17 @@ define(['app/services/services-service',
                 $scope.showGuests = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
 
-                $scope.closeGuests = function(){
+                $scope.closeGuests = function () {
                     var result = ValidateServiceGuestsInfo($scope.guests, false, false);
 
-                    if(!result.hasError) {
+                    if (!result.hasError) {
                         $scope.showGuests = false;
                         $scope.guestsInfo = result.message;
                     }
                 };
 
-                $scope.updateGuests = function() {
-                    if(!IsInteger($scope.adults)) {
+                $scope.updateGuests = function () {
+                    if (!IsInteger($scope.adults)) {
                         $scope.adultsHasError = true;
                         return;
                     } else {
@@ -85,20 +87,20 @@ define(['app/services/services-service',
                     }
 
                     var adults = parseInt($scope.adults);
-                    if(adults < $scope.guests.length) {
+                    if (adults < $scope.guests.length) {
                         $scope.guests = _.first($scope.guests, adults)
-                    } else if(adults > $scope.guests.length){
+                    } else if (adults > $scope.guests.length) {
                         var more = adults - $scope.guests.length;
-                        for(var i = 0; i < more; i++) {
+                        for (var i = 0; i < more; i++) {
                             $scope.guests.push({
                                 minors: '',
-                                minorsError:false
+                                minorsError: false
                             });
                         }
                     }
                 };
 
-                function doAdditionalProcess(serviceItem){
+                function doAdditionalProcess(serviceItem) {
                     var sliderImageData = [];
                     modules.angular.forEach(serviceItem.SliderImages, function (item, index) {
                         sliderImageData.push({
@@ -118,77 +120,67 @@ define(['app/services/services-service',
                 $scope.serviceItem = null;
                 $scope.showMap = false;
                 function loadService(reload) {
-                    ServicesService.getServiceDetail($routeParams.serviceId).then(function(data){
+                    ServicesService.getServiceDetail($routeParams.serviceId).then(function (data) {
                         $scope.serviceItem = data;
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
-                        if(!reload)
+                        if (!reload)
                             doAdditionalProcess(data);
                     });
                 }
 
                 $scope.checkAvailability = function (reload) {
-                    $scope.selectedLocation = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Id:$scope.selectedLocation;
-                    $scope.selectedLocationName = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Name:$scope.selectedLocationName;
 
-                    if($scope.selectedLocation == null) {
-                        showError("Please select a location!");
+                    var result = ValidateServiceGuestsInfo($scope.guests);
+
+                    if ($scope.startDate == "") {
+                        showError("Start date is required!");
                         return;
                     }
 
-                    var result = ValidateServiceGuestsInfo($scope.guests);
-                    if(result.adults == 0) {
-                        $scope.filterByLocation($scope.selectedLocation);
-                    } else {
-
-                        if($scope.startDate == "") {
-                            showError("Start date is required!");
-                            return;
-                        }
-
-                        var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
-                        var now = new Date();
-                        if(startDate < now.getTime()){
-                            showError("Start date must be later than now!");
-                            return;
-                        }
-
-                        if(result.adults > 0 &&  result.hasError) {
-                            showError("Guests is required!");
-                            return;
-                        }
-
-                        var param = {
-                            ProductId:$routeParams.serviceId,
-                            ServiceTime:null,
-                            DestinationId:null,//$scope.selectedLocation,
-                            LanguageId:$scope.languageId,
-                            CategoryId:null,
-                            ServiceType:null,
-                            StartDate:$scope.startDate+'T00:00:00.000Z',
-                            Guests:GuestsToServiceCriteria($scope.guests)
-                        };
-
-                        ServicesService.getAvailability(param).then(function(data){
-                            if (data.length > 0) {
-                                $scope.serviceItem = data[0];
-                                if(!reload)
-                                    doAdditionalProcess(data[0]);
-                                else
-                                    scrollToControl('category');
-                            }
-                        },function(){
-                        });
+                    var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
+                    var now = new Date();
+                    if (startDate < now.getTime()) {
+                        showError("Start date must be later than now!");
+                        return;
                     }
+
+                    if (result.adults > 0 && result.hasError) {
+                        showError("Guests is required!");
+                        return;
+                    }
+
+                    var param = {
+                        ProductId: $routeParams.serviceId,
+                        ServiceTime: null,
+                        DestinationId: null,//$scope.selectedLocation,
+                        LanguageId: $scope.languageId,
+                        CategoryId: null,
+                        ServiceType: null,
+                        StartDate: $scope.startDate + 'T00:00:00.000Z',
+                        Guests: GuestsToServiceCriteria($scope.guests)
+                    };
+
+                    ServicesService.getAvailability(param).then(function (data) {
+                        if (data.length > 0) {
+                            $scope.serviceItem = data[0];
+                            if (!reload)
+                                doAdditionalProcess(data[0]);
+                        }
+                        if(reload) {
+                            scrollToControl('category');
+                        }
+                    }, function () {
+                    });
 
                 };
 
-                $scope.load = function(reload) {
+                $scope.load = function (reload) {
 
                     $cookieStore.put('serviceCriteria', {
                         locationId: $scope.selectedLocation,
-                        locationName:$scope.selectedLocationName,
-                        startDate:$scope.startDate,
+                        locationName: $scope.selectedLocationName,
+                        startDate: $scope.startDate,
                         guests: $scope.guests
                     });
 

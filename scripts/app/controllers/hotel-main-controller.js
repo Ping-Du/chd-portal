@@ -163,20 +163,36 @@ define(['app/services/hotel-service',
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 
                 $scope.searchHotels = function() {
-                    $scope.selectedLocation = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.ProductId:$scope.selectedLocation;
-                    $scope.selectedLocationName = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Name:$scope.selectedLocationName;
+
+                    if($scope.selectedSearchLocation === undefined) { // user delete location
+                        $scope.selectedLocation = null;
+                        $scope.selectedLocationName = '';
+                    } else {
+                        $scope.selectedLocation = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.ProductId : $scope.selectedLocation;
+                        $scope.selectedLocationName = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.Name : $scope.selectedLocationName;
+                    }
                     $scope.selectedStar = null;
                     $scope.selectedType = null;
 
-                    if($scope.selectedLocation == null) {
-                        showError("Please select a location!");
-                        return;
-                    }
-
                     var result = ValidateHotelGuestsInfo($scope.guests);
+
+                    //check availability
+                    $cookieStore.put('hotelCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName:$scope.selectedLocationName,
+                        checkInDate:$scope.checkInDate,
+                        checkOutDate:$scope.checkOutDate,
+                        guests: $scope.guests
+                    });
+
                     if(result.rooms == 0) {
                         loadAllHotels($scope.selectedLocation);
                     } else {
+
+                        if($scope.selectedLocation == null) {
+                            showError("Please select a location!");
+                            return;
+                        }
 
                         if($scope.checkInDate == "") {
                             showError("Check in date is required!");
@@ -204,15 +220,6 @@ define(['app/services/hotel-service',
                             showError("Guests is required!");
                             return;
                         }
-
-                        //check availability
-                        $cookieStore.put('hotelCriteria', {
-                            locationId: $scope.selectedLocation,
-                            locationName:$scope.selectedLocationName,
-                            checkInDate:$scope.checkInDate,
-                            checkOutDate:$scope.checkOutDate,
-                            guests: $scope.guests
-                        });
 
                         var param = {
                             Nights: DayDiff(new Date(checkInDate), new Date(checkOutDate)),

@@ -167,8 +167,9 @@ define(['app/services/hotel-service',
                             $scope.hotelItem = data[0];
                             if(!reload)
                                 doAdditionalProcess(data[0]);
-                            else
-                                scrollToControl('category');
+                        }
+                        if(reload) {
+                            scrollToControl('category');
                         }
                     }, function () {
                     });

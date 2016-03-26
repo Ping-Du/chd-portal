@@ -1,13 +1,14 @@
 define(['app/services/services-service',
     'app/services/language-service',
     'app/services/navbar-service',
+    'app/services/search-service',
     'app/directives/datepicker-directive', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('ServiceMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout',
-            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout) {
+            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout', 'SearchService',
+            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout, SearchService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -49,13 +50,12 @@ define(['app/services/services-service',
                 $scope.selectedLocationName = criteria?criteria.locationName:'';
                 $scope.selectedSearchLocation = null;
 
-                $scope.locations = [];
-                function fillLocations(value) {
-                    if (!_.find($scope.locations, function (item) {
-                            return item.Id == value.Id;
-                        })) {
-                        $scope.locations.push(value);
-                    }
+                $scope.searchLocations = [];
+                function loadSearchLocations() {
+                    $scope.searchLocations = [];
+                    SearchService.getLocations().then(function(data){
+                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                    });
                 }
 
                 $scope.filterByLocation = function (id) {
@@ -126,18 +126,33 @@ define(['app/services/services-service',
                 };
 
                 $scope.searchServices = function() {
-                    $scope.selectedLocation = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Id:$scope.selectedLocation;
-                    $scope.selectedLocationName = $scope.selectedSearchLocation?$scope.selectedSearchLocation.originalObject.Name:$scope.selectedLocationName;
 
-                    if($scope.selectedLocation == null) {
-                        showError("Please select a location!");
-                        return;
+                    if($scope.selectedSearchLocation === undefined) { // user delete location
+                        $scope.selectedLocation = null;
+                        $scope.selectedLocationName = '';
+                    } else {
+                        $scope.selectedLocation = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.ProductId : $scope.selectedLocation;
+                        $scope.selectedLocationName = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.Name : $scope.selectedLocationName;
                     }
 
                     var result = ValidateServiceGuestsInfo($scope.guests);
+
+                    //check availability
+                    $cookieStore.put('serviceCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName:$scope.selectedLocationName,
+                        startDate:$scope.startDate,
+                        guests: $scope.guests
+                    });
+
                     if(result.adults == 0) {
-                        $scope.filterByLocation($scope.selectedLocation);
+                        loadAllServices();
                     } else {
+
+                        if($scope.selectedLocation == null) {
+                            showError("Please select a location!");
+                            return;
+                        }
 
                         if($scope.startDate == "") {
                             showError("Start date is required!");
@@ -155,14 +170,6 @@ define(['app/services/services-service',
                             showError("Guests is required!");
                             return;
                         }
-
-                        //check availability
-                        $cookieStore.put('serviceCriteria', {
-                            locationId: $scope.selectedLocation,
-                            locationName:$scope.selectedLocationName,
-                            startDate:$scope.startDate,
-                            guests: $scope.guests
-                        });
 
                         var param = {
                             ProductId:null,
@@ -195,7 +202,6 @@ define(['app/services/services-service',
                         $scope.allServices = data;
                         _.each($scope.allServices, function (item, index) {
                             item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
-                            fillLocations(item.Location);
                         });
                         fillServices();
                     }, function () {
@@ -204,6 +210,7 @@ define(['app/services/services-service',
                 }
 
                 function load() {
+                    loadSearchLocations();
                     if($scope.adults != '0' && $scope.adults != '')
                         $scope.searchServices();
                     else
