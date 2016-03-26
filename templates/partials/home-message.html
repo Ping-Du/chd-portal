@@ -1,6 +1,6 @@
-<div class="float-bar" id="float-bar" data-ng-controller="MessageController" data-ng-show="message.Title">
+<div class="message-bar" data-ng-controller="MessageController" data-ng-show="show">
     <div class="container relative">
-        <div style="font-size: 20px; color: #fff; margin: 20px 0;">{{message.Title}}</div>
-        <span class="icon-close2" onclick="$('#float-bar').hide();"></span>
+        <div style="font-size: 20px; color: #fff; margin: 20px 0;">{{message}}</div>
+        <span class="icon-close2" data-ng-click="close()"></span>
     </div>
 </div>

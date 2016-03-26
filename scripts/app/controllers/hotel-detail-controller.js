@@ -80,13 +80,9 @@ define(['app/services/hotel-service',
                         var more = rooms - $scope.guests.length;
                         for (var i = 0; i < more; i++) {
                             $scope.guests.push({
-                                firstName: '',
-                                lastName: '',
-                                ages: '',
+                                adults: '1',
                                 minors: '',
-                                firstNameError: false,
-                                lastNameError: false,
-                                agesError: false,
+                                adultsError: false,
                                 minorsError: false
                             });
                         }

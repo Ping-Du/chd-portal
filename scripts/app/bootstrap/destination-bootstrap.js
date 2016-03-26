@@ -1,4 +1,4 @@
-define(['app/interceptors/security-interceptor',
+define(['app/interceptors/http-interceptor',
         'app/controllers/language-controller',
         'app/controllers/header-controller',
         'app/controllers/navbar-controller',

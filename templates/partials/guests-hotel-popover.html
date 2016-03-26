@@ -1,5 +1,5 @@
 <!--<script type="text/ng-template" id="GuestsTemplate.html">-->
-    <div style="width:550px;height:330px;padding: 0 10px;">
+    <div style="width:400px;height:330px;padding: 0 10px;">
         <form class="form-inline">
             <div data-ng-class="{'form-group':true, 'has-error':$parent.roomsHasError }">
                 <label class="control-label" for="roomQty">Rooms:</label>
@@ -13,18 +13,14 @@
                 <thead>
                 <tr>
                     <th>Room</th>
-                    <!--<th>First Name</th>-->
-                    <!--<th>Last Name</th>-->
-                    <th>Adult Ages</th>
+                    <th>Adults</th>
                     <th>Minor Ages</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr data-ng-repeat="item in $parent.guests">
                     <td>{{$index+1}}</td>
-                    <!--<td data-ng-class="{'has-error':item.firstNameError}"><input class="form-control input-sm" type="text" data-ng-model="item.firstName" placeholder="first name"></td>-->
-                    <!--<td data-ng-class="{'has-error':item.lastNameError}"><input class="form-control input-sm" type="text" data-ng-model="item.lastName" placeholder="last name"></td>-->
-                    <td data-ng-class="{'has-error':item.agesError}"><input class="form-control input-sm" type="text" data-ng-model="item.ages" placeholder="ages( >17 ): 30,28"></td>
+                    <td data-ng-class="{'has-error':item.adultsError}"><input class="form-control input-sm" type="text" data-ng-model="item.adults" placeholder="1"></td>
                     <td data-ng-class="{'has-error':item.minorsError}"><input class="form-control input-sm" type="text" data-ng-model="item.minors" placeholder="minors( <=17 ): 2,3"></td>
                 </tr>
                 </tbody>

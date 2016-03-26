@@ -76,7 +76,7 @@ function IsInteger(s) {
     }
 }
 
-function ValidateHotelGuestsInfo(guests, lastNameRequired, firstNameRequired) {
+function ValidateHotelGuestsInfo(guests) {
     var result = {
         hasError:false,
         rooms:0,
@@ -87,51 +87,24 @@ function ValidateHotelGuestsInfo(guests, lastNameRequired, firstNameRequired) {
 
     for (var g = 0; g < guests.length; g++) {
         result.rooms++;
-        if(lastNameRequired) {
-            guests[g].lastName = guests[g].lastName.Trim();
-            if(guests[g].lastName == '') {
-                guests[g].lastNameError = true;
-                result.hasError = true;
-            } else{
-                guests[g].lastNameError=false;
-            }
-        } else {
-            guests[g].lastNameError = false;
-        }
-
-        if(firstNameRequired) {
-            guests[g].firstName = guests[g].firstName.Trim();
-            if(guests[g].firstName == '') {
-                guests[g].firstNameError = true;
-                result.hasError = true;
-            } else{
-                guests[g].firstNameError=false;
-            }
-        } else {
-            guests[g].firstNameError = false;
-        }
-
-        guests[g].ages = guests[g].ages.replace(/\s/g,'');
-        if(guests[g].ages != '') {
-            var ages = guests[g].ages.split(',');
-            for(var j = 0; j < ages.length; j++) {
-                if (!IsInteger(ages[j])) {
-                    guests[g].agesError = true;
+        guests[g].adults = guests[g].adults.replace(/\s/g,'');
+        if(guests[g].adults != '') {
+                if (!IsInteger(guests[g].adults)) {
+                    guests[g].adultsError = true;
                     result.hasError = true;
                 } else {
-                    if (parseInt(ages[j]) <= 17 || parseInt(ages[j]) > 100) {
-                        guests[g].agesError = true;
+                    if (parseInt(guests[g].adults) <= 0 || parseInt(guests[g].adults) > 10) {
+                        guests[g].adultsError = true;
                         result.hasError = true;
                     }
                     else {
-                        guests[g].agesError = false;
+                        guests[g].adultsError = false;
+                        result.adults += parseInt(guests[g].adults);
                     }
                 }
-            }
-            result.adults += ages.length;
         } else {
             result.hasError = true;
-            guests[g].agesError = true;
+            guests[g].adultsError = true;
         }
 
         guests[g].minors = guests[g].minors.replace(/\s/g,'');
@@ -157,7 +130,7 @@ function ValidateHotelGuestsInfo(guests, lastNameRequired, firstNameRequired) {
     return result;
 }
 
-function ValidateServiceGuestsInfo(guests, lastNameRequired, firstNameRequired) {
+function ValidateServiceGuestsInfo(guests) {
     var result = {
         hasError:false,
         adults:0,
@@ -167,49 +140,6 @@ function ValidateServiceGuestsInfo(guests, lastNameRequired, firstNameRequired) 
 
     for (var g = 0; g < guests.length; g++) {
         result.adults++;
-        if(lastNameRequired) {
-            guests[g].lastName = guests[g].lastName.Trim();
-            if(guests[g].lastName == '') {
-                guests[g].lastNameError = true;
-                result.hasError = true;
-            } else{
-                guests[g].lastNameError=false;
-            }
-        } else {
-            guests[g].lastNameError = false;
-        }
-
-        if(firstNameRequired) {
-            guests[g].firstName = guests[g].firstName.Trim();
-            if(guests[g].firstName == '') {
-                guests[g].firstNameError = true;
-                result.hasError = true;
-            } else{
-                guests[g].firstNameError=false;
-            }
-        } else {
-            guests[g].firstNameError = false;
-        }
-
-        guests[g].ages = guests[g].ages.replace(/\s/g,'');
-        if(guests[g].ages != '') {
-                if (!IsInteger(guests[g].ages)) {
-                    guests[g].agesError = true;
-                    result.hasError = true;
-                } else {
-                    if (parseInt(guests[g].ages) <= 17 || parseInt(guests[g].ages) > 100) {
-                        guests[g].agesError = true;
-                        result.hasError = true;
-                    }
-                    else {
-                        guests[g].agesError = false;
-                    }
-                }
-        } else {
-            result.hasError = true;
-            guests[g].agesError = true;
-        }
-
         guests[g].minors = guests[g].minors.replace(/\s/g,'');
         if (guests[g].minors != '') {
             var minors = guests[g].minors.split(',');
@@ -246,7 +176,7 @@ function GuestsToArray(guests) {
         }
         rooms.push({
             Guests: {
-                Adults: item.ages.split(',').length,
+                Adults: parseInt(item.adults),
                 MinorAges: minors
             }
         });

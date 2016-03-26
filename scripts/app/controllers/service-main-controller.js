@@ -118,13 +118,7 @@ define(['app/services/services-service',
                         var more = adults - $scope.guests.length;
                         for(var i = 0; i < more; i++) {
                             $scope.guests.push({
-                                firstName: '',
-                                lastName: '',
-                                ages: '',
                                 minors: '',
-                                firstNameError:false,
-                                lastNameError:false,
-                                agesError:false,
                                 minorsError:false
                             });
                         }

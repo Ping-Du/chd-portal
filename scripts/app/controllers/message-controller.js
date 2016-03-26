@@ -4,11 +4,17 @@ define(['app/services/message-service'], function (modules) {
     modules.controllers
         .controller('MessageController', ['$scope', 'MessageService', 'SessionService', function ($scope, MessageService, SessionService) {
 
+            $scope.show = false;
             $scope.message = null;
             function loadMessage() {
                 var promise = MessageService.getMessage();
                 promise.then(function (data) {
-                    $scope.message = data;
+                    if(modules.angular.isObject(data))
+                        $scope.message = data.Title;
+                    //else
+                    //    $scope.message = "Hello!";
+                    if($scope.message)
+                        $scope.show = true;
                 }, function (/*data*/) {
                 });
             }
@@ -23,6 +29,10 @@ define(['app/services/message-service'], function (modules) {
                     load();
                 }
             });
+
+            $scope.close = function() {
+                $scope.show = false;
+            };
 
             load();
         }]);

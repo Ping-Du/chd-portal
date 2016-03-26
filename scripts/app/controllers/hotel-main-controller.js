@@ -101,21 +101,39 @@ define(['app/services/hotel-service',
                 function loadAllHotels(locationId) {
                     $scope.selectedStar = null;
                     $scope.selectedType = null;
+                    //$loading.start('main');
                     if(locationId) {
                         HotelService.getHotelsByDestinationId(locationId).then(function (data) {
                             fillAllHotels(data);
                             fillHotels();
+                            //$loading.finish('main');
                         }, function () {
                             $scope.allHotels = [];
+                            //$loading.finish('main');
                         });
                     } else {
                         HotelService.getHotelsByLanguageId().then(function (data) {
                             fillAllHotels(data);
                             fillHotels();
+                            //$loading.finish('main');
                         }, function () {
                             $scope.allHotels = [];
+                            //$loading.finish('main');
                         });
                     }
+                }
+
+                function getAvailability(param) {
+                    $scope.allHotels = [];
+                    $scope.showHotels = [];
+                    //$loading.start('main');
+                    HotelService.getAvailability(param).then(function(data){
+                        fillAllHotels(data);
+                        fillHotels();
+                        //$loading.finish('main');
+                    },function(){
+                        //$loading.finish('main');
+                    });
                 }
 
                 var criteria = $cookieStore.get('hotelCriteria');
@@ -207,12 +225,7 @@ define(['app/services/hotel-service',
                             Rooms:GuestsToArray($scope.guests)
                         };
 
-                        HotelService.getAvailability(param).then(function(data){
-                            fillAllHotels(data);
-                            fillHotels();
-                        },function(){
-                            $scope.allHotels= [];
-                        });
+                        getAvailability(param);
                     }
                 };
 
@@ -240,13 +253,9 @@ define(['app/services/hotel-service',
                         var more = rooms - $scope.guests.length;
                         for(var i = 0; i < more; i++) {
                             $scope.guests.push({
-                                firstName: '',
-                                lastName: '',
-                                ages: '',
+                                adults:'1',
                                 minors: '',
-                                firstNameError:false,
-                                lastNameError:false,
-                                agesError:false,
+                                adultsError:false,
                                 minorsError:false
                             });
                         }
