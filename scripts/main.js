@@ -133,7 +133,7 @@ define(['config'], function (cfg) {
         }
 
         // get token
-        var storage = $.sessionStorage;
+        var storage = $.cookieStorage; //$.sessionStorage;
         var token = storage.get('apiToken');
         if(token == null) {
             $.ajax({
@@ -148,7 +148,8 @@ define(['config'], function (cfg) {
                 }),
                 success: function (data/*, status*/) {
                     //{"access_token": "string","token_type": "bearer","expires_in": 0,"userName": "string","issued": "2016-02-17T11:39:45.637Z","expires": "2016-02-17T11:39:45.639Z"}
-                    storage.set('apiToken', data.access_token);
+                    console.debug('login using api account');
+                    storage.setExpires(14).set('apiToken', data.access_token);
                     token = data.access_token;
                     bootstrap(token);
                 },
