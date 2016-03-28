@@ -66,5 +66,6 @@
   "LOCATION":"Location",
   "TYPE":"Type",
   "MY_ACCOUNT":"My Account",
-  "STAR":"Star"
+  "STAR":"Star",
+  "PRICE":"Price"
 }

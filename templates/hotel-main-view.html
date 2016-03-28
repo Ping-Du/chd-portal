@@ -66,6 +66,16 @@
                        data-ng-click="filterByType(item.Id)">{{item.Name}}</a>
                 </dd>
             </dl>
+            <dl class="filter-item" data-ng-show="prices.length > 0">
+                <dt><i class="icon-coin-dollar"></i>&nbsp;{{"PRICE"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedPrice==null}"
+                       data-ng-click="filterByPrice(null)">All</a>
+                    <a href data-ng-repeat="item in prices | orderBy:'+Name':false"
+                       data-ng-class="{'active':selectedType==item.Id}"
+                       data-ng-click="filterByPrice(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
         </div>
         <section class="thumbnail-part" data-ng-show="featuredHotels.length > 0">
             <div class="title">
@@ -110,7 +120,7 @@
                             <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
                             <ul class="hotel">
                                 <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
-                                <!--<li class="text-right price"><span>$89.00</span></li>-->
+                                <li class="text-right price"><span>{{item.price}}</span></li>
                             </ul>
                         </div>
                     </div>

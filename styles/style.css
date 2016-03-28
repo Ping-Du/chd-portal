@@ -16,7 +16,7 @@
   box-shadow: 2px 5px 8px #a6a6a6; }
 
 .thumbnail .caption > ul.hotel .price, .price {
-  font-size: 24px;
+  font-size: 18px;
   color: #ed685b; }
 
 .search-main [class^="icon-"], .search-main [class*=" icon-"], .order-form [class^="icon-"], .order-form [class*=" icon-"], .head-crumb [class^="icon-"], .head-crumb [class*=" icon-"], .input-icon [class^="icon-"], .input-icon [class*=" icon-"], .quick-search [class^="icon-"], .quick-search [class*=" icon-"] {

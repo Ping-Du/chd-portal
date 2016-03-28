@@ -62,6 +62,24 @@ define(['app/services/services-service',
                     fillServices();
                 };
 
+                $scope.selectedPrice = null;
+                $scope.prices = [];
+                function fillPrices(price) {
+                    var index = Math.floor(price/100);
+                    if(!_.find($scope.prices, function(item){
+                            return item.Id == index;
+                        })){
+                        $scope.prices.push({
+                            Id:index,
+                            Name:(index==0?'$0-$99':'$'+index+'00-$'+index+'99')
+                        });
+                    }
+                }
+                $scope.filterByPrice = function(id){
+                    $scope.selectedPrice = id;
+                    fillServices();
+                };
+
                 $scope.featuredServices = [];
                 $scope.showServices = [];
                 $scope.allServices = [];
@@ -70,11 +88,45 @@ define(['app/services/services-service',
                     $scope.showServices = [];
                     _.each($scope.allServices, function (item, key) {
                         var locationed = (item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
-                        if(locationed) {
+                        var priced = ($scope.selectedPrice == null);
+                        if(!priced) {
+                            if(_.find(item.AvailabilityCategories, function(category){
+                                    return (Math.floor(category.Price/100) == $scope.selectedPrice);
+                                })){
+                                priced = true;
+                            }
+                        }
+                        if(locationed && priced) {
                             if(item.Featured)
                                 $scope.featuredServices.push(item);
                             //else
                                 $scope.showServices.push(item);
+                        }
+                    });
+                }
+
+                function fillAllServices(data){
+                    $scope.allServices = [];
+                    $scope.prices = [];
+                    _.each(data, function (item, index) {
+                        if(item.ServiceType.Id == serviceTypeId) {
+                            item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
+                            //fillLocations(item.Location);
+                            $scope.allServices.push(item);
+                        }
+
+                        if(item.AvailabilityCategories){
+                            var minPrice = 0;
+                            var maxPrice = 0;
+                            _.each(item.AvailabilityCategories, function(category, index){
+                                fillPrices(category.Price);
+                                if(category.Price < minPrice || minPrice == 0)
+                                    minPrice = category.Price;
+                                if(category.Price > maxPrice) {
+                                    maxPrice = category.Price;
+                                }
+                            });
+                            item.price = makePriceString(minPrice, maxPrice);
                         }
                     });
                 }
@@ -137,6 +189,8 @@ define(['app/services/services-service',
 
                     var result = ValidateServiceGuestsInfo($scope.guests);
 
+                    $scope.selectedPrice = null;
+
                     //check availability
                     $cookieStore.put('serviceCriteria', {
                         locationId: $scope.selectedLocation,
@@ -183,14 +237,7 @@ define(['app/services/services-service',
                         };
 
                         ServicesService.getAvailability(param).then(function(data){
-                            $scope.allServices = [];
-                            _.each(data, function (item, index) {
-                                if(item.ServiceType.Id == serviceTypeId) {
-                                    item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
-                                    //fillLocations(item.Location);
-                                    $scope.allServices.push(item);
-                                }
-                            });
+                            fillAllServices(data);
                             fillServices();
                         },function(){
                         });
@@ -199,10 +246,7 @@ define(['app/services/services-service',
 
                 function loadAllServices() {
                     ServicesService.getServiceByType(serviceType).then(function (data) {
-                        $scope.allServices = data;
-                        _.each($scope.allServices, function (item, index) {
-                            item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
-                        });
+                        fillAllServices(data);
                         fillServices();
                     }, function () {
                         $scope.allServices = [];

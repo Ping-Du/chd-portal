@@ -206,4 +206,12 @@ function DayDiff(startDate, endDate) {
     return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
 }
 
+function makePriceString(lowPrice, highPrice) {
+
+    if(lowPrice == highPrice)
+        return '$'+lowPrice;
+    else
+        return '$'+lowPrice+' - $'+highPrice;
+}
+
 

@@ -12,6 +12,16 @@ define(['app/services/account-service'], function (modules) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
                 }
 
+                $scope.webRoot = SessionService.config().webRoot;
+
+                $scope.languageId = SessionService.languageId();
+                $scope.$on('LanguageChanged', function (event, data) {
+                    if($scope.languageId != data) {
+                        $scope.languageId = data;
+                        load();
+                    }
+                });
+
                 $scope.message = "Wrong URL, Please make sure the URL is right!";
 
             }]);

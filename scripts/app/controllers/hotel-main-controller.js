@@ -78,8 +78,16 @@ define(['app/services/hotel-service',
                     _.each($scope.allHotels, function(item, key){
                         var stared = (item.StarRating == $scope.selectedStar || $scope.selectedStar == null) ;
                         var typed = (item.HotelType.Id == $scope.selectedType || $scope.selectedType == null) ;
+                        var priced = ($scope.selectedPrice == null);
+                        if(!priced) {
+                            if(_.find(item.AvailabilityCategories, function(category){
+                                return (Math.floor(category.Price/100) == $scope.selectedPrice);
+                            })){
+                                priced = true;
+                            }
+                        }
                         var locationed = true; //(item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
-                        if(stared && typed && locationed) {
+                        if(stared && typed && locationed && priced) {
                             if(item.Featured)
                                 $scope.featuredHotels.push(item);
                             //else
@@ -87,15 +95,48 @@ define(['app/services/hotel-service',
                         }
                     });
                 }
+
+                $scope.selectedPrice = null;
+                $scope.prices = [];
+                function fillPrices(price) {
+                    var index = Math.floor(price/100);
+                    if(!_.find($scope.prices, function(item){
+                            return item.Id == index;
+                        })){
+                        $scope.prices.push({
+                            Id:index,
+                            Name:(index==0?'$0-$99':'$'+index+'00-$'+index+'99')
+                        });
+                    }
+                }
+                $scope.filterByPrice = function(id){
+                    $scope.selectedPrice = id;
+                    fillHotels();
+                };
+
                 function fillAllHotels(data){
                     $scope.allHotels = data;
                     $scope.stars = [];
                     $scope.types = [];
+                    $scope.prices = [];
                     _.each($scope.allHotels, function(item, index){
                         item.DetailsURI = 'hotels.html#/'+item.ProductId+'/'+$scope.languageId;
                         item.starClass = "icon-star-" + (item.StarRating * 10);
                         fillStars(item.StarRating);
                         fillTypes(item.HotelType);
+                        if(item.AvailabilityCategories){
+                            var minPrice = 0;
+                            var maxPrice = 0;
+                            _.each(item.AvailabilityCategories, function(category, index){
+                                fillPrices(category.Price);
+                                if(category.Price < minPrice || minPrice == 0)
+                                    minPrice = category.Price;
+                                if(category.Price > maxPrice) {
+                                    maxPrice = category.Price;
+                                }
+                            });
+                            item.price = makePriceString(minPrice, maxPrice);
+                        }
                     });
                 }
                 function loadAllHotels(locationId) {

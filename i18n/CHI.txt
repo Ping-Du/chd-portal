@@ -66,5 +66,6 @@
   "LOCATION":"地点",
   "TYPE":"类型",
   "MY_ACCOUNT":"我的账户",
-  "STAR":"星级"
+  "STAR":"星级",
+  "PRICE":"价格"
 }

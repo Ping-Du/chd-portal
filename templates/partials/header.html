@@ -15,7 +15,7 @@
                 </span>
             </li>
             <li data-ng-show="isAuthorized">
-                <a href="account.html">{{"MY_ACCOUNT"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a data-ng-href="account.html#/{{languageId}}">{{"MY_ACCOUNT"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a href data-ng-click="logout()">{{"LOGOUT"|translate}}</a>
             </li>
             <li data-ng-show="!isAuthorized">
