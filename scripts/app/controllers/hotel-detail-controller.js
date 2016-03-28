@@ -3,6 +3,7 @@ define(['app/services/hotel-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
+    'app/controllers/hotel-booking-modal-controller',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
@@ -174,6 +175,9 @@ define(['app/services/hotel-service',
                     }, function () {
                     });
 
+                };
+
+                $scope.showBookingModal = function () {
                 };
 
                 $scope.load = function(reload) {
