@@ -169,13 +169,13 @@
             <h3>Location</h3>
             <div class="content">
                 <!--<p><strong>Address：</strong>{{serviceItem.Address.Address1 + ', ' + serviceItem.Address.City + ', ' + serviceItem.Address.State}}</p>-->
-                <p><strong>Address 1：</strong>{{serviceItem.Address.Address1}}</p>
-                <p><strong>Address 2：</strong>{{serviceItem.Address.Address2}}</p>
-                <p><strong>Address 3：</strong>{{serviceItem.Address.Address3}}</p>
-                <p><strong>City：</strong>{{serviceItem.Address.City}}</p>
-                <p><strong>State：</strong>{{serviceItem.Address.State}}</p>
-                <p><strong>Country：</strong>{{serviceItem.Address.Country}}</p>
-                <p><strong>Zip：</strong>{{serviceItem.Address.Zip}}</p>
+                <p data-ng-show="serviceItem.Address.Address1 && serviceItem.Address.Address1 != ''"><strong>Address 1：</strong>{{serviceItem.Address.Address1}}</p>
+                <p data-ng-show="serviceItem.Address.Address2 && serviceItem.Address.Address2 != ''"><strong>Address 2：</strong>{{serviceItem.Address.Address2}}</p>
+                <p data-ng-show="serviceItem.Address.Address3 && serviceItem.Address.Address3 != ''"><strong>Address 3：</strong>{{serviceItem.Address.Address3}}</p>
+                <p data-ng-show="serviceItem.Address.City && serviceItem.Address.City != ''"><strong>City：</strong>{{serviceItem.Address.City}}</p>
+                <p data-ng-show="serviceItem.Address.State && serviceItem.Address.State != ''"><strong>State：</strong>{{serviceItem.Address.State}}</p>
+                <p data-ng-show="serviceItem.Address.Country && serviceItem.Address.Country != ''"><strong>Country：</strong>{{serviceItem.Address.Country}}</p>
+                <p data-ng-show="serviceItem.Address.Zip && serviceItem.Address.Zip != ''"><strong>Zip：</strong>{{serviceItem.Address.Zip}}</p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>

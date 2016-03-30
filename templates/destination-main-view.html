@@ -1,9 +1,9 @@
 <div class="container-bg container-padding">
     <div class="container">
 
-        <section class="thumbnail-part">
+        <section class="thumbnail-part" data-ng-show="showFeaturedDestinations">
             <div class="slides-container city-slider">
-                <div data-u="loading" class="loading">
+                <div data-u="loading" style="position: absolute;top:0;left:0;">
                     <div class="loading-icon"></div>
                 </div>
                 <div class="row c-s-list" data-u="slides" id="slides">
@@ -40,7 +40,7 @@
                     var innerHtml = '';
                     for (var i = 0; i < imageData.length; i++) {
                         innerHtml += '<div class="col-sm-6 col-md-4"><div class="thumbnail">';
-                        innerHtml += '<a href="' + imageData.url + '" class="flo-layer">';
+                        innerHtml += '<a href="' + imageData[i].url + '" class="flo-layer">';
                         innerHtml += '<span class="flo-layer-c text">' + imageData[i].caption + '</span>';
                         innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
                         innerHtml += '</a>';
@@ -68,7 +68,7 @@
                 }
             </script>
         </section>
-
+        <hr>
         <section class="thumbnail-part">
             <div class="row">
                 <div class="col-sm-6 col-md-4" data-ng-repeat="item in allItems">

@@ -124,6 +124,7 @@ define(['app/services/services-service',
                         $scope.serviceItem = data;
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
+                        clearEmptyAddress(data.Address);
                         if (!reload)
                             doAdditionalProcess(data);
                     });
@@ -164,6 +165,7 @@ define(['app/services/services-service',
                     ServicesService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.serviceItem = data[0];
+                            clearEmptyAddress(data[0].Address);
                             if (!reload)
                                 doAdditionalProcess(data[0]);
                         }

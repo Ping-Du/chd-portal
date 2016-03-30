@@ -71,24 +71,29 @@ function($) {
 		$(document).on('scroll', function() {
 			if($('.stuckMenu').length == 0)
 				return;
-			varscroll = parseInt($(document).scrollTop());
+			var varscroll = parseInt($(document).scrollTop());
 			if(menuSize != null){
 				for(var i=0;i < menuSize;i++)
 				{
 					var ele = $('#'+content[i]+'');
 					if(ele.length == 0)
 						return;
-					contentTop[i] = $('#'+content[i]+'').offset().top;
+					contentTop[i] = $('#'+content[i]+'').offset().top - 50;
 					function bottomView(i) {
-						contentView = $('#'+content[i]+'').height()*.4;
+						contentView = $('#'+content[i]+'').height() *.4;
 						testView = contentTop[i] - contentView;
-						//console.log('varscroll:' + varscroll);
-						if(varscroll > testView){
+						//console.log('index:'+i+' varscroll:' + varscroll + " content:" + contentView + " testView:" + testView);
+
+						//if(varscroll > testView){
+                        contentHeight = $('#'+content[i]+'').height();
+                        if(varscroll > contentTop[i]-50 && varscroll < contentTop[i] + contentHeight){
 							$('.'+itemClass).removeClass(itemHover);
 							$('.'+itemClass+':eq('+i+')').addClass(itemHover);
+                            console.log("index:" + i + ' add hover class');
 						} else if(varscroll < 50){
 							$('.'+itemClass).removeClass(itemHover);
 							$('.'+itemClass+':eq(0)').addClass(itemHover);
+                            //console.log("index:" + 0 + ' add hover class');
 						}
 					}
 					if(scrollDir == 'down' && varscroll > contentTop[i]-50 && varscroll < contentTop[i]+50) {
@@ -98,6 +103,14 @@ function($) {
 					if(scrollDir == 'up') {
 						bottomView(i);
 					}
+                    //if(varscroll < 50) {
+                     //   		$('.'+itemClass).removeClass(itemHover);
+                     //   		$('.'+itemClass+':eq(0)').addClass(itemHover);
+                    //} else
+                    //if(varscroll > contentTop[i]-50 && varscroll < contentTop[i]+50) {
+                    	//$('.'+itemClass).removeClass(itemHover);
+                    	//$('.'+itemClass+':eq('+i+')').addClass(itemHover);
+                    //}
 				}
 			}
 			if(vartop == 0) {

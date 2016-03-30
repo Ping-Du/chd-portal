@@ -25,7 +25,7 @@ function elementPosition(obj) {
 function scrollToControl(id) {
     var elem = document.getElementById(id);
     var scrollPos = elementPosition(elem);
-    window.scrollTo(scrollPos.x, scrollPos.y);
+    window.scrollTo(scrollPos.x, scrollPos.y - 50);
 }
 
 function initMap(lat, lng, title) {
@@ -212,6 +212,19 @@ function makePriceString(lowPrice, highPrice) {
         return '$'+lowPrice;
     else
         return '$'+lowPrice+' - $'+highPrice;
+}
+
+function clearEmptyAddress(address) {
+    address.Address1 = address.Address1.Trim();
+    address.Address2 = address.Address2.Trim();
+    address.Address3 = address.Address3.Trim();
+    address.City = address.City.Trim();
+    address.State = address.State.Trim();
+    if(address.Country == null)
+        address.Country = "";
+    else
+        address.Country = address.Country.Trim();
+    address.Zip = address.Zip.Trim();
 }
 
 

@@ -9,8 +9,13 @@
                         <i class="language-icon" style="background: url({{currentLanguage.FlagImageURI}}) no-repeat -5px -3px;"></i>{{currentLanguage.LocalName==''?currentLanguage.Name:currentLanguage.LocalName}}
                         <i class="icon-caret-down"></i>
                     </a>
-                    <ul class="uib-dropdown-menu" style="min-width: 80px; margin-left:-20px">
-                        <li role="menuitem" data-ng-repeat="item in availableLanguages"><a href data-ng-click="changeLanguage(item.Id, true, true)">{{item.LocalName==''?item.Name:item.LocalName}}</a></li>
+                    <ul class="uib-dropdown-menu" style="min-width: 120px; margin-left:-20px">
+                        <li role="menuitem" data-ng-repeat="item in availableLanguages">
+                            <div style="display: inline;">
+                            <img data-ng-src="{{item.FlagImageURI}}">
+                            <a href data-ng-click="changeLanguage(item.Id, true, true)">{{item.LocalName==''?item.Name:item.LocalName}}</a>
+                            </div>
+                        </li>
                     </ul>
                 </span>
             </li>

@@ -19,6 +19,7 @@ define(['app/services/language-service',
                     $scope.webRoot = SessionService.config().webRoot;
                     $scope.languageId = SessionService.languageId();
 
+                    $scope.showFeaturedDestinations = true;
                     var featuredItems = [];
                     $scope.allItems = [];
                     function loadAllItems() {
@@ -35,12 +36,15 @@ define(['app/services/language-service',
                                         image:item.MainInformation.LargeImageURI
                                     });
                             });
+
+                            if(featuredItems.length > 0) {
+                                $scope.showFeaturedDestinations = true;
+                                initSlider(featuredItems);
+                            } else {
+                                $scope.showFeaturedDestinations = false;
+                            }
                         }, function () {
                         });
-
-                        if(featuredItems.length > 0) {
-                            initSlider(featuredItems);
-                        }
                     }
 
                     function load() {

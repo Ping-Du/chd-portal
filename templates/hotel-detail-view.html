@@ -80,15 +80,16 @@
             </div>
             <section class="col-md-4">
                 <div class="service-detail-info">
-                    <span class="caption">{{hotelItem.Name}}</span><i data-ng-class="starClass" style="position:absolute;"></i>
+                    <span class="caption">{{hotelItem.Name}}</span>
                 </div>
                 <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
                 <br/>
                 <div class="row tab-list">
-                    <div class="col-xs-6 col-md-6"> <span>ID：</span>{{hotelItem.ProductId}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Type：</span>{{hotelItem.HotelType.Name}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Address：</span>{{hotelItem.Address.Address1}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>City：</span>{{hotelItem.Address.City}}</div>
+                    <div class="col-xs-12 col-md-12"><span>Star: </span><i data-ng-class="starClass"></i></div>
+                    <div class="col-xs-6 col-md-6"> <span>ID: </span>{{hotelItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Type: </span>{{hotelItem.HotelType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Address: </span>{{hotelItem.Address.Address1}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>City: </span>{{hotelItem.Address.City}}</div>
                 </div>
                 <br/>
                 <!--<div class="tax-com-part">-->
@@ -153,7 +154,7 @@
                                 <td>{{item.CancelBy | limitTo:10}}</td>
                                 <td>{{item.AvailabilityLevel}}</td>
                                 <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}">Book Now</button></td>
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="showBookingModal($index)">Book Now</button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -179,13 +180,13 @@
             <h3>Location</h3>
             <div class="content">
                 <!--<p><strong>Address：</strong>{{hotelItem.Address.Address1 + ', ' + hotelItem.Address.City + ', ' + hotelItem.Address.State}}</p>-->
-                <p><strong>Address 1：</strong>{{hotelItem.Address.Address1}}</p>
-                <p><strong>Address 2：</strong>{{hotelItem.Address.Address2}}</p>
-                <p><strong>Address 3：</strong>{{hotelItem.Address.Address3}}</p>
-                <p><strong>City：</strong>{{hotelItem.Address.City}}</p>
-                <p><strong>State：</strong>{{hotelItem.Address.State}}</p>
-                <p><strong>Country：</strong>{{hotelItem.Address.Country}}</p>
-                <p><strong>Zip：</strong>{{hotelItem.Address.Zip}}</p>
+                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>Address 1：</strong>{{hotelItem.Address.Address1}}</p>
+                <p data-ng-show="hotelItem.Address.Address2 != ''"><strong>Address 2：</strong>{{hotelItem.Address.Address2}}</p>
+                <p data-ng-show="hotelItem.Address.Address3 != ''"><strong>Address 3：</strong>{{hotelItem.Address.Address3}}</p>
+                <p data-ng-show="hotelItem.Address.City != ''"><strong>City：</strong>{{hotelItem.Address.City}}</p>
+                <p data-ng-show="hotelItem.Address.State != ''"><strong>State：</strong>{{hotelItem.Address.State}}</p>
+                <p data-ng-show="hotelItem.Address.Country != '' && hotelItem.Address.Country"><strong>Country：</strong>{{hotelItem.Address.Country}}</p>
+                <p data-ng-show="hotelItem.Address.Zip != ''"><strong>Zip：</strong>{{hotelItem.Address.Zip}}</p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>

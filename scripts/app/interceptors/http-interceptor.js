@@ -29,6 +29,17 @@ define(['app/services/session-service'], function (modules) {
                     return response;
                 },
                 responseError:function(rejection) {
+                    console.error('requests:'+requests+' url:'+rejection.config.url);
+                    if(rejection.config.url.indexOf(SessionService.config().apiRoot) >= 0) {
+                        if(rejection.config.url.indexOf('/account/') < 0) {
+                            requests--;
+                            //console.log('requests:'+requests+' url:'+response.config.url);
+                            if (requests <= 0) {
+                                requests = 0;
+                                $rootScope.showLoading = false;
+                            }
+                        }
+                    }
                     return $q.reject(rejection);
                 }
             };

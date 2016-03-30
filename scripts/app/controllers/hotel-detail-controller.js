@@ -116,6 +116,7 @@ define(['app/services/hotel-service',
                         $scope.hotelItem = data;
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
+                        clearEmptyAddress(data.Address);
                         if(!reload)
                             doAdditionalProcess(data);
                     });
@@ -166,6 +167,7 @@ define(['app/services/hotel-service',
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];
+                            clearEmptyAddress(data[0].Address);
                             if(!reload)
                                 doAdditionalProcess(data[0]);
                         }
@@ -177,7 +179,8 @@ define(['app/services/hotel-service',
 
                 };
 
-                $scope.showBookingModal = function () {
+                $scope.showBookingModal = function (categoryIndex) {
+                    $rootScope.$broadcast('OpenHotelBookingModal', $scope.hotelItem, categoryIndex);
                 };
 
                 $scope.load = function(reload) {

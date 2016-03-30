@@ -23,7 +23,7 @@ define(['app/services/language-service',
                     $scope.showMap = false;
                     function loadDestination() {
                         $scope.destinationItem = null;
-                        var slideImageData = [];
+                        var sliderImageData = [];
                         DestinationService.getDestinationDetail($routeParams.destinationId).then(function (data) {
                             $scope.destinationItem = data;
                             _.each(data.SliderImages, function(item, index){
