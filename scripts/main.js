@@ -32,7 +32,9 @@ define(['config'], function (cfg) {
             'angular-ui-router':'libs/angular-ui-router.min',
             'bootstrap-datepicker':'libs/bootstrap-datepicker.min',
             'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min',
-            'angucomplete-alt':'libs/angucomplete-alt.min'
+            'angucomplete-alt':'libs/angucomplete-alt.min',
+            'jquery.inputmask':'libs/jquery.inputmask.bundle.min',
+            'inputmask':'libs/green.inputmask4angular'
         },
         shim: {
             'jquery':{
@@ -115,6 +117,12 @@ define(['config'], function (cfg) {
             },
             'angucomplete-alt':{
                 deps:['angular']
+            },
+            'inputmask':{
+                deps:['jquery.inputmask', 'angular']
+            },
+            'jquery.inputmask':{
+                deps:['jquery']
             }
         }
     };

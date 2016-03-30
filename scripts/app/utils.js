@@ -86,37 +86,8 @@ function GetHotelGuestsInfo(guests) {
     return ( rooms + ' room(s) ' + adults + ' adult(s) ' + minors + ' minor(s)');
 }
 
-function ValidateServiceGuestsInfo(guests) {
-    var result = {
-        hasError:false,
-        adults:0,
-        children: 0,
-        message:""
-    };
-
-    for (var g = 0; g < guests.length; g++) {
-        result.adults++;
-        guests[g].minors = guests[g].minors.replace(/\s/g,'');
-        if (guests[g].minors != '') {
-            var minors = guests[g].minors.split(',');
-            for (var i = 0; i < minors.length; i++) {
-                if (!IsInteger(minors[i])) {
-                    guests[g].minorsError = true;
-                    result.hasError = true;
-                } else {
-                    if (parseInt(minors) > 17) {
-                        guests[g].minorsError = true;
-                        result.hasError = true;
-                    } else {
-                        guests[g].minorsError = false;
-                    }
-                }
-            }
-            result.children += minors.length;
-        }
-    }
-    result.message = result.adults + ' adult(s) ' + result.children + ' minor(s)';
-    return result;
+function GetServiceGuestsInfo(guests) {
+    return ((guests.Adults.Trim()==''?'0':guests.Adults) + ' adult(s) ' + guests.MinorAges.length + ' minor(s)');
 }
 
 
@@ -139,17 +110,11 @@ function GuestsToHotelArray(guests) {
 
 function GuestsToServiceCriteria(guests) {
     var obj = {
-        Adults:guests.length,
+        Adults:(guests.Adults.Trim() == ''?0:parseInt(guests.Adults)),
         MinorAges:[]
     };
-    for(var i = 0; i < guests.length; i++) {
-        var item = guests[i];
-        var minors = [];
-        if(item.minors != '')
-            minors = item.minors.split(',');
-        for(var j = 0; j < minors.length; j++) {
-            obj.MinorAges.push(parseInt(minors[j]));
-        }
+    for(var i = 0; i < guests.MinorAges.length; i++) {
+        obj.MinorAges.push(parseInt(guests.MinorAges[i]));
     }
 
     return obj;

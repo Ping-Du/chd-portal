@@ -41,11 +41,9 @@ define(['app/services/services-service',
                 });
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria?criteria.guests:[];
-                $scope.adults = ''+$scope.guests.length;
-                $scope.adultsHasError = false;
+                $scope.guests = criteria?criteria.guests:{Adults:'0', MinorAges:[]};
+                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 $scope.startDate = criteria?criteria.startDate:"";
-                $scope.guestsInfo = ValidateServiceGuestsInfo($scope.guests).message;
                 $scope.selectedLocation = criteria?criteria.locationId:null;
                 $scope.selectedLocationName = criteria?criteria.locationName:'';
                 $scope.selectedSearchLocation = null;
@@ -146,35 +144,30 @@ define(['app/services/services-service',
                 $scope.showGuests = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
 
-                $scope.closeGuests = function(){
-                    var result = ValidateServiceGuestsInfo($scope.guests, false, false);
-
-                    if(!result.hasError) {
-                        $scope.showGuests = false;
-                        $scope.guestsInfo = result.message;
-                    }
+                $scope.regexOption = {
+                    regex: "[0-9]{1,2}"
                 };
 
-                $scope.updateGuests = function() {
-                    if(!IsInteger($scope.adults)) {
-                        $scope.adultsHasError = true;
-                        return;
-                    } else {
-                        $scope.adultsHasError = false;
+                $scope.addMinor = function() {
+                    if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
+                        $scope.guests.Adults = '1';
                     }
+                    $scope.guests.MinorAges.push('0');
+                };
 
-                    var adults = parseInt($scope.adults);
-                    if(adults < $scope.guests.length) {
-                        $scope.guests = _.first($scope.guests, adults)
-                    } else if(adults > $scope.guests.length){
-                        var more = adults - $scope.guests.length;
-                        for(var i = 0; i < more; i++) {
-                            $scope.guests.push({
-                                minors: '',
-                                minorsError:false
-                            });
-                        }
+                $scope.deleteMinor = function(index) {
+                    $scope.guests.MinorAges.splice(index, 1);
+                };
+
+                $scope.$watch('guests.Adults', function(newValue,oldValue, scope){
+                    if(newValue.Trim() == ''|| parseInt(newValue) == 0) {
+                        $scope.guests.MinorAges = [];
                     }
+                });
+
+                $scope.closeGuests = function(){
+                        $scope.showGuests = false;
+                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
 
                 $scope.searchServices = function() {
@@ -187,8 +180,6 @@ define(['app/services/services-service',
                         $scope.selectedLocationName = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.Name : $scope.selectedLocationName;
                     }
 
-                    var result = ValidateServiceGuestsInfo($scope.guests);
-
                     $scope.selectedPrice = null;
 
                     //check availability
@@ -199,7 +190,7 @@ define(['app/services/services-service',
                         guests: $scope.guests
                     });
 
-                    if(result.adults == 0) {
+                    if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
                         loadAllServices();
                     } else {
 
@@ -217,11 +208,6 @@ define(['app/services/services-service',
                         var now = new Date();
                         if(startDate < now.getTime()){
                             showError("Start date must be later than now!");
-                            return;
-                        }
-
-                        if(result.adults > 0 &&  result.hasError) {
-                            showError("Guests is required!");
                             return;
                         }
 
@@ -255,13 +241,13 @@ define(['app/services/services-service',
 
                 function load() {
                     loadSearchLocations();
-                    if($scope.adults != '0' && $scope.adults != '')
+                    if($scope.guests.Adults != '0' && $scope.guests.Adults != '')
                         $scope.searchServices();
                     else
                         loadAllServices();
                 }
 
-                load();
+                //load();
 
             }]);
 });

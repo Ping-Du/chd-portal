@@ -45,11 +45,9 @@ define(['app/services/services-service',
                 $scope.searchLocations = [];
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria ? criteria.guests : [];
-                $scope.adults = '' + $scope.guests.length;
-                $scope.adultsHasError = false;
+                $scope.guests = criteria?criteria.guests:{Adults:'0', MinorAges:[]};
+                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 $scope.startDate = criteria ? criteria.startDate : "";
-                $scope.guestsInfo = ValidateServiceGuestsInfo($scope.guests).message;
                 $scope.selectedLocation = criteria ? criteria.locationId : null;
                 $scope.selectedLocationName = criteria ? criteria.locationName : '';
                 $scope.selectedSearchLocation = null;
@@ -70,35 +68,30 @@ define(['app/services/services-service',
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
 
                 $scope.closeGuests = function () {
-                    var result = ValidateServiceGuestsInfo($scope.guests, false, false);
-
-                    if (!result.hasError) {
-                        $scope.showGuests = false;
-                        $scope.guestsInfo = result.message;
-                    }
+                    $scope.showGuests = false;
+                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
 
-                $scope.updateGuests = function () {
-                    if (!IsInteger($scope.adults)) {
-                        $scope.adultsHasError = true;
-                        return;
-                    } else {
-                        $scope.adultsHasError = false;
-                    }
-
-                    var adults = parseInt($scope.adults);
-                    if (adults < $scope.guests.length) {
-                        $scope.guests = _.first($scope.guests, adults)
-                    } else if (adults > $scope.guests.length) {
-                        var more = adults - $scope.guests.length;
-                        for (var i = 0; i < more; i++) {
-                            $scope.guests.push({
-                                minors: '',
-                                minorsError: false
-                            });
-                        }
-                    }
+                $scope.regexOption = {
+                    regex: "[0-9]{1,2}"
                 };
+
+                $scope.addMinor = function() {
+                    if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
+                        $scope.guests.Adults = '1';
+                    }
+                    $scope.guests.MinorAges.push('0');
+                };
+
+                $scope.deleteMinor = function(index) {
+                    $scope.guests.MinorAges.splice(index, 1);
+                };
+
+                $scope.$watch('guests.Adults', function(newValue,oldValue, scope){
+                    if(newValue.Trim() == ''|| parseInt(newValue) == 0) {
+                        $scope.guests.MinorAges = [];
+                    }
+                });
 
                 function doAdditionalProcess(serviceItem) {
                     var sliderImageData = [];
@@ -132,7 +125,10 @@ define(['app/services/services-service',
 
                 $scope.checkAvailability = function (reload) {
 
-                    var result = ValidateServiceGuestsInfo($scope.guests);
+                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 ){
+                        showError('Guests required!');
+                        return;
+                    }
 
                     if ($scope.startDate == "") {
                         showError("Start date is required!");
@@ -146,10 +142,6 @@ define(['app/services/services-service',
                         return;
                     }
 
-                    if (result.adults > 0 && result.hasError) {
-                        showError("Guests is required!");
-                        return;
-                    }
 
                     var param = {
                         ProductId: $routeParams.serviceId,
@@ -177,7 +169,7 @@ define(['app/services/services-service',
 
                 };
 
-                $scope.load = function (reload) {
+                function load(reload) {
 
                     $cookieStore.put('serviceCriteria', {
                         locationId: $scope.selectedLocation,
@@ -186,13 +178,13 @@ define(['app/services/services-service',
                         guests: $scope.guests
                     });
 
-                    if ($scope.adults != '0' && $scope.adults != '')
-                        $scope.checkAvailability(reload);
-                    else
+                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 )
                         loadService(reload);
-                };
+                    else
+                        $scope.checkAvailability(reload);
+                }
 
-                $scope.load(false);
+                load(false);
 
                 $window.scrollTo(0, 0);
 
