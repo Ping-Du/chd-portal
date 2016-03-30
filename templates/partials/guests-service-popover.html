@@ -1,49 +1,69 @@
 <!--<script type="text/ng-template" id="GuestsTemplate.html">-->
-    <div style="width:250px;height:330px;padding: 0 10px;">
-        <form class="form-inline">
-            <div>
-                <label class="control-label">Adults:</label>
-                <input type="text" class="form-control" style="width:80px;" data-ng-model="$parent.guests.Adults" input-mask="'Regex'" mask-option="$parent.regexOption">
+<div style="width:250px;height:350px;padding: 0 10px;">
+    <form>
+        <div>
+            <label class="control-label">Adults:</label>
+            <!--<input type="text" class="form-control" style="width:80px;" data-ng-model="$parent.guests.Adults" input-mask="'Regex'" mask-option="$parent.regexOption">-->
+            <div class="input-group spinner" data-trigger="spinner" id="adults">
+                <input id="AdultQty" type="text" class="form-control text-center" data-rule="quantity" data-ng-model="$parent.guests.Adults">
+                  <span class="input-group-addon">
+                    <a href="javascript:;" class="spin-up" data-spin="up" style="padding-left:0;"><icon class="glyphicon glyphicon-triangle-top" style="font-size:9px;"></icon></a>
+                    <a href="javascript:;" class="spin-down" data-spin="down" style="padding-left:0;"><span class="glyphicon glyphicon-triangle-bottom" style="font-size:9px;"></span></a>
+                  </span>
             </div>
-        </form>
-        <br>
-        <div style="height: 200px;overflow: scroll" >
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>Minor Age</th>
-                    <th style="width:50px;"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-ng-repeat="item in $parent.guests.MinorAges track by $index" class="form-group-sm">
-                    <td ><select class="form-control" style="width:60px;" data-ng-model="$parent.guests.MinorAges[$index]"><option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option></select></td>
-                    <td><a href data-ng-click="$parent.deleteMinor($index)"><i class="glyphicon glyphicon-remove"></i></a></td>
-                </tr>
-                </tbody>
-            </table>
         </div>
-        <br>
-        <div class="text-right">
-            <input class="btn btn-primary" type="button" value="Add Minor" data-ng-click="$parent.addMinor()">
-            <span><input class="btn btn-warning" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>
-        </div>
+    </form>
+    <script>
+        $('#adults').spinner({
+            max:99,
+            min:0,
+            step:1
+        });
+    </script>
+    <br>
+    <div style="height: 200px;overflow: scroll">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 30px;">#</th>
+                <th>Minor Age</th>
+                <th style="width:50px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="height: 20px;" data-ng-repeat="item in $parent.guests.MinorAges track by $index" >
+                <td>{{$index+1}}</td>
+                <td><select class="form-control input-sm" style="width:60px;" data-ng-model="$parent.guests.MinorAges[$index]">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                </select></td>
+                <td><a href data-ng-click="$parent.deleteMinor($index)"><i class="glyphicon glyphicon-remove main-red"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+    <br>
+
+    <div class="text-right">
+        <input class="btn btn-primary" type="button" value="Add Minor" data-ng-click="$parent.addMinor()">
+        <span><input class="btn btn-warning" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>
+    </div>
+</div>
 <!--</script>-->

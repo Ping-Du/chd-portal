@@ -68,6 +68,7 @@ define(['app/services/services-service',
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
 
                 $scope.closeGuests = function () {
+                    $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     $scope.showGuests = false;
                     $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
@@ -77,6 +78,7 @@ define(['app/services/services-service',
                 };
 
                 $scope.addMinor = function() {
+                    $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
                         $scope.guests.Adults = '1';
                     }

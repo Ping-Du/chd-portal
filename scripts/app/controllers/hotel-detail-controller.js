@@ -173,9 +173,9 @@ define(['app/services/hotel-service',
 
                 };
 
-                $scope.showBookingModal = function (categoryIndex) {
-                    $rootScope.$broadcast('OpenHotelBookingModal', $scope.hotelItem, categoryIndex);
-                };
+                //$scope.showBookingModal = function (categoryIndex) {
+                //    $rootScope.$broadcast('OpenHotelBookingModal', $scope.hotelItem, categoryIndex);
+                //};
 
                 $scope.load = function(reload) {
                     if(reload) {

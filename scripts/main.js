@@ -16,7 +16,7 @@ define(['config'], function (cfg) {
             'stickup':'libs/stickup',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
-            'angular': 'libs/angular',
+            'angular': 'libs/angular.min',
             'angular-cookies': 'libs/angular-cookies.min',
             'angular-sanitize': 'libs/angular-sanitize.min',
             'angular-local-storage': 'libs/angular-local-storage.min',
@@ -34,7 +34,8 @@ define(['config'], function (cfg) {
             'bootstrap-datepicker.zh-CN':'libs/bootstrap-datepicker.zh-CN.min',
             'angucomplete-alt':'libs/angucomplete-alt.min',
             'jquery.inputmask':'libs/jquery.inputmask.bundle.min',
-            'inputmask':'libs/green.inputmask4angular'
+            'inputmask':'libs/green.inputmask4angular',
+            'jquery.spinner':'libs/jquery.spinner.min'
         },
         shim: {
             'jquery':{
@@ -122,6 +123,9 @@ define(['config'], function (cfg) {
                 deps:['jquery.inputmask', 'angular']
             },
             'jquery.inputmask':{
+                deps:['jquery']
+            },
+            'jquery.spinner':{
                 deps:['jquery']
             }
         }

@@ -7,7 +7,8 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/change-password-modal-controller',
         'app/controllers/register-modal-controller',
         'app/controllers/service-main-controller',
-        'app/controllers/service-detail-controller'],
+        'app/controllers/service-detail-controller',
+        'jquery.spinner'],
     function (modules) {
         'use strict';
 
