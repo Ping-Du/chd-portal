@@ -1,34 +1,69 @@
 <!--<script type="text/ng-template" id="GuestsTemplate.html">-->
-    <div style="width:400px;height:330px;padding: 0 10px;">
-        <form class="form-inline">
-            <div data-ng-class="{'form-group':true, 'has-error':$parent.roomsHasError }">
-                <label class="control-label" for="roomQty">Rooms:</label>
-                <input type="text" class="form-control" style="width:80px;" id="roomQty" data-ng-model="$parent.rooms" data-ng-change="updateRooms()">
-                <!--<input type="button" class="btn btn-default btn-xs" value="Update" data-ng-click="$parent.updateRooms()">-->
-            </div>
-        </form>
-        <br>
-        <div style="height: 200px;overflow: scroll" >
+    <div style="width:530px;height:330px;padding: 0 10px;">
+        <div style="height: 250px;overflow: scroll" >
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Room</th>
-                    <th>Adults</th>
-                    <th>Minor Ages</th>
+                    <th style="width:50px;">Room</th>
+                    <th style="width:80px;">Adults</th>
+                    <th style="width:80px;">Minors</th>
+                    <th style="">Minor Ages</th>
+                    <th style="width:50px;"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="item in $parent.guests">
+                <tr data-ng-repeat="item in $parent.guests" class="form-group-sm">
                     <td>{{$index+1}}</td>
-                    <td data-ng-class="{'has-error':item.adultsError}"><input class="form-control input-sm" type="text" data-ng-model="item.adults" placeholder="1"></td>
-                    <td data-ng-class="{'has-error':item.minorsError}"><input class="form-control input-sm" type="text" data-ng-model="item.minors" placeholder="minors( <=17 ): 2,3"></td>
+                    <td><select class="form-control" data-ng-model="item.Adults">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                    </select></td>
+                    <td><select class="form-control" data-ng-model="item.Minors" data-ng-change="minorsChange($index)"><option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option></select></td>
+                    <td class="form-inline"><select class="form-control" style="width:60px;" data-ng-repeat="minor in item.MinorAges track by $index" data-ng-model="item.MinorAges[$index]"><option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option></select></td>
+                    <td><a href data-ng-click="$parent.deleteRoom($index)"><i class="glyphicon glyphicon-remove"></i></a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <br>
         <div class="text-right">
-            <span><input class="btn btn-primary" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>
+            <input class="btn btn-primary" type="button" value="Add Room" data-ng-click="$parent.addRoom()">
+            <input class="btn btn-warning" type="button" value="Close" data-ng-click="$parent.closeGuests()">
         </div>
     </div>
 <!--</script>-->

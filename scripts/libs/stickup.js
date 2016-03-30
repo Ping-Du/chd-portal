@@ -89,7 +89,7 @@ function($) {
                         if(varscroll > contentTop[i]-50 && varscroll < contentTop[i] + contentHeight){
 							$('.'+itemClass).removeClass(itemHover);
 							$('.'+itemClass+':eq('+i+')').addClass(itemHover);
-                            console.log("index:" + i + ' add hover class');
+                           // console.log("index:" + i + ' add hover class');
 						} else if(varscroll < 50){
 							$('.'+itemClass).removeClass(itemHover);
 							$('.'+itemClass+':eq(0)').addClass(itemHover);

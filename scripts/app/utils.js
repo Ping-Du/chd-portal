@@ -76,58 +76,14 @@ function IsInteger(s) {
     }
 }
 
-function ValidateHotelGuestsInfo(guests) {
-    var result = {
-        hasError:false,
-        rooms:0,
-        adults:0,
-        children: 0,
-        message:""
-    };
-
-    for (var g = 0; g < guests.length; g++) {
-        result.rooms++;
-        guests[g].adults = guests[g].adults.replace(/\s/g,'');
-        if(guests[g].adults != '') {
-                if (!IsInteger(guests[g].adults)) {
-                    guests[g].adultsError = true;
-                    result.hasError = true;
-                } else {
-                    if (parseInt(guests[g].adults) <= 0 || parseInt(guests[g].adults) > 10) {
-                        guests[g].adultsError = true;
-                        result.hasError = true;
-                    }
-                    else {
-                        guests[g].adultsError = false;
-                        result.adults += parseInt(guests[g].adults);
-                    }
-                }
-        } else {
-            result.hasError = true;
-            guests[g].adultsError = true;
-        }
-
-        guests[g].minors = guests[g].minors.replace(/\s/g,'');
-        if (guests[g].minors != '') {
-            var minors = guests[g].minors.split(',');
-            for (var i = 0; i < minors.length; i++) {
-                if (!IsInteger(minors[i])) {
-                    guests[g].minorsError = true;
-                    result.hasError = true;
-                } else {
-                    if (parseInt(minors) > 17) {
-                        guests[g].minorsError = true;
-                        result.hasError = true;
-                    } else {
-                        guests[g].minorsError = false;
-                    }
-                }
-            }
-            result.children += minors.length;
-        }
+function GetHotelGuestsInfo(guests) {
+    var rooms = guests.length, adults = 0, minors = 0;
+    for(var i = 0; i < guests.length; i++) {
+        adults += parseInt(guests[i].Adults);
+        minors += guests[i].MinorAges.length;
     }
-    result.message = result.rooms + ' room(s) ' + result.adults + ' adult(s) ' + result.children + ' minor(s)';
-    return result;
+
+    return ( rooms + ' room(s) ' + adults + ' adult(s) ' + minors + ' minor(s)');
 }
 
 function ValidateServiceGuestsInfo(guests) {
@@ -164,22 +120,19 @@ function ValidateServiceGuestsInfo(guests) {
 }
 
 
-function GuestsToArray(guests) {
+function GuestsToHotelArray(guests) {
     var rooms = [];
     for(var i = 0; i < guests.length; i++) {
-        var item = guests[i];
-        var minors = [];
-        if(item.minors != '')
-            minors = item.minors.split(',');
-        for(var j = 0; j < minors.length; j++) {
-            minors[j] = parseInt(minors[j]);
-        }
         rooms.push({
             Guests: {
-                Adults: parseInt(item.adults),
-                MinorAges: minors
+                Adults: parseInt(guests[i].Adults),
+                MinorAges: []
             }
         });
+
+        for(var j = 0; j < guests[i].MinorAges.length; j++) {
+            rooms[i].Guests.MinorAges.push(parseInt(guests[i].MinorAges[j]));
+        }
     }
     return rooms;
 }
