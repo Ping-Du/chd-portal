@@ -188,7 +188,7 @@ define(['app/services/hotel-service',
                         });
                     }
 
-                    if ($scope.rooms != '0' && $scope.rooms != '')
+                    if ($scope.guests.length > 0)
                         $scope.checkAvailability(reload);
                     else
                         loadHotel(reload);
