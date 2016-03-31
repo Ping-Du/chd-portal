@@ -35,7 +35,11 @@
 </div>
 <div class="search-position" data-ng-show="showSearchBox">
     <form class="search-wrap">
-        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-keypress="onKeyPressed($event)" data-ng-model="keyword"/>
+        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-model="keyword"
+               uib-popover-template="searchResultTemplateUrl" popover-title="Search Results"
+               popover-is-open="showSearchResult" popover-append-to-body="true"
+               popover-trigger="none" popover-placement="bottom" data-ng-click="onClick($event)" data-ng-blur="onBlur($event)" />
+        <!--<input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-keypress="onKeyPressed($event)" data-ng-model="keyword" />-->
         <i class="icon-search" data-ng-click="search()"></i>
     </form>
 </div>

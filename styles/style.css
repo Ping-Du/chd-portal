@@ -130,6 +130,12 @@ header {
 .carousel-control .icon-chevron-thin-right {
   right: 40%; }
 
+.popover {
+  max-width: 700px; }
+
+.popover-title {
+  font-weight: bold; }
+
 @font-face {
   font-family: 'allicon';
   src: url("../fonts/icon.eot?z61766");

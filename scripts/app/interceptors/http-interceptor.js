@@ -3,43 +3,41 @@ define(['app/services/session-service'], function (modules) {
     modules.interceptors
         .factory('HttpInterceptor', ['$q', '$rootScope', 'SessionService', function ($q, $rootScope, SessionService) {
             var requests = 0;
-            var httpInjector = {
-                request: function (cfg) {
-                    if(cfg.url.indexOf(SessionService.config().apiRoot) >= 0) {
-                        if(cfg.url.indexOf('/account/') < 0) {
+
+            function showOrHideLoading(cfg, show) {
+                if (cfg.showLoading === false) {
+                    return;
+                }
+
+                if (cfg.url.indexOf(SessionService.config().apiRoot) >= 0) {
+                    if (cfg.url.indexOf('/account/') < 0) {
+                        if(show) {
                             $rootScope.showLoading = true;
                             requests++;
-                            //console.log('requests:'+requests+' url:'+cfg.url);
+                        } else {
+                            requests --;
+                            if (requests <= 0) {
+                                requests = 0;
+                                $rootScope.showLoading = false;
+                            }
                         }
                     }
-                    cfg.headers.Authorization = ('Bearer ' + (SessionService.token()?SessionService.token():SessionService.config().apiToken));
+                }
+            }
+
+            var httpInjector = {
+                request: function (cfg) {
+                    showOrHideLoading(cfg, true);
+                    cfg.headers.Authorization = ('Bearer ' + (SessionService.token() ? SessionService.token() : SessionService.config().apiToken));
                     return cfg;
                 },
-                response:function(response) {
-                    if(response.config.url.indexOf(SessionService.config().apiRoot) >= 0) {
-                        if(response.config.url.indexOf('/account/') < 0) {
-                            requests--;
-                            //console.log('requests:'+requests+' url:'+response.config.url);
-                            if (requests <= 0) {
-                                requests = 0;
-                                $rootScope.showLoading = false;
-                            }
-                        }
-                    }
+                response: function (response) {
+                    showOrHideLoading(response.config, false);
                     return response;
                 },
-                responseError:function(rejection) {
-                    console.error('requests:'+requests+' url:'+rejection.config.url);
-                    if(rejection.config.url.indexOf(SessionService.config().apiRoot) >= 0) {
-                        if(rejection.config.url.indexOf('/account/') < 0) {
-                            requests--;
-                            //console.log('requests:'+requests+' url:'+response.config.url);
-                            if (requests <= 0) {
-                                requests = 0;
-                                $rootScope.showLoading = false;
-                            }
-                        }
-                    }
+                responseError: function (rejection) {
+                    console.error('requests:' + requests + ' url:' + rejection.config.url);
+                    showOrHideLoading(rejection.config, false);
                     return $q.reject(rejection);
                 }
             };
