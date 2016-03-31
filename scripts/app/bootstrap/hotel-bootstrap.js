@@ -7,7 +7,7 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/change-password-modal-controller',
         'app/controllers/hotel-main-controller',
         'app/controllers/hotel-detail-controller',
-        'app/controllers/register-modal-controller'],
+        'app/controllers/register-modal-controller','jquery.raty'],
     function (modules) {
         'use strict';
 

@@ -35,7 +35,8 @@ define(['config'], function (cfg) {
             'angucomplete-alt':'libs/angucomplete-alt.min',
             'jquery.inputmask':'libs/jquery.inputmask.bundle.min',
             'inputmask':'libs/green.inputmask4angular',
-            'jquery.spinner':'libs/jquery.spinner.min'
+            'jquery.spinner':'libs/jquery.spinner.min',
+            'jquery.raty':'libs/jquery.raty'
         },
         shim: {
             'jquery':{
@@ -126,6 +127,9 @@ define(['config'], function (cfg) {
                 deps:['jquery']
             },
             'jquery.spinner':{
+                deps:['jquery']
+            },
+            'jquery.raty':{
                 deps:['jquery']
             }
         }

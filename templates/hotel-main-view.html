@@ -49,11 +49,17 @@
             <dl class="filter-item">
                 <dt><i class="icon-star-full"></i>&nbsp;{{"STAR"|translate}}</dt>
                 <dd>
-                    <a href data-ng-class="{'active':selectedStar==null}"
-                       data-ng-click="filterByStar(null)">All</a>
-                    <a href data-ng-repeat="item in stars | orderBy:'+Name':false"
-                       data-ng-class="{'active':selectedStar==item.Id}"
-                       data-ng-click="filterByStar(item.Id)">{{item.Name}}</a>
+                    <!--<a href data-ng-class="{'active':selectedStar==null}"-->
+                       <!--data-ng-click="filterByStar(null)">All</a>-->
+                    <!--<a href data-ng-repeat="item in stars | orderBy:'+Name':false"-->
+                       <!--data-ng-class="{'active':selectedStar==item.Id}"-->
+                       <!--data-ng-click="filterByStar(item.Id)">{{item.Name}}</a>-->
+                    <div id="fromStar" style="display: inline;"></div>&nbsp;&nbsp;--&nbsp;&nbsp;</span><div id="toStar" style="display: inline;"></div>
+                    &nbsp;<input type="button" data-ng-click="filterByStarRange()" value="Filter">
+                    <script>
+                        $('#fromStar').raty({cancel:true, half: true, score:0, path:'images/'});
+                        $('#toStar').raty({cancel:true, half:true, score:5, path:'images/'});
+                    </script>
                 </dd>
             </dl>
             <dl class="filter-item">

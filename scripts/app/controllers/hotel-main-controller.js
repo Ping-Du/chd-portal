@@ -54,6 +54,16 @@ define(['app/services/hotel-service',
                     fillHotels();
                 };
 
+                var star1 = 0, star2 = 5;
+                $scope.filterByStarRange = function() {
+                    $scope.selectedStar = null;
+                    star1 = $('#fromStar').raty('score');
+                    if(star1 === undefined)
+                        star1 = 0;
+                    star2 = $('#toStar').raty('score');
+                    fillHotels();
+                };
+
                 $scope.selectedType = null;
                 $scope.types = [];
                 function fillTypes(value) {
@@ -77,6 +87,10 @@ define(['app/services/hotel-service',
                     _.each($scope.allHotels, function(item, key){
                         var stared = (item.StarRating == $scope.selectedStar || $scope.selectedStar == null) ;
                         var typed = (item.HotelType.Id == $scope.selectedType || $scope.selectedType == null) ;
+                        if(item.StarRating >=  star1 && item.StarRating <=  star2)
+                            stared = true;
+                        else
+                            stared = false;
                         var priced = ($scope.selectedPrice == null);
                         if(!priced) {
                             if(_.find(item.AvailabilityCategories, function(category){
