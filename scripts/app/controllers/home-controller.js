@@ -58,6 +58,10 @@ define(['app/services/banner-service',
                 function loadHotels() {
                     HotelService.getFeaturedHotels().then(function(data){
                         $scope.hotels = data;
+                        _.each($scope.hotels, function(item, index) {
+                            item.DetailsURI = 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
+                            item.starClass = "icon-star-" + (item.StarRating * 10);
+                        });
                     });
                 }
 
