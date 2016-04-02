@@ -1,0 +1,162 @@
+<div class="modal fade" data-ng-controller="ShoppingCartModalController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <script type="text/ng-template" id="ShoppingCartModal.html">
+                <style>
+                    .uibtab-info {
+                        /*padding: 10px;*/
+                        max-height: 400px;
+                        overflow: auto;
+                    }
+
+                    .table-scroll {
+                        max-height: 280px;
+                        overflow: auto;
+                    }
+                </style>
+                <div class="modal-header">
+                    <button type="button" class="close" data-ng-click="cancel()"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>Booking Information</h4>
+                </div>
+                <div class="modal-body">
+                    <uib-tabset justified="true">
+                        <uib-tab index="0" heading="Products" active="tabs[0].active" disable="tabs[0].disabled" >
+                            <div class="uibtab-info">
+                                <div data-ng-show="shoppingItems.hotels.length > 0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>Hotel Name</td>
+                                            <td>Room Type</td>
+                                            <td>Price</td>
+                                            <td>Check In</td>
+                                            <td>Nights</td>
+                                            <td>Guests</td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-ng-repeat="hotel in shoppingItems.hotels"
+                                            style="vertical-align: middle;">
+                                            <td>{{hotel.product.Name}}</td>
+                                            <td>{{hotel.product.AvailabilityCategories[hotel.index].Name}}</td>
+                                            <td style="color:red">${{hotel.product.AvailabilityCategories[hotel.index].Price}}</td>
+                                            <td>{{hotel.product.StartDate | limitTo:10 }}</td>
+                                            <td>
+                                                {{hotel.product.AvailabilityCategories[hotel.index].Rooms[0].Nights.length}}
+                                            </td>
+                                            <td>
+                                                <p data-ng-repeat="room in hotel.product.AvailabilityCategories[hotel.index].Rooms">
+                                                    {{'room #' + (room.RoomId + 1) + ' - ' + room.guestsInfo}}
+                                                </p>
+                                            </td>
+                                            <td><a href data-ng-click="removeHotel($index)"><i
+                                                    class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                </div>
+                                <div data-ng-show="shoppingItems.services.length > 0">
+                                    <p><strong>Services</strong></p>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="1" heading="Names & Details" active="tabs[1].active" disable="tabs[1].disabled">
+                            <div style="padding-top: 5px;">
+                                <div class="form-inline form-group">
+                                    <label>Client Reference: &nbsp;</label><input type="text"
+                                                                                  class="form-control input-sm"
+                                                                                  data-ng-model="bookingInfo.Reference">
+                                </div>
+                            </div>
+                            <div class="table-scroll">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr style="font-weight: bold;">
+                                        <td></td>
+                                        <td>ID</td>
+                                        <td>Last Name</td>
+                                        <td>First Name</td>
+                                        <td>Age</td>
+                                        <td>Title</td>
+                                        <td>Phone</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr data-ng-repeat="guest in bookingInfo.Guests">
+                                        <td><span data-ng-show="guest.PrimaryGuest"
+                                                  style="color:red;font-weight: bold;">*</span></td>
+                                        <td>{{guest.GuestId}}</td>
+                                        <td><input type="text" class="form-control input-sm"
+                                                   data-ng-model="guest.LastName"></td>
+                                        <td><input type="text" class="form-control input-sm"
+                                                   data-ng-model="guest.FirstName"></td>
+                                        <td><span data-ng-show="!guest.Adult">{{guest.Age}}</span></td>
+                                        <td><select class="form-control input-sm" data-ng-model="guest.Title"
+                                                    data-ng-show="guest.Adult">
+                                            <option>Mr</option>
+                                            <option>Mrs</option>
+                                            <option>Ms</option>
+                                            <option>Dr</option>
+                                        </select><span data-ng-show="!guest.Adult">child</span></td>
+                                        <td><input type="text" class="form-control input-sm"
+                                                   data-ng-model="guest.Phone"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-info-wrap">Please fill out all lead names (marked with asterisk *).</p>
+                        </uib-tab>
+                        <uib-tab index="2" heading="Assignments" active="tabs[2].active" disable="tabs[2].disabled">
+                            <div style="padding-top: 5px;" class="text-info">
+                                Assignments are made automatically based on the names entered in the 'Names and Details'
+                                screen. Please review and change accordingly.
+                            </div>
+                            <br>
+                            <div class="table-scroll">
+                                <div data-ng-repeat="hotel in bookingInfo.Hotels">
+                                    <p style="color: #e32b19;font-weight: bold;">Hotel - {{hotel.HotelName}}</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>Room Type</td>
+                                            <td>Room #</td>
+                                            <td>Price</td>
+                                            <td>Lead Guest</td>
+                                            <td>Other Guests</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-ng-repeat="room in hotel.Rooms">
+                                            <td>{{hotel.CategoryName}}</td>
+                                            <td>{{$index+1}}</td>
+                                            <td style="color:red">${{room.Price}}</td>
+                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select></td>
+                                            <td><div data-ng-repeat="guest in room.Guests.GuestIds">
+                                                <select class="form-control" data-ng-model="guest" data-ng-show="guest != room.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                        </div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="3" heading="Review & Pay" active="tabs[3].active" disable="tabs[3].disabled">
+                            Review & Pay
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-click="previous()"
+                            data-ng-disabled="!showPreviousBtn">Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-click="next()"
+                            data-ng-disabled="!showNextBtn">Next
+                    </button>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

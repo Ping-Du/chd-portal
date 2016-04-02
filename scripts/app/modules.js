@@ -1,6 +1,6 @@
-define(['underscore', 'angular', "angucomplete-alt", 'inputmask'], function (_, angular) {
+define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'inputmask'], function (_, angular) {
 
-    var services = angular.module('chd.services', ['ngCookies', 'ngSanitize', 'pascalprecht.translate', 'angular.css.injector']);
+    var services = angular.module('chd.services', ['ngCookies','LocalStorageModule', 'ngSanitize', 'pascalprecht.translate', 'angular.css.injector']);
     var filters = angular.module('chd.filters', []);
     var interceptors = angular.module('chd.interceptors',[services.name]);
     var directives = angular.module('chd.directives', ["angucomplete-alt", "green.inputmask4angular"]);

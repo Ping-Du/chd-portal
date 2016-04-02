@@ -1,9 +1,9 @@
 <div class="line"></div>
 <nav class="navbar-default" role="navigation">
 <div class="container relative" data-ng-controller="NavbarController">
-    <div class="shopping-car" data-ng-show="isAuthorized">
+    <div class="shopping-car" data-ng-show="isAuthorized" data-ng-click="openShoppingCart()">
         <i class="icon-cart"></i>
-        <span class="s-car-amount">0</span>
+        <span class="s-car-amount" data-ng-show="shoppingItems.hotels.length + shoppingItems.services.length > 0">{{shoppingItems.hotels.length + shoppingItems.services.length}}</span>
     </div>
     <div>
         <!-- Brand and toggle get grouped for better mobile display -->

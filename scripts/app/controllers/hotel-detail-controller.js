@@ -3,7 +3,7 @@ define(['app/services/hotel-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
-    'app/controllers/hotel-booking-modal-controller',
+    'app/controllers/consent-required-modal-controller',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
@@ -173,9 +173,9 @@ define(['app/services/hotel-service',
 
                 };
 
-                //$scope.showBookingModal = function (categoryIndex) {
-                //    $rootScope.$broadcast('OpenHotelBookingModal', $scope.hotelItem, categoryIndex);
-                //};
+                $scope.addToShoppingCart = function (categoryIndex) {
+                    $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
+                };
 
                 $scope.load = function(reload) {
                     if(reload) {

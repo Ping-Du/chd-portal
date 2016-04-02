@@ -1,8 +1,10 @@
-define(['app/services/navbar-service', 'app/services/session-service'], function (modules) {
+define(['app/services/navbar-service',
+    'app/services/session-service',
+    'app/controllers/shopping-cart-modal-controller'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller("NavbarController", ['$scope', 'NavbarService', 'SessionService', function ($scope, NavbarService, SessionService) {
+        .controller("NavbarController", ['$rootScope', '$scope', 'NavbarService', 'SessionService', 'ShoppingService', function ($rootScope, $scope, NavbarService, SessionService, ShoppingService) {
 
             $scope.navigator = {
                 active: NavbarService.getActiveItem(),
@@ -27,7 +29,14 @@ define(['app/services/navbar-service', 'app/services/session-service'], function
             });
             $scope.$on('LanguageChanged', function(event, data){
                 $scope.languageId = data;
-            })
+            });
+
+
+            $scope.shoppingItems = ShoppingService.getItems();
+
+            $scope.openShoppingCart = function() {
+                $rootScope.$broadcast('ShoppingCart:Open');
+            }
 
         }]);
 
