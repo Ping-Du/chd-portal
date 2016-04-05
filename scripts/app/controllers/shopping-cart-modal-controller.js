@@ -119,6 +119,56 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                             room.guestsInfo = adults + " adult(s) " + minors + ' minor(s)';
                         }
                     }
+
+                    for(i = 0; i < $scope.shoppingItems.services.length; i++) {
+                        var service = $scope.shoppingItems.services[i].product;
+                        var serviceIndex = $scope.shoppingItems.services[i].index;
+                        var serviceCategory = service.AvailabilityCategories[serviceIndex];
+                        var serviceGuestId = $scope.bookingInfo.Guests.length + 1;
+                        $scope.bookingInfo.Services.push({
+                            ServiceTime:'',
+                            PickupPoint: '',
+                            DropoffPoint:'',
+                            TripItemId: 0,
+                            ProductType: service.ProductType,
+                            ProductId: service.ProductId,
+                            ServiceName:service.Name,
+                            CategoryId: serviceCategory.Id,
+                            CategoryName:serviceCategory.Name,
+                            StartDate: service.StartDate,
+                            Note: '',
+                            AvailabilityLevel: serviceCategory.AvailabilityLevel,
+                            Price: serviceCategory.Price,
+                            Guests:{
+                                GuestIds:[],
+                                PrimaryGuestId:1
+                            }
+                        });
+                        var serviceAdults = 0, serviceMinors = 0;
+                        for (j = 0; j < serviceCategory.Guests.length; j++) {
+                            var guest = serviceCategory.Guests[j];
+                            //$scope.bookingInfo.Services[i].Guests.GuestIds.push(j+1);
+                                if (guest.Type == 'ADULT' && (guest.Age >= 18 || guest.Age == 0)) {
+                                    serviceAdults++;
+                                    if (i == 0) {
+                                        addEmptyGuest(serviceGuestId, j == 0, guest.Age, true);
+                                        $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
+                                        if(j == 0)
+                                            $scope.bookingInfo.Services[i].Guests.PrimaryGuestId = serviceGuestId;
+                                        serviceGuestId ++;
+                                    }
+                                }
+                                else {
+                                    serviceMinors++;
+                                    if (i == 0 ) {
+                                        addEmptyGuest(serviceGuestId, false, guest.Age, false);
+                                        $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
+                                        serviceGuestId ++;
+                                    }
+                                }
+                            serviceCategory.guestsInfo = serviceAdults + " adult(s) " + serviceMinors + ' minor(s)';
+                        }
+                    }
                 }
 
                 $scope.cancel = function () {
@@ -127,6 +177,11 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
 
                 $scope.removeHotel = function (index) {
                     ShoppingService.removeItem('HTL', index);
+                    calculateInfo();
+                };
+
+                $scope.removeService = function(index) {
+                    ShoppingService.removeItem('OPT', index);
                     calculateInfo();
                 };
 
@@ -165,6 +220,14 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                         }
                     }
                 }
+
+                $scope.addGuest = function() {
+                    $scope.bookingInfo.Guests.push({});
+                };
+
+                $scope.removeGuest = function(index) {
+                    $scope.bookingInfo.Guests.splice(index, 1);
+                };
 
                 $scope.previous = function () {
                     if($scope.activeTabIndex == 1) {

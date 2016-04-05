@@ -59,7 +59,32 @@
                                     <br>
                                 </div>
                                 <div data-ng-show="shoppingItems.services.length > 0">
-                                    <p><strong>Services</strong></p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>Service Name</td>
+                                            <td>Type</td>
+                                            <td style="width:250px;">Category</td>
+                                            <td>Service Date</td>
+                                            <td>Price</td>
+                                            <td>Guests</td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-ng-repeat="service in shoppingItems.services"
+                                            style="vertical-align: middle;">
+                                            <td>{{service.product.Name}}</td>
+                                            <td>{{service.product.ServiceType.Name}}</td>
+                                            <td>{{service.product.AvailabilityCategories[service.index].Name}}</td>
+                                            <td>{{service.product.StartDate | limitTo:10 }}</td>
+                                            <td style="color:red">${{service.product.AvailabilityCategories[service.index].Price}}</td>
+                                            <td>{{service.product.AvailabilityCategories[service.index].guestsInfo}}</td>
+                                            <td><a href data-ng-click="removeService($index)"><i
+                                                    class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </uib-tab>
@@ -82,6 +107,7 @@
                                         <td>Age</td>
                                         <td>Title</td>
                                         <td>Phone</td>
+                                        <td></td>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -102,12 +128,17 @@
                                             <option>Dr</option>
                                         </select><span data-ng-show="!guest.Adult">child</span></td>
                                         <td><input type="text" class="form-control input-sm"
-                                                   data-ng-model="guest.Phone"></td>
+                                                   data-ng-model="guest.Phone" data-ng-show="guest.Adult"></td>
+                                        <td><a href data-ng-click="removeGuest($index)"><i
+                                                class="glyphicon glyphicon-remove main-red"></i></a></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="text-info-wrap">Please fill out all lead names (marked with asterisk *).</p>
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-md-8 text-info">Please fill out all lead names (marked with asterisk <span style="color:red;">*</span>).</div>
+                                <div class="col-md-4 text-right"><input type="button" class="button btn-red btn-sm" value="Add Guest" data-ng-click="addGuest()"></div>
+                            </div>
                         </uib-tab>
                         <uib-tab index="2" heading="Assignments" active="tabs[2].active" disable="tabs[2].disabled">
                             <div style="padding-top: 5px;" class="text-info">

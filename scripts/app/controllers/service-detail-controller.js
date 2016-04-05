@@ -3,6 +3,7 @@ define(['app/services/services-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
+    'app/controllers/consent-required-modal-controller',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
@@ -185,6 +186,10 @@ define(['app/services/services-service',
                     else
                         $scope.checkAvailability(reload);
                 }
+
+                $scope.addToShoppingCart = function (categoryIndex) {
+                    $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
+                };
 
                 load(false);
 

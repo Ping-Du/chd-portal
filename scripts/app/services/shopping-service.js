@@ -42,9 +42,9 @@ define(['app/services/trip-service'], function (modules) {
                     } else {
                         shoppingItems.services.splice(index, 1);
                     }
-                    localStorageService.clearAll();
+                    //localStorageService.clearAll();
                     localStorageService.set('shoppingItems', shoppingItems);
-                    $cookieStore.put('hasShoppingItems', shoppingItems.length > 0);
+                    $cookieStore.put('hasShoppingItems', (shoppingItems.hotels.length + shoppingItems.services.length) > 0);
                 }
             };
         }]);
