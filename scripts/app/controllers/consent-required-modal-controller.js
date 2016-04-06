@@ -56,7 +56,27 @@ define(['app/services/shopping-service'], function (modules) {
                 $scope.onRequest = (product.AvailabilityCategories[index].AvailabilityLevel == "Requestable");
                 $scope.required = ($scope.message != '' || $scope.onRequest);
 
+                $scope.isService = (product.ProductType == 'OPT');
+                $scope.serviceTime = '';
+                $scope.pickupPoint = '';
+                $scope.dropoffPoint = '';
+                $scope.product = product;
+
+                if($scope.isService) {
+                    if(product.PickupPoints.length > 0) {
+                        $scope.pickupPoint = product.PickupPoints[0].ProductId;
+                    }
+                    if(product.DropoffPoints.length > 0) {
+                        $scope.dropoffPoint = product.DropoffPoints[0].ProductId;
+                    }
+                }
+
                 $scope.ok = function () {
+                    if($scope.isService) {
+                        product.PickupPoint = $scope.pickupPoint;
+                        product.dropoffPoint = $scope.dropoffPoint;
+                        product.AvailabilityCategories[index].ServiceTime = $scope.serviceTime;
+                    }
                     $uibModalInstance.close('ok');
                 };
 

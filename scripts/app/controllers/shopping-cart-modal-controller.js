@@ -126,9 +126,9 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                         var serviceCategory = service.AvailabilityCategories[serviceIndex];
                         var serviceGuestId = $scope.bookingInfo.Guests.length + 1;
                         $scope.bookingInfo.Services.push({
-                            ServiceTime:'',
-                            PickupPoint: '',
-                            DropoffPoint:'',
+                            ServiceTime:serviceCategory.ServiceTime,
+                            PickupPoint: service.PickupPoint,
+                            DropoffPoint:service.DropoffPoint,
                             TripItemId: 0,
                             ProductType: service.ProductType,
                             ProductId: service.ProductId,
@@ -141,7 +141,7 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                             Price: serviceCategory.Price,
                             Guests:{
                                 GuestIds:[],
-                                PrimaryGuestId:1
+                                PrimaryGuestId:serviceGuestId
                             }
                         });
                         var serviceAdults = 0, serviceMinors = 0;
