@@ -41,9 +41,28 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                     Reference: '',
                     PrimaryGuestName: '',
                     Guests: [],
-                    PaymentInfo: null,
+                    PaymentInfo: {
+                        ProfileId:'',
+                        PaymentMethod:'CreditCard',
+                        CreditCardInfo:{
+                            CardNumber:'',
+                            ExpirationMonth:0,
+                            ExpirationYear:2017,
+                            CardCode:''
+                        },
+                        BankAccountInfo:{
+                            BankAccountNumber:'',
+                            NameOnAccount:'',
+                            RoutingNumber:''
+                        },
+                        SaveInProfile:false
+                    },
                     Hotels: [],
-                    Services: []
+                    Services: [],
+                    Adults:0,
+                    Minors:0,
+                    HotelPrice:0,
+                    ServicePrice:0
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -56,7 +75,8 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                         Age: '' + age,
                         PrimaryGuest: primaryGuest,
                         Adult: adult,
-                        ShowName:'123'
+                        ShowName:'',
+                        deletable:false
                     });
                 }
 
@@ -88,6 +108,7 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                         for (j = 0; j < category.Rooms.length; j++) {
                             var room = category.Rooms[j];
                             $scope.bookingInfo.Hotels[i].Nights = room.Nights.length;
+                            $scope.bookingInfo.HotelPrice += room.Price;
                             $scope.bookingInfo.Hotels[i].Rooms.push({
                                 Guests:{
                                     GuestIds:[],
@@ -125,6 +146,7 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                         var serviceIndex = $scope.shoppingItems.services[i].index;
                         var serviceCategory = service.AvailabilityCategories[serviceIndex];
                         var serviceGuestId = $scope.bookingInfo.Guests.length + 1;
+                        $scope.bookingInfo.ServicePrice += serviceCategory.Price;
                         $scope.bookingInfo.Services.push({
                             ServiceTime:serviceCategory.ServiceTime,
                             PickupPoint: service.PickupPoint,
@@ -191,7 +213,7 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
 
                 function setButtons() {
                     $scope.showPreviousBtn = ($scope.activeTabIndex > 0);
-                    $scope.showNextBtn = ($scope.activeTabIndex < 3);
+                    $scope.showNextBtn = ($scope.activeTabIndex < 4);
                 }
 
                 calculateInfo();
@@ -201,14 +223,22 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                     {active: true, disabled: false},
                     {active: false, disabled: true},
                     {active: false, disabled: true},
+                    {active: false, disabled: true},
                     {active: false, disabled: true}
                 ];
 
                 function calShowName() {
+                    var validateResult = true;
+
+                    $scope.bookingInfo.Adults = 0;
+                    $scope.bookingInfo.Minors = 0;
                     for(var i = 0; i < $scope.bookingInfo.Guests.length; i++) {
                         var g = $scope.bookingInfo.Guests[i];
-                        if(g.PrimaryGuest)
-                            g.ShowName = '* '+ g.LastName + ' ' + g.FirstName;
+                        if(g.PrimaryGuest) {
+                            g.ShowName = '* ' + g.LastName + ' ' + g.FirstName;
+                            if(g.LastName == '' || g.FirstName == '')
+                                validateResult = false;
+                        }
                         else
                             g.ShowName = g.LastName + ' ' + g.FirstName;
                         if(g.ShowName.Trim() == '') {
@@ -218,21 +248,35 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                                 g.ShowName = '#' + g.GuestId + ' Minor Age ' + g.Age;
                             }
                         }
+                        if(g.Adult)
+                            $scope.bookingInfo.Adults ++;
+                        else
+                            $scope.bookingInfo.Minors ++;
+                    }
+
+                    return validateResult;
+                }
+
+                function reCalculateGuestId() {
+                    for(var i = 0; i < $scope.bookingInfo.Guests.length; i++) {
+                        $scope.bookingInfo.Guests[i].GuestId = i+1;
                     }
                 }
 
-                $scope.addGuest = function() {
-                    $scope.bookingInfo.Guests.push({});
+                $scope.addGuest = function(adult) {
+                    addEmptyGuest($scope.bookingInfo.Guests.length +1, false, 0, adult);
                 };
 
                 $scope.removeGuest = function(index) {
                     $scope.bookingInfo.Guests.splice(index, 1);
+                    reCalculateGuestId();
                 };
 
                 $scope.previous = function () {
                     if($scope.activeTabIndex == 1) {
                         calShowName();
                     }
+                    $scope.message = '';
                     $scope.tabs[$scope.activeTabIndex].disabled = true;
                     $scope.tabs[$scope.activeTabIndex].active = false;
                     $scope.activeTabIndex = $scope.activeTabIndex - 1;
@@ -241,10 +285,68 @@ define(['app/services/shopping-service', 'app/utils'], function (modules) {
                     setButtons();
                 };
 
+                $scope.message = '';
+
+                function checkGuestAssignment() {
+                    var i, j, k;
+
+                    var total = $scope.bookingInfo.Guests.length;
+                    var primaryOk = false;
+                    for(i = 0; i < $scope.bookingInfo.Hotels.length; i++) {
+                        var hotel = $scope.bookingInfo.Hotels[i];
+                        for(j = 0; j < hotel.Rooms.length; j++) {
+                            primaryOk = false;
+                            for(k = 0; k < hotel.Rooms[j].Guests.GuestIds.length; k++) {
+                                if(hotel.Rooms[j].Guests.GuestIds[k] == 0 || hotel.Rooms[j].Guests.GuestIds[k] > total) {
+                                    return false;
+                                }
+                                if(hotel.Rooms[j].Guests.GuestIds[k] == hotel.Rooms[j].Guests.PrimaryGuestId) {
+                                    if($scope.bookingInfo.Guests[hotel.Rooms[j].Guests.PrimaryGuestId - 1].FirstName != '' && $scope.bookingInfo.Guests[hotel.Rooms[j].Guests.PrimaryGuestId - 1].LastName != '')
+                                        primaryOk = true;
+                                }
+                            }
+                            if(!primaryOk) {
+                                return false;
+                            }
+                        }
+                    }
+
+
+                    for(i = 0; i < $scope.bookingInfo.Services.length; i++) {
+                        var service = $scope.bookingInfo.Services[i];
+                        primaryOk = false;
+                        for(j = 0; j < service.Guests.GuestIds.length; j++) {
+                            if(service.Guests.GuestIds[j] == 0 || service.Guests.GuestIds[j] > total)
+                                return false;
+                            if(service.Guests.PrimaryGuestId == service.Guests.GuestIds[j])
+                            {
+                                if($scope.bookingInfo.Guests[service.Guests.PrimaryGuestId - 1].FirstName != '' && $scope.bookingInfo.Guests[service.Guests.PrimaryGuestId - 1].LastName != '')
+                                    primaryOk = true;
+                            }
+                        }
+                        if(!primaryOk)
+                            return false;
+                    }
+
+                    return true;
+                }
+
                 $scope.next = function () {
                     if($scope.activeTabIndex == 1) {
-                        calShowName();
+                        if(!calShowName()){
+                            $scope.message = "Please fill out all lead names";
+                            return;
+                        }
                     }
+                    if($scope.activeTabIndex == 2) {
+                        if(!checkGuestAssignment()) {
+                            $scope.message = "Please assign all guests!";
+                            return;
+                        }
+                    }
+
+
+                    $scope.message = '';
                     $scope.tabs[$scope.activeTabIndex].disabled = true;
                     $scope.tabs[$scope.activeTabIndex].active = false;
                     $scope.activeTabIndex = $scope.activeTabIndex + 1;

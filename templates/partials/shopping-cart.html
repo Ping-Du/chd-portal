@@ -21,7 +21,7 @@
                 </div>
                 <div class="modal-body">
                     <uib-tabset justified="true">
-                        <uib-tab index="0" heading="Products" active="tabs[0].active" disable="tabs[0].disabled" >
+                        <uib-tab index="0" heading="Products" active="tabs[0].active" disable="tabs[0].disabled">
                             <div class="uibtab-info">
                                 <div data-ng-show="shoppingItems.hotels.length > 0">
                                     <table class="table table-striped">
@@ -41,7 +41,9 @@
                                             style="vertical-align: middle;">
                                             <td>{{hotel.product.Name}}</td>
                                             <td>{{hotel.product.AvailabilityCategories[hotel.index].Name}}</td>
-                                            <td style="color:red">${{hotel.product.AvailabilityCategories[hotel.index].Price}}</td>
+                                            <td style="color:red">
+                                                ${{hotel.product.AvailabilityCategories[hotel.index].Price}}
+                                            </td>
                                             <td>{{hotel.product.StartDate | limitTo:10 }}</td>
                                             <td>
                                                 {{hotel.product.AvailabilityCategories[hotel.index].Rooms[0].Nights.length}}
@@ -78,8 +80,11 @@
                                             <td>{{service.product.ServiceType.Name}}</td>
                                             <td>{{service.product.AvailabilityCategories[service.index].Name}}</td>
                                             <td>{{service.product.StartDate | limitTo:10 }}</td>
-                                            <td style="color:red">${{service.product.AvailabilityCategories[service.index].Price}}</td>
-                                            <td>{{service.product.AvailabilityCategories[service.index].guestsInfo}}</td>
+                                            <td style="color:red">
+                                                ${{service.product.AvailabilityCategories[service.index].Price}}
+                                            </td>
+                                            <td>{{service.product.AvailabilityCategories[service.index].guestsInfo}}
+                                            </td>
                                             <td><a href data-ng-click="removeService($index)"><i
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
                                         </tr>
@@ -119,7 +124,27 @@
                                                    data-ng-model="guest.LastName"></td>
                                         <td><input type="text" class="form-control input-sm"
                                                    data-ng-model="guest.FirstName"></td>
-                                        <td><span data-ng-show="!guest.Adult">{{guest.Age}}</span></td>
+                                        <td><span data-ng-show="!guest.Adult"><select class="form-control input-sm"
+                                                                                      data-ng-model="guest.Age">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                            <option>13</option>
+                                            <option>14</option>
+                                            <option>15</option>
+                                            <option>16</option>
+                                            <option>17</option>
+                                        </select></span></td>
                                         <td><select class="form-control input-sm" data-ng-model="guest.Title"
                                                     data-ng-show="guest.Adult">
                                             <option>Mr</option>
@@ -136,9 +161,16 @@
                                 </table>
                             </div>
                             <div class="row" style="margin-top: 5px;">
-                                <div class="col-md-8 text-info">Please fill out all lead names (marked with asterisk <span style="color:red;">*</span>).</div>
-                                <div class="col-md-4 text-right"><input type="button" class="button btn-red btn-sm" value="Add Guest" data-ng-click="addGuest()"></div>
+                                <div class="col-md-8 text-info">Please fill out all lead names (marked with asterisk
+                                    <span style="color:red;">*</span>).
+                                </div>
+                                <div class="col-md-4 text-right"><input type="button" class="button btn-red btn-sm"
+                                                                        value="Add Adult"
+                                                                        data-ng-click="addGuest(true)">&nbsp;&nbsp;<input
+                                        type="button" class="button btn-red btn-sm" value="Add Minor"
+                                        data-ng-click="addGuest(false)"></div>
                             </div>
+                            <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
                         <uib-tab index="2" heading="Assignments" active="tabs[2].active" disable="tabs[2].disabled">
                             <div style="padding-top: 5px;" class="text-info">
@@ -146,6 +178,7 @@
                                 screen. Please review and change accordingly.
                             </div>
                             <br>
+
                             <div class="table-scroll">
                                 <div data-ng-repeat="hotel in bookingInfo.Hotels">
                                     <p style="color: #e32b19;font-weight: bold;">Hotel - {{hotel.HotelName}}</p>
@@ -156,7 +189,7 @@
                                             <td>Room #</td>
                                             <td>Price</td>
                                             <td>Lead Guest</td>
-                                            <td>Other Guests</td>
+                                            <td>All Guests</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -164,10 +197,16 @@
                                             <td>{{hotel.CategoryName}}</td>
                                             <td>{{$index+1}}</td>
                                             <td style="color:red">${{room.Price}}</td>
-                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select></td>
-                                            <td><div data-ng-repeat="guest in room.Guests.GuestIds">
-                                                <select class="form-control" data-ng-model="guest" data-ng-show="guest != room.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
-                                        </div></td>
+                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId"
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                            </td>
+                                            <td>
+                                                <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
+                                                    <select class="form-control"
+                                                            data-ng-model="room.Guests.GuestIds[$index]"
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                </div>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -181,7 +220,7 @@
                                             <td>Category</td>
                                             <td>Price</td>
                                             <td>Lead Guest</td>
-                                            <td>Other Guests</td>
+                                            <td>All Guests</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -189,18 +228,96 @@
                                             <td>{{service.ServiceName}}</td>
                                             <td>{{service.CategoryName}}</td>
                                             <td style="color:red">${{service.Price}}</td>
-                                            <td><select class="form-control" data-ng-model="service.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select></td>
-                                            <td><div data-ng-repeat="guest in service.Guests.GuestIds">
-                                                <select class="form-control" data-ng-model="guest" data-ng-show="guest != service.Guests.PrimaryGuestId" data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
-                                            </div></td>
+                                            <td><select class="form-control"
+                                                        data-ng-model="service.Guests.PrimaryGuestId"
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                            </td>
+                                            <td>
+                                                <div data-ng-repeat="guest in service.Guests.GuestIds track by $index">
+                                                    <select class="form-control"
+                                                            data-ng-model="service.Guests.GuestIds[$index]"
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                </div>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
-                        <uib-tab index="3" heading="Review & Pay" active="tabs[3].active" disable="tabs[3].disabled">
-                            Review & Pay
+                        <uib-tab index="3" heading="Review" active="tabs[3].active" disable="tabs[3].disabled">
+                            <div class="uibtab-info" style="margin-top: 5px;">
+                                <strong>Guests - Total: {{bookingInfo.Guests.length}} Adult(s): {{bookingInfo.Adults}}
+                                    Minor(s): {{bookingInfo.Minors}}</strong>
+
+                                <p><span data-ng-repeat="guest in bookingInfo.Guests">{{guest.ShowName}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                </p>
+                                <hr>
+                                <strong>Hotels - Sub Total: ${{bookingInfo.HotelPrice}}</strong>
+
+                                <div>
+                                    <p data-ng-repeat="hotel in bookingInfo.Hotels">Name: {{hotel.HotelName}}&nbsp;&nbsp;&nbsp;&nbsp;Category:
+                                        {{hotel.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;Room(s): {{hotel.Rooms.length}}&nbsp;&nbsp;&nbsp;&nbsp;Check
+                                        In Date: {{hotel.StartDate | limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Night(s):
+                                        {{hotel.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;Price: ${{hotel.Price}}</p>
+                                </div>
+                                <hr>
+                                <strong>Services - Sub Total: ${{bookingInfo.ServicePrice}}</strong>
+
+                                <div>
+                                    <p data-ng-repeat="service in bookingInfo.Services">Name: {{service.ServiceName}}&nbsp;&nbsp;&nbsp;&nbsp;Category:
+                                        {{service.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;Date: {{service.StartDate |
+                                        limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Time: {{service.ServiceTime}}&nbsp;&nbsp;&nbsp;&nbsp;Price:
+                                        ${{service.Price}}</p>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="text-right" style="color:red;"><strong>Grand Total: ${{(bookingInfo.ServicePrice
+                                + bookingInfo.HotelPrice) | number:2}}</strong></div>
+                        </uib-tab>
+                        <uib-tab index="4" heading="Pay" active="tabs[4].active" disable="tabs[4].disabled">
+                            <div class="uibtab-info" style="margin-top: 5px;">
+                                <div class="form-group form-inline">
+                                    <label>Payment Profile: </label>
+                                    <select class="form-control"></select>
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label>Method: </label>
+
+                                        <label class="radio-inline"><input type="radio" name="paymentMethod"
+                                                                           value="CreditCard" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod" checked>Credit Card</label>
+                                        <label class="radio-inline"><input type="radio" name="paymentMethod"
+                                                                           value="ECheck" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">ECheck</label>
+
+                                </div>
+                            </div>
+                            <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
+                                <div class="form-group">
+                                    <label>Card No: </label>
+                                    <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
+                                    <label>Expiration Year: </label>
+                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear">
+                                    <label>Expiration Month: </label>
+                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth">
+                                    <label>Code: </label>
+                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
+                                </div>
+                            </div>
+                            <div class="from-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck'">
+                                <div class="form-group">
+                                    <label>Bank Account: </label>
+                                    <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.BankAccountNumber">
+                                    <label>Name: </label>
+                                    <input class="form-control" type="text" style="width: 150px;" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.NameOnAccount">
+                                    <label>Routing Number: </label>
+                                    <input class="form-control" type="text" style="width: 150px;" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.RoutingNumber">
+                                </div>
+                            </div>
+                            <div class="form-group form-inline">
+                                <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
+                                <label>Save In Profile</label>
+                            </div>
                         </uib-tab>
                     </uib-tabset>
                 </div>
@@ -209,7 +326,10 @@
                             data-ng-disabled="!showPreviousBtn">Previous
                     </button>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-click="next()"
-                            data-ng-disabled="!showNextBtn">Next
+                            data-ng-disabled="!showNextBtn" data-ng-show="!tabs[4].active">Next
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" data-ng-click="book()"
+                            data-ng-show="tabs[4].active">Book & Pay
                     </button>
                 </div>
             </script>
