@@ -45,6 +45,13 @@ define(['app/services/trip-service'], function (modules) {
                     //localStorageService.clearAll();
                     localStorageService.set('shoppingItems', shoppingItems);
                     $cookieStore.put('hasShoppingItems', (shoppingItems.hotels.length + shoppingItems.services.length) > 0);
+                },
+                removeAll:function() {
+                    localStorageService.clearAll();
+                    $cookieStore.put('hasShoppingItems', false);
+                },
+                book:function(param) {
+                    return TripService.saveBooking(param);
                 }
             };
         }]);

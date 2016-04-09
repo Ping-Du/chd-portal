@@ -280,7 +280,7 @@
                             <div class="uibtab-info" style="margin-top: 5px;">
                                 <div class="form-group form-inline">
                                     <label>Payment Profile: </label>
-                                    <select class="form-control"></select>
+                                    <select class="form-control" style="width:250px;" data-ng-options="p.ProfileId as (p.PaymentMethod + ' ' + p.Description) for p in financeInfo.Profiles"></select>
                                 </div>
                                 <div class="form-group form-inline">
                                     <label>Method: </label>
@@ -297,9 +297,9 @@
                                     <label>Card No: </label>
                                     <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
                                     <label>Expiration Year: </label>
-                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear">
+                                    <select class="form-control" data-ng-options="item for item in years" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear"></select>
                                     <label>Expiration Month: </label>
-                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth">
+                                    <select class="form-control" data-ng-options="item for item in months" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth"></select>
                                     <label>Code: </label>
                                     <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
                                 </div>
@@ -318,6 +318,7 @@
                                 <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
                                 <label>Save In Profile</label>
                             </div>
+                            <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
                     </uib-tabset>
                 </div>
@@ -328,8 +329,11 @@
                     <button type="button" class="btn btn-primary btn-sm" data-ng-click="next()"
                             data-ng-disabled="!showNextBtn" data-ng-show="!tabs[4].active">Next
                     </button>
-                    <button type="button" class="btn btn-warning btn-sm" data-ng-click="book()"
-                            data-ng-show="tabs[4].active">Book & Pay
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-click="bookAndPay(false)"
+                            data-ng-show="tabs[4].active">Save As Quote
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" data-ng-click="bookAndPay(true)"
+                            data-ng-show="tabs[4].active" data-ng-disabled="{{bookDisabled}}">Book & Pay
                     </button>
                 </div>
             </script>
