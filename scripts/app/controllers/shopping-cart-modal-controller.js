@@ -354,6 +354,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     setButtons();
                 };
 
+                //$scope.selectedProfile = null;
                 function getBookParam(paymentIncluded) {
                     var param = {
                         TripId: $scope.bookingInfo.TripId,
@@ -373,7 +374,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             LastName: g.LastName,
                             Title: g.Title,
                             Phone: g.Phone,
-                            Age: parseInt(g.Age),
+                            Age: (g.Adult?null:parseInt(g.Age)),
                             PrimaryGuest: g.PrimaryGuest
                         });
                     }
@@ -412,12 +413,18 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     }
                     if(paymentIncluded) {
                         var p = $scope.bookingInfo.PaymentInfo;
+                        var profile = null;
+                        for(i = 0; i < $scope.financeInfo.Profiles.length; i++) {
+                            if(p.ProfileId == $scope.financeInfo.Profiles[i].ProfileID) {
+                                profile = $scope.financeInfo.Profiles[i];
+                            }
+                        }
                         param.PaymentInfo = {
-                            ProfileId: ((p.ProfileId == '')?null: p.ProfileId),
-                            PaymentMethod: (p.ProfileId == ''?p.PaymentMethod:null),
-                            CreditCardInfo: (p.ProfileId == '' && p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
-                            BankAccountInfo: (p.ProfileId == '' && p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
-                            SaveInProfile: (p.ProfileId == ''? p.SaveInProfile: null)
+                            ProfileID: (profile?p.ProfileId:null),
+                            PaymentMethod: "", //(profile?profile.PaymentMethod: p.PaymentMethod),
+                            CreditCardInfo: (!profile && p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
+                            BankAccountInfo: (!profile && p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
+                            SaveInProfile: (profile?false: p.SaveInProfile)
                         };
                     }
                     return param;
@@ -433,7 +440,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     if ($window.confirm(msg)) {
                         var p = getBookParam(pay);
                         if(pay) {
-                            if(p.PaymentInfo.ProfileId == '' || p.PaymentInfo.ProfileId == null) {
+                            if(p.PaymentInfo.ProfileID == '' || p.PaymentInfo.ProfileID == null) {
                                 if(p.PaymentInfo.PaymentMethod == 'CreditCard') {
                                     if(p.PaymentInfo.CreditCardInfo.CardNumber == '' || p.PaymentInfo.CreditCardInfo.CardCode == '' || p.PaymentInfo.CreditCardInfo.ExpirationYear == 0 || p.PaymentInfo.CreditCardInfo.ExpirationMonth == 0) {
                                         $scope.message = 'Please fill out all information of credit card!';
@@ -465,6 +472,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 function loadFinanceInfo() {
                     AccountService.getFinanceInfo().then(function(data){
                         $scope.financeInfo = data;
+                        //$scope.selectedProfile = data.Profiles[0];
                     });
                 }
 

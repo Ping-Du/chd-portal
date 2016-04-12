@@ -180,7 +180,7 @@
                             <br>
 
                             <div class="table-scroll">
-                                <div data-ng-repeat="hotel in bookingInfo.Hotels">
+                                <div data-ng-repeat="hotel in bookingInfo.Hotels" data-ng-show="shoppingItems.hotels.length > 0">
                                     <p style="color: #e32b19;font-weight: bold;">Hotel - {{hotel.HotelName}}</p>
                                     <table class="table table-striped">
                                         <thead>
@@ -211,7 +211,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div>
+                                <div data-ng-show="shoppingItems.services.length > 0">
                                     <p style="color: #e32b19;font-weight: bold;">Service</p>
                                     <table class="table table-striped">
                                         <thead>
@@ -253,19 +253,17 @@
 
                                 <p><span data-ng-repeat="guest in bookingInfo.Guests">{{guest.ShowName}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 </p>
-                                <hr>
-                                <strong>Hotels - Sub Total: ${{bookingInfo.HotelPrice}}</strong>
-
-                                <div>
+                                <div data-ng-show="bookingInfo.Hotels.length > 0">
+                                    <hr>
+                                    <strong>Hotels - Sub Total: ${{bookingInfo.HotelPrice}}</strong>
                                     <p data-ng-repeat="hotel in bookingInfo.Hotels">Name: {{hotel.HotelName}}&nbsp;&nbsp;&nbsp;&nbsp;Category:
                                         {{hotel.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;Room(s): {{hotel.Rooms.length}}&nbsp;&nbsp;&nbsp;&nbsp;Check
                                         In Date: {{hotel.StartDate | limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Night(s):
                                         {{hotel.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;Price: ${{hotel.Price}}</p>
                                 </div>
-                                <hr>
-                                <strong>Services - Sub Total: ${{bookingInfo.ServicePrice}}</strong>
-
-                                <div>
+                                <div data-ng-show="bookingInfo.Services.length > 0">
+                                    <hr>
+                                    <strong>Services - Sub Total: ${{bookingInfo.ServicePrice}}</strong>
                                     <p data-ng-repeat="service in bookingInfo.Services">Name: {{service.ServiceName}}&nbsp;&nbsp;&nbsp;&nbsp;Category:
                                         {{service.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;Date: {{service.StartDate |
                                         limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Time: {{service.ServiceTime}}&nbsp;&nbsp;&nbsp;&nbsp;Price:
@@ -280,7 +278,7 @@
                             <div class="uibtab-info" style="margin-top: 5px;">
                                 <div class="form-group form-inline">
                                     <label>Payment Profile: </label>
-                                    <select class="form-control" style="width:250px;" data-ng-options="p.ProfileId as (p.PaymentMethod + ' ' + p.Description) for p in financeInfo.Profiles"></select>
+                                    <select class="form-control" style="width:250px;" data-ng-options="Profile.ProfileID as Profile.Description for Profile in financeInfo.Profiles" data-ng-model="bookingInfo.PaymentInfo.ProfileId"></select>
                                 </div>
                                 <div class="form-group form-inline">
                                     <label>Method: </label>
