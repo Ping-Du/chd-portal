@@ -280,7 +280,7 @@
                                     <label>Payment Profile: </label>
                                     <select class="form-control" style="width:250px;" data-ng-options="Profile.ProfileID as Profile.Description for Profile in financeInfo.Profiles" data-ng-model="bookingInfo.PaymentInfo.ProfileId"></select>
                                 </div>
-                                <div class="form-group form-inline">
+                                <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">
                                     <label>Method: </label>
 
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
@@ -292,17 +292,17 @@
                             </div>
                             <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
                                 <div class="form-group">
-                                    <label>Card No: </label>
-                                    <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
-                                    <label>Expiration Year: </label>
-                                    <select class="form-control" data-ng-options="item for item in years" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear"></select>
-                                    <label>Expiration Month: </label>
-                                    <select class="form-control" data-ng-options="item for item in months" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth"></select>
-                                    <label>Code: </label>
-                                    <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
+                                    <label data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">Card No: </label>
+                                    <input class="form-control" type="text" style="width:200px" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
+                                    <label data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">Expiration Year: </label>
+                                    <select class="form-control" data-ng-options="item for item in years" style="width: 80px;" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear"></select>
+                                    <label data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">Expiration Month: </label>
+                                    <select class="form-control" data-ng-options="item for item in months" style="width: 80px;" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth"></select>
+                                    <label data-ng-show="bookingInfo.PaymentInfo.ProfileId == null || onlyCardCode">Code: </label>
+                                    <input class="form-control" type="text" style="width: 50px;" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null || onlyCardCode" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
                                 </div>
                             </div>
-                            <div class="from-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck'">
+                            <div class="from-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck' && bookingInfo.PaymentInfo.ProfileId == null">
                                 <div class="form-group">
                                     <label>Bank Account: </label>
                                     <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.BankAccountNumber">
@@ -312,7 +312,7 @@
                                     <input class="form-control" type="text" style="width: 150px;" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.RoutingNumber">
                                 </div>
                             </div>
-                            <div class="form-group form-inline">
+                            <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">
                                 <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
                                 <label>Save In Profile</label>
                             </div>

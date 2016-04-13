@@ -42,7 +42,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     PrimaryGuestName: '',
                     Guests: [],
                     PaymentInfo: {
-                        ProfileId: '',
+                        ProfileId: null,
                         PaymentMethod: 'CreditCard',
                         CreditCardInfo: {
                             CardNumber: '',
@@ -413,22 +413,52 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     }
                     if(paymentIncluded) {
                         var p = $scope.bookingInfo.PaymentInfo;
-                        var profile = null;
-                        for(i = 0; i < $scope.financeInfo.Profiles.length; i++) {
-                            if(p.ProfileId == $scope.financeInfo.Profiles[i].ProfileID) {
-                                profile = $scope.financeInfo.Profiles[i];
-                            }
-                        }
+                        var profile = getProfile(p.ProfileId);
                         param.PaymentInfo = {
                             ProfileID: (profile?p.ProfileId:null),
-                            PaymentMethod: "", //(profile?profile.PaymentMethod: p.PaymentMethod),
+                            PaymentMethod: (profile?profile.PaymentMethod: p.PaymentMethod),
                             CreditCardInfo: (!profile && p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
                             BankAccountInfo: (!profile && p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
                             SaveInProfile: (profile?false: p.SaveInProfile)
                         };
+
+                        if(profile && !$scope.financeInfo.CardCodeRequired) {
+                            param.PaymentInfo.PaymentMethod = null;
+                            param.PaymentInfo.CreditCardInfo = null;
+                        }
+
+                        if(profile && $scope.financeInfo.CardCodeRequired) {
+                            param.PaymentInfo.CreditCardInfo = {
+                                CardCode: p.CreditCardInfo.CardCode
+                            }
+                        }
+
                     }
                     return param;
                 }
+
+                function getProfile(profileId) {
+                    for(var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
+                        if(profileId == $scope.financeInfo.Profiles[i].ProfileID) {
+                            return $scope.financeInfo.Profiles[i];
+                        }
+                    }
+                    return null;
+                }
+
+                $scope.onlyCardCode = false;
+                $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function(newValue, oldValue){
+                    if(newValue != null) {
+                        var profile = getProfile(newValue);
+                        $scope.bookingInfo.PaymentInfo.PaymentMethod = profile.PaymentMethod;
+                        if(profile.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired) {
+                            $scope.onlyCardCode = true;
+                            return;
+                        }
+                    }
+
+                    $scope.onlyCardCode = false;
+                });
 
                 $scope.bookDisabled = false;
                 $scope.bookAndPay = function (pay) {
@@ -453,13 +483,19 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                         return;
                                     }
                                 }
+                            } else {
+                                var profile = getProfile(p.PaymentInfo.ProfileID);
+                                if(p.PaymentInfo.PaymentMethod == 'CreditCard' && profile.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
+                                    $scope.message = "Please fill out card code!";
+                                    return;
+                                }
                             }
                             $scope.bookDisabled = true;
                         }
                         ShoppingService.book(p).then(function(data){
                             ShoppingService.removeAll();
                         }, function(data){
-                            $scope.message = data.Message;
+                            $scope.message = data.Message + data.ModelState.request;
                             $scope.bookDisabled = false;
                         });
                     }
@@ -472,6 +508,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 function loadFinanceInfo() {
                     AccountService.getFinanceInfo().then(function(data){
                         $scope.financeInfo = data;
+                        $scope.financeInfo.Profiles.unshift({
+                            ProfileID:null,
+                            PaymentMethod: "CreditCard",
+                            Description:'Please select'
+                        });
                         //$scope.selectedProfile = data.Profiles[0];
                     });
                 }

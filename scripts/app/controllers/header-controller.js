@@ -64,7 +64,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     if(isSearchPage)
                         return;
 
-                    if ($scope.keyword.length >= 2) {
+                    if ($scope.keyword.length >= 3) {
                         $scope.showSearchResult = true;
                     }
                 };
@@ -80,7 +80,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     if(isSearchPage)
                         return;
 
-                    if (newValue.length < 2) {
+                    if (newValue.length < 3) {
                         $scope.showSearchResult = false;
                         return;
                     }
