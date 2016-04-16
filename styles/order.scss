@@ -97,3 +97,58 @@
 .quantity-item{width:10%; text-align: center;}
 .sum-item{width: 15%; text-align: center;}
 .action-item{width: 5%; text-align: center;}
+
+.myorder-wrap{
+  background-color: $white;
+  box-shadow: 0 2px 5px rgba($font-lightgray, 0.4);
+  border-radius: 6px;
+  padding: 30px;
+  h3{font-size:18px; margin-bottom: 15px;}
+  .head-crumb{padding: 15px 0;}
+
+}
+.order-search{background-color: $page-bg; padding: 15px 0;
+  .form-group{position: relative;}
+  .icon-calendar, .icon-caret-down {
+    font-size: 18px;
+    top: 8px;
+    position: absolute;
+    color: $font-lightgray;
+  }
+  .icon-calendar{
+    left: 20px;
+  }
+  .form-control, .btn{width: 100%;}
+  .icon-caret-down{
+    right: 25px;
+  }
+}
+
+/*选择类目页面-左测分类*/
+.side-nav {
+  width: 200px;
+  padding: 20px; }
+.side-nav dl {
+  margin-bottom: 12px;
+  //color: $main-red;
+}
+.side-nav dl dt {
+  font-size: 14px;
+  line-height: 2.2;
+  a{ color: $main-red;}
+}
+.side-nav dl i {
+  margin-right: 10px;
+  font-size: 17px; }
+.side-nav dl dd a {
+  display:block ;
+  padding-left: 15px;
+  line-height: 2.0;
+  color: $font-darkgray;
+  text-decoration: none; }
+.side-nav dl dd a:nth-child(2n) {
+  margin-right: 0; }
+.side-nav dl dd a:hover, .side-nav dl dd .active {
+  color: $main-red; }
+.side-nav dl:last-child {
+  border-bottom: 0; }

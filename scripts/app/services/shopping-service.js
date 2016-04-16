@@ -49,6 +49,9 @@ define(['app/services/trip-service'], function (modules) {
                 removeAll:function() {
                     localStorageService.clearAll();
                     $cookieStore.put('hasShoppingItems', false);
+                    shoppingItems.hotels = [];
+                    shoppingItems.services = [];
+
                 },
                 book:function(param) {
                     return TripService.saveBooking(param);

@@ -200,11 +200,13 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 $scope.removeHotel = function (index) {
                     ShoppingService.removeItem('HTL', index);
                     calculateInfo();
+                    setButtons();
                 };
 
                 $scope.removeService = function (index) {
                     ShoppingService.removeItem('OPT', index);
                     calculateInfo();
+                    setButtons();
                 };
 
                 $scope.activeTabIndex = 0;
@@ -213,7 +215,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
 
                 function setButtons() {
                     $scope.showPreviousBtn = ($scope.activeTabIndex > 0);
-                    $scope.showNextBtn = ($scope.activeTabIndex < 4);
+                    $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0));
                 }
 
                 calculateInfo();
@@ -417,27 +419,39 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         param.PaymentInfo = {
                             ProfileID: (profile?p.ProfileId:null),
                             PaymentMethod: (profile?profile.PaymentMethod: p.PaymentMethod),
-                            CreditCardInfo: (!profile && p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
-                            BankAccountInfo: (!profile && p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
-                            SaveInProfile: (profile?false: p.SaveInProfile)
+                            CreditCardInfo: (p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
+                            BankAccountInfo: (p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
+                            SaveInProfile: p.SaveInProfile
                         };
 
-                        if(profile && !$scope.financeInfo.CardCodeRequired) {
-                            param.PaymentInfo.PaymentMethod = null;
-                            param.PaymentInfo.CreditCardInfo = null;
-                        }
-
-                        if(profile && $scope.financeInfo.CardCodeRequired) {
-                            param.PaymentInfo.CreditCardInfo = {
-                                CardCode: p.CreditCardInfo.CardCode
-                            }
-                        }
+                        //if(profile && !$scope.financeInfo.CardCodeRequired) {
+                        //    param.PaymentInfo.PaymentMethod = null;
+                        //    param.PaymentInfo.CreditCardInfo = null;
+                        //}
+                        //
+                        //if(profile && $scope.financeInfo.CardCodeRequired) {
+                        //    param.PaymentInfo.CreditCardInfo = {
+                        //        CardCode: p.CreditCardInfo.CardCode
+                        //    }
+                        //}
+                        //
+                        //if(param.PaymentInfo.CreditCardInfo != null) {
+                        //    if(param.PaymentInfo.CreditCardInfo.CardNumber == '')
+                        //        param.PaymentInfo.CreditCardInfo.CardNumber = null;
+                        //    if(param.PaymentInfo.CreditCardInfo.ExpirationMonth == 0)
+                        //        param.PaymentInfo.CreditCardInfo.ExpirationMonth = null;
+                        //    if(param.PaymentInfo.CreditCardInfo.ExpirationYear == 0)
+                        //        param.PaymentInfo.CreditCardInfo.ExpirationYear = null;
+                        //}
 
                     }
                     return param;
                 }
 
                 function getProfile(profileId) {
+                    if(profileId == null)
+                        return null;
+
                     for(var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
                         if(profileId == $scope.financeInfo.Profiles[i].ProfileID) {
                             return $scope.financeInfo.Profiles[i];
@@ -446,22 +460,23 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     return null;
                 }
 
-                $scope.onlyCardCode = false;
                 $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function(newValue, oldValue){
                     if(newValue != null) {
                         var profile = getProfile(newValue);
                         $scope.bookingInfo.PaymentInfo.PaymentMethod = profile.PaymentMethod;
-                        if(profile.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired) {
-                            $scope.onlyCardCode = true;
-                            return;
+                        if(profile.PaymentMethod == 'CreditCard') {
+                            var matches =  profile.Description.match(/\d+/g);
+                            if(matches != null && matches.length > 2) {
+                                $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = parseInt(matches[2]) + 2000;
+                                $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = parseInt(matches[1]);
+                            }
                         }
                     }
-
-                    $scope.onlyCardCode = false;
                 });
 
                 $scope.bookDisabled = false;
                 $scope.bookAndPay = function (pay) {
+                    $scope.message = '';
                     var msg;
                     if(pay)
                         msg = 'Are you sure that you will book and pay for these products?';
@@ -476,6 +491,12 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                         $scope.message = 'Please fill out all information of credit card!';
                                         return;
                                     }
+
+                                    var now = new Date();
+                                    if(p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth()+1) {
+                                        $scope.message = 'Please fill valid year and month!';
+                                        return;
+                                    }
                                 }
                                 if(p.PaymentInfo.PaymentMethod == 'ECheck') {
                                     if(p.PaymentInfo.BankAccountInfo.BankAccountNumber == '' || p.PaymentInfo.BankAccountInfo.NameOnAccount == '' || p.PaymentInfo.BankAccountInfo.RoutingNumber == '') {
@@ -485,7 +506,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                 }
                             } else {
                                 var profile = getProfile(p.PaymentInfo.ProfileID);
-                                if(p.PaymentInfo.PaymentMethod == 'CreditCard' && profile.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
+                                if(p.PaymentInfo.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
                                     $scope.message = "Please fill out card code!";
                                     return;
                                 }
@@ -494,8 +515,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         }
                         ShoppingService.book(p).then(function(data){
                             ShoppingService.removeAll();
+                            $scope.bookDisabled = true;
+                            $scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
                         }, function(data){
-                            $scope.message = data.Message + data.ModelState.request;
+                            $scope.message = data.Message;
                             $scope.bookDisabled = false;
                         });
                     }

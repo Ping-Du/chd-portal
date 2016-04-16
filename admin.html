@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{'LANGUAGE_CODE'| translate}}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Others must follow above three meta -->
+    <title translate="{{'HOME_TITLE'}}"></title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" >
+    <!--<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <link type="text/css" href="styles/latin-ext.css" rel="stylesheet">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="styles/style.css" rel="stylesheet">
+    <link type="text/css" href="styles/order.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="scripts/libs/html5shiv.min.js"></script>
+    <script src="scripts/libs/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="scripts/libs/require.min.js" data-main="scripts/main"
+            data-bootstrap="app/bootstrap/admin"></script>
+    <!-- other js -->
+</head>
+<body>
+
+<!-- header start here -->
+<header class="relative">
+    <div class="container" data-ng-include="'templates/partials/header.html'"  role="banner">
+    </div>
+    <div class="line"></div>
+    <nav class="navbar-default" role="navigation" data-ng-include="'templates/partials/navigator.html'">
+    </nav>
+</header>
+<!-- header end here -->
+
+<div class="container-bg container-padding">
+    <div class="container">
+        <div class="row clearfix">
+            <div style="float: left; margin: 0 15px;" data-ng-include="'templates/partials/admin-menu.html'">
+            </div>
+
+            <div data-ng-view>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer role="contentinfo">
+    <div data-ng-include="'templates/partials/footer.html'">
+    </div>
+</footer>
+
+<!-- change password modal start here -->
+<div data-ng-include="'templates/partials/change-password.html'">
+</div>
+<!-- change password modal end here -->
+
+<div data-ng-include="'templates/partials/shopping-cart.html'">
+</div>
+
+<div data-ng-include="'templates/partials/loading.html'">
+</div>
+
+</body>
+</html>
