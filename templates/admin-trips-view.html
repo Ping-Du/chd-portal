@@ -1,0 +1,62 @@
+<div style="float: left; margin: 0 15px; width: 940px;">
+    <div class="myorder-wrap">
+        <div class="path">
+            <h3 class="form-inline">{{title}}</h3>
+        </div>
+        <div class="order-search row" style="margin-bottom: 30px;">
+            <div class="form-inline">
+                <div class="form-group-sm col-md-3 col-xs-4">
+                    <i class="icon-calendar"></i>
+                    <input id="startDate" type="text" class="input-date input-default form-control-sm" data-date-picker
+                           placeholder="Trip Start Date: Begin" data-ng-model="startDate" data-init-date="startDate">
+                </div>
+                <div class="form-group-sm col-md-3 col-xs-4">
+                    <i class="icon-calendar"></i>
+                    <input id="endDate" type="text" class="input-date input-default form-control-sm" data-date-picker
+                           placeholder="Trip Start Date: End" data-ng-model="endDate" data-init-date="endDate">
+                </div>
+                <!--<div class="form-group-sm col-md-2 col-xs-4">-->
+                    <!--<select type="text" class="form-control-sm" placeholder="Status"></select>-->
+                <!--</div>-->
+                <div class="form-group-sm col-md-2 col-xs-4">
+                    <input type="checkbox" class="form-control-sm" data-ng-model="includeCancelled">&nbsp;Include Cancelled
+                </div>
+                <div class="form-group-sm col-md-2 col-xs-4">
+                    <button type="button" class="btn btn-red" data-ng-click="filterTrips()">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table-bordered table table-striped">
+                <thead>
+                <tr class="active">
+                    <th>Trip Id</th>
+                    <th>Primary Guest</th>
+                    <th>Guests</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Price</th>
+                    <th>Create Date</th>
+                    <th>Availability</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="item in trips">
+                    <td>{{item.TripId}}</td>
+                    <td>{{item.PrimaryGuestName}}</td>
+                    <td>{{item.PassengerCount}}</td>
+                    <td>{{item.ServicesBegin|limitTo:10}}</td>
+                    <td>{{item.ServicesEnd|limitTo:10}}</td>
+                    <td>${{item.Price}}</td>
+                    <td>{{item.CreatedOn | limitTo:10}}</td>
+                    <td>{{item.AvailabilityLevel}}</td>
+                    <td>{{item.Status}}</td>
+                    <td><a href data-ng-click="viewDetails(item)">View Details</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

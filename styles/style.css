@@ -1818,7 +1818,7 @@ table.fixed-header {
   height: 100%;
   left: 0;
   top: 0;
-  z-index: 99;
+  z-index: 10000;
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden; }
 

@@ -6,7 +6,7 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/login-modal-controller',
         'app/controllers/change-password-modal-controller',
         'app/controllers/admin-menu-controller',
-        'app/controllers/admin-main-controller',
+        'app/controllers/admin-trips-controller',
         'app/controllers/admin-finance-controller'],
     function (modules) {
         'use strict';
@@ -25,16 +25,16 @@ define(['app/interceptors/http-interceptor',
         modules.app.config(['$routeProvider', 'SessionServiceProvider', function($routeProvider, SessionServiceProvider){
             console.log('user:' + SessionServiceProvider.user() + ' languageId:'+ SessionServiceProvider.languageId());
             $routeProvider
-                .when('/trips/:languageId', {
-                    templateUrl:'templates/admin-main-view.html',
-                    controller:'AdminMainController'
+                .when('/trips/:tripType/:languageId', {
+                    templateUrl:'templates/admin-trips-view.html',
+                    controller:'AdminTripsController'
                 })
                 .when('/finance/:languageId',{
                     templateUrl:'templates/admin-finance-view.html',
                     controller:'AdminFinanceController'
                 })
                 .otherwise({
-                    redirectTo: '/trips/' + SessionServiceProvider.languageId() //$.cookie('languageId')
+                    redirectTo: '/trips/current/' + SessionServiceProvider.languageId() //$.cookie('languageId')
                 });
         }]);
 

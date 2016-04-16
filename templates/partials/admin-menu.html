@@ -1,25 +1,17 @@
 <nav class="side-nav myorder-wrap" data-ng-controller="AdminMenuController">
-    <dl>
-        <dt><i class="icon-caret-right"></i>{{'MY_TRIPS'|translate}}</dt>
-        <dd><a href data-ng-click="clickMenuItem(0)" data-ng-class="{active:menuItems[0].active}">Trips</a></dd>
+    <dl data-ng-repeat="group in menuItems">
+        <dt data-ng-class="{active:group.active}"><i class="icon-caret-right"></i>{{group.title}}</dt>
+        <dd data-ng-repeat="item in group.items">
+            <a href data-ng-click="clickMenuItem(item.id)" data-ng-class="{active:item.active}">{{item.title}}</a>
+        </dd>
     </dl>
-    <dl>
-        <dt><i class="icon-caret-right"></i>My Account</dt>
-        <dd><a href data-ng-click="clickMenuItem(1)" data-ng-class="{active:menuItems[1].active}">Finance Info</a></dd>
-        <dd><a href data-ng-click="changePassword()">{{"CHANGE_PASSWORD"|translate}}</a></dd>
-    </dl>
+    <!--<dl>-->
+        <!--<dt><i class="icon-caret-right"></i>{{'MY_TRIPS'|translate}}</dt>-->
+        <!--<dd><a href data-ng-click="clickMenuItem(0)" data-ng-class="{active:menuItems[0].active}">Trips</a></dd>-->
+    <!--</dl>-->
+    <!--<dl>-->
+        <!--<dt><i class="icon-caret-right"></i>My Account</dt>-->
+        <!--<dd><a href data-ng-click="clickMenuItem(1)" data-ng-class="{active:menuItems[1].active}">Finance Info</a></dd>-->
+        <!--<dd><a href data-ng-click="changePassword()">{{"CHANGE_PASSWORD"|translate}}</a></dd>-->
+    <!--</dl>-->
 </nav>
-<!--<script type="text/javascript">-->
-    <!--$(".side-nav").click(function () {-->
-<!--//        var curr = $(this).find(".side-list");-->
-<!--//        if (curr.css("display") == "block") {-->
-<!--//            curr.hide();-->
-<!--//            $(this).find("i").removeClass("icon-caret-down").addClass("icon-caret-up");-->
-<!--//        }-->
-<!--//        else {-->
-<!--//            curr.show();-->
-<!--//            $(this).find("i").addClass("icon-caret-down").removeClass("icon-caret-up");-->
-<!--//        }-->
-        <!--console.log('click on menu');-->
-    <!--});-->
-<!--</script>-->

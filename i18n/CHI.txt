@@ -8,8 +8,11 @@
   "MY_TRIPS":"我的行程",
   "CHANGE_PASSWORD":"修改密码",
   "LOGOUT":"注销",
+  "SAVE":"保存",
+   "SAVE_TRIP":"保存行程"
   "OK":"确认",
   "CANCEL":"取消",
+    "CANCEL_TRIP":"取消行程预订",
   "FORGOT_PASSWORD":"忘记密码",
   "USER_NAME":"用户名",
   "PASSWORD":"密码",

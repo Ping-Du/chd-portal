@@ -10,7 +10,7 @@ define(['app/services/session-service'], function (modules) {
                 }
 
                 if (cfg.url.indexOf(SessionService.config().apiRoot) >= 0) {
-                    if (cfg.url.indexOf('/account/') < 0) {
+                    //if (cfg.url.indexOf('/account/') < 0) {
                         if(show) {
                             $rootScope.showLoading = true;
                             requests++;
@@ -21,7 +21,7 @@ define(['app/services/session-service'], function (modules) {
                                 $rootScope.showLoading = false;
                             }
                         }
-                    }
+                    //}
                 }
             }
 
