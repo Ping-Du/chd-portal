@@ -1,0 +1,171 @@
+<div style="float: left; margin: 0 15px; width: 940px;">
+    <div class="myorder-wrap">
+        <div class="path">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>{{title}}</h3>
+                </div>
+                <div class="col-md-6 text-right">
+                    <input type="button" class="btn btn-sm btn-red" value="Cancel Trip" data-ng-click="cancelTrip()"
+                           data-ng-show="showCancelBtn">
+                </div>
+            </div>
+        </div>
+        <div style="padding-top: 5px;">
+            <style>
+                .uibtab-info {
+                    padding-top: 10px;
+                }
+            </style>
+            <uib-tabset justified="true">
+                <uib-tab index="0" heading="Main Information">
+                    <div class="uibtab-info row">
+                        <div class="col-md-3"><strong>Trip ID: </strong>{{trip.TripId}}</div>
+                        <div class="col-md-3"><strong>Availability: </strong>{{trip.AvailabilityLevel}}</div>
+                        <div class="col-md-3"><strong>Status: </strong>{{trip.Status}}</div>
+                        <div class="col-md-3"><strong>Create Date: </strong>{{trip.CreatedOn | limitTo:10}}</div>
+                        <div class="col-md-3"><strong>Start Date: </strong>{{trip.ServicesBegin | limitTo:10}}</div>
+                        <div class="col-md-3"><strong>End Date: </strong>{{trip.ServicesEnd | limitTo:10}}</div>
+                        <div class="col-md-6"><strong>Description: </strong>{{trip.Description}}</div>
+                        <div class="col-md-6"><strong>Reference: </strong>{{trip.Reference}}</div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div class="col-md-4"><strong>Price: </strong>${{trip.Price}}</div>
+                        <div class="col-md-4"><strong>Amount Due: </strong>${{trip.PaymentAmountDue}}</div>
+                        <div class="col-md-4"><strong>Due By: </strong>{{trip.PaymentDueBy | limitTo: 10}}</div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="Passengers">
+                    <div class="uibtab-info">
+                        <table class="table-bordered table table-striped">
+                            <thead>
+                            <tr class="active">
+                                <th>Guest Id</th>
+                                <th>Primary Guest</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Age</th>
+                                <th>Title</th>
+                                <th>Phone</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="guest in trip.Passengers">
+                                <td>{{guest.GuestId}}</td>
+                                <td>{{guest.PrimaryGuest}}</td>
+                                <td>{{guest.LastName}}</td>
+                                <td>{{guest.FirstName}}</td>
+                                <td>{{guest.Age}}</td>
+                                <td>{{guest.Title}}</td>
+                                <td>{{guest.Phone}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="Hotels">
+                    <div class="uibtab-info">
+                        <div data-ng-repeat="hotel in trip.Hotels"
+                             style="background-color: #f9f9f9; border-radius: 10px; padding: 10px;">
+                            <div class="row">
+                                <div class="col-md-6"><h3 class="text-info">{{hotel.Name}}</h3></div>
+                                <div class="col-md-3"><strong>Check In: </strong>{{hotel.StartDate|limitTo:10}}</div>
+                                <div class="col-md-3"><strong>Check Out: </strong>{{hotel.CheckOutDate|limitTo:10}}</div>
+                                <div class="col-md-3"><strong>Nights: </strong>{{hotel.Nights}}</div>
+                                <div class="col-md-3"><strong>Price: </strong><span class="text-danger">${{hotel.Price}}</span></div>
+                                <div class="col-md-3"><strong>Availability: </strong>{{hotel.AvailabilityLevel}}</div>
+                            </div>
+                            <br>
+                            <h3 class="text-info">Category</h3>
+                            <div class="row">
+                                <div class="col-md-4"><strong>Room Type:</strong>{{hotel.Category.Name}}</div>
+                                <div class="col-md-4"><strong>Rooms:</strong>{{hotel.Rooms.length}}</div>
+                            </div>
+                            <br>
+                            <h3 class="text-info">Guests</h3>
+                            <div class="row" data-ng-repeat="room in hotel.Rooms">
+                                <div class="col-md-2" >
+                                    <strong>Room #{{$index+1}}</strong>
+                                </div>
+                                <div class="col-md-2" >
+                                    <strong>${{room.Price}}</strong>
+                                </div>
+                                <div class="col-md-2" data-ng-repeat="g in room.Guests" data-ng-class="{'text-red':getGuest(g.GuestId).PrimaryGuest}">
+                                        {{getGuest(g.GuestId).FormattedName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="3" heading="Services">
+                    <div class="uibtab-info">
+                        <div data-ng-repeat="service in trip.Services"
+                             style="background-color: #f9f9f9; border-radius: 10px; padding: 10px;">
+                            <div class="row">
+                                <div class="col-md-6"><h3 class="text-info">{{service.Name}}</h3></div>
+                                <div class="col-md-3"><strong>Start Date: </strong>{{service.StartDate|limitTo:10}}</div>
+                                <div class="col-md-3"><strong>End Date: </strong>{{service.EndDate|limitTo:10}}</div>
+                                <div class="col-md-3"><strong>Price: </strong><span class="text-danger">${{service.Price}}</span></div>
+                                <div class="col-md-3"><strong>Availability: </strong>{{service.AvailabilityLevel}}</div>
+                            </div>
+                            <br>
+                            <h3 class="text-info">Category</h3>
+                            <div class="row">
+                                <div class="col-md-4"><strong>Service Name:</strong>{{service.Category.Name}}</div>
+                            </div>
+                            <!--<br>-->
+                            <!--<h3 class="text-info">Guests</h3>-->
+                            <!--<div class="row" data-ng-repeat="room in hotel.Rooms">-->
+                                <!--<div class="col-md-2" >-->
+                                    <!--<strong>Room #{{$index+1}}</strong>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2" >-->
+                                    <!--<strong>${{room.Price}}</strong>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-2" data-ng-repeat="g in room.Guests" data-ng-class="{'text-red':getGuest(g.GuestId).PrimaryGuest}">-->
+                                    <!--{{getGuest(g.GuestId).FormattedName}}-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="4" heading="Documents">
+                    <div class="uibtab-info row">
+                        <div class="col-md-12"><h3>Available Documents</h3></div>
+                        <table class="table-bordered table table-striped">
+                            <thead>
+                            <tr class="active">
+                                <th>Document</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="doc in trip.DocTypes">
+                                <td>{{doc.Name}}</td>
+                                <td>
+                                    <select class="form-control-sm" data-ng-model="trip.DocTypes[$index].type">
+                                        <option>pdf</option>
+                                        <option>html</option>
+                                    </select>
+                                    <a href data-ng-click="showDocument(doc)">Show Document</a>
+                                </td>
+                                <td>
+                                    <!--<a href data-ng-click="showDocument(doc)">Show Document</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                    <a href data-ng-click="sendDocument(doc)">Send To Me</a>
+                                </td>
+                            </tr>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+        </div>
+
+    </div>
+</div>
+</div>

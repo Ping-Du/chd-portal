@@ -7,7 +7,8 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/change-password-modal-controller',
         'app/controllers/admin-menu-controller',
         'app/controllers/admin-trips-controller',
-        'app/controllers/admin-finance-controller'],
+        'app/controllers/admin-finance-controller',
+        'app/controllers/admin-trips-detail-controller'],
     function (modules) {
         'use strict';
 
@@ -28,6 +29,10 @@ define(['app/interceptors/http-interceptor',
                 .when('/trips/:tripType/:languageId', {
                     templateUrl:'templates/admin-trips-view.html',
                     controller:'AdminTripsController'
+                })
+                .when('/trips/:tripType/:tripId/:languageId',{
+                    templateUrl:'templates/admin-trips-detail-view.html',
+                    controller:'AdminTripsDetailController'
                 })
                 .when('/finance/:languageId',{
                     templateUrl:'templates/admin-finance-view.html',

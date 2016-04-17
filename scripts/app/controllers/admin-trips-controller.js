@@ -1,7 +1,6 @@
 define(['app/services/account-service',
     'app/services/trip-service',
-    'app/directives/datepicker-directive',
-    'app/controllers/trip-detail-modal-controller'], function (modules) {
+    'app/directives/datepicker-directive'], function (modules) {
     'use strict';
 
     modules.controllers
@@ -69,8 +68,9 @@ define(['app/services/account-service',
                     });
                 };
 
-                $scope.viewDetails = function(tripItem) {
-                    $rootScope.$broadcast('Trip:ViewDetail', tripItem);
+                $scope.viewDetails = function(tripId) {
+                    //$rootScope.$broadcast('Trip:ViewDetail', tripItem);
+                    $location.url('/trips/'+$routeParams.tripType+'/'+tripId+'/'+ $scope.languageId,true);
                 };
 
                 function load() {

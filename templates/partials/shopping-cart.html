@@ -177,8 +177,9 @@
                                 Assignments are made automatically based on the names entered in the 'Names and Details'
                                 screen. Please review and change accordingly.
                             </div>
-                            <br>
-
+                            <div class="form-inline">
+                                <label>Primary Guest Of This Trip: &nbsp;</label><select class="form-control input-sm" data-ng-options="(guest.LastName + ' ' + guest.FirstName) as guest.ShowName for guest in bookingInfo.Guests" data-ng-model="bookingInfo.PrimaryGuestName"></select>
+                            </div>
                             <div class="table-scroll">
                                 <div data-ng-repeat="hotel in bookingInfo.Hotels" data-ng-show="shoppingItems.hotels.length > 0">
                                     <p style="color: #e32b19;font-weight: bold;">Hotel - {{hotel.HotelName}}</p>

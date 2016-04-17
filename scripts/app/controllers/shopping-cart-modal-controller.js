@@ -147,10 +147,36 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         var serviceCategory = service.AvailabilityCategories[serviceIndex];
                         var serviceGuestId = $scope.bookingInfo.Guests.length + 1;
                         $scope.bookingInfo.ServicePrice += serviceCategory.Price;
+
+                        var pickUpPoint = null;
+                        var dropOffPoint = null;
+
+                        for(k = 0; k < service.PickupPoints.length; k++) {
+                            if(service.PickupPoints[k].ProductId == service.PickupPoint) {
+                                pickUpPoint = {
+                                    LocationType:'WAY',
+                                    LocationId:service.PickupPoint,
+                                    Time:''
+                                };
+                                break;
+                            }
+                        }
+
+                        for(k = 0; k < service.DropoffPoints.length; k++) {
+                            if(service.DropoffPoints[k].ProductId == service.DropoffPoint) {
+                                dropOffPoint = {
+                                        LocationType:'WAY',
+                                        LocationId:service.DropoffPoint,
+                                        Time:''
+                                };
+                                break;
+                            }
+                        }
+
                         $scope.bookingInfo.Services.push({
                             ServiceTime: serviceCategory.ServiceTime,
-                            PickupPoint: service.PickupPoint,
-                            DropoffPoint: service.DropoffPoint,
+                            PickupPoint: pickUpPoint, //service.PickupPoint,
+                            DropoffPoint: dropOffPoint, //service.DropoffPoint,
                             TripItemId: 0,
                             ProductType: service.ProductType,
                             ProductId: service.ProductId,
@@ -231,12 +257,17 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
 
                 function calShowName() {
                     var validateResult = true;
+                    var firstGuest = true;
 
                     $scope.bookingInfo.Adults = 0;
                     $scope.bookingInfo.Minors = 0;
                     for (var i = 0; i < $scope.bookingInfo.Guests.length; i++) {
                         var g = $scope.bookingInfo.Guests[i];
                         if (g.PrimaryGuest) {
+                            if(firstGuest) {
+                                firstGuest = false;
+                                $scope.bookingInfo.PrimaryGuestName = g.LastName + ' ' + g.FirstName;
+                            }
                             g.ShowName = '* ' + g.LastName + ' ' + g.FirstName;
                             if (g.LastName == '' || g.FirstName == '')
                                 validateResult = false;

@@ -159,6 +159,10 @@ a {
   }
 }
 
+.text-red {
+  color:  $main-red;
+}
+
 [class^="icon-star-"], [class*=" icon-star-"] {
   display: inline-block;
   height: 10px;

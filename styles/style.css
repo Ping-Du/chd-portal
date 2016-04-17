@@ -552,6 +552,9 @@ a {
       text-decoration: none;
       color: #ed685b; }
 
+.text-red {
+  color: #ed685b; }
+
 [class^="icon-star-"], [class*=" icon-star-"] {
   display: inline-block;
   height: 10px;
