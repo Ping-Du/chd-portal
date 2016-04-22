@@ -152,9 +152,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         var dropOffPoint = null;
 
                         for(k = 0; k < service.PickupPoints.length; k++) {
-                            if(service.PickupPoints[k].ProductId == service.PickupPoint) {
+                            if(service.PickupPoints[k].LocationId == service.PickupPoint) {
                                 pickUpPoint = {
-                                    LocationType:'WAY',
+                                    LocationType:service.PickupPoints[k].LocationType,
                                     LocationId:service.PickupPoint,
                                     Time:''
                                 };
@@ -163,9 +163,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         }
 
                         for(k = 0; k < service.DropoffPoints.length; k++) {
-                            if(service.DropoffPoints[k].ProductId == service.DropoffPoint) {
+                            if(service.DropoffPoints[k].LocationId == service.DropoffPoint) {
                                 dropOffPoint = {
-                                        LocationType:'WAY',
+                                        LocationType:service.DropoffPoints[k].LocationType,
                                         LocationId:service.DropoffPoint,
                                         Time:''
                                 };
@@ -429,6 +429,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     }
                     for(i = 0; i < $scope.bookingInfo.Services.length; i++) {
                         var s = $scope.bookingInfo.Services[i];
+                        var pick = null, drop = null;
                         param.Services.push({
                             ServiceTime: s.ServiceTime,
                             PickupPoint: s.PickupPoint,
@@ -443,6 +444,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             Price: s.Price,
                             Guests: s.Guests
                         });
+
                     }
                     if(paymentIncluded) {
                         var p = $scope.bookingInfo.PaymentInfo;

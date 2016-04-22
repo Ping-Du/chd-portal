@@ -12,7 +12,7 @@
    "SAVE_TRIP":"保存行程"
   "OK":"确认",
   "CANCEL":"取消",
-    "CANCEL_TRIP":"取消行程预订",
+  "CANCEL_TRIP":"取消行程预订",
   "FORGOT_PASSWORD":"忘记密码",
   "USER_NAME":"用户名",
   "PASSWORD":"密码",
