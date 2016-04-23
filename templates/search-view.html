@@ -8,7 +8,7 @@
                     <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
                     <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
                     <p class="address"><strong>Location:</strong> {{item.Location.DisplayName}}</p>
-                    <p class="desc">{{item.MainInformation.PlainText}}</p>
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>
                 <!--<div class="pro-separator">-->

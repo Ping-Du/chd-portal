@@ -441,6 +441,18 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0; }
 
+.image-size-16 {
+  width: 16px;
+  height: 16px; }
+
+.image-size-24 {
+  width: 16px;
+  height: 16px; }
+
+.image-size-32 {
+  width: 32px;
+  height: 32px; }
+
 .container-bg {
   background-color: #f6f6f6; }
 
@@ -791,7 +803,8 @@ a {
     z-index: 10;
     text-align: center; }
     .list-product .product-img img {
-      max-height: 240px;
+      max-height: 220px;
+      height: 220px;
       width: 100%; }
   .list-product .pro-detail {
     margin: 0 20px 0 375px; }

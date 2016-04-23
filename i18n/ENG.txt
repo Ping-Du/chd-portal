@@ -23,7 +23,7 @@
   "LOGIN_WRONG":"Wrong user name or password!",
   "OLD_PASSWORD_WRONG":"Old password is wrong!",
   "PASSWORD_NOT_MATCH":"Password and confirm password must match and not null!",
-  "KEYWORD":"Please input keywords",
+  "KEYWORD":"Know what you want? Find it here.",
   "SEARCH":"Search",
   "HOME":"Home",
   "HOME_TITLE":"Welcome To CHD",

@@ -1,8 +1,0 @@
-<div style="width:400px;height:450px;overflow: auto;">
-    <table class="table">
-        <tr data-ng-repeat="item in $parent.results">
-            <td style="vertical-align: middle"><img data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" style="width: 32px;height:32px;"></td>
-            <td style="color:darkgrey;"><a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a><br><span style="font-size: 9px;"><strong>Type:</strong> {{item.showName}} <strong>Location:</strong> {{item.Location.Name}}</span></td>
-        </tr>
-    </table>
-</div>
