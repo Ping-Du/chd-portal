@@ -36,7 +36,9 @@ define(['config'], function (cfg) {
             'jquery.inputmask':'libs/jquery.inputmask.bundle.min',
             'inputmask':'libs/green.inputmask4angular',
             'jquery.spinner':'libs/jquery.spinner.min',
-            'jquery.raty':'libs/jquery.raty'
+            'jquery.raty':'libs/jquery.raty',
+            'spinjs':'libs/spin',
+            'angular-loading':'libs/angular-loading.min'
         },
         shim: {
             'jquery':{
@@ -131,6 +133,9 @@ define(['config'], function (cfg) {
             },
             'jquery.raty':{
                 deps:['jquery']
+            },
+            'angular-loading':{
+                deps:['spinjs']
             }
         }
     };

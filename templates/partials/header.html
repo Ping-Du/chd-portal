@@ -34,14 +34,94 @@
         </div>
     </div>
 </div>
-<div class="search-position" data-ng-show="showSearchBox">
+<div class="search-position" data-ng-show="showSearchBox" uib-dropdown dropdown-append-to-body is-open="showSearchResult">
     <form class="search-wrap">
-        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-model="keyword"
-               uib-popover-template="searchResultTemplateUrl" popover-title="Search Results"
-               popover-is-open="showSearchResult" popover-append-to-body="true"
-               popover-trigger="none" popover-placement="bottom" data-ng-click="onClick($event)" data-ng-blur="onBlur($event)" />
+        <!--<input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-model="keyword"-->
+               <!--uib-popover-template="searchResultTemplateUrl" popover-title="Search Result"-->
+               <!--popover-is-open="showSearchResult" popover-append-to-body="true"-->
+               <!--popover-trigger="none" popover-placement="bottom" data-ng-click="onClick($event)" data-ng-blur="onBlur($event)" />-->
         <!--<input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-keypress="onKeyPressed($event)" data-ng-model="keyword" />-->
+        <input class="form-control input-text input-lg" type='text' placeholder="{{'KEYWORD'|translate}}" data-ng-model="keyword"
+               data-ng-click="onClick($event)"  />
         <i class="icon-search" data-ng-click="search()"></i>
     </form>
+    <ul class="uib-dropdown-menu" style="width: 480px;padding: 10px;">
+        <li role="menuitem" data-ng-show="!searched">
+            <div class="row">
+            <div class="col-md-10 text-warning">
+                Start typing to see matching products and destinations. Select a single product or select the search icon to see expanded results.
+            </div>
+            <div class="col-md-2 text-right"><a href data-ng-click="showSearchResult = false;"><i class="glyphicon glyphicon-remove text-red"></i></a> </div>
+            </div>
+        </li>
+        <li role="menuitem" data-ng-show="destinations.length > 0">
+            <div class="row">
+            <div class="col-md-12"><img src="images/map.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >Destinations</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="destinations.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in destinations">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="destinations.length > 0"></li>
+        <li role="menuitem" data-ng-show="hotels.length > 0">
+            <div class="row">
+                <div class="col-md-12"><img src="images/hotel.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >Hotels</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="hotels.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in hotels">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="hotels.length > 0"></li>
+        <li role="menuitem" data-ng-show="activities.length > 0">
+            <div class="row">
+            <div class="col-md-12"><img class="image-size-32" src="images/dining.png">&nbsp;<span class="text-red" style="font-weight: bold" >Things To Do</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="activities.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in activities">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="activities.length > 0"></li>
+        <li role="menuitem" data-ng-show="searched">
+            <div class="row">
+            <div class="col-md-10 text-warning">
+                ...keep typing to refine your search
+            </div>
+            <div class="col-md-2 text-right"><a href data-ng-click="showSearchResult = false;"><i class="glyphicon glyphicon-remove text-red"></i></a> </div>
+                </div>
+        </li>
+    </ul>
 </div>
 </div>

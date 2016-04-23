@@ -2,8 +2,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService',
-            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService) {
+        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading',
+            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading) {
                 $scope.showLanguage = HeaderService.showLanguage;
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
@@ -54,20 +54,15 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
 
                 var httpCanceller;
                 $scope.showSearchResult = false;
-                $scope.searchResultTemplateUrl = "templates/partials/search-result-popover.html";//"GuestsTemplate.html";
-
-                $scope.onBlur = function (e) {
-                    $scope.showSearchResult = false;
-                };
-
+                //$scope.searchResultTemplateUrl = "templates/partials/search-result-popover.html";//"GuestsTemplate.html";
                 $scope.onClick = function (e) {
                     if(isSearchPage)
                         return;
 
-                    if ($scope.keyword.length >= 3) {
-                        $scope.showSearchResult = true;
-                    }
+                    $scope.showSearchResult = true;
+
                 };
+
 
                 function cancelHttpRequest() {
                     if (httpCanceller) {
@@ -76,19 +71,32 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     }
                 }
 
+                $scope.searched = false;
+                $scope.destinations = [];
+                $scope.hotels = [];
+                $scope.activities = [];
+
                 $scope.$watch('keyword', function (newValue, oldValue, scope) {
-                    if(isSearchPage)
+                    if(isSearchPage || newValue == oldValue)
                         return;
 
-                    if (newValue.length < 3) {
-                        $scope.showSearchResult = false;
+                    $scope.destinations = [];
+                    $scope.hotels = [];
+                    $scope.activities = [];
+
+                    if (newValue.length < 1) {
+                        $scope.showSearchResult = true;
+                        $scope.searched = false;
                         return;
                     }
 
+                    $scope.searched = true;
                     $scope.showSearchResult = true;
                     cancelHttpRequest();
+                    //$loading.start('search-loading');
                     httpCanceller = SearchService.searchForKeyword(newValue);
                     httpCanceller.promise.then(function (data) {
+                        $loading.finish('search-loading');
                         $scope.results = [];
                         _.each(data, function (item, index) {
                             if (item.ProductType == 'HTL') {
@@ -102,8 +110,18 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                                 _.extend(item, {showName: 'City'});
                             }
                             $scope.results.push(item);
+
+                            if(item.ProductType == 'CTY') {
+                                $scope.destinations.push(item);
+                            } else if(item.ProductType == 'HTL') {
+                                $scope.hotels.push(item);
+                            } else if(item.ProductType == 'OPT') {
+                                $scope.activities.push(item);
+                            }
+
                         });
                     }, function (data) {
+                        //$loading.finish('search-loading');
                     });
 
                 });

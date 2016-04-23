@@ -7,6 +7,21 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0
 }
 
+.image-size-16 {
+  width:$image-size-16;
+  height:$image-size-16;
+}
+
+.image-size-24 {
+  width:$image-size-24;
+  height:$image-size-24;
+}
+
+.image-size-32 {
+  width:$image-size-32;
+  height:$image-size-32;
+}
+
 //h2{font-size: 30px;  color: $font-normal;}
 //h3{font-size: 16px;}
 //h1{font-size: 28px;}
@@ -483,7 +498,8 @@ a {
     text-align: center;
 
     img {
-      max-height:240px;
+      max-height:220px;
+      height:220px;
       width:100%;
     }
   }
