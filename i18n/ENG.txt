@@ -49,6 +49,8 @@
   "MICE_TITLE":"CHD - MICE",
   "BUS_CHARTER":"Bus Charter",
   "BUS_CHARTER_TITLE":"CHD - Bus Charter",
+  "PACKAGE":"Packages",
+  "GROUP":"Group",
   "ABOUT_US":"About Us",
   "SITE_MAP":"Site Map",
   "PRIVACY_POLICY":"Privacy Policy",

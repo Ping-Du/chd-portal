@@ -29,36 +29,72 @@ define(['app/services/session-service'], function (modules) {
                 getFeaturedServices:function() {
                     return invoke('/featured/languages/'+SessionService.languageId(), 'GET');
                 },
-                getShows:function() {
-                    return invoke('/shows/languages/'+SessionService.languageId(), 'GET');
-                },
-                getFeaturedShows:function(){
-                    return invoke('/shows/featured/languages/'+SessionService.languageId(), 'GET');
-                },
+                //getShows:function() {
+                //    return invoke('/shows/languages/'+SessionService.languageId(), 'GET');
+                //},
+                //getFeaturedShows:function(){
+                //    return invoke('/shows/featured/languages/'+SessionService.languageId(), 'GET');
+                //},
                 getActivities:function() {
                     return invoke('/activities/languages/'+SessionService.languageId(), 'GET');
+                },
+                getActivitiesByDestinationId:function(destinationId) {
+                    return invoke('/activities/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getFeaturedActivities:function(){
                     return invoke('/activities/featured/languages/'+SessionService.languageId(), 'GET');
                 },
+                getFeaturedActivitiesByDestinationId:function(destinationId){
+                    return invoke('/activities/featured/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopActivities:function() {
+                    invoke('/activities/top/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopActivitiesByDestinationId:function(destinationId) {
+                    invoke('/activities/top/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
                 getTours:function() {
                     return invoke('/tours/languages/'+SessionService.languageId(), 'GET');
+                },
+                getToursByDestinationId:function(destinationId) {
+                    return invoke('/tours/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopTours:function() {
+                    return invoke('/tours/top/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopToursByDestinationId:function(destinationId) {
+                    return invoke('/tours/top/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getFeaturedTours:function(){
                     return invoke('/tours/featured/languages/'+SessionService.languageId(), 'GET');
                 },
+                getFeaturedToursByDestinationId:function(destinationId){
+                    return invoke('/tours/featured/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
                 getTransportation:function() {
                     return invoke('/transportation/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTransportationByDestinationId:function(destinationId) {
+                    return invoke('/transportation/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopTransportation:function() {
+                    return invoke('/transportation/top/languages/'+SessionService.languageId(), 'GET');
+                },
+                getTopTransportationByDestinationId:function(destinationId) {
+                    return invoke('/transportation/top/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getFeaturedTransportation:function(){
                     return invoke('/transportation/featured/languages/'+SessionService.languageId(), 'GET');
                 },
-                getDining:function() {
-                    return invoke('/dining/languages/'+SessionService.languageId(), 'GET');
+                getFeaturedTransportationByDestinationId:function(destinationId){
+                    return invoke('/transportation/featured/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
-                getFeaturedDining:function(){
-                    return invoke('/dining/featured/languages/'+SessionService.languageId(), 'GET');
-                },
+                //getDining:function() {
+                //    return invoke('/dining/languages/'+SessionService.languageId(), 'GET');
+                //},
+                //getFeaturedDining:function(){
+                //    return invoke('/dining/featured/languages/'+SessionService.languageId(), 'GET');
+                //},
                 getServicesByDestination:function(destinationId) {
                     return invoke('/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
