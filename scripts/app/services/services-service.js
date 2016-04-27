@@ -48,10 +48,10 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/activities/featured/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getTopActivities:function() {
-                    invoke('/activities/top/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/activities/top/languages/'+SessionService.languageId(), 'GET');
                 },
                 getTopActivitiesByDestinationId:function(destinationId) {
-                    invoke('/activities/top/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/activities/top/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getTours:function() {
                     return invoke('/tours/languages/'+SessionService.languageId(), 'GET');

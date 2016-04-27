@@ -30,6 +30,7 @@
   "DESTINATION":"目的地",
   "DESTINATION_TITLE":"中美旅游 - 目的地",
   "HOTEL":"酒店",
+  "TOP_HOTELS":"销量最佳酒店",
   "HOTEL_TITLE":"中美旅游 - 酒店",
   "SHOWS":"表演",
   "SHOWS_TITLE":"中美旅游 - 表演",

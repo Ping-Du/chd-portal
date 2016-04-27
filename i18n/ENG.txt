@@ -30,6 +30,7 @@
   "DESTINATION":"Destinations",
   "DESTINATION_TITLE":"CHD - Destinations",
   "HOTEL":"Hotels",
+  "TOP_HOTELS":"Top Hotels",
   "HOTEL_TITLE":"CHD - Hotels",
   "SHOWS":"Shows",
   "SHOWS_TITLE":"CHD - Shows",

@@ -180,7 +180,7 @@
                 </div>
             </section>
 
-            <section class="thumbnail-part" data-ng-show="shows.length > 0">
+            <section class="thumbnail-part" data-ng-show="activities.length > 0">
                 <!--<div class="title">-->
                 <!--<i class="icon-show"></i>-->
                 <!--<h2>{{"SHOW"|translate}}</h2>-->
@@ -188,9 +188,9 @@
                 <header class="header-container">
                     <div class="title position"><i class="icon-show"></i>
 
-                        <h2>{{"SHOWS"|translate}}</h2></div>
+                        <h2>{{"ACTIVITIES"|translate}}</h2></div>
                     <div class="head-menu text-right">
-                        <a data-ng-href="services.html#/shows/{{languageId}}">{{"MORE"|translate}}</a>
+                        <a data-ng-href="services.html#/activities/{{languageId}}">{{"MORE"|translate}}</a>
                         <!--<a data-ng-href="services.html#/shows/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
                         <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
                     </div>
@@ -198,7 +198,7 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4" data-ng-repeat="item in shows">
                         <div class="thumbnail">
-                            <a data-ng-href="services.html#/shows/{{item.ProductId}}/{{languageId}}">
+                            <a data-ng-href="services.html#/activities/{{item.ProductId}}/{{languageId}}">
                                 <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
                             </a>
 
