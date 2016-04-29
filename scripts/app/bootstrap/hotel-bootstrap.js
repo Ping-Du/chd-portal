@@ -6,6 +6,7 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/login-modal-controller',
         'app/controllers/change-password-modal-controller',
         'app/controllers/hotel-main-controller',
+        'app/controllers/hotel-dest-controller',
         'app/controllers/hotel-detail-controller',
         'app/controllers/register-modal-controller','jquery.raty'],
     function (modules) {
@@ -21,6 +22,11 @@ define(['app/interceptors/http-interceptor',
                 .when('/:languageId', {
                     templateUrl:'templates/hotel-main-view.html',
                     controller:'HotelMainController',
+                    reloadOnSearch:true
+                })
+                .when('/destinations/:destinationId/:languageId', {
+                    templateUrl:'templates/hotel-dest-view.html',
+                    controller:'HotelDestController',
                     reloadOnSearch:true
                 })
                 .when('/:hotelId/:languageId',{

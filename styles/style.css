@@ -469,6 +469,12 @@ a {
   padding-right: 10px;
   padding-left: 10px; }
 
+.col-center-block {
+  float: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
 @media (min-width: 1200px) {
   .container {
     width: 1190px; } }

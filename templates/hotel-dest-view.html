@@ -1,0 +1,144 @@
+<form class="search-main">
+    <div class="container">
+        <div class=" row">
+            <div class="col-md-4 relative">
+                <i class="icon-location2"></i>
+                <!--<input type="text" class="form-control" placeholder="Location">-->
+                <div angucomplete-alt id="searchLocation"
+                     placeholder="Location"
+                     pause="1000"
+                     selected-object="selectedSearchLocation"
+                     local-data="searchLocations"
+                     search-fields="ProductId,Name"
+                     title-field="Name"
+                     minlength="1"
+                     input-class="form-control input"
+                     match-class="highlight"
+                     initial-value="selectedLocationName">
+                </div>
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
+                       placeholder="Check In Date" data-ng-model="checkInDate" data-init-date="checkInDate">
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
+                       placeholder="Check Out Date" data-ng-model="checkOutDate" data-init-date="checkOutDate">
+            </div>
+            <div class="col-md-3 relative">
+                <i class="icon-users"></i>
+                <input type="text" class="form-control input" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
+                       data-ng-model="roomsInfo"
+                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       popover-is-open="showGuests" ng-click="showGuests = true"
+                       popover-trigger="none" popover-placement="bottom">
+            </div>
+            <div class="col-md-1 relative">
+                <a href data-ng-click="searchHotels()" uib-tooltip="{{tooltips}}"
+                   tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
+                   tooltip-trigger="none"><i class="icon-search"></i></a>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container-bg container-padding">
+    <div class="container">
+        <div class="filter-box">
+            <dl class="filter-item">
+                <dt><i class="icon-star-full"></i>&nbsp;{{"STAR"|translate}}</dt>
+                <dd>
+                    <!--<a href data-ng-class="{'active':selectedStar==null}"-->
+                    <!--data-ng-click="filterByStar(null)">All</a>-->
+                    <!--<a href data-ng-repeat="item in stars | orderBy:'+Name':false"-->
+                    <!--data-ng-class="{'active':selectedStar==item.Id}"-->
+                    <!--data-ng-click="filterByStar(item.Id)">{{item.Name}}</a>-->
+                    <div id="fromStar" style="display: inline;"></div>&nbsp;&nbsp;--&nbsp;&nbsp;</span><div id="toStar" style="display: inline;"></div>
+                    &nbsp;<input type="button" data-ng-click="filterByStarRange()" value="Filter">
+                    <script>
+                        $('#fromStar').raty({cancel:true, half: true, score:0, path:'images/'});
+                        $('#toStar').raty({cancel:true, half:true, score:5, path:'images/'});
+                    </script>
+                </dd>
+            </dl>
+            <dl class="filter-item">
+                <dt><i class="icon-bed"></i>&nbsp;{{"TYPE"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedType==null}"
+                       data-ng-click="filterByType(null)">All</a>
+                    <a href data-ng-repeat="item in types | orderBy:'+Name':false"
+                       data-ng-class="{'active':selectedType==item.Id}"
+                       data-ng-click="filterByType(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+            <dl class="filter-item" data-ng-show="prices.length > 0">
+                <dt><i class="icon-coin-dollar"></i>&nbsp;{{"PRICE"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedPrice==null}"
+                       data-ng-click="filterByPrice(null)">All</a>
+                    <a href data-ng-repeat="item in prices | orderBy:'+Id':false"
+                       data-ng-class="{'active':selectedType==item.Id}"
+                       data-ng-click="filterByPrice(item.Id)">{{item.Name}}</a>
+                </dd>
+            </dl>
+        </div>
+        <section class="thumbnail-part" data-ng-show="featuredHotels.length > 0">
+            <div class="title">
+                <h2>{{"FEATURED"|translate}}</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in featuredHotels">
+                    <div class="thumbnail">
+                        <a href data-ng-href="{{item.DetailsURI}}"><img
+                                data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;"></a>
+
+                        <div class="caption">
+                            <!--<ul class="ticket">-->
+                            <!--<li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>-->
+                            <!--&lt;!&ndash;<li class="text-right"><s>$120</s>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p class="price">$89.00</p></li>&ndash;&gt;-->
+                            <!--</ul>-->
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name |limitTo:35}}</a>
+                                <i data-ng-class="item.starClass"></i></h3>
+                            <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
+                            <ul class="hotel">
+                                <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
+                                <li class="text-right price"><span>{{item.price}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="sortbar" data-ng-show="featuredHotels.length > 0">
+            <!--<ul>-->
+            <!--<li><a href="#">Price</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Sale Volumn</a><i class="icon-caret-down"></i></li>-->
+            <!--<li><a href="#">Score</a><i class="icon-caret-down"></i></li>-->
+            <!--</ul>-->
+        </div>
+        <section class="thumbnail-part">
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in showHotels">
+                    <div class="thumbnail">
+                        <a data-ng-href="{{item.DetailsURI}}">
+                            <!--<span class="new-layer"></span>-->
+                            <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
+                        </a>
+
+                        <div class="caption">
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name | limitTo:35}}</a>
+                                <i data-ng-class="item.starClass"></i></h3>
+                            <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
+                            <ul class="hotel">
+                                <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
+                                <li class="text-right price"><span>{{item.price}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -56,7 +56,7 @@ define(['app/services/banner-service',
 
                 $scope.hotels = [];
                 function loadHotels() {
-                    HotelService.getFeaturedHotels().then(function(data){
+                    HotelService.getTopHotels().then(function(data){
                         $scope.hotels = data;
                         _.each($scope.hotels, function(item, index) {
                             item.DetailsURI = 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
@@ -65,10 +65,10 @@ define(['app/services/banner-service',
                     });
                 }
 
-                $scope.shows = [];
-                function loadShows() {
-                    ServicesService.getFeaturedShows().then(function(data) {
-                        $scope.shows = data;
+                $scope.activities = [];
+                function loadActivities() {
+                    ServicesService.getTopActivities().then(function(data) {
+                        $scope.activities = data;
                     });
                 }
 
@@ -77,7 +77,7 @@ define(['app/services/banner-service',
                     loadBanners();
                     loadDestinations();
                     loadHotels();
-                    loadShows();
+                    loadActivities();
                 }
 
                 $scope.$on('LanguageChanged', function (event, data) {
