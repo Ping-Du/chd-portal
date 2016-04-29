@@ -52,6 +52,7 @@
   "BUS_CHARTER_TITLE":"中美旅游 - 租车",
   "PACKAGE":"组合套餐",
   "GROUP":"团队",
+  "GROUP_TITLE":"中美旅游 - 团队报价",
   "ABOUT_US":"关于我们",
   "SITE_MAP":"网站地图",
   "PRIVACY_POLICY":"隐私条款",
