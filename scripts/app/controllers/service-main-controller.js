@@ -7,8 +7,8 @@ define(['app/services/services-service',
 
     modules.controllers
         .controller('ServiceMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout', 'SearchService',
-            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout, SearchService) {
+            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout', 'SearchService','$routeParams',
+            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout, SearchService, $routeParams) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -41,11 +41,13 @@ define(['app/services/services-service',
                 });
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria?criteria.guests:{Adults:'0', MinorAges:[]};
+                var servicesDestination = $cookieStore.get('servicesDestination');
+                $cookieStore.remove('servicesDestination');
+                $scope.guests = servicesDestination?{Adults:'0', MinorAges:[]}:(criteria?criteria.guests:{Adults:'0', MinorAges:[]});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
-                $scope.startDate = criteria?criteria.startDate:"";
-                $scope.selectedLocation = criteria?criteria.locationId:null;
-                $scope.selectedLocationName = criteria?criteria.locationName:'';
+                $scope.startDate = servicesDestination?"":(criteria?criteria.startDate:"");
+                $scope.selectedLocation = servicesDestination?servicesDestination.ProductId:(criteria?criteria.locationId:null);
+                $scope.selectedLocationName = servicesDestination?servicesDestination.Name:(criteria?criteria.locationName:null);
                 $scope.selectedSearchLocation = null;
 
                 $scope.searchLocations = [];
@@ -78,6 +80,11 @@ define(['app/services/services-service',
                     fillServices();
                 };
 
+                $scope.onlyAvailable = false;
+                $scope.filterByAvailable = function() {
+                    fillServices();
+                };
+
                 $scope.featuredServices = [];
                 $scope.showServices = [];
                 $scope.allServices = [];
@@ -87,17 +94,26 @@ define(['app/services/services-service',
                     _.each($scope.allServices, function (item, key) {
                         var locationed = (item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         var priced = ($scope.selectedPrice == null);
-                        if(!priced) {
+                        var available = ($scope.onlyAvailable == false);
+                        if(!priced || !available) {
                             if(_.find(item.AvailabilityCategories, function(category){
-                                    return (Math.floor(category.Price/100) == $scope.selectedPrice);
+                                    if(!priced && !available)
+                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available"));
+                                    else if(!priced && available)
+                                        return (Math.floor(category.Price/100) == $scope.selectedPrice);
+                                    else if(priced && !available) {
+                                        return category.AvailabilityLevel == "Available"
+                                    } else
+                                        return true;
                                 })){
                                 priced = true;
+                                available = true;
                             }
                         }
-                        if(locationed && priced) {
+                        if(locationed && priced && available) {
                             if(item.Featured)
                                 $scope.featuredServices.push(item);
-                            //else
+                            else
                                 $scope.showServices.push(item);
                         }
                     });
@@ -232,13 +248,22 @@ define(['app/services/services-service',
                     }
                 };
 
-                function loadAllServices() {
-                    ServicesService.getServiceByType(serviceType).then(function (data) {
-                        fillAllServices(data);
-                        fillServices();
-                    }, function () {
-                        $scope.allServices = [];
-                    });
+                function loadAllServices(destinationId) {
+                    if(destinationId) {
+                        ServicesService.getActivitiesByDestinationId(destinationId).then(function (data) {
+                            fillAllServices(data);
+                            fillServices();
+                        }, function () {
+                            $scope.allServices = [];
+                        });
+                    } else {
+                        ServicesService.getServiceByType(serviceType).then(function (data) {
+                            fillAllServices(data);
+                            fillServices();
+                        }, function () {
+                            $scope.allServices = [];
+                        });
+                    }
                 }
 
                 function load() {
@@ -246,7 +271,7 @@ define(['app/services/services-service',
                     if($scope.guests.Adults != '0' && $scope.guests.Adults != '')
                         $scope.searchServices();
                     else
-                        loadAllServices();
+                        loadAllServices($scope.selectedLocation);
                 }
 
                 load();

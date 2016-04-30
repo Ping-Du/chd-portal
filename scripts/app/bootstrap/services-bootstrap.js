@@ -6,6 +6,7 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/login-modal-controller',
         'app/controllers/change-password-modal-controller',
         'app/controllers/register-modal-controller',
+        'app/controllers/service-activities-top-controller',
         'app/controllers/service-main-controller',
         'app/controllers/service-detail-controller',
         'jquery.spinner'],
@@ -29,58 +30,56 @@ define(['app/interceptors/http-interceptor',
         // config route
         modules.app.config(['$routeProvider', function ($routeProvider) {
             $routeProvider
-                .when('/shows/:languageId', {
-                    templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController'
-                    //,reloadOnSearch: true
+                //.when('/shows/:languageId', {
+                //    templateUrl: 'templates/service-main-view.html',
+                //    controller: 'ServiceMainController'
+                //    //,reloadOnSearch: true
+                //})
+                //.when('/shows/:serviceId/:languageId', {
+                //    templateUrl: 'templates/service-detail-view.html',
+                //    controller: 'ServiceDetailController'
+                //    //,reloadOnSearch: true
+                //})
+                .when('/activities/top/:languageId', {
+                    templateUrl: 'templates/service-activities-top-view.html',
+                    controller: 'ServiceActivitiesTopController'
                 })
-                .when('/shows/:serviceId/:languageId', {
-                    templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController'
-                    //,reloadOnSearch: true
-                })
-                .when('/activities/:languageId', {
-                    templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController'
-                    //,reloadOnSearch: true
+                .when('/activities/:languageId',{
+                    templateUrl:'templates/service-main-view.html',
+                    controller:'ServiceMainController'
                 })
                 .when('/activities/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
                     controller: 'ServiceDetailController'
-                    //,reloadOnSearch: true
                 })
                 .when('/tours/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController',
-                    reloadOnSearch: true
+                    controller: 'ServiceMainController'
                 })
                 .when('/tours/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
                     controller: 'ServiceDetailController'
-                    //,reloadOnSearch: true
                 })
                 .when('/transportation/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
                     controller: 'ServiceMainController'
-                    //,reloadOnSearch: true
                 })
                 .when('/transportation/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
                     controller: 'ServiceDetailController'
-                    //,reloadOnSearch: true
                 })
-                .when('/dining/:languageId', {
-                    templateUrl: 'templates/service-main-view.html',
-                    controller: 'ServiceMainController'
-                    //,reloadOnSearch: true
-                })
-                .when('/dining/:serviceId/:languageId', {
-                    templateUrl: 'templates/service-detail-view.html',
-                    controller: 'ServiceDetailController'
-                    //,reloadOnSearch: true
-                })
+                //.when('/dining/:languageId', {
+                //    templateUrl: 'templates/service-main-view.html',
+                //    controller: 'ServiceMainController'
+                //    //,reloadOnSearch: true
+                //})
+                //.when('/dining/:serviceId/:languageId', {
+                //    templateUrl: 'templates/service-detail-view.html',
+                //    controller: 'ServiceDetailController'
+                //    //,reloadOnSearch: true
+                //})
                 .otherwise({
-                    redirectTo: '/shows/' + $.cookie('languageId')
+                    redirectTo: '/activities/top/' + $.cookie('languageId')
                 });
         }]);
 

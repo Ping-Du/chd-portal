@@ -75,5 +75,7 @@
   "TYPE":"类型",
   "MY_ACCOUNT":"我的账户",
   "STAR":"星级",
-  "PRICE":"价格"
+  "PRICE":"价格",
+  "AVAILABILITY":"可用的",
+  "AVAILABLE":"可预订"
 }
