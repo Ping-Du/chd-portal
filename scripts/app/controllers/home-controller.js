@@ -48,7 +48,7 @@ define(['app/services/banner-service',
 
                 $scope.destinations = [];
                 function loadDestinations() {
-                    DestinationService.getFeaturedDestinations().then(function (data) {
+                    DestinationService.getTopDestinations().then(function (data) {
                         $scope.destinations = data;
                         initSlider(fillSlideData(data));
                     });

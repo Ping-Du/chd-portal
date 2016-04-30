@@ -57,7 +57,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/tours/languages/'+SessionService.languageId(), 'GET');
                 },
                 getToursByDestinationId:function(destinationId) {
-                    return invoke('/tours/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/tours/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getTopTours:function() {
                     return invoke('/tours/top/languages/'+SessionService.languageId(), 'GET');
@@ -69,7 +69,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/tours/featured/languages/'+SessionService.languageId(), 'GET');
                 },
                 getFeaturedToursByDestinationId:function(destinationId){
-                    return invoke('/tours/featured/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                    return invoke('/tours/featured/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
                 },
                 getTransportation:function() {
                     return invoke('/transportation/languages/'+SessionService.languageId(), 'GET');

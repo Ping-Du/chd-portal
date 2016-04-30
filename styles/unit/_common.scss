@@ -727,6 +727,19 @@ a {
     text-align: center;
     margin: 20px auto;
   }
+
+  .more-link {
+    padding-top: 20px;
+    a {
+      color: $main-red;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    a:hover {
+      color: $main-red;
+      text-decoration: underline;
+    }
+  }
 }
 
 .comment-media {

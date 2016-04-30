@@ -50,7 +50,8 @@
   "MICE_TITLE":"中美旅游 - 会展",
   "BUS_CHARTER":"租车",
   "BUS_CHARTER_TITLE":"中美旅游 - 租车",
-  "PACKAGE":"组合套餐",
+  "PACKAGES":"组合套餐",
+  "PACKAGES_TITLE":"中美旅游 - 组合套餐",
   "GROUP":"团队",
   "GROUP_TITLE":"中美旅游 - 团队报价",
   "ABOUT_US":"关于我们",
@@ -77,5 +78,6 @@
   "STAR":"星级",
   "PRICE":"价格",
   "AVAILABILITY":"可用的",
-  "AVAILABLE":"可预订"
+  "AVAILABLE":"可预订",
+  "DETAIL":"详细"
 }

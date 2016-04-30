@@ -965,6 +965,15 @@ a {
     width: 100%;
     text-align: center;
     margin: 20px auto; }
+  .detail-wrap .more-link {
+    padding-top: 20px; }
+    .detail-wrap .more-link a {
+      color: #ed685b;
+      text-decoration: none;
+      font-size: 14px; }
+    .detail-wrap .more-link a:hover {
+      color: #ed685b;
+      text-decoration: underline; }
 
 .comment-media {
   border-bottom: 1px solid #eee; }

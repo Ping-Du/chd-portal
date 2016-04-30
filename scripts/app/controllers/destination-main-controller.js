@@ -28,13 +28,15 @@ define(['app/services/language-service',
                         DestinationService.getDestinationsByLanguageId().then(function (data) {
                             _.each(data, function (item, index) {
                                 item.DetailsURI = 'destinations.html#/'+item.ProductId+'/'+$scope.languageId;
-                                $scope.allItems.push(item);
-                                if (item.Featured)
+                                if (item.Featured) {
                                     featuredItems.push({
-                                        url:item.DetailsURI,
-                                        caption:item.Name,
-                                        image:item.MainInformation.LargeImageURI
+                                        url: item.DetailsURI,
+                                        caption: item.Name,
+                                        image: item.MainInformation.LargeImageURI
                                     });
+                                }// else {
+                                    $scope.allItems.push(item);
+                                //}
                             });
 
                             if(featuredItems.length > 0) {

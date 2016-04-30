@@ -57,7 +57,10 @@ define(['app/services/services-service',
                 }
 
                 $scope.showActivitiesMainPage = function(){
-                    $cookieStore.put('servicesDestination', $scope.currentDestination);
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentDestination.ProductId,
+                        Name:$scope.currentDestination.Name
+                    });
                     $location.url("/activities/"+$scope.languageId, true);
                 };
 
