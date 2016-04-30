@@ -212,8 +212,8 @@ define(['app/services/hotel-service',
                 }
 
                 var criteria = $cookieStore.get('hotelCriteria');
-                var hotelDestination = $cookieStore.get('hotelDestination');
-                $cookieStore.remove('hotelDestination');
+                var hotelDestination = $cookieStore.get('forDestination');
+                $cookieStore.remove('forDestination');
                 $scope.checkInDate = hotelDestination?"":(criteria?criteria.checkInDate:"");
                 $scope.checkOutDate = hotelDestination?"":(criteria?criteria.checkOutDate:"");
                 $scope.guests = hotelDestination?[]:(criteria?criteria.guests:[]);

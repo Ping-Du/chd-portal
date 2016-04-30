@@ -50,7 +50,8 @@
   "MICE_TITLE":"CHD - MICE",
   "BUS_CHARTER":"Bus Charter",
   "BUS_CHARTER_TITLE":"CHD - Bus Charter",
-  "PACKAGE":"Packages",
+  "PACKAGES":"Packages",
+  "PACKAGES_TITLE":"CHD - Packages",
   "GROUP":"Group",
   "GROUP_TITLE":"CHD - Group Quote",
   "ABOUT_US":"About Us",
@@ -77,5 +78,6 @@
   "STAR":"Star",
   "PRICE":"Price",
   "AVAILABILITY":"Availability",
-  "AVAILABLE":"Available"
+  "AVAILABLE":"Available",
+    "DETAIL":"Detail"
 }

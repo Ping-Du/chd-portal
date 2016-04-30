@@ -45,8 +45,12 @@
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
                     <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
-                    <a href onclick="scrollToControl('hotel')"><i class="glyphicon glyphicon-briefcase"></i>&nbsp;Hotels</a>
-                    <a href onclick="scrollToControl('service')"><i class="glyphicon glyphicon-film"></i>&nbsp;Services</a>
+                    <a href onclick="scrollToControl('hotel')" data-ng-show="hotels.length > 0"><i class="glyphicon glyphicon-briefcase"></i>&nbsp;Hotels</a>
+                    <a href onclick="scrollToControl('activities')" data-ng-show="activities.length > 0"><i class="glyphicon glyphicon-film"></i>&nbsp;Things To Do</a>
+                    <a href onclick="scrollToControl('tours')" data-ng-show="tours.length > 0"><i class="glyphicon glyphicon-flag"></i>&nbsp;Tours</a>
+                    <br><br>
+                    <a href onclick="scrollToControl('transportation')" data-ng-show="transportation.length > 0"><i class="glyphicon glyphicon-road"></i>&nbsp;Transportation</a>
+                    <a href onclick="scrollToControl('packages')" data-ng-show="packages.length > 0"><i class="glyphicon glyphicon-calendar"></i>&nbsp;Packages</a>
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
                 </div>
                 <!--<div class="row">-->
@@ -62,21 +66,31 @@
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('detail')">Detail</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('service')">Services</a></li>
+                    <li class="menu-item" data-ng-show="hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
+                    <li class="menu-item" data-ng-show="activities.length > 0"><a href onclick="scrollToControl('activities')">Things To Do</a></li>
+                    <li class="menu-item" data-ng-show="tours.length > 0"><a href onclick="scrollToControl('tours')">Tours</a></li>
+                    <li class="menu-item" data-ng-show="transportation.length > 0"><a href onclick="scrollToControl('transportation')">Transportation</a></li>
+                    <li class="menu-item" data-ng-show="packages.length > 0"><a href onclick="scrollToControl('packages')">Packages</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
             </nav>
         </div>
         <section class="detail-wrap" id="detail">
-            <h3>Detail</h3>
+            <h3>{{"DETAIL"|translate}}</h3>
             <div class="content">
                 <!--<h4>{{item.Title}}</h4>-->
                 <p data-ng-bind-html="destinationItem.AdditionalInformation[1].FormattedText"></p>
             </div>
         </section>
-        <section class="detail-wrap" id="hotel">
-            <h3>Hotels</h3>
+        <section class="detail-wrap" id="hotel" data-ng-show="hotels.length > 0">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3>{{"HOTEL"|translate}}</h3>
+                </div>
+                <div class="more-link">
+                    <a href data-ng-click="gotoUrl('hotels.html#/')">{{"MORE"|translate}}</a>
+                </div>
+            </div>
             <div class="content thumbnail-part">
                 <div class="row">
                     <div class="col-sm-6 col-md-4" data-ng-repeat="item in hotels">
@@ -85,44 +99,110 @@
                                 <!--<span class="new-layer"></span>-->
                                 <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:200px;">
                             </a>
-
-                            <div class="caption">
-                                <ul class="ticket">
-                                    <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
-                                    <!--<li class="text-right"><s>$120</s>-->
-                                    <!--<p class="price">$89.00</p></li>-->
-                                </ul>
-                            </div>
+                            <div style="padding:5px;"><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="detail-wrap" id="service">
-            <h3>Services</h3>
+        <section class="detail-wrap" id="activities" data-ng-show="activities.length > 0">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3>{{"ACTIVITIES"|translate}}</h3>
+                </div>
+                <div class="more-link">
+                    <a href data-ng-click="gotoUrl('services.html#/activities/')">{{"MORE"|translate}}</a>
+                </div>
+            </div>
+
             <div class="content thumbnail-part">
                 <div class="row">
-                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in services">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in activities">
                         <div class="thumbnail">
                             <a data-ng-href="{{item.DetailsURI}}">
                                 <!--<span class="new-layer"></span>-->
                                 <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:200px;">
                             </a>
+                            <div style="padding:5px;"><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="detail-wrap" id="tours" data-ng-show="tours.length > 0">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3>{{"TOURS"|translate}}</h3>
+                </div>
+                <div class="more-link">
+                    <a href data-ng-click="gotoUrl('services.html#/tours/')">{{"MORE"|translate}}</a>
+                </div>
+            </div>
 
-                            <div class="caption">
-                                <ul class="ticket">
-                                    <li class="title"><h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3></li>
-                                    <!--<li class="text-right"><s>$120</s>-->
-                                    <!--<p class="price">$89.00</p></li>-->
-                                </ul>
-                            </div>
+            <div class="content thumbnail-part">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in tours">
+                        <div class="thumbnail">
+                            <a data-ng-href="{{item.DetailsURI}}">
+                                <!--<span class="new-layer"></span>-->
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:200px;">
+                            </a>
+                            <div style="padding:5px;"><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="detail-wrap" id="transportation" data-ng-show="transportation.length > 0">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3>{{"TRANSPORTATION"|translate}}</h3>
+                </div>
+                <div class="more-link">
+                    <a href data-ng-click="gotoUrl('services.html#/transportation/')">{{"MORE"|translate}}</a>
+                </div>
+            </div>
+
+            <div class="content thumbnail-part">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in transportation">
+                        <div class="thumbnail">
+                            <a data-ng-href="{{item.DetailsURI}}">
+                                <!--<span class="new-layer"></span>-->
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:200px;">
+                            </a>
+                            <div style="padding:5px;"><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="detail-wrap" id="packages" data-ng-show="packages.length > 0">
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3>{{"PACKAGES"|translate}}</h3>
+                </div>
+                <div class="more-link">
+                    <a href data-ng-click="gotoUrl('packages.html#/')">{{"MORE"|translate}}</a>
+                </div>
+            </div>
+
+            <div class="content thumbnail-part">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in packages">
+                        <div class="thumbnail">
+                            <a data-ng-href="{{item.DetailsURI}}">
+                                <!--<span class="new-layer"></span>-->
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:200px;">
+                            </a>
+                            <div style="padding:5px;"><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <section class="detail-wrap" id="map">
-            <h3>Location</h3>
+            <h3>{{"LOCATION"|translate}}</h3>
             <div class="content">
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
@@ -183,20 +263,17 @@
 
     }
 
-    //initiating jQuery
-    jQuery(function($) {
-        $(document).ready( function() {
-            // 为 '.navbar-wrapper' class 启用stickUp插件
-            $('.detail-nav-wrap').stickUp({
-                parts: {
-                    0:'top',
-                    1:'detail',
-                    2:'hotel',
-                    3:'service',
-                    4: 'map'},
-                itemClass: 'menu-item',
-                itemHover: 'active' });
+    function initStickup(parts) {
+        //initiating jQuery
+        jQuery(function($) {
+            $(document).ready( function() {
+                // 为 '.navbar-wrapper' class 启用stickUp插件
+                $('.detail-nav-wrap').stickUp({
+                    parts: parts,
+                    itemClass: 'menu-item',
+                    itemHover: 'active' });
+            });
         });
-    });
+    }
 
 </script>

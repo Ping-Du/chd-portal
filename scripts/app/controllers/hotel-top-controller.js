@@ -42,7 +42,10 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.showHotelMainPage = function(){
-                    $cookieStore.put('hotelDestination', $scope.currentDestination);
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentDestination.ProductId,
+                        Name:$scope.currentDestination.Name
+                    });
                     $location.url("/"+$scope.languageId, true);
                 };
 

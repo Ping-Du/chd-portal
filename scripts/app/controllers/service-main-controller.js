@@ -41,8 +41,8 @@ define(['app/services/services-service',
                 });
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                var servicesDestination = $cookieStore.get('servicesDestination');
-                $cookieStore.remove('servicesDestination');
+                var servicesDestination = $cookieStore.get('forDestination');
+                $cookieStore.remove('forDestination');
                 $scope.guests = servicesDestination?{Adults:'0', MinorAges:[]}:(criteria?criteria.guests:{Adults:'0', MinorAges:[]});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 $scope.startDate = servicesDestination?"":(criteria?criteria.startDate:"");
