@@ -75,5 +75,7 @@
   "TYPE":"Type",
   "MY_ACCOUNT":"My Account",
   "STAR":"Star",
-  "PRICE":"Price"
+  "PRICE":"Price",
+  "AVAILABILITY":"Availability",
+  "AVAILABLE":"Available"
 }

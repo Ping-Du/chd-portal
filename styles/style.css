@@ -538,6 +538,9 @@ a {
   .thumbnail-part .title.position {
     width: 240px;
     float: left; }
+  .thumbnail-part .title.position-lg {
+    width: 250px;
+    float: left; }
   .thumbnail-part h2 {
     margin-top: 15px;
     font-size: 30px;
