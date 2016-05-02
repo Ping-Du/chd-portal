@@ -5,33 +5,33 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/account-controller',
         'app/controllers/login-modal-controller',
         'app/controllers/change-password-modal-controller',
-        'app/controllers/hotel-main-controller',
-        'app/controllers/hotel-top-controller',
-        'app/controllers/hotel-detail-controller',
+        'app/controllers/package-main-controller',
+        'app/controllers/package-top-controller',
+        'app/controllers/package-detail-controller',
         'app/controllers/register-modal-controller','jquery.raty'],
     function (modules) {
         'use strict';
 
         modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
-            NavbarServiceProvider.setActiveItem('hotel');
+            NavbarServiceProvider.setActiveItem('package');
         }]);
 
         // config route
         modules.app.config(['$routeProvider', function($routeProvider){
             $routeProvider
                 .when('/top/:languageId', {
-                    templateUrl:'templates/hotel-top-view.html',
-                    controller:'HotelTopController',
+                    templateUrl:'templates/package-top-view.html',
+                    controller:'PackageTopController',
                     reloadOnSearch:true
                 })
                 .when('/:languageId', {
-                    templateUrl:'templates/hotel-main-view.html',
-                    controller:'HotelMainController',
+                    templateUrl:'templates/package-main-view.html',
+                    controller:'PackageMainController',
                     reloadOnSearch:true
                 })
-                .when('/:hotelId/:languageId',{
-                    templateUrl:'templates/hotel-detail-view.html',
-                    controller:'HotelDetailController',
+                .when('/:packageId/:languageId',{
+                    templateUrl:'templates/package-detail-view.html',
+                    controller:'PackageDetailController',
                     reloadOnSearch:true
                 })
                 .otherwise({

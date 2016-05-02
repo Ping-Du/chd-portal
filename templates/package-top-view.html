@@ -1,0 +1,42 @@
+<div class="container-bg container-padding">
+    <div class="container">
+        <section class="thumbnail-part">
+            <header class="header-container">
+                <div class="title position">
+                    <i class="icon-ticket"></i>
+                    <h2>{{"PACKAGES"|translate}}</h2>
+                </div>
+                <div class="head-menu">
+                    <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
+                    <a href data-ng-repeat="item in destinations" data-ng-click="loadPackages(item)" data-ng-class="{active:(item == currentDestination)}">{{item.Name}}</a>
+                    <a href style="float:right" data-ng-click="showPackagesMainPage()">{{"MORE"|translate}} In '{{currentDestination.Name}}'</a>
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in packages">
+                    <div class="thumbnail">
+                        <a data-ng-href="{{item.DetailsURI}}">
+                            <!--
+                            <span class="sales-layer">Pref</span>
+                            -->
+                            <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
+                        </a>
+
+                        <div class="caption">
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name | limitTo:30}}</a></h3>
+                            <!--
+                            <a data-ng-href="hotels.html#/{{item.Id}}/comment/{{languageId}}"><span>8.3</span>451 comments</a>
+                            -->
+                            <ul class="hotel">
+                                <li>{{item.Location.Name}}</li>
+                                <!--
+                                <li class="text-right price"><s class="aa">$200</s><span>$89.00</span></li>
+                                -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

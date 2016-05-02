@@ -1,0 +1,292 @@
+<form class="search-main">
+    <div class="container">
+        <div class=" row">
+            <div class="col-md-4 relative">
+                <i class="icon-location2"></i>
+                <!--<input type="text" class="form-control" placeholder="Location">-->
+                <div angucomplete-alt id="searchLocation"
+                     placeholder="Location"
+                     pause="1000"
+                     selected-object="selectedSearchLocation"
+                     local-data="searchLocations"
+                     search-fields="ProductId,Name"
+                     title-field="Name"
+                     minlength="1"
+                     input-class="form-control input"
+                     match-class="highlight"
+                     initial-value="selectedLocationName"
+                     disable-input="true" >
+                </div>
+            </div>
+            <div class="col-md-2 relative">
+                <i class="icon-calendar"></i>
+                <input id="startDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
+                       placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+            </div>
+            <div class="col-md-3 relative">
+                <i class="icon-users"></i>
+                <input type="text" class="form-control input" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
+                       data-ng-model="roomsInfo"
+                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       popover-is-open="showGuests" ng-click="showGuests = true"
+                       popover-trigger="none" popover-placement="bottom">
+            </div>
+            <div class="col-md-1 relative">
+                <a href data-ng-click="load(true)" uib-tooltip="{{tooltips}}"
+                   tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
+                   tooltip-trigger="none" ><i class="icon-search"></i></a>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container-bg container-padding" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="relative">
+                    <div class="slides-container slider-wrap" >
+                        <!-- Loading Screen -->
+                        <div data-u="loading" style="position: absolute;top:0;left:0;">
+                            <div class="loading-icon"></div>
+                        </div>
+                        <div id='slides' data-u="slides" class="slider-list-wrap">
+                            <!--<div data-p="112.50" data-ng-repeat="item in serviceItem.SliderImages" data-enable-jssor data-jssor-options="jssorOptions1" data-jssor-trigger="{{$last}}">-->
+                            <!--<img data-u="image" data-ng-src="{{item.ImagePath}}" />-->
+                            <!--<img data-u="thumb" data-ng-src="{{item.ImagePath}}" />-->
+                            <!--</div>-->
+                        </div>
+
+                        <!-- Thumbnail Navigator -->
+                        <div u="thumbnavigator" class="thum-wrap" data-autocenter="1">
+                            <div class="text-wrap"></div>
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div u="slides">
+                                <div u="prototype" class="p">
+                                    <div class="thum-list">
+                                        <div u="thumbnailtemplate" class="thum"></div>
+                                    </div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                            <!-- Thumbnail Item Skin End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="col-md-4">
+                <div class="service-detail-info">
+                    <span class="caption">{{packageItem.Name}}</span>
+                </div>
+                <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
+                <br/>
+                <div class="row tab-list">
+                    <div class="col-xs-12 col-md-12 text-red" data-ng-show="packageItem.Price">${{packageItem.Price}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>ID: </span>{{packageItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>Type: </span>{{packageItem.PackageType.Name}}</div>
+                    <div class="col-xs-12 col-md-12"> <span>Location: </span>{{packageItem.Location.Name}}</div>
+                </div>
+                <br/>
+                <!--<div class="tax-com-part">-->
+                <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
+                <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
+                <div class="pos-map">
+                    <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
+                    <a href onclick="scrollToControl('term')"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Terms</a>
+                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
+                    <br><br>
+                    <a href onclick="scrollToControl('hotel')" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Hotels</a>
+                    <a href onclick="scrollToControl('service')" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Services</a>
+                </div>
+                <div class="row" data-ng-show="packageItem.Price">
+                    <div class="price-btn-part">
+                        <div class="col-xs-12 col-md-12 text-right">
+                            <a href class="btn btn-red">Add To Cart</a></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="detail-nav-wrap is-stuck">
+            <nav class="container">
+                <ul>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('detail')">Detail</a></li>
+                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
+                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0"><a href onclick="scrollToControl('service')">Services</a></li>
+                    <li class="menu-item" ><a href onclick="scrollToControl('term')">Terms</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                </ul>
+            </nav>
+        </div>
+        <section class="detail-wrap" id="detail">
+            <h3>Detail&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!packageItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>
+            <div class="content">
+                <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
+                <p data-ng-repeat="item in packageItem.PrimaryAlternates">{{item}}</p>
+                <p data-ng-bind-html="packageItem.AdditionalInformation[1].FormattedText"></p>
+            </div>
+        </section>
+        <section class="detail-wrap" id="hotel" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0">
+            <h3>Hotels</h3>
+            <div class="content">
+                <div class="table-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="thead">
+                                <td>Name</td>
+                                <td class="tlist-4">Location</td>
+                                <td class="tlist-2">Address</td>
+                                <td class="tlist-4"></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories.Hotels" >
+                                <td>
+                                    <div class="media media-roomlist">
+                                        <div class="media-left media-middle">
+                                            <img class="media-object" src="item.MainInformation.ThumbnailImageURI">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{item.Name}}</h5>
+                                            <p><i data-ng-class="starClass"></i></p>
+                                            <p class="p-detail"><strong>ID:</strong>{{item.Id}}&nbsp;&nbsp;<strong>Type:</strong>{{item.HotelType.Name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.Location.Name}}</td>
+                                <td>{{item.Address1}}</td>
+                                <td><button type="button" class="btn btn-default btn-red">View Detail</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--<p><strong>Rooms:</strong>{{packageItem.Rooms.length}}&nbsp;&nbsp;<strong>Price:</strong>${{packageItem.HotelPrice}}</p>-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="detail-wrap" id="service" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0">
+            <h3>Services</h3>
+            <div class="content">
+                <div class="table-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="thead">
+                                <td>Name</td>
+                                <td class="tlist-4">Location</td>
+                                <td class="tlist-2">Address</td>
+                                <td class="tlist-4"></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories.Services" >
+                                <td>
+                                    <div class="media media-roomlist">
+                                        <div class="media-left media-middle">
+                                            <img class="media-object" src="item.MainInformation.ThumbnailImageURI">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{item.Name}}</h5>
+                                            <p class="p-detail"><strong>ID:</strong>{{item.Id}}&nbsp;&nbsp;<strong>Type:</strong>{{item.ServiceType.Name}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{item.Location.Name}}</td>
+                                <td>{{item.Address1}}</td>
+                                <td><button type="button" class="btn btn-default btn-red">View Detail</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--<p><strong>Rooms:</strong>{{packageItem.Rooms.length}}&nbsp;&nbsp;<strong>Price:</strong>${{packageItem.HotelPrice}}</p>-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="detail-wrap" id="term">
+            <h3>Terms</h3>
+            <div class="content">
+                <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
+                <p data-ng-repeat="item in packageItem.Warnings" data-ng-bind-html="item.FormattedText"></p>
+            </div>
+        </section>
+        <section class="detail-wrap" id="map">
+            <h3>Location</h3>
+            <div class="content">
+                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>Location：</strong>{{packageItem.Location.Name}}</p>
+                <!--ui-map="myMap" ui-options="mapOptions"-->
+                <div class="map-box" id="map_canvas" data-ng-show="showMap">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function initSlider(imageData) {
+        var jssorOptions = {
+            $AutoPlay: true,
+            $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+            },
+            $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 9,
+                $SpacingX: 3,
+                $SpacingY: 3,
+                $Align: 260
+            }
+        };
+        var slides = $('#slides');
+        var container = slides.closest('.slides-container');
+        if (!container.attr("id"))
+            container.attr("id", new Date().getTime());
+
+        var innerHtml = '';
+        for(var i = 0; i < imageData.length; i++ ) {
+            innerHtml += '<div data-p="112.50">';
+            innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
+            if(imageData[i].thumb) {
+                innerHtml += '<img data-u="thumb" src="' + imageData[i].thumb + '" />';
+            }
+            innerHtml += '</div>';
+        }
+        slides.html(innerHtml);
+
+        var jssorObject1 = new $JssorSlider$(container.attr("id"), jssorOptions);
+
+        function ScaleSlider1() {
+            var refSize = jssorObject1.$Elmt.parentNode.clientWidth;
+            if (refSize) {
+                refSize = Math.min(refSize, 770);
+                jssorObject1.$ScaleWidth(refSize);
+            }
+            else {
+                window.setTimeout(ScaleSlider1, 30);
+            }
+        }
+
+        ScaleSlider1();
+        $Jssor$.$AddEvent(window, "load", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "resize", ScaleSlider1);
+        $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider1);
+
+    }
+
+    //initiating jQuery
+    jQuery(function($) {
+        $(document).ready( function() {
+            // 为 '.navbar-wrapper' class 启用stickUp插件
+            $('.detail-nav-wrap').stickUp({
+                parts: {
+                    0:'top',
+                    1: 'detail',
+                    2:'term',
+                    3: 'map'},
+                itemClass: 'menu-item',
+                itemHover: 'active' });
+        });
+    });
+
+</script>

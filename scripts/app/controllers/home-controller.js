@@ -104,8 +104,8 @@ define(['app/services/banner-service',
                 };
                 $scope.showActivitiesMainPage = function(){
                     $cookieStore.put('forDestination', {
-                        ProductId:$scope.currentDestination.ProductId,
-                        Name:$scope.currentDestination.Name
+                        ProductId:$scope.currentActivitiesDestination.ProductId,
+                        Name:$scope.currentActivitiesDestination.Name
                     });
                     $location.url("/activities/"+$scope.languageId, true);
                 };
