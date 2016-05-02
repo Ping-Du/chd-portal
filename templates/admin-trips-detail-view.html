@@ -148,10 +148,10 @@
                             <tr data-ng-repeat="doc in trip.DocTypes">
                                 <td>{{doc.Name}}</td>
                                 <td>
-                                    <select class="form-control-sm" data-ng-model="trip.DocTypes[$index].type">
-                                        <option>pdf</option>
-                                        <option>html</option>
-                                    </select>
+                                    <!--<select class="form-control-sm" data-ng-model="trip.DocTypes[$index].type">-->
+                                        <!--<option>pdf</option>-->
+                                        <!--<option>html</option>-->
+                                    <!--</select>-->
                                     <a href data-ng-click="showDocument(doc)">Show Document</a>
                                 </td>
                                 <td>
@@ -162,6 +162,9 @@
                             </tr>
                             </tbody>
                         </table>
+                        <br>
+                        <div data-ng-bind-html="docContent">
+                        </div>
                     </div>
                 </uib-tab>
         </div>

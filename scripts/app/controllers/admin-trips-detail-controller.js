@@ -63,11 +63,10 @@ define(['app/services/account-service',
                 $scope.showDocument = function(docItem) {
                     var url = SessionService.config().apiRoot + docItem.RetrieveUri.substring(1).replace(/%7BformatId%7D/,docItem.type);
                     url = url.replace(/\/\//, '/');
-                    $window.open(url, '');
-                    //var url = docItem.RetrieveUri.replace(/%7BformatId%7D/,docItem.type);
-                    //DocumentService.getDocByUrl(url).then(function(data){
-                    //    $scope.docContent = data;
-                    //});
+                    var url = docItem.RetrieveUri.replace(/%7BformatId%7D/,'html');
+                    DocumentService.getDocByUrl(url).then(function(data){
+                        $scope.docContent = data;
+                    });
                 };
 
                 $scope.sendDocument = function(docItem) {

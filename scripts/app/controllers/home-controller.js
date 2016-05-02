@@ -6,15 +6,22 @@ define(['app/services/banner-service',
     'use strict';
 
     modules.controllers
-        .controller("HomeController", ['$rootScope', '$scope', 'SessionService',
+        .controller("HomeController", ['$rootScope', '$scope', '$cookieStore', 'SessionService',
             'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService',
-            function ($rootScope, $scope, SessionService, BannerService, DestinationService, HotelService, ServicesService, $log, $location, LanguageService) {
+            function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService, $log, $location, LanguageService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
                 }
+                $scope.languageId = SessionService.languageId();
+                $scope.$on('LanguageChanged', function (event, data) {
+                    if ($scope.languageId != data) {
+                        $scope.languageId = data;
+                        load();
+                    }
+                });
 
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.slide = {
@@ -22,7 +29,6 @@ define(['app/services/banner-service',
                     noWrapSlides: false
                 };
                 $scope.banners = [];
-
                 function loadBanners() {
                     BannerService.getBannersByLanguageId().then(function (data) {
                         var array = [];
@@ -51,41 +57,64 @@ define(['app/services/banner-service',
                     DestinationService.getTopDestinations().then(function (data) {
                         $scope.destinations = data;
                         initSlider(fillSlideData(data));
+                        $scope.loadHotels(data[0]);
+                        $scope.loadActivities(data[0]);
                     });
                 }
 
                 $scope.hotels = [];
-                function loadHotels() {
-                    HotelService.getTopHotels().then(function(data){
-                        $scope.hotels = data;
+                $scope.currentHotelsDestination = null;
+                $scope.loadHotels = function(destination) {
+                    if(destination == $scope.currentHotelsDestination)
+                        return;
+                    $scope.hotels = [];
+                    $scope.currentHotelsDestination = destination;
+                    HotelService.getTopHotelsByDestinationId($scope.currentHotelsDestination.ProductId).then(function(data){
+                        $scope.hotels = _.first(data, 3);
                         _.each($scope.hotels, function(item, index) {
                             item.DetailsURI = 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
                             item.starClass = "icon-star-" + (item.StarRating * 10);
                         });
                     });
-                }
+                };
+
+                $scope.showHotelMainPage = function(){
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentHotelsDestination.ProductId,
+                        Name:$scope.currentHotelsDestination.Name
+                    });
+                    $location.url("/"+$scope.languageId, true);
+                };
 
                 $scope.activities = [];
-                function loadActivities() {
-                    ServicesService.getTopActivities().then(function(data) {
-                        $scope.activities = data;
-                    });
-                }
+                $scope.currentActivitiesDestination = null;
+                $scope.loadActivities = function(destination) {
+                    if(destination == $scope.currentActivitiesDestination)
+                        return;
 
-                $scope.languageId = SessionService.languageId();
+                    $scope.activities = [];
+                    $scope.currentActivitiesDestination = destination;
+                    ServicesService.getTopActivitiesByDestinationId($scope.currentActivitiesDestination.ProductId).then(function(data) {
+                        $scope.activities = _.first(data, 3);
+                        _.each($scope.activities, function(item){
+                            item.DetailsURI = 'services.html#/activities/'+item.ProductId+'/'+$scope.languageId;
+                            //item.starClass = "icon-star-" + (item.StarRating * 10);
+                        });
+                    });
+                };
+                $scope.showActivitiesMainPage = function(){
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentDestination.ProductId,
+                        Name:$scope.currentDestination.Name
+                    });
+                    $location.url("/activities/"+$scope.languageId, true);
+                };
+
+
                 function load() {
                     loadBanners();
                     loadDestinations();
-                    loadHotels();
-                    loadActivities();
                 }
-
-                $scope.$on('LanguageChanged', function (event, data) {
-                    if ($scope.languageId != data) {
-                        $scope.languageId = data;
-                        load();
-                    }
-                });
 
                 load();
 

@@ -141,15 +141,15 @@
                 </script>
             </section>
 
-            <section class="thumbnail-part" data-ng-show="hotels.length > 0">
+            <section class="thumbnail-part" >
                 <header class="header-container">
                     <div class="title position"><i class="icon-building"></i>
 
                         <h2>{{"HOTEL"|translate}}</h2></div>
-                    <div class="head-menu text-right">
-                        <a data-ng-href="hotels.html#/{{languageId}}">{{"MORE"|translate}}</a>
+                    <div class="head-menu">
                         <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
-                        <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
+                        <a href data-ng-repeat="item in destinations" data-ng-click="loadHotels(item)" data-ng-class="{active:(item == currentHotelsDestination)}">{{item.Name}}</a>
+                        <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} In '{{currentHotelsDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">
@@ -180,7 +180,7 @@
                 </div>
             </section>
 
-            <section class="thumbnail-part" data-ng-show="activities.length > 0">
+            <section class="thumbnail-part" >
                 <!--<div class="title">-->
                 <!--<i class="icon-show"></i>-->
                 <!--<h2>{{"SHOW"|translate}}</h2>-->
@@ -189,10 +189,9 @@
                     <div class="title position"><i class="icon-show"></i>
 
                         <h2>{{"ACTIVITIES"|translate}}</h2></div>
-                    <div class="head-menu text-right">
-                        <a data-ng-href="services.html#/activities/{{languageId}}">{{"MORE"|translate}}</a>
-                        <!--<a data-ng-href="services.html#/shows/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
-                        <!--<a data-ng-repeat="item in destinations" data-ng-href="hotels.html#/destination/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>-->
+                    <div class="head-menu">
+                        <a href data-ng-repeat="item in destinations" data-ng-click="loadActivities(item)" data-ng-class="{active:(item == currentActivitiesDestination)}">{{item.Name}}</a>
+                        <a href style="float:right" data-ng-click="showActivitiesMainPage()">{{"MORE"|translate}} In '{{currentActivitiesDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">
