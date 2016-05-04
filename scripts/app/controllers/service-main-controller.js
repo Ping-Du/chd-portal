@@ -57,8 +57,24 @@ define(['app/services/services-service',
                         $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
                     });
                 }
-
                 $scope.filterByLocation = function (id) {
+                    fillServices();
+                };
+
+                $scope.types = [{
+                    id:'ATTAD',
+                    name:'Activity'
+                },{
+                    id:'DINE',
+                    name:'Dining'
+                },{
+                    id:'SHOW',
+                    name:'Show'
+                }];
+                $scope.selectedType = null;
+                $scope.showTypeFilter = (serviceType == 'activities');
+                $scope.filterByType = function(typeId) {
+                    $scope.selectedType = typeId;
                     fillServices();
                 };
 
@@ -95,6 +111,7 @@ define(['app/services/services-service',
                         var locationed = (item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
+                        var typed = (item.ServiceType.Id == $scope.selectedType || $scope.selectedType == null);
                         if(!priced || !available) {
                             if(_.find(item.AvailabilityCategories, function(category){
                                     if(!priced && !available)
@@ -110,7 +127,7 @@ define(['app/services/services-service',
                                 available = true;
                             }
                         }
-                        if(locationed && priced && available) {
+                        if(locationed && priced && available && typed) {
                             if(item.Featured)
                                 $scope.featuredServices.push(item);
                             else

@@ -4,7 +4,7 @@ define(['app/services/session-service'], function (modules) {
         .service('DocumentService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
             function invoke(url, method, data, headers) {
                 var deferred = $q.defer();
-                var newUrl = url.replace(/\/documentation/, '');
+                var newUrl = url.replace(/\/tracelink\/documentation/i, '');
                 $http({
                     method: method,
                     url: ( SessionService.config().apiRoot + 'documentation' + newUrl),
@@ -38,8 +38,8 @@ define(['app/services/session-service'], function (modules) {
                 getDocByUrl: function(url) {
                     return invoke(url, 'GET');
                 },
-                sendDocByUrl:function(url) {
-                    return invoke(url, 'POST');
+                sendDocByUrl:function(url, data) {
+                    return invoke(url, 'POST', data);
                 }
             };
         }]);

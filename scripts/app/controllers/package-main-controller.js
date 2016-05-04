@@ -78,9 +78,9 @@ define(['app/services/package-service',
                         var locationed = true; //(item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         if(typed && locationed && priced && available) {
                             if(item.Featured)
-                                $scope.featuredHotels.push(item);
+                                $scope.featuredPackages.push(item);
                             else
-                                $scope.showHotels.push(item);
+                                $scope.showPackages.push(item);
                         }
                     });
                 }

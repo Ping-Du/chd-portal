@@ -1,11 +1,12 @@
 define(['app/services/destination-service',
-    'app/directives/datepicker-directive'], function (modules) {
+    'app/directives/datepicker-directive',
+    'app/services/group-service'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller("GroupController", ['$rootScope', '$scope', 'SessionService',
-            'DestinationService', '$log', '$location', 'LanguageService',
-            function ($rootScope, $scope, SessionService, DestinationService, $log, $location, LanguageService) {
+        .controller("GroupController", ['_','$rootScope', '$scope', 'SessionService',
+            'DestinationService', '$log', '$location', 'LanguageService','GroupService','$window',
+            function (_, $rootScope, $scope, SessionService, DestinationService, $log, $location, LanguageService, GroupService, $window) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -82,7 +83,38 @@ define(['app/services/destination-service',
                     if ($scope.group.star === undefined)
                         $scope.group.star = 0;
                     if ($scope.group_form.$valid) {
-                        // invoke api
+                        var destinations = [];
+                        var services = [];
+                        _.each($scope.group.destinations, function(item){
+                            if(item.selected) {
+                                destinations.push(item.name);
+                            }
+                        });
+                        if($scope.group.otherDestinations != '') {
+                            destinations.push($scope.group.otherDestinations);
+                        }
+                        _.each($scope.group.services, function(item){
+                            if(item.selected) {
+                                services.push(item.name);
+                            }
+                        });
+                        if($scope.group.otherServices != '') {
+                            services.push($scope.group.otherServices);
+                        }
+                        GroupService.getQuote({
+                            Adults:$scope.group.adults,
+                            Children:$scope.group.children,
+                            DepartureDate:$scope.group.startDate+'T00:00:00.000Z',
+                            Nights:$scope.group.nights,
+                            Destinations:destinations,
+                            Services:services,
+                            MinimumStarRating:$scope.group.star,
+                            ContactAddresses:["" + $scope.group.email]
+                        }).then(function(data){
+                            $window.alert('Group Information has been submitted successfully!');
+                        }, function(data){
+                            $window.alert('Submit failed, please try later!');
+                        });
                     } else {
                         $scope.group_form.submitted = true;
                     }

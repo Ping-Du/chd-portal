@@ -61,8 +61,8 @@ define(['app/services/account-service',
                 $scope.docTypes = null;
                 $scope.docContent = null;
                 $scope.showDocument = function(docItem) {
-                    var url = SessionService.config().apiRoot + docItem.RetrieveUri.substring(1).replace(/%7BformatId%7D/,docItem.type);
-                    url = url.replace(/\/\//, '/');
+                    //var url = SessionService.config().apiRoot + docItem.RetrieveUri.substring(1).replace(/%7BformatId%7D/,docItem.type);
+                    //url = url.replace(/\/\//, '/');
                     var url = docItem.RetrieveUri.replace(/%7BformatId%7D/,'html');
                     DocumentService.getDocByUrl(url).then(function(data){
                         $scope.docContent = data;
@@ -70,7 +70,18 @@ define(['app/services/account-service',
                 };
 
                 $scope.sendDocument = function(docItem) {
-                    DocumentService.sendDocByUrl(docItem.SendUri).then(function(data){
+
+                    if(docItem.selectedAddress == null && docItem.otherAddress == '') {
+                        return;
+                    }
+                    var list = [];
+                    if(docItem.selectedAddress) {
+                        list.push(docItem.selectedAddress.EmailAddress);
+                    }
+                    if(docItem.otherAddress != '') {
+                        list.push(docItem.otherAddress);
+                    }
+                    DocumentService.sendDocByUrl(docItem.SendUri, list).then(function(data){
                        $window.alert('Request for sending document to your email address has been submitted!');
                     }, function(){
                         $window.alert('There is an error when sending request!');
@@ -81,7 +92,22 @@ define(['app/services/account-service',
                     TripService.getTripDetail($routeParams.tripId, true).then(function(data){
                         $scope.trip = data;
                         modules.angular.forEach($scope.trip.DocTypes, function(item){
-                            item.type = 'pdf';
+                            item.otherAddress = '';
+                            item.addresses = null;
+                            item.selectedAddress = null;
+                            var type = null;
+                            if(item.SendUri.indexOf('voucher') >= 0)
+                                type = 'voucher';
+                            else if(item.SendUri.indexOf('receipt') >= 0)
+                                type = 'receipt';
+                            else if(item.SendUri.indexOf('invoice') >= 0)
+                                type = 'invoice';
+
+                            if(type != null) {
+                                DocumentService.getEmailAddress($routeParams.tripId, type).then(function(data){
+                                    item.addresses = data;
+                                });
+                            }
                         });
                         if($scope.trip.Status == 'Booked') {
                             $scope.showCancelBtn = true;

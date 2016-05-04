@@ -78,7 +78,7 @@
                     <a href data-ng-class="{'active':selectedPrice==null}"
                        data-ng-click="filterByPrice(null)">All</a>
                     <a href data-ng-repeat="item in prices | orderBy:'+Id':false"
-                       data-ng-class="{'active':selectedType==item.Id}"
+                       data-ng-class="{'active':selectedPrice==item.Id}"
                        data-ng-click="filterByPrice(item.Id)">{{item.Name}}</a>
                 </dd>
             </dl>

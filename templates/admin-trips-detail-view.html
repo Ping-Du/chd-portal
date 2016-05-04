@@ -154,9 +154,14 @@
                                     <!--</select>-->
                                     <a href data-ng-click="showDocument(doc)">Show Document</a>
                                 </td>
-                                <td>
+                                <td class="form-inline">
                                     <!--<a href data-ng-click="showDocument(doc)">Show Document</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-                                    <a href data-ng-click="sendDocument(doc)">Send To Me</a>
+                                    Send To <select class="form-control" style="width:200px;" data-ng-model="trip.DocTypes[$index].selectedAddress"
+                                            data-ng-options="e.EmailAddress for e in doc.addresses"></select> Or <input type="text" class="form-control"
+                                                                                   style="width:200px;"
+                                                                                   data-ng-model="trip.DocTypes[$index].otherAddress"
+                                                                                   placeholder="example@example.com">
+                                    <input type="button" class="btn btn-sm btn-info" data-ng-click="sendDocument(doc)" value="Send">
                                 </td>
                             </tr>
                             </tr>

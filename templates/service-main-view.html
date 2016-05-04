@@ -40,8 +40,18 @@
 </form>
 <div class="container-bg container-padding">
     <div class="container">
-        <div class="filter-box" data-ng-show="prices.length > 0">
-            <dl class="filter-item">
+        <div class="filter-box" >
+            <dl class="filter-item" data-ng-show="showTypeFilter">
+                <dt><i class="icon-directions_bike"></i>&nbsp;{{"TYPE"|translate}}</dt>
+                <dd>
+                    <a href data-ng-class="{'active':selectedType==null}"
+                       data-ng-click="filterByType(null)">All</a>
+                    <a href data-ng-repeat="item in types"
+                       data-ng-class="{'active':selectedType==item.id}"
+                       data-ng-click="filterByType(item.id)">{{item.name}}</a>
+                </dd>
+            </dl>
+            <dl class="filter-item" data-ng-show="prices.length > 0">
                 <dt><i class="icon-coin-dollar"></i>&nbsp;{{"PRICE"|translate}}</dt>
                 <dd>
                     <a href data-ng-class="{'active':selectedPrice==null}"
@@ -51,7 +61,7 @@
                        data-ng-click="filterByPrice(item.Id)">{{item.Name}}</a>
                 </dd>
             </dl>
-            <dl class="filter-item">
+            <dl class="filter-item" data-ng-show="prices.length > 0">
                 <dt><i class="icon-checkmark"></i>&nbsp;{{"AVAILABILITY"|translate}}</dt>
                 <dd>
                     <div style="display: inline;"><input type="checkbox" data-ng-model="onlyAvailable" data-ng-change="filterByAvailable()">&nbsp;{{"AVAILABLE"|translate}}</div>
