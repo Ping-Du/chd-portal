@@ -546,6 +546,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             }
                             $scope.bookDisabled = true;
                         }
+
+                        // test on live
+                        p.PaymentInfo = null;
+
                         ShoppingService.book(p).then(function(data){
                             ShoppingService.removeAll();
                             $scope.bookDisabled = true;

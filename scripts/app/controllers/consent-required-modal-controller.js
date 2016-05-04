@@ -57,7 +57,7 @@ define(['app/services/shopping-service'], function (modules) {
                 $scope.required = ($scope.message != '' || $scope.onRequest);
 
                 $scope.isService = (product.ProductType == 'OPT');
-                $scope.serviceTime = '';
+                //$scope.serviceTime = '';
                 $scope.pickupPoint = '';
                 $scope.dropoffPoint = '';
                 $scope.product = product;
@@ -75,7 +75,7 @@ define(['app/services/shopping-service'], function (modules) {
                     if($scope.isService) {
                         product.PickupPoint = $scope.pickupPoint;
                         product.dropoffPoint = $scope.dropoffPoint;
-                        product.AvailabilityCategories[index].ServiceTime = $scope.serviceTime;
+                        //product.AvailabilityCategories[index].ServiceTime = $scope.serviceTime;
                     }
                     $uibModalInstance.close('ok');
                 };

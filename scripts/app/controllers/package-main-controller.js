@@ -229,7 +229,7 @@ define(['app/services/package-service',
                         }
 
                         var param = {
-                            PackageType:null,
+                            PackageType:'MCH',
                             ProductId:null,
                             DestinationId:$scope.selectedLocation,
                             LanguageId:$scope.languageId,

@@ -3,14 +3,15 @@ define(['app/services/hotel-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
     'app/services/search-service',
+    'app/services/destination-service',
     'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('HotelMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'HotelService', 'LanguageService', '$translate', '$cookieStore', '$filter','SearchService','$timeout','$routeParams',
+            'HotelService', 'LanguageService', '$translate', '$cookieStore', '$filter','SearchService','$timeout','$routeParams','DestinationService',
             function (_, $rootScope, $scope, $location, SessionService, HotelService, LanguageService, $translate, $cookieStore, $filter, SearchService,
-                      $timeout, $routeParams) {
+                      $timeout, $routeParams, DestinationService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -32,16 +33,18 @@ define(['app/services/hotel-service',
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
                     SearchService.getLocations().then(function(data){
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        //var dest = _.find(data, function(item){
-                        //    return item.ProductId == $routeParams.locationId;
-                        //});
-                        //if(dest) {
-                        //    $scope.selectedLocation = dest.ProductId;
-                        //    $scope.selectedLocationName = dest.Name;
-                        //}
-                    });
+                    //DestinationService.getDestinationsByLanguageId().then(function(data){
+                            $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                            //var dest = _.find(data, function(item){
+                            //    return item.ProductId == $routeParams.locationId;
+                            //});
+                            //if(dest) {
+                            //    $scope.selectedLocation = dest.ProductId;
+                            //    $scope.selectedLocationName = dest.Name;
+                            //}
+                        });
                 }
+
 
                 $scope.selectedStar = null;
                 $scope.stars = [];

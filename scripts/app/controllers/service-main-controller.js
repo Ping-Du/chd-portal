@@ -108,7 +108,7 @@ define(['app/services/services-service',
                     $scope.featuredServices = [];
                     $scope.showServices = [];
                     _.each($scope.allServices, function (item, key) {
-                        var locationed = (item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
+                        var locationed = true; //(item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
                         var typed = (item.ServiceType.Id == $scope.selectedType || $scope.selectedType == null);
