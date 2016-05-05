@@ -122,19 +122,21 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                     adults++;
                                     if (i == 0) {
                                         addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
+                                    }
                                         $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
                                         if (k == 0)
                                             $scope.bookingInfo.Hotels[i].Rooms[j].Guests.PrimaryGuestId = guestId;
                                         guestId++;
-                                    }
+
                                 }
                                 else {
                                     minors++;
                                     if (i == 0) {
                                         addEmptyGuest(guestId, false, room.Guests[k].Age, false);
+                                    }
                                         $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
                                         guestId++;
-                                    }
+                                    //}
                                 }
                             }
                             room.guestsInfo = adults + " adult(s) " + minors + ' minor(s)';
@@ -399,6 +401,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         Services: []
                     };
                     var i, j;
+                    var hasPrimaryGuest = false;
                     for(i = 0; i < $scope.bookingInfo.Guests.length; i++) {
                         var g = $scope.bookingInfo.Guests[i];
                         param.Guests.push({
@@ -408,8 +411,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             Title: g.Title,
                             Phone: g.Phone,
                             Age: (g.Adult?null:parseInt(g.Age)),
-                            PrimaryGuest: g.PrimaryGuest
+                            PrimaryGuest: (g.PrimaryGuest && !hasPrimaryGuest)
                         });
+                        if(g.PrimaryGuest && !hasPrimaryGuest) {
+                            hasPrimaryGuest = true;
+                        }
                     }
                     for(i = 0; i < $scope.bookingInfo.Hotels.length; i++) {
                         var h = $scope.bookingInfo.Hotels[i];

@@ -61,6 +61,7 @@ define(['app/services/shopping-service'], function (modules) {
                 $scope.pickupPoint = '';
                 $scope.dropoffPoint = '';
                 $scope.product = product;
+                $scope.hasTransport = product.HasTransport;
 
                 if($scope.isService) {
                     if(product.PickupPoints.length > 0) {
