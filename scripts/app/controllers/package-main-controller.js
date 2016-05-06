@@ -39,6 +39,8 @@ define(['app/services/package-service',
                 $scope.selectedType = null;
                 $scope.types = [];
                 function fillTypes(value) {
+                    if(value == null)
+                        return;
                     if(!_.find($scope.types, function(item){
                             return item.Id == value.Id;
                         })){
@@ -57,7 +59,11 @@ define(['app/services/package-service',
                     $scope.featuredPackages = [];
                     $scope.showPackages = [];
                     _.each($scope.allPackages, function(item, key){
-                        var typed = (item.PackageType.Id == $scope.selectedType || $scope.selectedType == null) ;
+
+                        var typed = true;
+                        if(item.PackageType)
+                            typed = (item.PackageType.Id == $scope.selectedType || $scope.selectedType == null) ;
+                        
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
                         if(!priced || !available) {
@@ -116,9 +122,17 @@ define(['app/services/package-service',
                         item.DetailsURI = 'packages.html#/'+item.ProductId+'/'+$scope.languageId;
                         fillTypes(item.PackageType);
                         if(item.AvailabilityCategories){
+                            var minPrice = 0;
+                            var maxPrice = 0;
                             _.each(item.AvailabilityCategories, function(category, index){
                                 fillPrices(category.Price);
+                                if(category.Price < minPrice || minPrice == 0)
+                                    minPrice = category.Price;
+                                if(category.Price > maxPrice) {
+                                    maxPrice = category.Price;
+                                }
                             });
+                            item.price = makePriceString(minPrice, maxPrice);
                         }
                     });
                 }
@@ -153,7 +167,6 @@ define(['app/services/package-service',
                     PackageService.getAvailability(param).then(function(data){
                         fillAllPackages(data);
                         fillPackages();
-                        //$loading.finish('main');
                     },function(){
                         //$loading.finish('main');
                     });
@@ -229,7 +242,7 @@ define(['app/services/package-service',
                         }
 
                         var param = {
-                            PackageType:'MCH',
+                            PackageType:null,
                             ProductId:null,
                             DestinationId:$scope.selectedLocation,
                             LanguageId:$scope.languageId,

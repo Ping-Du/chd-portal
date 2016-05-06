@@ -77,15 +77,22 @@
                 <div class="service-detail-info">
                     <span class="caption">{{packageItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
-                <br/>
+                <div class="row" data-ng-show="packageItem.AvailabilityCategories[0].Price">
+                    <div class="price-btn-part">
+                        <div class="col-xs-6 col-md-6 ">
+                            <h2><span class="text-red">${{packageItem.AvailabilityCategories[0].Price}}</span></h2>
+                        </div>
+                        <div class="col-xs-6 col-md-6 text-right">
+                            <a href class="btn btn-red" data-ng-click="addToShoppingCart()">Add To Cart</a></div>
+                    </div>
+                </div>
+                <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
                 <div class="row tab-list">
                     <div class="col-xs-12 col-md-12 text-red" data-ng-show="packageItem.Price">${{packageItem.Price}}</div>
                     <div class="col-xs-6 col-md-6"> <span>ID: </span>{{packageItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"> <span>Type: </span>{{packageItem.PackageType.Name}}</div>
                     <div class="col-xs-12 col-md-12"> <span>Location: </span>{{packageItem.Location.Name}}</div>
                 </div>
-                <br/>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                 <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
@@ -96,14 +103,8 @@
                     <a href onclick="scrollToControl('term')"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Terms</a>
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
                     <br><br>
-                    <a href onclick="scrollToControl('hotel')" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Hotels</a>
-                    <a href onclick="scrollToControl('service')" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Services</a>
-                </div>
-                <div class="row" data-ng-show="packageItem.Price">
-                    <div class="price-btn-part">
-                        <div class="col-xs-12 col-md-12 text-right">
-                            <a href class="btn btn-red">Add To Cart</a></div>
-                    </div>
+                    <a href onclick="scrollToControl('hotel')" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Hotels</a>
+                    <a href onclick="scrollToControl('service')" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Services</a>
                 </div>
             </section>
         </div>
@@ -112,8 +113,8 @@
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('detail')">Detail</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0"><a href onclick="scrollToControl('service')">Services</a></li>
+                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
+                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0"><a href onclick="scrollToControl('service')">Services</a></li>
                     <li class="menu-item" ><a href onclick="scrollToControl('term')">Terms</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
@@ -127,7 +128,7 @@
                 <p data-ng-bind-html="packageItem.AdditionalInformation[1].FormattedText"></p>
             </div>
         </section>
-        <section class="detail-wrap" id="hotel" data-ng-show="packageItem.AvailabilityCategories.Hotels.length > 0">
+        <section class="detail-wrap" id="hotel" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0">
             <h3>Hotels</h3>
             <div class="content">
                 <div class="table-content">
@@ -137,27 +138,26 @@
                             <tr class="thead">
                                 <td>Name</td>
                                 <td class="tlist-4">Location</td>
-                                <td class="tlist-2">Address</td>
-                                <td class="tlist-4"></td>
+                                <td class="tlist-2">Start Date</td>
+                                <td class="tlist-4">Nights</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories.Hotels" >
+                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories[0].Hotels" >
                                 <td>
                                     <div class="media media-roomlist">
                                         <div class="media-left media-middle">
-                                            <img class="media-object" src="item.MainInformation.ThumbnailImageURI">
+                                            <img class="media-object" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
                                         </div>
                                         <div class="media-body">
                                             <h5 class="media-heading">{{item.Name}}</h5>
-                                            <p><i data-ng-class="starClass"></i></p>
-                                            <p class="p-detail"><strong>ID:</strong>{{item.Id}}&nbsp;&nbsp;<strong>Type:</strong>{{item.HotelType.Name}}</p>
+                                            <p class="p-detail"><strong>ID:</strong>{{item.ProductId}}&nbsp;&nbsp;<strong>Type:</strong>{{item.HotelType.Name}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{item.Location.Name}}</td>
-                                <td>{{item.Address1}}</td>
-                                <td><button type="button" class="btn btn-default btn-red">View Detail</button></td>
+                                <td>{{item.StartDate|limitTo:10}}</td>
+                                <td>{{item.Nights}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -166,7 +166,7 @@
                 </div>
             </div>
         </section>
-        <section class="detail-wrap" id="service" data-ng-show="packageItem.AvailabilityCategories.Services.length > 0">
+        <section class="detail-wrap" id="service" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0">
             <h3>Services</h3>
             <div class="content">
                 <div class="table-content">
@@ -176,26 +176,24 @@
                             <tr class="thead">
                                 <td>Name</td>
                                 <td class="tlist-4">Location</td>
-                                <td class="tlist-2">Address</td>
-                                <td class="tlist-4"></td>
+                                <td class="tlist-2">Start Date</td>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories.Services" >
+                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories[0].Services" >
                                 <td>
                                     <div class="media media-roomlist">
                                         <div class="media-left media-middle">
-                                            <img class="media-object" src="item.MainInformation.ThumbnailImageURI">
+                                            <img class="media-object" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
                                         </div>
                                         <div class="media-body">
                                             <h5 class="media-heading">{{item.Name}}</h5>
-                                            <p class="p-detail"><strong>ID:</strong>{{item.Id}}&nbsp;&nbsp;<strong>Type:</strong>{{item.ServiceType.Name}}</p>
+                                            <p class="p-detail"><strong>ID:</strong>{{item.ProductId}}&nbsp;&nbsp;<strong>Type:</strong>{{item.ServiceType.Name}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{{item.Location.Name}}</td>
-                                <td>{{item.Address1}}</td>
-                                <td><button type="button" class="btn btn-default btn-red">View Detail</button></td>
+                                <td>{{item.StartDate|limitTo:10}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -282,8 +280,10 @@
                 parts: {
                     0:'top',
                     1: 'detail',
-                    2:'term',
-                    3: 'map'},
+                    2:'hotel',
+                    3:'service',
+                    4:'term',
+                    5: 'map'},
                 itemClass: 'menu-item',
                 itemHover: 'active' });
         });

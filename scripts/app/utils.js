@@ -124,6 +124,10 @@ function DayDiff(startDate, endDate) {
     return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
 }
 
+function addDays(startDate, days) {
+    return new Date(startDate.valueOf() + days * 24* 3600000);
+}
+
 function makePriceString(lowPrice, highPrice) {
 
     if(lowPrice == highPrice)

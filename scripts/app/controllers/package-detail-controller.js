@@ -148,8 +148,8 @@ define(['app/services/package-service',
 
                     PackageService.getAvailability(param).then(function (data) {
 
-                        _.each(data.AvailabilityCategories.Hotels, function(item, index){
-                            item.starClass = 'icon-star-' + (item.StarRating * 10);
+                        _.each(data[0].AvailabilityCategories[0].Hotels, function(item, index){
+                            //item.starClass = 'icon-star-' + (item.StarRating * 10);
                         });
 
                         //data.HotelPrice = 0;
@@ -176,7 +176,7 @@ define(['app/services/package-service',
                 };
 
                 $scope.addToShoppingCart = function () {
-                    $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem);
+                    $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, 0);
                 };
 
                 $scope.load = function(reload) {

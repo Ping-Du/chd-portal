@@ -57,6 +57,7 @@ define(['app/services/shopping-service'], function (modules) {
                 $scope.required = ($scope.message != '' || $scope.onRequest);
 
                 $scope.isService = (product.ProductType == 'OPT');
+                $scope.isPackage = (product.ProductType == 'PKG');
                 //$scope.serviceTime = '';
                 $scope.pickupPoint = '';
                 $scope.dropoffPoint = '';

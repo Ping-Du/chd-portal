@@ -59,6 +59,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     },
                     Hotels: [],
                     Services: [],
+                    Packages:[],
                     Adults: 0,
                     Minors: 0,
                     HotelPrice: 0,

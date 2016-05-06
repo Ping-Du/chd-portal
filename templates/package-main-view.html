@@ -88,7 +88,7 @@
                             <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
                             <ul class="hotel">
                                 <li>{{item.PackageType.Name}}<br/>{{item.Location.Name}}</li>
-                                <li class="text-right price"><span>{{item.Price}}</span></li>
+                                <li class="text-right price"><span>{{item.price}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -115,8 +115,8 @@
                             <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name | limitTo:35}}</a></h3>
                             <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
                             <ul class="hotel">
-                                <li>{{item.HotelType.Name}}<br/>{{item.Location.Name}}</li>
-                                <li class="text-right price"><span>{{item.Price}}</span></li>
+                                <li>{{item.PackageType.Name}}<br/>{{item.Location.Name}}</li>
+                                <li class="text-right price"><span>{{item.price}}</span></li>
                             </ul>
                         </div>
                     </div>
