@@ -25,8 +25,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     $scope.open();
                 });
             }])
-        .controller('ShoppingCartModalInstanceController', ['$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService',
-            function ($rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService) {
+        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService',
+            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService) {
 
                 //function translate(key) {
                 //    $translate(key).then(function (translation) {
@@ -63,7 +63,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     Adults: 0,
                     Minors: 0,
                     HotelPrice: 0,
-                    ServicePrice: 0
+                    ServicePrice: 0,
+                    PackagePrice:0
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -85,7 +86,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     $scope.bookingInfo.Guests = [];
                     $scope.bookingInfo.Hotels = [];
                     $scope.bookingInfo.Services = [];
+                    $scope.bookingInfo.Packages = [];
                     var i, j, k;
+
                     for (i = 0; i < $scope.shoppingItems.hotels.length; i++) {
                         var hotel = $scope.shoppingItems.hotels[i].product;
                         var index = $scope.shoppingItems.hotels[i].index;
@@ -119,7 +122,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             });
                             var adults = 0, minors = 0;
                             for (k = 0; k < room.Guests.length; k++) {
-                                if (room.Guests[k].Type == 'ADULT') {
+                                if (room.Guests[k].Type == 'ADULT' && (room.Guests[k].Age >= 18 || room.Guests[k].Age == 0)) {
                                     adults++;
                                     if (i == 0) {
                                         addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
@@ -220,6 +223,83 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             serviceCategory.guestsInfo = serviceAdults + " adult(s) " + serviceMinors + ' minor(s)';
                         }
                     }
+
+                    for(i = 0; i < $scope.shoppingItems.packages.length; i++) {
+                        var pkg = $scope.shoppingItems.packages[i].product;
+                        var index = $scope.shoppingItems.packages[i].index;
+                        var category = pkg.AvailabilityCategories[index];
+                        var guestId = 1;
+                        $scope.bookingInfo.PackagePrice += category.Price;
+                        $scope.bookingInfo.Packages.push({
+                            TripItemId: 0,
+                            ProductType: pkg.ProductType,
+                            ProductId: pkg.ProductId,
+                            Name:pkg.Name,
+                            CategoryId: category.Id,
+                            CategoryName: category.Name,
+                            EndDate:category.EndDate,
+                            StartDate: category.StartDate,
+                            Note: '',
+                            AvailabilityLevel: category.AvailabilityLevel,
+                            Price: category.Price,
+                            Rooms: [],
+                            TransportationServices:[],
+                            Nights:category.Nights
+                        });
+                        for(j = 0; j < category.Services.length; j++) {
+                            $scope.bookingInfo.Packages[i].TransportationServices.push({
+                                //Sequence:(j+1),
+                                //ServiceTime:null,
+                                //TripItemId:null,
+                                Note:'',
+                                Guests: {
+                                    GuestIds: [],
+                                    PrimaryGuestId: 1
+                                },
+                                ProductType:category.Services[j].ProductType,
+                                ProductId:category.Services[j].ProductId,
+                                CategoryId:category.Services[j].Category.Id,
+                                PickupPoint:category.Services[j].PickupPoint,
+                                DropoffPoint:category.Services[j].DropoffPoint,
+                                AvailabilityLevel:category.Services[j].AvailabilityLevel,
+                                StartDate:category.Services[j].StartDate
+                            });
+                        }
+                        for (j = 0; j < category.Rooms.length; j++) {
+                            var room = category.Rooms[j];
+                            $scope.bookingInfo.Packages[i].Rooms.push({
+                                Guests: {
+                                    GuestIds: [],
+                                    PrimaryGuestId: 0
+                                },
+                                Price: room.Price
+                            });
+                            var adults = 0, minors = 0;
+                            for (k = 0; k < room.Guests.length; k++) {
+                                if (room.Guests[k].Type == 'ADULT' && (room.Guests[k].Age >= 18 || room.Guests[k].Age == 0)) {
+                                    adults++;
+                                    if (i == 0) {
+                                        addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
+                                    }
+                                    $scope.bookingInfo.Packages[i].Rooms[j].Guests.GuestIds.push(guestId);
+                                    if (k == 0)
+                                        $scope.bookingInfo.Packages[i].Rooms[j].Guests.PrimaryGuestId = guestId;
+                                    guestId++;
+
+                                }
+                                else {
+                                    minors++;
+                                    if (i == 0) {
+                                        addEmptyGuest(guestId, false, room.Guests[k].Age, false);
+                                    }
+                                    $scope.bookingInfo.Packages[i].Rooms[j].Guests.GuestIds.push(guestId);
+                                    guestId++;
+                                    //}
+                                }
+                            }
+                            category.guestsInfo = adults + " adult(s) " + minors + ' minor(s)';
+                        }
+                    }
                 }
 
                 $scope.cancel = function () {
@@ -238,13 +318,19 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     setButtons();
                 };
 
+                $scope.removePackage = function (index) {
+                    ShoppingService.removeItem('PKG', index);
+                    calculateInfo();
+                    setButtons();
+                };
+
                 $scope.activeTabIndex = 0;
                 $scope.showPreviousBtn = false;
                 $scope.showNextBtn = false;
 
                 function setButtons() {
                     $scope.showPreviousBtn = ($scope.activeTabIndex > 0);
-                    $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0));
+                    $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0  || $scope.bookingInfo.Packages.length > 0));
                 }
 
                 calculateInfo();
@@ -399,7 +485,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         Guests: [],
                         PaymentInfo: null,
                         Hotels: [],
-                        Services: []
+                        Services: [],
+                        Packages:[]
                     };
                     var i, j;
                     var hasPrimaryGuest = false;
@@ -441,7 +528,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             ServiceTime: s.ServiceTime,
                             PickupPoint: s.PickupPoint,
                             DropoffPoint: s.DropoffPoint,
-                           // TripItemId: (s.TripItemId==0?null: s.TripItemId),
+                            // TripItemId: (s.TripItemId==0?null: s.TripItemId),
                             ProductType: s.ProductType,
                             ProductId: s.ProductId,
                             CategoryId: s.CategoryId,
@@ -451,39 +538,39 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             Price: s.Price,
                             Guests: s.Guests
                         });
-
+                    }
+                    for(i = 0; i < $scope.bookingInfo.Packages.length; i++) {
+                        var pkg = $scope.bookingInfo.Packages[i];
+                        param.Packages.push({
+                            ProductType: pkg.ProductType,
+                            ProductId: pkg.ProductId,
+                            CategoryId: pkg.CategoryId,
+                            StartDate: pkg.StartDate,
+                            Note: pkg.Note,
+                            AvailabilityLevel: pkg.AvailabilityLevel,
+                            Price: pkg.Price,
+                            Rooms: pkg.Rooms,
+                            TransportationServices:pkg.TransportationServices
+                        });
+                        //for(j = 0; j < param.Packages[i].Rooms.length; j++) {
+                        //    param.Packages[i].Rooms[j].
+                        //}
+                        for(j = 0; j < param.Packages[i].TransportationServices.length; j++) {
+                            for(var k = 1; k <= param.Guests.length; k++) {
+                                param.Packages[i].TransportationServices[j].Guests.GuestIds.push(k);
+                            }
+                        }
                     }
                     if(paymentIncluded) {
                         var p = $scope.bookingInfo.PaymentInfo;
-                        var profile = getProfile(p.ProfileId);
-                        param.PaymentInfo = {
-                            ProfileID: (profile?p.ProfileId:null),
-                            PaymentMethod: (profile?profile.PaymentMethod: p.PaymentMethod),
-                            CreditCardInfo: (p.PaymentMethod == 'CreditCard'? p.CreditCardInfo:null),
-                            BankAccountInfo: (p.PaymentMethod == 'ECheck'? p.BankAccountInfo:null),
-                            SaveInProfile: p.SaveInProfile
-                        };
-
-                        //if(profile && !$scope.financeInfo.CardCodeRequired) {
-                        //    param.PaymentInfo.PaymentMethod = null;
-                        //    param.PaymentInfo.CreditCardInfo = null;
-                        //}
-                        //
-                        //if(profile && $scope.financeInfo.CardCodeRequired) {
-                        //    param.PaymentInfo.CreditCardInfo = {
-                        //        CardCode: p.CreditCardInfo.CardCode
-                        //    }
-                        //}
-                        //
-                        //if(param.PaymentInfo.CreditCardInfo != null) {
-                        //    if(param.PaymentInfo.CreditCardInfo.CardNumber == '')
-                        //        param.PaymentInfo.CreditCardInfo.CardNumber = null;
-                        //    if(param.PaymentInfo.CreditCardInfo.ExpirationMonth == 0)
-                        //        param.PaymentInfo.CreditCardInfo.ExpirationMonth = null;
-                        //    if(param.PaymentInfo.CreditCardInfo.ExpirationYear == 0)
-                        //        param.PaymentInfo.CreditCardInfo.ExpirationYear = null;
-                        //}
-
+                            var profile = getProfile(p.ProfileId);
+                            param.PaymentInfo = {
+                                ProfileID: (profile ? p.ProfileId : null),
+                                PaymentMethod: (profile ? profile.PaymentMethod : p.PaymentMethod),
+                                CreditCardInfo: (p.PaymentMethod == 'CreditCard' ? p.CreditCardInfo : null),
+                                BankAccountInfo: (p.PaymentMethod == 'ECheck' ? p.BankAccountInfo : null),
+                                SaveInProfile: p.SaveInProfile
+                            };
                     }
                     return param;
                 }
@@ -555,7 +642,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         }
 
                         // test on live
-                        p.PaymentInfo = null;
+                        if(p.PaymentInfo.PaymentMethod == '')
+                            p.PaymentInfo = null;
 
                         ShoppingService.book(p).then(function(data){
                             ShoppingService.removeAll();
@@ -577,7 +665,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         $scope.financeInfo = data;
                         $scope.financeInfo.Profiles.unshift({
                             ProfileID:null,
-                            PaymentMethod: "CreditCard",
+                            PaymentMethod: '',
                             Description:'Please select'
                         });
                         //$scope.selectedProfile = data.Profiles[0];
@@ -593,7 +681,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     for(i = 0; i < 12; i++) {
                         $scope.months.push(1+i);
                     }
-                    loadFinanceInfo();
+                    //loadFinanceInfo();
                 }
 
                 load();

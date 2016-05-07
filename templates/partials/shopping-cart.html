@@ -91,6 +91,37 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div data-ng-show="shoppingItems.packages.length > 0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>Package Name</td>
+                                            <td>Type</td>
+                                            <td style="width:100px;">Start Date</td>
+                                            <td style="width:100px;">End Date</td>
+                                            <td>Price</td>
+                                            <td>Guests</td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-ng-repeat="package in shoppingItems.packages"
+                                            style="vertical-align: middle;">
+                                            <td>{{package.product.Name}}</td>
+                                            <td>{{package.product.PackageType.Name}}</td>
+                                            <td>{{package.product.AvailabilityCategories[package.index].StartDate | limitTo:10 }}</td>
+                                            <td>{{package.product.AvailabilityCategories[package.index].EndDate | limitTo:10 }}</td>
+                                            <td style="color:red">
+                                                ${{package.product.AvailabilityCategories[package.index].Price}}
+                                            </td>
+                                            <td>{{package.product.AvailabilityCategories[package.index].guestsInfo}}
+                                            </td>
+                                            <td><a href data-ng-click="removePackage($index)"><i
+                                                    class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </uib-tab>
                         <uib-tab index="1" heading="Names & Details" active="tabs[1].active" disable="tabs[1].disabled">
@@ -244,6 +275,37 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div data-ng-repeat="package in bookingInfo.Packages" data-ng-show="shoppingItems.packages.length > 0">
+                                    <p style="color: #e32b19;font-weight: bold;">Package - {{package.Name}}</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr style="font-weight: bold;">
+                                            <td>Room #</td>
+                                            <td>Nights</td>
+                                            <td>Price</td>
+                                            <td>Lead Guest</td>
+                                            <td>All Guests</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-ng-repeat="room in package.Rooms">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{package.Nights}}</td>
+                                            <td style="color:red">${{room.Price}}</td>
+                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId"
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                            </td>
+                                            <td>
+                                                <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
+                                                    <select class="form-control"
+                                                            data-ng-model="room.Guests.GuestIds[$index]"
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
@@ -270,10 +332,18 @@
                                         limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Time: {{service.ServiceTime}}&nbsp;&nbsp;&nbsp;&nbsp;Price:
                                         ${{service.Price}}</p>
                                 </div>
+                                <div data-ng-show="bookingInfo.Packages.length > 0">
+                                    <hr>
+                                    <strong>Packages - Sub Total: ${{bookingInfo.PackagePrice}}</strong>
+                                    <p data-ng-repeat="package in bookingInfo.Packages">Name: {{package.Name}}&nbsp;&nbsp;&nbsp;&nbsp;Category:
+                                        {{package.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;Room(s): {{package.Rooms.length}}&nbsp;&nbsp;&nbsp;&nbsp;Start
+                                         Date: {{package.StartDate | limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;Night(s):
+                                        {{package.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;Price: ${{package.Price}}</p>
+                                </div>
                                 <hr>
                             </div>
                             <div class="text-right" style="color:red;"><strong>Grand Total: ${{(bookingInfo.ServicePrice
-                                + bookingInfo.HotelPrice) | number:2}}</strong></div>
+                                + bookingInfo.HotelPrice + bookingInfo.PackagePrice) | number:2}}</strong></div>
                         </uib-tab>
                         <uib-tab index="4" heading="Pay" active="tabs[4].active" disable="tabs[4].disabled">
                             <div class="uibtab-info" style="margin-top: 5px;">
@@ -288,6 +358,8 @@
                                                                            value="CreditCard" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod" checked>Credit Card</label>
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
                                                                            value="ECheck" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">ECheck</label>
+                                    <label class="radio-inline"><input type="radio" name="paymentMethod"
+                                                                       value="" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">Credit Balance</label>
 
                                 </div>
                             </div>
@@ -313,7 +385,7 @@
                                     <input class="form-control" type="text" style="width: 150px;" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.RoutingNumber">
                                 </div>
                             </div>
-                            <div class="form-group form-inline">
+                            <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck' || bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
                                 <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
                                 <label>Save In Profile</label>
                             </div>

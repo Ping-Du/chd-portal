@@ -104,9 +104,12 @@ define(['app/services/package-service',
                 }
 
                 $scope.packageItem = null;
+                $scope.allPackages = [];
                 $scope.showMap = false;
                 function loadPackage(reload) {
+                    $scope.allPackages = [];
                     PackageService.getPackageDetail($routeParams.packageId).then(function (data) {
+                        $scope.allPackages.push(data);
                         $scope.packageItem = data;
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
@@ -114,6 +117,14 @@ define(['app/services/package-service',
                             doAdditionalProcess(data);
                     });
                 }
+
+                //$scope.$watch('packageItem', function(newVal, oldVal){
+                //    if(!newVal)
+                //        return;
+                //    if(newVal == oldVal)
+                //        return;
+                //    doAdditionalProcess(newVal);
+                //});
 
                 $scope.checkAvailability = function (reload) {
 
@@ -146,11 +157,12 @@ define(['app/services/package-service',
                         Rooms: GuestsToHotelArray($scope.guests)
                     };
 
+                    $scope.allPackages = [];
                     PackageService.getAvailability(param).then(function (data) {
 
-                        _.each(data[0].AvailabilityCategories[0].Hotels, function(item, index){
-                            //item.starClass = 'icon-star-' + (item.StarRating * 10);
-                        });
+                        //_.each(data[0].AvailabilityCategories[0].Hotels, function(item, index){
+                        //    //item.starClass = 'icon-star-' + (item.StarRating * 10);
+                        //});
 
                         //data.HotelPrice = 0;
                         //_.each(data.AvailabilityCategories.Rooms, function(item) {
@@ -163,6 +175,7 @@ define(['app/services/package-service',
                         //});
 
                         if (data.length > 0) {
+                            $scope.allPackages = data;
                             $scope.packageItem = data[0];
                             if(!reload)
                                 doAdditionalProcess(data[0]);
@@ -175,8 +188,8 @@ define(['app/services/package-service',
 
                 };
 
-                $scope.addToShoppingCart = function () {
-                    $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, 0);
+                $scope.addToShoppingCart = function (index) {
+                    $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, index);
                 };
 
                 $scope.load = function(reload) {

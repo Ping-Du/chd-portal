@@ -74,17 +74,12 @@
                 </div>
             </div>
             <section class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" data-ng-model="packageItem" data-ng-options="p.Name for p in allPackages">
+                    </select>
+                </div>
                 <div class="service-detail-info">
                     <span class="caption">{{packageItem.Name}}</span>
-                </div>
-                <div class="row" data-ng-show="packageItem.AvailabilityCategories[0].Price">
-                    <div class="price-btn-part">
-                        <div class="col-xs-6 col-md-6 ">
-                            <h2><span class="text-red">${{packageItem.AvailabilityCategories[0].Price}}</span></h2>
-                        </div>
-                        <div class="col-xs-6 col-md-6 text-right">
-                            <a href class="btn btn-red" data-ng-click="addToShoppingCart()">Add To Cart</a></div>
-                    </div>
                 </div>
                 <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
                 <div class="row tab-list">
@@ -99,12 +94,10 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
+                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Categories</a>
                     <a href onclick="scrollToControl('detail')"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
                     <a href onclick="scrollToControl('term')"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Terms</a>
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
-                    <br><br>
-                    <a href onclick="scrollToControl('hotel')" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Hotels</a>
-                    <a href onclick="scrollToControl('service')" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Services</a>
                 </div>
             </section>
         </div>
@@ -112,94 +105,61 @@
             <nav class="container">
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('category')">Categories</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('detail')">Detail</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0"><a href onclick="scrollToControl('service')">Services</a></li>
                     <li class="menu-item" ><a href onclick="scrollToControl('term')">Terms</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
             </nav>
         </div>
+        <section class="detail-wrap" id="category">
+            <h3>Categories&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!packageItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>
+            <div class="table-content">
+                <div class="table-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="thead">
+                                <td>Category</td>
+                                <td class="tlist-4">Price</td>
+                                <td class="tlist-4">Start Date</td>
+                                <td class="tlist-4">End Date</td>
+                                <td class="tlist-4">Available</td>
+                                <td class="tlist-4">Operation</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories" data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
+                                <td>
+                                    <div class="media media-roomlist">
+                                        <div class="media-left media-middle">
+                                            <img class="media-object" src="images/na.png">
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{item.Name}}</h5>
+                                            <p class="p-detail">Product ID: {{item.Id}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="price">${{item.Price}}</span></td>
+                                <td>{{item.StartDate | limitTo:10}}</td>
+                                <td>{{item.EndDate | limitTo:10}}</td>
+                                <td>{{item.AvailabilityLevel}}</td>
+                                <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">Add To Cart</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="detail-wrap" id="detail">
-            <h3>Detail&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!packageItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>
+            <h3>Detail</h3>
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-repeat="item in packageItem.PrimaryAlternates">{{item}}</p>
                 <p data-ng-bind-html="packageItem.AdditionalInformation[1].FormattedText"></p>
-            </div>
-        </section>
-        <section class="detail-wrap" id="hotel" data-ng-show="packageItem.AvailabilityCategories[0].Hotels.length > 0">
-            <h3>Hotels</h3>
-            <div class="content">
-                <div class="table-content">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr class="thead">
-                                <td>Name</td>
-                                <td class="tlist-4">Location</td>
-                                <td class="tlist-2">Start Date</td>
-                                <td class="tlist-4">Nights</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories[0].Hotels" >
-                                <td>
-                                    <div class="media media-roomlist">
-                                        <div class="media-left media-middle">
-                                            <img class="media-object" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">{{item.Name}}</h5>
-                                            <p class="p-detail"><strong>ID:</strong>{{item.ProductId}}&nbsp;&nbsp;<strong>Type:</strong>{{item.HotelType.Name}}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{item.Location.Name}}</td>
-                                <td>{{item.StartDate|limitTo:10}}</td>
-                                <td>{{item.Nights}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!--<p><strong>Rooms:</strong>{{packageItem.Rooms.length}}&nbsp;&nbsp;<strong>Price:</strong>${{packageItem.HotelPrice}}</p>-->
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="detail-wrap" id="service" data-ng-show="packageItem.AvailabilityCategories[0].Services.length > 0">
-            <h3>Services</h3>
-            <div class="content">
-                <div class="table-content">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr class="thead">
-                                <td>Name</td>
-                                <td class="tlist-4">Location</td>
-                                <td class="tlist-2">Start Date</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr data-ng-repeat="item in packageItem.AvailabilityCategories[0].Services" >
-                                <td>
-                                    <div class="media media-roomlist">
-                                        <div class="media-left media-middle">
-                                            <img class="media-object" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">{{item.Name}}</h5>
-                                            <p class="p-detail"><strong>ID:</strong>{{item.ProductId}}&nbsp;&nbsp;<strong>Type:</strong>{{item.ServiceType.Name}}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{item.Location.Name}}</td>
-                                <td>{{item.StartDate|limitTo:10}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <!--<p><strong>Rooms:</strong>{{packageItem.Rooms.length}}&nbsp;&nbsp;<strong>Price:</strong>${{packageItem.HotelPrice}}</p>-->
-                    </div>
-                </div>
             </div>
         </section>
         <section class="detail-wrap" id="term">
@@ -279,11 +239,10 @@
             $('.detail-nav-wrap').stickUp({
                 parts: {
                     0:'top',
-                    1: 'detail',
-                    2:'hotel',
-                    3:'service',
-                    4:'term',
-                    5: 'map'},
+                    1: 'category',
+                    2: 'detail',
+                    3:'term',
+                    4: 'map'},
                 itemClass: 'menu-item',
                 itemHover: 'active' });
         });
