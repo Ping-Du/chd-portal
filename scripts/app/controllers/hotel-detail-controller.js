@@ -188,7 +188,7 @@ define(['app/services/hotel-service',
                         });
                     }
 
-                    if ($scope.guests.length > 0)
+                    if ($scope.guests.length > 0 && !$routeParams.noAvailability)
                         $scope.checkAvailability(reload);
                     else
                         loadHotel(reload);

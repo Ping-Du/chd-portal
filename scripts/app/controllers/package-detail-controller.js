@@ -3,6 +3,7 @@ define(['app/services/package-service',
     'app/services/language-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
+    'app/controllers/category-detail-modal-controller',
     'app/controllers/consent-required-modal-controller',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
@@ -190,6 +191,10 @@ define(['app/services/package-service',
 
                 $scope.addToShoppingCart = function (index) {
                     $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, index);
+                };
+
+                $scope.showCategoryDetail = function(index) {
+                    $rootScope.$broadcast('CategoryDetail:Open', $scope.packageItem.AvailabilityCategories[index]);
                 };
 
                 $scope.load = function(reload) {

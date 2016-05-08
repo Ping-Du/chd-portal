@@ -181,7 +181,7 @@ define(['app/services/services-service',
                         guests: $scope.guests
                     });
 
-                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 )
+                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 || $routeParams.noAvailability )
                         loadService(reload);
                     else
                         $scope.checkAvailability(reload);

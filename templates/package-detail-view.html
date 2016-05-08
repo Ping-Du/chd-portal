@@ -138,6 +138,7 @@
                                         <div class="media-body">
                                             <h5 class="media-heading">{{item.Name}}</h5>
                                             <p class="p-detail">Product ID: {{item.Id}}</p>
+                                            <p class="p-detail"><a href data-ng-click="showCategoryDetail($index)">Category Detail</a></p>
                                         </div>
                                     </div>
                                 </td>
@@ -145,8 +146,10 @@
                                 <td>{{item.StartDate | limitTo:10}}</td>
                                 <td>{{item.EndDate | limitTo:10}}</td>
                                 <td>{{item.AvailabilityLevel}}</td>
-                                <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">Add To Cart</button></td>
+                                <td>
+                                    <button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">Add To Cart</button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -16,7 +16,7 @@ define(['config'], function (cfg) {
             'stickup':'libs/stickup',
             'bootstrap':'libs/bootstrap.min',
             'underscore': 'libs/underscore-min',
-            'angular': 'libs/angular',
+            'angular': 'libs/angular.min',
             'angular-cookies': 'libs/angular-cookies.min',
             'angular-sanitize': 'libs/angular-sanitize.min',
             'angular-local-storage': 'libs/angular-local-storage.min',
