@@ -188,7 +188,11 @@ define(['app/services/services-service',
                 }
 
                 $scope.addToShoppingCart = function (categoryIndex) {
-                    $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                    } else {
+                        $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
+                    }
                 };
 
                 load(false);

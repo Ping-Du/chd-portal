@@ -20,9 +20,9 @@ define(['app/services/account-service'], function (modules) {
             });
         }])
         .controller('LoginModalInstanceController', ['$rootScope', '$scope', '$uibModalInstance', '$translate', 'AccountService', function($rootScope, $scope, $uibModalInstance, $translate, AccountService){
-            $scope.userName = "";
-            $scope.password = "";
-            $scope.message = "testuser iQPP6ntalT&f";
+            $scope.userName = "testuser";
+            $scope.password = "iQPP6ntalT&f";
+            $scope.message = "";
 
             function translate(key) {
                 $translate(key).then(function(translation){

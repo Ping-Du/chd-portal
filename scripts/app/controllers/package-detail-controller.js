@@ -190,7 +190,11 @@ define(['app/services/package-service',
                 };
 
                 $scope.addToShoppingCart = function (index) {
-                    $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, index);
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                    } else {
+                        $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, index);
+                    }
                 };
 
                 $scope.showCategoryDetail = function(index) {

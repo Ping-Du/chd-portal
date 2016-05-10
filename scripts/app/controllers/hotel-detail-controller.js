@@ -174,7 +174,11 @@ define(['app/services/hotel-service',
                 };
 
                 $scope.addToShoppingCart = function (categoryIndex) {
-                    $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                    } else {
+                        $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
+                    }
                 };
 
                 $scope.load = function(reload) {

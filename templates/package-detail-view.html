@@ -74,7 +74,7 @@
                 </div>
             </div>
             <section class="col-md-4">
-                <div class="form-group">
+                <div class="form-group" data-ng-show="allPackages.length > 1">
                     <select class="form-control" data-ng-model="packageItem" data-ng-options="p.Name for p in allPackages">
                     </select>
                 </div>
