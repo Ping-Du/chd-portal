@@ -7,7 +7,7 @@ define(['config'], function (cfg) {
     var libs = {
         baseUrl: cfg.webRoot + 'scripts/',
         //urlArgs: '_ts=' + (new Date()).getTime(),
-        urlArgs: '_v=1',
+        //urlArgs: '_v=1',
         waitSeconds: 0,
         paths: {
             'jquery':'libs/jquery.min',
