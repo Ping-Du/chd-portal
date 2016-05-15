@@ -53,6 +53,19 @@ define(['app/services/hotel-service',
                     }, 5000);
                 }
 
+                $scope.$watch('checkInDate', function(newVal, oldVal){
+                    if(newVal == oldVal) {
+                        return;
+                    }
+
+                    $('#checkOutDate').datepicker('setStartDate',
+                        addDays($('#checkInDate').datepicker('getDate'), 1));
+
+                    if($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                        $scope.checkOutDate = '';
+                    }
+                });
+
                 $scope.showGuests = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 

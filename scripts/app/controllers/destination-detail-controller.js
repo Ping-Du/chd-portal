@@ -58,7 +58,7 @@ define(['app/services/language-service',
                     $scope.hotels = [];
                     function loadHotels() {
                         $scope.hotels = [];
-                        HotelService.getHotelsByDestinationId($routeParams.destinationId).then(function (data) {
+                        HotelService.getTopHotelsByDestinationId($routeParams.destinationId).then(function (data) {
                             for(var i = 0; i < data.length && i < 3; i++){
                                 var item = data[i];
                                 item.DetailsURI = $scope.webRoot + 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
@@ -71,7 +71,7 @@ define(['app/services/language-service',
                     function loadActivities() {
                         loadingCount++;
                         $scope.hotels = [];
-                        ServicesService.getActivitiesByDestinationId($routeParams.destinationId).then(function (data) {
+                        ServicesService.getTopActivitiesByDestinationId($routeParams.destinationId).then(function (data) {
                             loadingCount--;
                             for(var i = 0; i < data.length && i < 3; i++){
                                 var item = data[i];
@@ -87,7 +87,7 @@ define(['app/services/language-service',
                     function loadTours() {
                         loadingCount ++;
                         $scope.hotels = [];
-                        ServicesService.getToursByDestinationId($routeParams.destinationId).then(function (data) {
+                        ServicesService.getTopToursByDestinationId($routeParams.destinationId).then(function (data) {
                             loadingCount --;
                             for(var i = 0; i < data.length && i < 3; i++){
                                 var item = data[i];
@@ -103,7 +103,7 @@ define(['app/services/language-service',
                     function loadTransportation() {
                         loadingCount ++;
                         $scope.transportation = [];
-                        ServicesService.getTransportationByDestinationId($routeParams.destinationId).then(function (data) {
+                        ServicesService.getTopTransportationByDestinationId($routeParams.destinationId).then(function (data) {
                             loadingCount --;
                             for(var i = 0; i < data.length && i < 3; i++){
                                 var item = data[i];
@@ -119,7 +119,7 @@ define(['app/services/language-service',
                     function loadPackages() {
                         loadingCount ++;
                         $scope.packages = [];
-                        PackageService.getPackagesByDestinationId($routeParams.destinationId).then(function (data) {
+                        PackageService.getTopPackagesByDestinationId($routeParams.destinationId).then(function (data) {
                             loadingCount --;
                             for(var i = 0; i < data.length && i < 3; i++){
                                 var item = data[i];

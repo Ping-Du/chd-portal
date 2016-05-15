@@ -243,6 +243,10 @@ define(['app/services/hotel-service',
 
                     $('#checkOutDate').datepicker('setStartDate',
                         addDays($('#checkInDate').datepicker('getDate'), 1));
+
+                    if($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                        $scope.checkOutDate = '';
+                    }
                 });
 
                 $scope.showGuests = false;
