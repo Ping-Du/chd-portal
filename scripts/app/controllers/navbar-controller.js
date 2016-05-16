@@ -36,6 +36,22 @@ define(['app/services/navbar-service',
 
             $scope.openShoppingCart = function() {
                 $rootScope.$broadcast('ShoppingCart:Open');
+            };
+
+            $scope.$on('ShoppingCart:Animate', function(event){
+                times = 5;
+                blink('#shopping-cart');
+            });
+
+            var times;
+            function blink(selector){
+                $(selector).fadeOut('slow', function(){
+                    $(this).fadeIn('slow', function(){
+                        times --;
+                        if(times > 0)
+                           blink(this);
+                    });
+                });
             }
 
         }]);

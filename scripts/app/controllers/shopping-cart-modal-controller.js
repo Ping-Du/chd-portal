@@ -331,6 +331,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 function setButtons() {
                     $scope.showPreviousBtn = ($scope.activeTabIndex > 0);
                     $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0  || $scope.bookingInfo.Packages.length > 0));
+                    _.each($scope.tabs, function(item, index){
+                    });
                 }
 
                 calculateInfo();

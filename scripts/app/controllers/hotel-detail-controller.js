@@ -4,14 +4,15 @@ define(['app/services/hotel-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
     'app/controllers/consent-required-modal-controller',
+    'app/services/shopping-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('HotelDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout) {
+            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout','ShoppingService',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
                 $scope.path = $location.path();
@@ -190,9 +191,23 @@ define(['app/services/hotel-service',
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
-                        $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
+                        if($scope.hotelItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
+                            $scope.hotelItem.Warnings.length > 0 && $scope.hotelItem.Warnings[0].ConsentRequired
+                            ))
+                            $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
+                        else {
+                            ShoppingService.addItem($scope.hotelItem, categoryIndex);
+                            scrollToControl('header');
+                            $rootScope.$broadcast('ShoppingCart:Animate');
+                        }
                     }
                 };
+
+                $scope.$on('ConsentRequired:Confirmed', function(event, product, index){
+                    ShoppingService.addItem(product, index);
+                    scrollToControl('header');
+                    $rootScope.$broadcast('ShoppingCart:Animate');
+                });
 
                 $scope.load = function(reload) {
                     if(reload) {

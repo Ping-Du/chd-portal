@@ -4,14 +4,15 @@ define(['app/services/services-service',
     'app/services/navbar-service',
     'app/directives/datepicker-directive',
     'app/controllers/consent-required-modal-controller',
+    'app/services/shopping-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('ServiceDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, $window, $cookieStore, $timeout) {
+            'ServicesService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout','ShoppingService',
+            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, ServicesService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -191,9 +192,24 @@ define(['app/services/services-service',
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
-                        $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
+
+                        if($scope.serviceItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
+                                $scope.serviceItem.Warnings.length > 0 && $scope.serviceItem.Warnings[0].ConsentRequired
+                            ))
+                            $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
+                        else {
+                            ShoppingService.addItem($scope.serviceItem, categoryIndex);
+                            scrollToControl('header');
+                            $rootScope.$broadcast('ShoppingCart:Animate');
+                        }
                     }
                 };
+
+                $scope.$on('ConsentRequired:Confirmed', function(event, product, index){
+                    ShoppingService.addItem(product, index);
+                    scrollToControl('header');
+                    $rootScope.$broadcast('ShoppingCart:Animate');
+                });
 
                 load(false);
 

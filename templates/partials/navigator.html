@@ -1,38 +1,55 @@
 <div class="line"></div>
 <nav class="navbar-default" role="navigation">
-<div class="container relative" data-ng-controller="NavbarController">
-    <div class="shopping-car" data-ng-show="isAuthorized" data-ng-click="openShoppingCart()">
-        <i class="icon-cart"></i>
-        <span class="s-car-amount" data-ng-show="shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length > 0">{{shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length}}</span>
-    </div>
-    <div>
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" ng-click="navigator.isCollapsed = !navigator.isCollapsed">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+    <div class="container relative" data-ng-controller="NavbarController">
+        <div class="shopping-car" data-ng-show="isAuthorized" data-ng-click="openShoppingCart()">
+            <i class="icon-cart"></i>
+            <span id='shopping-cart' class="s-car-amount"
+                  data-ng-show="shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length > 0">{{shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length}}</span>
+            <!--<button class="btn btn-red">Check Out</button>-->
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="example-navbar-collapse" uib-collapse="navigator.isCollapsed">
-            <ul class="nav navbar-nav" >
-                <li data-ng-class="{'active':navigator.active=='home'}"><a data-ng-href="{{webRoot}}home.html#/{{languageId}}">{{'HOME'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='destination'}"><a data-ng-href="{{webRoot}}destinations.html#/{{languageId}}" >{{'DESTINATION'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='hotel'}"><a data-ng-href="{{webRoot}}hotels.html#/top/{{languageId}}" >{{'HOTEL'|translate}}</a></li>
-                <!--<li data-ng-class="{'active':navigator.active=='shows'}"><a data-ng-href="{{webRoot}}services.html#/shows/{{languageId}}" >{{'SHOWS'|translate}}</a></li>-->
-                <li data-ng-class="{'active':navigator.active=='activities'}"><a data-ng-href="{{webRoot}}services.html#/activities/top/{{languageId}}" >{{'ACTIVITIES'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='tours'}"><a data-ng-href="{{webRoot}}services.html#/tours/{{languageId}}" >{{'TOURS'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='transportation'}"><a data-ng-href="{{webRoot}}services.html#/transportation/{{languageId}}" >{{'TRANSPORTATION'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='package'}"><a data-ng-href="{{webRoot}}packages.html#/top/{{languageId}}" >{{'PACKAGES'|translate}}</a></li>
-                <li data-ng-class="{'active':navigator.active=='group'}"><a data-ng-href="{{webRoot}}group.html#/transportation/{{languageId}}" >{{'GROUP'|translate}}</a></li>
-                <!--<li data-ng-class="{'active':navigator.active=='cruise'}"><a href="cruise.html" translate="{{'CRUISE'}}">游轮</a></li>-->
-                <!--<li data-ng-class="{'active':navigator.active=='dining'}"><a data-ng-href="{{webRoot}}services.html#/dining/{{languageId}}" >{{'DINING'|translate}}</a></li>-->
-                <!--<li data-ng-class="{'active':navigator.active=='shopping'}"><a href="shopping.html" translate="{{'SHOPPING'}}">购物</a></li>-->
-                <!--<li data-ng-class="{'active':navigator.active=='mice'}"><a href="mice.html" translate="{{'MICE'}}">会展</a></li>-->
-                <!--<li data-ng-class="{'active':navigator.active=='bus charter'}"><a href="bus-charter.html" translate="{{'BUS_CHARTER'}}">租车</a></li>-->
-            </ul>
-        </div><!-- /.navbar-collapse -->
+        <div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-click="navigator.isCollapsed = !navigator.isCollapsed">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="example-navbar-collapse" uib-collapse="navigator.isCollapsed">
+                <ul class="nav navbar-nav">
+                    <li data-ng-class="{'active':navigator.active=='home'}"><a
+                            data-ng-href="{{webRoot}}home.html#/{{languageId}}">{{'HOME'|translate}}</a></li>
+                    <li data-ng-class="{'active':navigator.active=='destination'}"><a
+                            data-ng-href="{{webRoot}}destinations.html#/{{languageId}}">{{'DESTINATION'|translate}}</a>
+                    </li>
+                    <li data-ng-class="{'active':navigator.active=='hotel'}"><a
+                            data-ng-href="{{webRoot}}hotels.html#/top/{{languageId}}">{{'HOTEL'|translate}}</a></li>
+                    <!--<li data-ng-class="{'active':navigator.active=='shows'}"><a data-ng-href="{{webRoot}}services.html#/shows/{{languageId}}" >{{'SHOWS'|translate}}</a></li>-->
+                    <li data-ng-class="{'active':navigator.active=='activities'}"><a
+                            data-ng-href="{{webRoot}}services.html#/activities/top/{{languageId}}">{{'ACTIVITIES'|translate}}</a>
+                    </li>
+                    <li data-ng-class="{'active':navigator.active=='tours'}"><a
+                            data-ng-href="{{webRoot}}services.html#/tours/{{languageId}}">{{'TOURS'|translate}}</a></li>
+                    <li data-ng-class="{'active':navigator.active=='transportation'}"><a
+                            data-ng-href="{{webRoot}}services.html#/transportation/{{languageId}}">{{'TRANSPORTATION'|translate}}</a>
+                    </li>
+                    <li data-ng-class="{'active':navigator.active=='package'}"><a
+                            data-ng-href="{{webRoot}}packages.html#/top/{{languageId}}">{{'PACKAGES'|translate}}</a>
+                    </li>
+                    <li data-ng-class="{'active':navigator.active=='group'}"><a
+                            data-ng-href="{{webRoot}}group.html#/transportation/{{languageId}}">{{'GROUP'|translate}}</a>
+                    </li>
+                    <!--<li data-ng-class="{'active':navigator.active=='cruise'}"><a href="cruise.html" translate="{{'CRUISE'}}">游轮</a></li>-->
+                    <!--<li data-ng-class="{'active':navigator.active=='dining'}"><a data-ng-href="{{webRoot}}services.html#/dining/{{languageId}}" >{{'DINING'|translate}}</a></li>-->
+                    <!--<li data-ng-class="{'active':navigator.active=='shopping'}"><a href="shopping.html" translate="{{'SHOPPING'}}">购物</a></li>-->
+                    <!--<li data-ng-class="{'active':navigator.active=='mice'}"><a href="mice.html" translate="{{'MICE'}}">会展</a></li>-->
+                    <!--<li data-ng-class="{'active':navigator.active=='bus charter'}"><a href="bus-charter.html" translate="{{'BUS_CHARTER'}}">租车</a></li>-->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
     </div>
-</div><!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </nav>

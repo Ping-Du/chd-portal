@@ -5,14 +5,15 @@ define(['app/services/package-service',
     'app/directives/datepicker-directive',
     'app/controllers/category-detail-modal-controller',
     'app/controllers/consent-required-modal-controller',
+    'app/services/shopping-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller('PackageDetailController', ['_', '$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'PackageService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout',
-            function (_, $rootScope, $scope, $location, $routeParams, $log, SessionService, PackageService, LanguageService, $translate, $window, $cookieStore, $timeout) {
+            'PackageService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout','ShoppingService',
+            function (_, $rootScope, $scope, $location, $routeParams, $log, SessionService, PackageService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
                 $scope.path = $location.path();
@@ -189,13 +190,27 @@ define(['app/services/package-service',
 
                 };
 
-                $scope.addToShoppingCart = function (index) {
+                $scope.addToShoppingCart = function (categoryIndex) {
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
-                        $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, index);
+                        if($scope.packageItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
+                                $scope.packageItem.Warnings.length > 0 && $scope.packageItem.Warnings[0].ConsentRequired
+                            ))
+                            $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, categoryIndex);
+                        else {
+                            ShoppingService.addItem($scope.packageItem, categoryIndex);
+                            scrollToControl('header');
+                            $rootScope.$broadcast('ShoppingCart:Animate');
+                        }
                     }
                 };
+
+                $scope.$on('ConsentRequired:Confirmed', function(event, product, index){
+                    ShoppingService.addItem(product, index);
+                    scrollToControl('header');
+                    $rootScope.$broadcast('ShoppingCart:Animate');
+                });
 
                 $scope.showCategoryDetail = function(index) {
                     $rootScope.$broadcast('CategoryDetail:Open', $scope.packageItem.AvailabilityCategories[index]);

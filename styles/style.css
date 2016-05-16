@@ -90,7 +90,7 @@ header {
       top: 3px; }
   header .shopping-car {
     cursor: pointer; }
-    header .shopping-car .icon-cart, header .shopping-car .s-car-amount {
+    header .shopping-car .icon-cart, header .shopping-car .s-car-amount, header .shopping-car .btn {
       position: absolute; }
     header .shopping-car .icon-cart {
       font-size: 22px;
@@ -1542,7 +1542,10 @@ a {
     right: 36px; }
   .shopping-car .s-car-amount {
     bottom: 20px;
-    right: 12px; } }
+    right: 12px; }
+  .shopping-car .btn {
+    bottom: 10px;
+    right: 5px; } }
 @media (max-width: 767px) {
   .list-product .comment {
     display: none; }

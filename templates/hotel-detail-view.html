@@ -177,9 +177,15 @@
                                 </td>
                                 <td><span class="price">${{item.Price}}</span></td>
                                 <td>{{item.CancelBy | limitTo:10}}</td>
-                                <td>{{item.AvailabilityLevel}}</td>
+                                <td>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:32px; color:#99cc33;" data-ng-show="item.AvailabilityLevel == 'Available'"></span>
+                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="font-size:32px; color:#ff9900;" data-ng-show="item.AvailabilityLevel == 'NotAvailable'"></span>
+                                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size:32px; color:#ffcc00;" data-ng-show="item.AvailabilityLevel == 'Requestable'"></span>
+                                </td>
                                 <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">Add To Cart</button></td>
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">
+                                    <span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;Add</button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -1,8 +1,8 @@
 define(['app/services/shopping-service'], function (modules) {
     'use strict';
     modules.controllers
-        .controller('ConsentRequiredModalController', ['$scope', '$uibModal', 'ShoppingService',
-            function ($scope, $uibModal, ShoppingService) {
+        .controller('ConsentRequiredModalController', ['$rootScope','$scope', '$uibModal', 'ShoppingService',
+            function ($rootScope, $scope, $uibModal, ShoppingService) {
                 $scope.open = function (product, index) {
                     var modalInstance = $uibModal.open({
                         templateUrl: 'ConsentRequiredModal.html',
@@ -20,7 +20,8 @@ define(['app/services/shopping-service'], function (modules) {
                     });
 
                     modalInstance.result.then(function () {
-                        ShoppingService.addItem(product, index);
+                        //ShoppingService.addItem(product, index);
+                        $rootScope.$broadcast('ConsentRequired:Confirmed', product, index);
                     }, function () {
                     });
                 };
