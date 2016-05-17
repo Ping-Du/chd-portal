@@ -7,8 +7,8 @@ define(['app/services/banner-service',
 
     modules.controllers
         .controller("HomeController", ['$rootScope', '$scope', '$cookieStore', 'SessionService',
-            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService',
-            function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService, $log, $location, LanguageService) {
+            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService','$window',
+            function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService, $log, $location, LanguageService, $window) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -83,7 +83,7 @@ define(['app/services/banner-service',
                         ProductId:$scope.currentHotelsDestination.ProductId,
                         Name:$scope.currentHotelsDestination.Name
                     });
-                    $location.url("/"+$scope.languageId, true);
+                    $window.location.href = $scope.webRoot + "hotels.html#/"+$scope.languageId;
                 };
 
                 $scope.activities = [];
@@ -107,7 +107,7 @@ define(['app/services/banner-service',
                         ProductId:$scope.currentActivitiesDestination.ProductId,
                         Name:$scope.currentActivitiesDestination.Name
                     });
-                    $location.url("/activities/"+$scope.languageId, true);
+                    $window.location.href = $scope.webRoot + "services.html#/activities/"+$scope.languageId;
                 };
 
 
