@@ -108,6 +108,7 @@ define(['app/services/services-service',
                     $scope.featuredServices = [];
                     $scope.showServices = [];
                     _.each($scope.allServices, function (item, key) {
+                        // because location is not as same as the parameter sent: 'Los Angeles' got 'Long Beach'
                         var locationed = true; //(item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
@@ -227,6 +228,7 @@ define(['app/services/services-service',
 
                     if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
                         loadAllServices();
+                        fillServices();
                     } else {
 
                         if($scope.selectedLocation == null) {
@@ -267,7 +269,7 @@ define(['app/services/services-service',
 
                 function loadAllServices(destinationId) {
                     if(destinationId) {
-                        ServicesService.getActivitiesByDestinationId(destinationId).then(function (data) {
+                        ServicesService.getServiceByTypeAndDestination(serviceType, destinationId).then(function (data) {
                             fillAllServices(data);
                             fillServices();
                         }, function () {

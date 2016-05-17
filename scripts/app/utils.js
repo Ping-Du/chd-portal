@@ -48,7 +48,8 @@ function getServiceType(serviceTypeId, byName) {
         {id:"SHOW",name: 'shows'},
         {id:"ATTAD",name: 'activities'},
         {id:'DINE',name:'dining'},
-        {id:'SHTTL',name:'tours'}
+        {id:'BST',name:'tours'},
+        {id:'SHTTL',name:'transportation'}
     ];
 
     for(var i = 0; i < serviceTypes.length; i++) {

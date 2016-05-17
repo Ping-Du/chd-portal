@@ -104,6 +104,9 @@ define(['app/services/session-service'], function (modules) {
                 getServiceByType:function(serviceType){
                     return invoke('/'+serviceType+'/languages/'+SessionService.languageId(), 'GET');
                 },
+                getServiceByTypeAndDestination:function(serviceType, destinationId) {
+                    return invoke('/'+serviceType+'/destinations/'+destinationId+'/languages/'+SessionService.languageId(), 'GET');
+                },
                 getFeaturedServiceByType:function(serviceType){
                     return invoke('/'+serviceType+'/featured/languages/'+SessionService.languageId(), 'GET');
                 },
