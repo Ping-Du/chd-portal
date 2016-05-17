@@ -34,9 +34,9 @@ define(['app/services/language-service',
                                         caption: item.Name,
                                         image: item.MainInformation.LargeImageURI
                                     });
-                                }// else {
+                                } else {
                                     $scope.allItems.push(item);
-                                //}
+                                }
                             });
 
                             if(featuredItems.length > 0) {

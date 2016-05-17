@@ -1,22 +1,26 @@
 <form class="search-main">
     <div class="container">
         <div class=" row">
+            <!--<div class="col-md-4 relative">-->
+                <!--<i class="icon-location2"></i>-->
+                <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Location">&ndash;&gt;-->
+                <!--<div angucomplete-alt id="searchLocation"-->
+                     <!--placeholder="Location"-->
+                     <!--pause="1000"-->
+                     <!--selected-object="selectedSearchLocation"-->
+                     <!--local-data="searchLocations"-->
+                     <!--search-fields="ProductId,Name"-->
+                     <!--title-field="Name"-->
+                     <!--minlength="1"-->
+                     <!--input-class="form-control input"-->
+                     <!--match-class="highlight"-->
+                     <!--initial-value="selectedLocationName"-->
+                     <!--disable-input="true" >-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="col-md-4 relative">
-                <i class="icon-location2"></i>
-                <!--<input type="text" class="form-control" placeholder="Location">-->
-                <div angucomplete-alt id="searchLocation"
-                     placeholder="Location"
-                     pause="1000"
-                     selected-object="selectedSearchLocation"
-                     local-data="searchLocations"
-                     search-fields="ProductId,Name"
-                     title-field="Name"
-                     minlength="1"
-                     input-class="form-control input"
-                     match-class="highlight"
-                     initial-value="selectedLocationName"
-                     disable-input="true" >
-                </div>
+                <!--<i class="icon-location2"></i>-->
+                <input type="text" class="form-control input" placeholder="" readonly data-ng-model="hotelItem.Name">
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
@@ -165,15 +169,17 @@
                             <tbody>
                             <tr data-ng-repeat="item in hotelItem.AvailabilityCategories" data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
                                 <td>
-                                    <div class="media media-roomlist">
-                                        <div class="media-left media-middle">
-                                            <img class="media-object" src="images/na.png">
-                                        </div>
-                                        <div class="media-body">
-                                            <h5 class="media-heading">{{item.Name}}</h5>
-                                            <p class="p-detail">Product ID: {{item.Id}}</p>
-                                        </div>
-                                    </div>
+                                    <!--<div class="media media-roomlist">-->
+                                        <!--<div class="media-left media-middle">-->
+                                            <!--<img class="media-object" src="images/na.png">-->
+                                        <!--</div>-->
+                                        <!--<div class="media-body">-->
+                                            <!--<h5 class="media-heading">{{item.Name}}</h5>-->
+                                            <!--<p class="p-detail">Product ID: {{item.Id}}</p>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <span><strong>{{item.Name}}</strong></span>
+                                    <br><span>Product ID:{{item.Id}}</span>
                                 </td>
                                 <td><span class="price">${{item.Price}}</span></td>
                                 <td>{{item.CancelBy | limitTo:10}}</td>

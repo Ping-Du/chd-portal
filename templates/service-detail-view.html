@@ -1,22 +1,26 @@
 <form class="search-main">
     <div class="container">
         <div class=" row">
-            <div class="col-md-5 relative">
-                <i class="icon-location2"></i>
-                <!--<input type="text" class="form-control" placeholder="Location">-->
-                <div angucomplete-alt id="searchLocation"
-                     placeholder="Location"
-                     pause="1000"
-                     selected-object="selectedSearchLocation"
-                     local-data="searchLocations"
-                     search-fields="ProductId,Name"
-                     title-field="Name"
-                     minlength="1"
-                     input-class="form-control input"
-                     match-class="highlight"
-                     initial-value="selectedLocationName"
-                     disable-input="true">
-                </div>
+            <!--<div class="col-md-5 relative">-->
+                <!--<i class="icon-location2"></i>-->
+                <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Location">&ndash;&gt;-->
+                <!--<div angucomplete-alt id="searchLocation"-->
+                     <!--placeholder="Location"-->
+                     <!--pause="1000"-->
+                     <!--selected-object="selectedSearchLocation"-->
+                     <!--local-data="searchLocations"-->
+                     <!--search-fields="ProductId,Name"-->
+                     <!--title-field="Name"-->
+                     <!--minlength="1"-->
+                     <!--input-class="form-control input"-->
+                     <!--match-class="highlight"-->
+                     <!--initial-value="selectedLocationName"-->
+                     <!--disable-input="true">-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="col-md-4 relative">
+                <!--<i class="icon-location2"></i>-->
+                <input type="text" class="form-control input" placeholder="" readonly data-ng-model="serviceItem.Name">
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>

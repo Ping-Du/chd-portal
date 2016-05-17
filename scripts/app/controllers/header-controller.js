@@ -8,17 +8,17 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
 
-                $scope.keyword = ($location.search().keyword ? $location.search().keyword : '');
+                $scope.keyword = ''; //($location.search().keyword ? $location.search().keyword : '');
                 $scope.results = null;
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
 
-                var isSearchPage;
+                var isSearchPage = false;
 
-                if($location.search().keyword)
-                    isSearchPage = true;
-                else
-                    isSearchPage = false;
+                //if($location.search().keyword)
+                //    isSearchPage = true;
+                //else
+                //    isSearchPage = false;
 
                 $scope.search = function () {
                     var word = $scope.keyword.Trim();
