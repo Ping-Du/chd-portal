@@ -2,13 +2,14 @@ define(['app/services/session-service'], function (modules) {
     'use strict';
     modules.services
         .service('TripService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
-            function invoke(url, method, data, headers) {
+            function invoke(url, method, data, headers, showLoading) {
                 var deferred = $q.defer();
                 $http({
                     method: method,
                     url: ( SessionService.config().apiRoot + 'trips' + url),
                     data:data,
-                    headers:headers
+                    headers:headers,
+                    showLoading:(showLoading === undefined?true:showLoading)
                 }).success(function (data/*, status, headers, cfg*/) {
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
@@ -40,7 +41,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/bookings/save', 'POST', bookingData);
                 },
                 cancelBooking:function(bookingData){
-                    return invoke('/cancel', 'DELETE', bookingData, { "Content-Type": "application/json;charset=UTF-8"});
+                    return invoke('/cancel', 'DELETE', bookingData, { "Content-Type": "application/json;charset=UTF-8"}, false);
                 },
                 saveAssignments:function(data) {
                     return invoke('/saveassignments', 'POST', data);

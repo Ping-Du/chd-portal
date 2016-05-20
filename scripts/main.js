@@ -39,7 +39,8 @@ define(['config'], function (cfg) {
             'jquery.spinner':'libs/jquery.spinner.min',
             'jquery.raty':'libs/jquery.raty',
             'spinjs':'libs/spin',
-            'angular-loading':'libs/angular-loading.min'
+            'angular-loading':'libs/angular-loading.min',
+            'sweetalert':'libs/sweetalert.min'
         },
         shim: {
             'jquery':{
