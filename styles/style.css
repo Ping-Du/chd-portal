@@ -576,6 +576,9 @@ a {
 .text-red {
   color: #ed685b; }
 
+.text-light-grey {
+  color: #CCCCFF; }
+
 [class^="icon-star-"], [class*=" icon-star-"] {
   display: inline-block;
   height: 10px;

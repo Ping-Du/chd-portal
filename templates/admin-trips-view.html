@@ -43,7 +43,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-ng-repeat="item in trips">
+                <tr data-ng-class="{'text-light-grey':item.Status == 'Cancelled'}" data-ng-repeat="item in trips">
                     <td>{{item.TripId}}</td>
                     <td>{{item.PrimaryGuestName}}</td>
                     <td>{{item.PassengerCount}}</td>
@@ -51,7 +51,13 @@
                     <td>{{item.ServicesEnd|limitTo:10}}</td>
                     <td>${{item.Price}}</td>
                     <td>{{item.CreatedOn | limitTo:10}}</td>
-                    <td>{{item.AvailabilityLevel}}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:18px; color:#99cc33;" data-ng-show="item.AvailabilityLevel == 'Confirmed'"></span>
+                        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:18px; color:#ccff33;" data-ng-show="item.AvailabilityLevel == 'PartlyConfirmed'"></span>
+                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="font-size:18px; color:#ff9900;" data-ng-show="item.AvailabilityLevel == 'Cancelled'"></span>
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size:18px; color:#ffcc00;" data-ng-show="item.AvailabilityLevel == 'OnRequest'"></span>
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true" style="font-size:18px; color:#66CCCC;" data-ng-show="item.AvailabilityLevel == 'Administrative'"></span>
+                    </td>
                     <td>{{item.Status}}</td>
                     <td><a href data-ng-click="viewDetails(item.TripId)">View Details</a></td>
                 </tr>
