@@ -670,7 +670,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             PaymentMethod: '',
                             Description:'Please select'
                         });
-                        //$scope.selectedProfile = data.Profiles[0];
+                        $scope.selectedProfile = data.Profiles[0];
                     });
                 }
 
@@ -683,7 +683,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     for(i = 0; i < 12; i++) {
                         $scope.months.push(1+i);
                     }
-                    //loadFinanceInfo();
+                    loadFinanceInfo();
                 }
 
                 load();

@@ -67,7 +67,7 @@ function getServiceId(serviceType) {
             if(type != '')
                 type += ',';
 
-            type += serviceTypes[i].id;
+            type += "'" + serviceTypes[i].id +"'";
         }
     }
     return type;
