@@ -44,11 +44,14 @@
             <dl class="filter-item" data-ng-show="showTypeFilter">
                 <dt><i class="icon-directions_bike"></i>&nbsp;{{"TYPE"|translate}}</dt>
                 <dd>
-                    <a href data-ng-class="{'active':selectedType==null}"
-                       data-ng-click="filterByType(null)">All</a>
-                    <a href data-ng-repeat="item in types"
-                       data-ng-class="{'active':selectedType==item.id}"
-                       data-ng-click="filterByType(item.id)">{{item.name}}</a>
+                    <!--<a href data-ng-class="{'active':selectedType==null}"-->
+                       <!--data-ng-click="filterByType(null)">All</a>-->
+                    <!--<a href data-ng-repeat="item in types"-->
+                       <!--data-ng-class="{'active':selectedType==item.id}"-->
+                       <!--data-ng-click="filterByType(item.id)">{{item.name}}</a>-->
+                    <label data-ng-repeat="item in types" class="checkbox-inline">
+                        <input type="checkbox" value="{{item.Id}}" data-ng-model="item.selected" data-ng-change="filterByType(null)"> {{item.Name}}
+                    </label>
                 </dd>
             </dl>
             <dl class="filter-item" data-ng-show="prices.length > 0">
@@ -93,7 +96,7 @@
                             <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name| limitTo:40}}</a></h3>
                             <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
                             <ul class="hotel">
-                                <li>{{item.ServiceType.Name}}<br/>{{item.Location.Name}}</li>
+                                <li>{{item.ServiceType.Name|limitTo:20}}<br/>{{item.Location.Name}}</li>
                                 <li class="text-right price"><span>{{item.price}}</span></li>
                             </ul>
                         </div>
@@ -126,7 +129,7 @@
                             <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name| limitTo:40}}</a></h3>
                             <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
                             <ul class="hotel">
-                                <li>{{item.ServiceType.Name}}<br/>{{item.Location.Name}}</li>
+                                <li>{{item.ServiceType.Name|limitTo:20}}<br/>{{item.Location.Name}}</li>
                                 <li class="text-right price"><span>{{item.price}}</span></li>
                             </ul>
                         </div>

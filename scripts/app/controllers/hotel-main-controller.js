@@ -81,6 +81,9 @@ define(['app/services/hotel-service',
                     if(!_.find($scope.types, function(item){
                             return item.Id == value.Id;
                         })){
+                        _.extend(value, {
+                            selected:true
+                        });
                         $scope.types.push(value);
                     }
                 }
@@ -102,6 +105,9 @@ define(['app/services/hotel-service',
                     _.each($scope.allHotels, function(item, key){
                         var stared = (item.StarRating == $scope.selectedStar || $scope.selectedStar == null) ;
                         var typed = (item.HotelType.Id == $scope.selectedType || $scope.selectedType == null) ;
+                        typed = _.find($scope.types, function(tp){
+                            return (tp.Id == item.HotelType.Id && tp.selected);
+                        });
                         if(item.StarRating >=  star1 && item.StarRating <=  star2)
                             stared = true;
                         else

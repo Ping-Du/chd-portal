@@ -1,11 +1,10 @@
-
-String.prototype.Trim = function(){
+String.prototype.Trim = function () {
     return this.replace(/(^\s*)|(\s*$)/g, "");
 };
-String.prototype.LTrim = function(){
+String.prototype.LTrim = function () {
     return this.replace(/(^\s*)/g, "");
 };
-String.prototype.RTrim = function() {
+String.prototype.RTrim = function () {
     return this.replace(/(\s*$)/g, "");
 };
 
@@ -43,27 +42,35 @@ function initMap(lat, lng, title) {
     });
 }
 
-function getServiceType(serviceTypeId, byName) {
-    var serviceTypes = [
-        {id:"SHOW",name: 'shows'},
-        {id:"ATTAD",name: 'activities'},
-        {id:'DINE',name:'dining'},
-        {id:'BST',name:'tours'},
-        {id:'SHTTL',name:'transportation'}
-    ];
+var serviceTypes = [
+    {id: "SHOW", type: 'activities'},
+    {id: "ATTAD", type: 'activities'},
+    {id: 'DINE', type: 'activities'},
+    {id: 'BST', type: 'tours'},
+    {id: 'SHTTL', type: 'transportation'},
+    {id: 'SHW-D', type: 'activities'}
+];
+function getServiceType(serviceTypeId) {
+    for (var i = 0; i < serviceTypes.length; i++) {
+        if (serviceTypes[i].id == serviceTypeId)
+            return serviceTypes[i].type;
+    }
+    return "unknown";
+}
+function getServiceId(serviceType) {
+    //if(serviceType == 'activities')
+    //    return 'ATTAD';
 
-    for(var i = 0; i < serviceTypes.length; i++) {
-        if(!byName) {
-            if (serviceTypes[i].id == serviceTypeId)
-                return serviceTypes[i].name;
-        } else {
-            if(serviceTypes[i].name == serviceTypeId) {
-                return serviceTypes[i].id;
-            }
+    var type = '';
+    for (var i = 0; i < serviceTypes.length; i++) {
+        if (serviceTypes[i].type == serviceType) {
+            if(type != '')
+                type += ',';
+
+            type += serviceTypes[i].id;
         }
     }
-
-    return "unknown";
+    return type;
 }
 
 function IsInteger(s) {
@@ -79,7 +86,7 @@ function IsInteger(s) {
 
 function GetHotelGuestsInfo(guests) {
     var rooms = guests.length, adults = 0, minors = 0;
-    for(var i = 0; i < guests.length; i++) {
+    for (var i = 0; i < guests.length; i++) {
         adults += parseInt(guests[i].Adults);
         minors += guests[i].MinorAges.length;
     }
@@ -88,13 +95,13 @@ function GetHotelGuestsInfo(guests) {
 }
 
 function GetServiceGuestsInfo(guests) {
-    return ((guests.Adults.Trim()==''?'0':guests.Adults) + ' adult(s) ' + guests.MinorAges.length + ' minor(s)');
+    return ((guests.Adults.Trim() == '' ? '0' : guests.Adults) + ' adult(s) ' + guests.MinorAges.length + ' minor(s)');
 }
 
 
 function GuestsToHotelArray(guests) {
     var rooms = [];
-    for(var i = 0; i < guests.length; i++) {
+    for (var i = 0; i < guests.length; i++) {
         rooms.push({
             Guests: {
                 Adults: parseInt(guests[i].Adults),
@@ -102,7 +109,7 @@ function GuestsToHotelArray(guests) {
             }
         });
 
-        for(var j = 0; j < guests[i].MinorAges.length; j++) {
+        for (var j = 0; j < guests[i].MinorAges.length; j++) {
             rooms[i].Guests.MinorAges.push(parseInt(guests[i].MinorAges[j]));
         }
     }
@@ -111,10 +118,10 @@ function GuestsToHotelArray(guests) {
 
 function GuestsToServiceCriteria(guests) {
     var obj = {
-        Adults:(guests.Adults.Trim() == ''?0:parseInt(guests.Adults)),
-        MinorAges:[]
+        Adults: (guests.Adults.Trim() == '' ? 0 : parseInt(guests.Adults)),
+        MinorAges: []
     };
-    for(var i = 0; i < guests.MinorAges.length; i++) {
+    for (var i = 0; i < guests.MinorAges.length; i++) {
         obj.MinorAges.push(parseInt(guests.MinorAges[i]));
     }
 
@@ -126,15 +133,15 @@ function DayDiff(startDate, endDate) {
 }
 
 function addDays(startDate, days) {
-    return new Date(startDate.valueOf() + days * 24* 3600000);
+    return new Date(startDate.valueOf() + days * 24 * 3600000);
 }
 
 function makePriceString(lowPrice, highPrice) {
 
-    if(lowPrice == highPrice)
-        return '$'+lowPrice;
+    if (lowPrice == highPrice)
+        return '$' + lowPrice;
     else
-        return '$'+lowPrice+' - $'+highPrice;
+        return '$' + lowPrice + ' - $' + highPrice;
 }
 
 function clearEmptyAddress(address) {
@@ -143,7 +150,7 @@ function clearEmptyAddress(address) {
     address.Address3 = address.Address3.Trim();
     address.City = address.City.Trim();
     address.State = address.State.Trim();
-    if(address.Country == null)
+    if (address.Country == null)
         address.Country = "";
     else
         address.Country = address.Country.Trim();

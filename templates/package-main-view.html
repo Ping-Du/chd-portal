@@ -44,11 +44,14 @@
             <dl class="filter-item">
                 <dt><i class="icon-gift"></i>&nbsp;{{"TYPE"|translate}}</dt>
                 <dd>
-                    <a href data-ng-class="{'active':selectedType==null}"
-                       data-ng-click="filterByType(null)">All</a>
-                    <a href data-ng-repeat="item in types | orderBy:'+Name':false"
-                       data-ng-class="{'active':selectedType==item.Id}"
-                       data-ng-click="filterByType(item.Id)">{{item.Name}}</a>
+                    <!--<a href data-ng-class="{'active':selectedType==null}"-->
+                       <!--data-ng-click="filterByType(null)">All</a>-->
+                    <!--<a href data-ng-repeat="item in types | orderBy:'+Name':false"-->
+                       <!--data-ng-class="{'active':selectedType==item.Id}"-->
+                       <!--data-ng-click="filterByType(item.Id)">{{item.Name}}</a>-->
+                    <label data-ng-repeat="item in types | orderBy:'+Name':false" class="checkbox-inline">
+                        <input type="checkbox" value="{{item.Id}}" data-ng-model="item.selected" data-ng-change="filterByType(null)"> {{item.Name}}
+                    </label>
                 </dd>
             </dl>
             <dl class="filter-item" data-ng-show="prices.length > 0">

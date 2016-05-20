@@ -29,7 +29,7 @@ define(['app/services/services-service',
                 }
 
                 var serviceType = parseService($location.path());
-                var serviceTypeId = getServiceType(serviceType, true);
+                //var serviceTypeId = getServiceType(serviceType, true);
                 $rootScope.$broadcast('ServiceChanged', serviceType);
                 $translate(modules.angular.uppercase(serviceType) + '_TITLE').then(function (data) {
                     $('title').text(data);

@@ -44,6 +44,9 @@ define(['app/services/package-service',
                     if(!_.find($scope.types, function(item){
                             return item.Id == value.Id;
                         })){
+                        _.extend(value, {
+                            selected:true
+                        });
                         $scope.types.push(value);
                     }
                 }
@@ -61,8 +64,12 @@ define(['app/services/package-service',
                     _.each($scope.allPackages, function(item, key){
 
                         var typed = true;
-                        if(item.PackageType)
-                            typed = (item.PackageType.Id == $scope.selectedType || $scope.selectedType == null) ;
+                        if(item.PackageType) {
+                            //typed = (item.PackageType.Id == $scope.selectedType || $scope.selectedType == null);
+                            typed = _.find($scope.types, function(tp){
+                                return (tp.Id == item.PackageType.Id && tp.selected);
+                            });
+                        }
                         
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);

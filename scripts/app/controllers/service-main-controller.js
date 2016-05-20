@@ -25,7 +25,7 @@ define(['app/services/services-service',
                 }
 
                 var serviceType = parseService($location.path());
-                var serviceTypeId = getServiceType(serviceType, true);
+                //var serviceTypeId = getServiceType(serviceType, true);
                 $rootScope.$broadcast('ServiceChanged', serviceType);
                 $translate(modules.angular.uppercase(serviceType) + '_TITLE').then(function (data) {
                     $('title').text(data);
@@ -61,16 +61,18 @@ define(['app/services/services-service',
                     fillServices();
                 };
 
-                $scope.types = [{
-                    id:'ATTAD',
-                    name:'Activity'
-                },{
-                    id:'DINE',
-                    name:'Dining'
-                },{
-                    id:'SHOW',
-                    name:'Show'
-                }];
+                $scope.types = [];
+                function fillTypes(value) {
+                    if(!_.find($scope.types, function(item){
+                            return item.Id == value.Id;
+                        })){
+                        _.extend(value, {
+                            selected:true
+                        });
+                        $scope.types.push(value);
+                    }
+                }
+
                 $scope.selectedType = null;
                 $scope.showTypeFilter = (serviceType == 'activities');
                 $scope.filterByType = function(typeId) {
@@ -113,6 +115,9 @@ define(['app/services/services-service',
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
                         var typed = (item.ServiceType.Id == $scope.selectedType || $scope.selectedType == null);
+                        typed = _.find($scope.types, function(tp){
+                            return (tp.Id == item.ServiceType.Id && tp.selected);
+                        });
                         if(!priced || !available) {
                             if(_.find(item.AvailabilityCategories, function(category){
                                     if(!priced && !available)
@@ -140,10 +145,12 @@ define(['app/services/services-service',
                 function fillAllServices(data){
                     $scope.allServices = [];
                     $scope.prices = [];
+                    $scope.types = [];
                     _.each(data, function (item, index) {
-                        if(item.ServiceType.Id == serviceTypeId) {
+                        if(getServiceType(item.ServiceType.Id) == serviceType) {
                             item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
                             //fillLocations(item.Location);
+                            fillTypes(item.ServiceType);
                             $scope.allServices.push(item);
                         }
 
@@ -254,7 +261,7 @@ define(['app/services/services-service',
                             DestinationId:$scope.selectedLocation,
                             LanguageId:$scope.languageId,
                             CategoryId:null,
-                            ServiceType:serviceTypeId,
+                            ServiceType:getServiceId(serviceType),
                             StartDate:$scope.startDate+'T00:00:00.000Z',
                             Guests:GuestsToServiceCriteria($scope.guests)
                         };
