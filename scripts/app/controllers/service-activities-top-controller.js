@@ -47,7 +47,7 @@ define(['app/services/services-service',
                     $scope.currentDestination = null;
                     DestinationService.getTopDestinations().then(function(data){
                         if(data.length > 0) {
-                            $scope.currentDestination = data[0];
+                            //$scope.currentDestination = data[0];
                             $scope.loadActivities(data[0]);
                         }
                         _.each(data, function(item){

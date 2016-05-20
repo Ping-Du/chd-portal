@@ -32,7 +32,7 @@ define(['app/services/hotel-service',
                     $scope.currentDestination = null;
                     DestinationService.getTopDestinations().then(function(data){
                         if(data.length > 0) {
-                            $scope.currentDestination = data[0];
+                            //$scope.currentDestination = data[0];
                             $scope.loadHotels(data[0]);
                         }
                         _.each(data, function(item){
