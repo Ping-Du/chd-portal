@@ -123,6 +123,9 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="text-center" style="margin-top: 10px;" data-ng-show="shoppingItems.hotels.length == 0 && shoppingItems.services.length == 0 && shoppingItems.packages.length == 0">
+                                <h3 class="text-info">Your cart is currently empty</h3>
+                            </div>
                         </uib-tab>
                         <uib-tab index="1" heading="Names & Details" active="tabs[1].active" disable="tabs[1].disabled">
                             <div style="padding-top: 5px;">
