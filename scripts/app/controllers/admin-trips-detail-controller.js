@@ -54,6 +54,7 @@ define(['app/services/account-service',
                         TripService.cancelBooking(param).then(function (data) {
                             $scope.showCancelBtn = false;
                             $scope.trip.AvailabilityLevel = 'Cancelled';
+                            $scope.trip.Status = 'Cancelled';
                             swal("Cancelled!", "This trip has been cancelled.", "success");
                         }, function (data) {
                             swal("Error!", "There is a error when cancelling the trip!", "error");
@@ -147,6 +148,8 @@ define(['app/services/account-service',
 
 
                 }
+
+                $scope.newTrip = $routeParams.newTrip;
 
                 load();
 

@@ -63,8 +63,15 @@ define(['app/services/hotel-service',
                         return;
                     }
 
+                    var str = newVal.replace(/-/g,"/");
+                    var date = new Date(str);
+                    if(!date)
+                        return;
+
                     $('#checkOutDate').datepicker('setStartDate',
-                        addDays($('#checkInDate').datepicker('getDate'), 1));
+                        addDays(date, 1));
+                    $('#checkOutDate2').datepicker('setStartDate',
+                        addDays(date, 1));
 
                     if($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
                         $scope.checkOutDate = '';

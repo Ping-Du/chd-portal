@@ -115,12 +115,12 @@ define(['app/services/account-service'], function (modules) {
                 }
 
                 $scope.$on('LOGOUT', function (event, data) {
-                    $window.location.href = 'home.html#/' + languageId;
+                    $window.location.href = SessionService.config().webRoot + 'home.html#/' + languageId;
                 });
 
                 function load() {
                     if (SessionService.user() == null) {
-                        $window.location.href = 'home.html#/' + languageId;
+                        $window.location.href = SessionService.config().webRoot + 'home.html#/' + languageId;
                     }
 
                     var selectedItem = findItem($location.path());

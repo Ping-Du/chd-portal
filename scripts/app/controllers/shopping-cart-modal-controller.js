@@ -25,8 +25,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     $scope.open();
                 });
             }])
-        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService',
-            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService) {
+        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService','SessionService',
+            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService) {
 
                 //function translate(key) {
                 //    $translate(key).then(function (translation) {
@@ -612,22 +612,6 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     else
                         msg = 'Are you sure that you will save it as quote?';
 
-                    swal({
-                        title: "Are you sure?",
-                        text: msg,
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes",
-                        cancelButtonText: 'No',
-                        closeOnConfirm: false,
-                        showLoaderOnConfirm: true
-                    }, function () {
-                        submitBooking(pay);
-                    });
-                };
-
-                function submitBooking(pay) {
                     var p = getBookParam(pay);
                     if (pay) {
                         if (p.PaymentInfo.ProfileID == '' || p.PaymentInfo.ProfileID == null) {
@@ -656,24 +640,51 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 return;
                             }
                         }
-                        $scope.bookDisabled = true;
                     }
 
                     // test on live
                     if (p.PaymentInfo.PaymentMethod == '')
                         p.PaymentInfo = null;
 
-                    ShoppingService.book(p).then(function (data) {
-                        ShoppingService.removeAll();
-                        $scope.bookDisabled = true;
-                        //$scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
-                        swal("Done!", "Book successfully.", "success");
-                    }, function (data) {
-                        //$scope.message = data.Message;
-                        swal("Error!", data.Message, "error");
-                        $scope.bookDisabled = false;
+                    swal({
+                        title: "Are you sure?",
+                        text: msg,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: 'No',
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                    }, function () {
+                        ShoppingService.book(p).then(function (data) {
+                            ShoppingService.removeAll();
+                            $scope.bookDisabled = true;
+                            //$scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
+                            //swal("Done!", "Book successfully.", "success");
+                            swal({
+                                title: "Done!",
+                                text: "Book successfully.",
+                                type: "success",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "Get Receipts",
+                                cancelButtonText: 'No',
+                                closeOnConfirm: true
+                            },function(isConfirm){
+                                if(isConfirm) {
+                                    $window.location.href = SessionService.config().webRoot + 'admin.html#/trips/current/' + data.TripId + '/' + SessionService.languageId() + "?newTrip=true";
+                                } else {
+                                    $scope.cancel();
+                                }
+                            });
+                        }, function (data) {
+                            //$scope.message = data.Message;
+                            swal("Error!", data.Message, "error");
+                            $scope.bookDisabled = false;
+                        });
                     });
-                }
+                };
 
                 $scope.years = [];
                 $scope.months = [];
