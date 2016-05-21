@@ -207,6 +207,19 @@ define(['app/services/services-service',
                     }
                 });
 
+
+                $scope.$watch('selectedSearchLocation', function(newVal, oldVal){
+                    if(newVal == oldVal)
+                        return;
+
+                    if(newVal) {
+                        $scope.selectedLocation = newVal.originalObject.ProductId;
+                        $scope.selectedLocationName = newVal.originalObject.Name;
+                        load(false);
+                    }
+
+                });
+
                 $scope.closeGuests = function(){
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                         $scope.showGuests = false;
@@ -292,15 +305,16 @@ define(['app/services/services-service',
                     }
                 }
 
-                function load() {
-                    loadSearchLocations();
+                function load(loadLocations) {
+                    if(loadLocations)
+                        loadSearchLocations();
                     if($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.searchServices();
                     else
                         loadAllServices($scope.selectedLocation);
                 }
 
-                load();
+                load(true);
 
             }]);
 });

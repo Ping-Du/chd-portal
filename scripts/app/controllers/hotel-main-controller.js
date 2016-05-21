@@ -250,6 +250,18 @@ define(['app/services/hotel-service',
                     }, 5000);
                 }
 
+                $scope.$watch('selectedSearchLocation', function(newVal, oldVal){
+                    if(newVal == oldVal)
+                        return;
+
+                    if(newVal) {
+                        $scope.selectedLocation = newVal.originalObject.ProductId;
+                        $scope.selectedLocationName = newVal.originalObject.Name;
+                        load(false);
+                    }
+
+                });
+
                 $scope.$watch('checkInDate', function(newVal, oldVal){
                     if(newVal == oldVal) {
                         return;
@@ -365,15 +377,16 @@ define(['app/services/hotel-service',
                     }
                 };
 
-                function load(){
-                    loadSearchLocations();
+                function load(loadLocations){
+                    if(loadLocations)
+                        loadSearchLocations();
                     if($scope.guests.length > 0 && $scope.checkInDate != "" && $scope.checkOutDate != "" && $scope.selectedLocation != null)
                         $scope.searchHotels();
                     else
                         loadAllHotels($scope.selectedLocation);
                 }
 
-               load();
+               load(true);
 
             }]);
 });

@@ -298,15 +298,29 @@ define(['app/services/package-service',
                     }
                 };
 
-                function load(){
-                    loadSearchLocations();
+
+                $scope.$watch('selectedSearchLocation', function(newVal, oldVal){
+                    if(newVal == oldVal)
+                        return;
+
+                    if(newVal) {
+                        $scope.selectedLocation = newVal.originalObject.ProductId;
+                        $scope.selectedLocationName = newVal.originalObject.Name;
+                        load(false);
+                    }
+
+                });
+
+                function load(loadLocations){
+                    if(loadLocations)
+                        loadSearchLocations();
                     if($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.searchPackages();
                     else
                         loadAllPackages($scope.selectedLocation);
                 }
 
-                load();
+                load(true);
 
             }]);
 });
