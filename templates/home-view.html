@@ -52,8 +52,8 @@
         <div class="container">
             <section class="thumbnail-part" data-ng-show="destinations.length > 0">
                 <header class="header-container">
-                    <div class="title position"><i class="icon-city"></i>
-
+                    <div class="title position">
+                        <!--<i class="icon-city"></i>-->
                         <h2>{{"DESTINATION"|translate}}</h2></div>
                     <div class="head-menu text-right">
                         <a data-ng-href="destinations.html#/{{languageId}}">{{"MORE"|translate}}</a>
@@ -168,12 +168,12 @@
                                 <!--
                                 <a data-ng-href="hotels.html#/{{item.Id}}/comment/{{languageId}}"><span>8.3</span>451 comments</a>
                                 -->
-                                <ul class="hotel">
-                                    <li>{{item.Location.Name}}</li>
+                                <!--<ul class="hotel">-->
+                                    <!--<li>{{item.Location.Name}}</li>-->
                                     <!--
                                     <li class="text-right price"><s class="aa">$200</s><span>$89.00</span></li>
                                     -->
-                                </ul>
+                                <!--</ul>-->
                             </div>
                         </div>
                     </div>
@@ -195,20 +195,72 @@
                     </div>
                 </header>
                 <div class="row">
-                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in shows">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in activities">
                         <div class="thumbnail">
-                            <a data-ng-href="services.html#/activities/{{item.ProductId}}/{{languageId}}">
+                            <a data-ng-href="{{item.DetailsURI}}">
                                 <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
                             </a>
 
                             <div class="caption">
-                                <ul class="ticket">
-                                    <li class="title"><h3><a
-                                            data-ng-href="services.html#/{{item.ProductId}}/{{languageId}}">{{item.Name}}</a>
-                                    </h3></li>
-                                    <!--<li class="text-right"><s>$120</s>-->
-                                    <!--<p class="price">$89.00</p></li>-->
-                                </ul>
+                                <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="thumbnail-part" >
+                <!--<div class="title">-->
+                <!--<i class="icon-show"></i>-->
+                <!--<h2>{{"SHOW"|translate}}</h2>-->
+                <!--</div>-->
+                <header class="header-container">
+                    <div class="title position"><i class="icon-city"></i>
+
+                        <h2>{{"TOURS"|translate}}</h2></div>
+                    <div class="head-menu">
+                        <a href data-ng-repeat="item in destinations" data-ng-click="loadTours(item)" data-ng-class="{active:(item == currentToursDestination)}">{{item.Name}}</a>
+                        <a href style="float:right" data-ng-click="showToursMainPage()">{{"MORE"|translate}} In '{{currentToursDestination.Name}}'</a>
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in tours">
+                        <div class="thumbnail">
+                            <a data-ng-href="{{item.DetailsURI}}">
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
+                            </a>
+
+                            <div class="caption">
+                                <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="thumbnail-part" >
+                <!--<div class="title">-->
+                <!--<i class="icon-show"></i>-->
+                <!--<h2>{{"SHOW"|translate}}</h2>-->
+                <!--</div>-->
+                <header class="header-container">
+                    <div class="title position"><i class="icon-ticket"></i>
+
+                        <h2>{{"PACKAGES"|translate}}</h2></div>
+                    <div class="head-menu">
+                        <a href data-ng-repeat="item in destinations" data-ng-click="loadPackages(item)" data-ng-class="{active:(item == currentPackagesDestination)}">{{item.Name}}</a>
+                        <a href style="float:right" data-ng-click="showPackagesMainPage()">{{"MORE"|translate}} In '{{currentPackagesDestination.Name}}'</a>
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" data-ng-repeat="item in packages">
+                        <div class="thumbnail">
+                            <a data-ng-href="{{item.DetailsURI}}">
+                                <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
+                            </a>
+
+                            <div class="caption">
+                                <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>
                             </div>
                         </div>
                     </div>

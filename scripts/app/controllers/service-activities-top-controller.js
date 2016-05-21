@@ -72,7 +72,7 @@ define(['app/services/services-service',
                     $scope.hotels = [];
                     $scope.currentDestination = destination;
                     ServicesService.getTopActivitiesByDestinationId(destination.ProductId).then(function(data){
-                        $scope.activities = _.first(data, 3);
+                        $scope.activities = data; // _.first(data, 3);
 
                         _.each($scope.activities, function(item){
                             item.DetailsURI = 'services.html#/activities/'+item.ProductId+'/'+$scope.languageId;

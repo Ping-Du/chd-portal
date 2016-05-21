@@ -2,13 +2,15 @@ define(['app/services/banner-service',
     'app/services/destination-service',
     'app/services/hotel-service',
     'app/services/services-service',
+    'app/services/package-service',
     'jssor.slider'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller("HomeController", ['$rootScope', '$scope', '$cookieStore', 'SessionService',
-            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService','$window',
-            function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService, $log, $location, LanguageService, $window) {
+            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService','$window','PackageService',
+            function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService,
+                      $log, $location, LanguageService, $window, PackageService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -59,6 +61,8 @@ define(['app/services/banner-service',
                         initSlider(fillSlideData(data));
                         $scope.loadHotels(data[0]);
                         $scope.loadActivities(data[0]);
+                        $scope.loadTours(data[0]);
+                        $scope.loadPackages(data[0]);
                     });
                 }
 
@@ -108,6 +112,53 @@ define(['app/services/banner-service',
                         Name:$scope.currentActivitiesDestination.Name
                     });
                     $window.location.href = $scope.webRoot + "services.html#/activities/"+$scope.languageId;
+                };
+
+                $scope.tours = [];
+                $scope.currentToursDestination = null;
+                $scope.loadTours = function(destination) {
+                    if(destination == $scope.currentToursDestination)
+                        return;
+
+                    $scope.tours = [];
+                    $scope.currentToursDestination = destination;
+                    ServicesService.getTopToursByDestinationId($scope.currentToursDestination.ProductId).then(function(data) {
+                        $scope.tours = _.first(data, 3);
+                        _.each($scope.tours, function(item){
+                            item.DetailsURI = 'services.html#/tours/'+item.ProductId+'/'+$scope.languageId;
+                            //item.starClass = "icon-star-" + (item.StarRating * 10);
+                        });
+                    });
+                };
+                $scope.showToursMainPage = function(){
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentToursDestination.ProductId,
+                        Name:$scope.currentToursDestination.Name
+                    });
+                    $window.location.href = $scope.webRoot + "services.html#/tours/"+$scope.languageId;
+                };
+
+                $scope.packages = [];
+                $scope.currentPackagesDestination = null;
+                $scope.loadPackages = function(destination) {
+                    if(destination == $scope.currentPackagesDestination)
+                        return;
+                    $scope.packages = [];
+                    $scope.currentPackagesDestination = destination;
+                    PackageService.getTopPackagesByDestinationId($scope.currentPackagesDestination.ProductId).then(function(data){
+                        $scope.packages = _.first(data, 3);
+                        _.each($scope.packages, function(item, index) {
+                            item.DetailsURI = 'packages.html#/' + item.ProductId + '/' + $scope.languageId;
+                        });
+                    });
+                };
+
+                $scope.showPackagesMainPage = function(){
+                    $cookieStore.put('forDestination', {
+                        ProductId:$scope.currentPackagesDestination.ProductId,
+                        Name:$scope.currentPackagesDestination.Name
+                    });
+                    $window.location.href = $scope.webRoot + "packages.html#/"+$scope.languageId;
                 };
 
 

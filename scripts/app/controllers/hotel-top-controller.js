@@ -57,7 +57,7 @@ define(['app/services/hotel-service',
                     $scope.hotels = [];
                     $scope.currentDestination = destination;
                     HotelService.getTopHotelsByDestinationId(destination.ProductId).then(function(data){
-                        $scope.hotels = _.first(data, 3);
+                        $scope.hotels = data; //_.first(data, 3);
 
                         _.each($scope.hotels, function(item){
                             item.DetailsURI = 'hotels.html#/'+item.ProductId+'/'+$scope.languageId;

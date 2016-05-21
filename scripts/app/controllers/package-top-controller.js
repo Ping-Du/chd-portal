@@ -57,9 +57,9 @@ define(['app/services/package-service',
                     $scope.packages = [];
                     $scope.currentDestination = destination;
                     PackageService.getTopPackagesByDestinationId(destination.ProductId).then(function(data){
-                        $scope.packages = _.first(data, 3);
+                        $scope.packages = data;
 
-                        _.each($scope.hotels, function(item){
+                        _.each($scope.packages, function(item){
                             item.DetailsURI = 'packages.html#/'+item.ProductId+'/'+$scope.languageId;
                             //item.starClass = "icon-star-" + (item.StarRating * 10);
                         });
