@@ -43,9 +43,9 @@ define(['app/services/services-service',
                 var criteria = $cookieStore.get('serviceCriteria');
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.guests = servicesDestination?{Adults:'0', MinorAges:[]}:(criteria?criteria.guests:{Adults:'0', MinorAges:[]});
+                $scope.guests = servicesDestination?{Adults:'2', MinorAges:[]}:(criteria?criteria.guests:{Adults:'2', MinorAges:[]});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
-                $scope.startDate = servicesDestination?"":(criteria?criteria.startDate:"");
+                $scope.startDate = (criteria?criteria.startDate:""); //servicesDestination?"":(criteria?criteria.startDate:"");
                 $scope.selectedLocation = servicesDestination?servicesDestination.ProductId:(criteria?criteria.locationId:null);
                 $scope.selectedLocationName = servicesDestination?servicesDestination.Name:(criteria?criteria.locationName:null);
                 $scope.selectedSearchLocation = null;
@@ -233,10 +233,10 @@ define(['app/services/services-service',
                         guests: $scope.guests
                     });
 
-                    if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
-                        loadAllServices();
-                        fillServices();
-                    } else {
+                    //if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 || $scope.startDate == '' ||  $scope.selectedLocation == null) {
+                    //    loadAllServices();
+                    //    fillServices();
+                    //} else {
 
                         if($scope.selectedLocation == null) {
                             showError("Please select a location!");
@@ -271,7 +271,7 @@ define(['app/services/services-service',
                             fillServices();
                         },function(){
                         });
-                    }
+                    //}
                 };
 
                 function loadAllServices(destinationId) {
@@ -294,7 +294,7 @@ define(['app/services/services-service',
 
                 function load() {
                     loadSearchLocations();
-                    if($scope.guests.Adults != '0' && $scope.guests.Adults != '')
+                    if($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.searchServices();
                     else
                         loadAllServices($scope.selectedLocation);

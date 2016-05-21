@@ -226,7 +226,7 @@ define(['app/services/package-service',
                         });
                     }
 
-                    if ($scope.guests.length > 0)
+                    if ($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.checkAvailability(reload);
                     else
                         loadPackage(reload);

@@ -36,7 +36,7 @@
                 <div class="service-detail-info">
                     <span class="caption">{{destinationItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span >{{destinationItem.AdditionalInformation[0].PlainText}}</span></a></div>
+                <div><a href onclick="scrollToControl('detail')"><span >{{destinationItem.MainInformation.PlainText|limitTo:500}} ...</span></a></div>
                 <br/>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
@@ -44,14 +44,14 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
-                    <a href onclick="scrollToControl('detail')" data-ng-show="destinationItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
+                    <!--<a href onclick="scrollToControl('detail')" data-ng-show="destinationItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
                     <a href onclick="scrollToControl('hotel')" data-ng-show="hotels.length > 0"><i class="glyphicon glyphicon-briefcase"></i>&nbsp;Hotels</a>
                     <a href onclick="scrollToControl('activities')" data-ng-show="activities.length > 0"><i class="glyphicon glyphicon-film"></i>&nbsp;Things To Do</a>
                     <a href onclick="scrollToControl('tours')" data-ng-show="tours.length > 0"><i class="glyphicon glyphicon-flag"></i>&nbsp;Tours</a>
                     <br><br>
                     <a href onclick="scrollToControl('transportation')" data-ng-show="transportation.length > 0"><i class="glyphicon glyphicon-road"></i>&nbsp;Transportation</a>
                     <a href onclick="scrollToControl('packages')" data-ng-show="packages.length > 0"><i class="glyphicon glyphicon-calendar"></i>&nbsp;Packages</a>
-                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
+                    <!--<a href onclick="scrollToControl('map')" data-ng-show="false"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>-->
                 </div>
                 <!--<div class="row">-->
                     <!--<div class="price-btn-part">-->
@@ -65,21 +65,21 @@
             <nav class="container">
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
-                    <li class="menu-item" data-ng-show="destinationItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">Detail</a></li>
+                    <li class="menu-item" data-ng-show="destinationItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{destinationItem.AdditionalInformation[0].Title}}</a></li>
                     <li class="menu-item" data-ng-show="hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
                     <li class="menu-item" data-ng-show="activities.length > 0"><a href onclick="scrollToControl('activities')">Things To Do</a></li>
                     <li class="menu-item" data-ng-show="tours.length > 0"><a href onclick="scrollToControl('tours')">Tours</a></li>
                     <li class="menu-item" data-ng-show="transportation.length > 0"><a href onclick="scrollToControl('transportation')">Transportation</a></li>
                     <li class="menu-item" data-ng-show="packages.length > 0"><a href onclick="scrollToControl('packages')">Packages</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                    <li class="menu-item" data-ng-show="false"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
             </nav>
         </div>
         <section class="detail-wrap" id="detail" data-ng-show="destinationItem.AdditionalInformation.length > 0">
-            <h3>{{"DETAIL"|translate}}</h3>
+            <h3>{{destinationItem.AdditionalInformation[0].Title}}</h3>
             <div class="content">
                 <!--<h4>{{item.Title}}</h4>-->
-                <p data-ng-bind-html="destinationItem.AdditionalInformation[1].FormattedText"></p>
+                <p data-ng-bind-html="destinationItem.AdditionalInformation[0].FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="hotel" data-ng-show="hotels.length > 0">
@@ -201,7 +201,7 @@
                 </div>
             </div>
         </section>
-        <section class="detail-wrap" id="map">
+        <section class="detail-wrap" id="map" data-ng-show="false">
             <h3>{{"LOCATION"|translate}}</h3>
             <div class="content">
                 <!--ui-map="myMap" ui-options="mapOptions"-->

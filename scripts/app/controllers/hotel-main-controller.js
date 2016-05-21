@@ -223,9 +223,17 @@ define(['app/services/hotel-service',
                 var criteria = $cookieStore.get('hotelCriteria');
                 var hotelDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.checkInDate = hotelDestination?"":(criteria?criteria.checkInDate:"");
-                $scope.checkOutDate = hotelDestination?"":(criteria?criteria.checkOutDate:"");
-                $scope.guests = hotelDestination?[]:(criteria?criteria.guests:[]);
+                $scope.checkInDate = (criteria?criteria.checkInDate:"");//hotelDestination?"":(criteria?criteria.checkInDate:"");
+                $scope.checkOutDate = (criteria?criteria.checkOutDate:""); //hotelDestination?"":(criteria?criteria.checkOutDate:"");
+                $scope.guests = hotelDestination?[{
+                    Adults: '2',
+                    Minors:'0',
+                    MinorAges: []
+                }]:(criteria?criteria.guests:[{
+                    Adults: '2',
+                    Minors:'0',
+                    MinorAges: []
+                }]);
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
                 $scope.selectedLocation = hotelDestination?hotelDestination.ProductId:(criteria?criteria.locationId:null);
                 $scope.selectedLocationName = hotelDestination?hotelDestination.Name:(criteria?criteria.locationName:null);
@@ -279,9 +287,9 @@ define(['app/services/hotel-service',
                         guests: $scope.guests
                     });
 
-                    if($scope.guests.length == 0) {
-                        loadAllHotels($scope.selectedLocation);
-                    } else {
+                    //if($scope.guests.length == 0 || $scope.checkInDate == "" && $scope.checkOutDate == "" && $scope.selectedLocation == null) {
+                    //    loadAllHotels($scope.selectedLocation);
+                    //} else {
 
                         if($scope.selectedLocation == null) {
                             showError("Please select a location!");
@@ -327,7 +335,7 @@ define(['app/services/hotel-service',
                         };
 
                         getAvailability(param);
-                    }
+                    //}
                 };
 
                 $scope.closeGuests = function(){
@@ -359,7 +367,7 @@ define(['app/services/hotel-service',
 
                 function load(){
                     loadSearchLocations();
-                    if($scope.guests.length > 0)
+                    if($scope.guests.length > 0 && $scope.checkInDate != "" && $scope.checkOutDate != "" && $scope.selectedLocation != null)
                         $scope.searchHotels();
                     else
                         loadAllHotels($scope.selectedLocation);

@@ -182,8 +182,17 @@ define(['app/services/package-service',
                 var criteria = $cookieStore.get('packageCriteria');
                 var packageDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.startDate = packageDestination?"":(criteria?criteria.startDate:"");
-                $scope.guests = packageDestination?[]:(criteria?criteria.guests:[]);
+                $scope.startDate = (criteria?criteria.startDate:"");//packageDestination?"":(criteria?criteria.startDate:"");
+                //$scope.guests = packageDestination?[]:(criteria?criteria.guests:[]);
+                $scope.guests = packageDestination?[{
+                    Adults: '2',
+                    Minors:'0',
+                    MinorAges: []
+                }]:(criteria?criteria.guests:[{
+                    Adults: '2',
+                    Minors:'0',
+                    MinorAges: []
+                }]);
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
                 $scope.selectedLocation = packageDestination?packageDestination.ProductId:(criteria?criteria.locationId:null);
                 $scope.selectedLocationName = packageDestination?packageDestination.Name:(criteria?criteria.locationName:null);
@@ -222,9 +231,9 @@ define(['app/services/package-service',
                         guests: $scope.guests
                     });
 
-                    if($scope.guests.length == 0) {
-                        loadAllPackages($scope.selectedLocation);
-                    } else {
+                    //if($scope.guests.length == 0) {
+                    //    loadAllPackages($scope.selectedLocation);
+                    //} else {
 
                         if($scope.selectedLocation == null) {
                             showError("Please select a location!");
@@ -259,7 +268,7 @@ define(['app/services/package-service',
                         };
 
                         getAvailability(param);
-                    }
+                    //}
                 };
 
                 $scope.closeGuests = function(){
@@ -291,7 +300,7 @@ define(['app/services/package-service',
 
                 function load(){
                     loadSearchLocations();
-                    if($scope.guests.length > 0)
+                    if($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.searchPackages();
                     else
                         loadAllPackages($scope.selectedLocation);

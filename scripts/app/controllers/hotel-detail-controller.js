@@ -34,7 +34,11 @@ define(['app/services/hotel-service',
                 $scope.searchLocations = [];
 
                 var criteria = $cookieStore.get('hotelCriteria');
-                $scope.guests = criteria?criteria.guests:[];
+                $scope.guests = criteria?criteria.guests:[{
+                    Adults: '2',
+                    Minors:'0',
+                    MinorAges: []
+                }];
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
                 $scope.checkInDate = criteria ? criteria.checkInDate : "";
                 $scope.checkOutDate = criteria ? criteria.checkOutDate : "";
@@ -220,7 +224,7 @@ define(['app/services/hotel-service',
                         });
                     }
 
-                    if ($scope.guests.length > 0 && !$routeParams.noAvailability)
+                    if ($scope.guests.length > 0 && $scope.checkInDate != "" && $scope.checkOutDate != "" && $scope.selectedLocation != null && !$routeParams.noAvailability)
                         $scope.checkAvailability(reload);
                     else
                         loadHotel(reload);

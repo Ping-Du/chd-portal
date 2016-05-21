@@ -47,7 +47,7 @@ define(['app/services/services-service',
                 $scope.searchLocations = [];
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria?criteria.guests:{Adults:'0', MinorAges:[]};
+                $scope.guests = criteria?criteria.guests:{Adults:'2', MinorAges:[]};
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 $scope.startDate = criteria ? criteria.startDate : "";
                 $scope.selectedLocation = criteria ? criteria.locationId : null;
@@ -182,10 +182,10 @@ define(['app/services/services-service',
                         guests: $scope.guests
                     });
 
-                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 || $routeParams.noAvailability )
-                        loadService(reload);
-                    else
+                    if($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
                         $scope.checkAvailability(reload);
+                    else
+                        loadService(reload);
                 }
 
                 $scope.addToShoppingCart = function (categoryIndex) {

@@ -97,8 +97,8 @@
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
                     <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Categories</a>
-                    <a href onclick="scrollToControl('detail')" data-ng-show="serviceItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>
-                    <a href onclick="scrollToControl('term')" data-ng-show="serviceItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Terms</a>
+                    <!--<a href onclick="scrollToControl('detail')" data-ng-show="serviceItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
+                    <a href onclick="scrollToControl('term')" data-ng-show="serviceItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{serviceItem.Warnings[0].Title}}</a>
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
                 </div>
                 <!--<div class="row">-->
@@ -114,8 +114,8 @@
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('category')">Categories</a></li>
-                    <li class="menu-item" data-ng-show="serviceItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">Detail</a></li>
-                    <li class="menu-item" data-ng-show="serviceItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">Terms</a></li>
+                    <li class="menu-item" data-ng-show="serviceItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{serviceItem.AdditionalInformation[1].Title}}</a></li>
+                    <li class="menu-item" data-ng-show="serviceItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{serviceItem.Warnings[0].Title}}</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
                 </ul>
             </nav>
@@ -163,14 +163,14 @@
             </div>
         </section>
         <section class="detail-wrap" id="detail" data-ng-show="serviceItem.AdditionalInformation.length > 0">
-            <h3>Detail</h3>
+            <h3>{{serviceItem.AdditionalInformation[1].Title}}</h3>
             <div class="content">
                 <!--<h4>{{item.Title}}</h4>-->
                 <p data-ng-bind-html="serviceItem.AdditionalInformation[1].FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="term" data-ng-show="serviceItem.Warnings.length > 0">
-            <h3>Terms</h3>
+            <h3>{{serviceItem.Warnings[0].Title}}</h3>
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-repeat="item in serviceItem.Warnings" data-ng-bind-html="item.FormattedText"></p>
