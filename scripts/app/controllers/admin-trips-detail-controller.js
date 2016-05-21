@@ -107,9 +107,11 @@ define(['app/services/account-service',
                         list.push(docItem.otherAddress);
                     }
                     DocumentService.sendDocByUrl(docItem.SendUri, list).then(function (data) {
-                        $window.alert('Request for sending document to your email address has been submitted!');
+                        //$window.alert('Request for sending document to your email address has been submitted!');
+                        swal("Success!", "Request for sending document to your email address has been submitted!", "success")
                     }, function () {
-                        $window.alert('There is an error when sending request!');
+                        //$window.alert('There is an error when sending request!');
+                        swal("Failed!", "There is an error while sending request!", "error");
                     });
                 };
 

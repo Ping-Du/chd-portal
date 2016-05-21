@@ -1,4 +1,4 @@
-define(['app/services/account-service', 'app/services/shopping-service', 'app/utils'], function (modules) {
+define(['app/services/account-service', 'app/services/shopping-service', 'sweetalert', 'app/utils'], function (modules) {
     'use strict';
     modules.controllers
         .controller('ShoppingCartModalController', ['$scope', '$uibModal', 'ShoppingService',
@@ -59,12 +59,12 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     },
                     Hotels: [],
                     Services: [],
-                    Packages:[],
+                    Packages: [],
                     Adults: 0,
                     Minors: 0,
                     HotelPrice: 0,
                     ServicePrice: 0,
-                    PackagePrice:0
+                    PackagePrice: 0
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -127,10 +127,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                     if (i == 0) {
                                         addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
                                     }
-                                        $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
-                                        if (k == 0)
-                                            $scope.bookingInfo.Hotels[i].Rooms[j].Guests.PrimaryGuestId = guestId;
-                                        guestId++;
+                                    $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
+                                    if (k == 0)
+                                        $scope.bookingInfo.Hotels[i].Rooms[j].Guests.PrimaryGuestId = guestId;
+                                    guestId++;
 
                                 }
                                 else {
@@ -138,8 +138,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                                     if (i == 0) {
                                         addEmptyGuest(guestId, false, room.Guests[k].Age, false);
                                     }
-                                        $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
-                                        guestId++;
+                                    $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
+                                    guestId++;
                                     //}
                                 }
                             }
@@ -157,23 +157,23 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         var pickUpPoint = null;
                         var dropOffPoint = null;
 
-                        for(k = 0; k < service.PickupPoints.length; k++) {
-                            if(service.PickupPoints[k].LocationId == service.PickupPoint) {
+                        for (k = 0; k < service.PickupPoints.length; k++) {
+                            if (service.PickupPoints[k].LocationId == service.PickupPoint) {
                                 pickUpPoint = {
-                                    LocationType:service.PickupPoints[k].LocationType,
-                                    LocationId:service.PickupPoint,
-                                    Time:''
+                                    LocationType: service.PickupPoints[k].LocationType,
+                                    LocationId: service.PickupPoint,
+                                    Time: ''
                                 };
                                 break;
                             }
                         }
 
-                        for(k = 0; k < service.DropoffPoints.length; k++) {
-                            if(service.DropoffPoints[k].LocationId == service.DropoffPoint) {
+                        for (k = 0; k < service.DropoffPoints.length; k++) {
+                            if (service.DropoffPoints[k].LocationId == service.DropoffPoint) {
                                 dropOffPoint = {
-                                        LocationType:service.DropoffPoints[k].LocationType,
-                                        LocationId:service.DropoffPoint,
-                                        Time:''
+                                    LocationType: service.DropoffPoints[k].LocationType,
+                                    LocationId: service.DropoffPoint,
+                                    Time: ''
                                 };
                                 break;
                             }
@@ -224,7 +224,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         }
                     }
 
-                    for(i = 0; i < $scope.shoppingItems.packages.length; i++) {
+                    for (i = 0; i < $scope.shoppingItems.packages.length; i++) {
                         var pkg = $scope.shoppingItems.packages[i].product;
                         var index = $scope.shoppingItems.packages[i].index;
                         var category = pkg.AvailabilityCategories[index];
@@ -234,35 +234,35 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             TripItemId: 0,
                             ProductType: pkg.ProductType,
                             ProductId: pkg.ProductId,
-                            Name:pkg.Name,
+                            Name: pkg.Name,
                             CategoryId: category.Id,
                             CategoryName: category.Name,
-                            EndDate:category.EndDate,
+                            EndDate: category.EndDate,
                             StartDate: category.StartDate,
                             Note: '',
                             AvailabilityLevel: category.AvailabilityLevel,
                             Price: category.Price,
                             Rooms: [],
-                            TransportationServices:[],
-                            Nights:category.Nights
+                            TransportationServices: [],
+                            Nights: category.Nights
                         });
-                        for(j = 0; j < category.Services.length; j++) {
+                        for (j = 0; j < category.Services.length; j++) {
                             $scope.bookingInfo.Packages[i].TransportationServices.push({
                                 //Sequence:(j+1),
                                 //ServiceTime:null,
                                 //TripItemId:null,
-                                Note:'',
+                                Note: '',
                                 Guests: {
                                     GuestIds: [],
                                     PrimaryGuestId: 1
                                 },
-                                ProductType:category.Services[j].ProductType,
-                                ProductId:category.Services[j].ProductId,
-                                CategoryId:category.Services[j].Category.Id,
-                                PickupPoint:category.Services[j].PickupPoint,
-                                DropoffPoint:category.Services[j].DropoffPoint,
-                                AvailabilityLevel:category.Services[j].AvailabilityLevel,
-                                StartDate:category.Services[j].StartDate
+                                ProductType: category.Services[j].ProductType,
+                                ProductId: category.Services[j].ProductId,
+                                CategoryId: category.Services[j].Category.Id,
+                                PickupPoint: category.Services[j].PickupPoint,
+                                DropoffPoint: category.Services[j].DropoffPoint,
+                                AvailabilityLevel: category.Services[j].AvailabilityLevel,
+                                StartDate: category.Services[j].StartDate
                             });
                         }
                         for (j = 0; j < category.Rooms.length; j++) {
@@ -330,8 +330,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
 
                 function setButtons() {
                     $scope.showPreviousBtn = ($scope.activeTabIndex > 0);
-                    $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0  || $scope.bookingInfo.Packages.length > 0));
-                    _.each($scope.tabs, function(item, index){
+                    $scope.showNextBtn = ($scope.activeTabIndex < 4 && ($scope.bookingInfo.Hotels.length > 0 || $scope.bookingInfo.Services.length > 0 || $scope.bookingInfo.Packages.length > 0));
+                    _.each($scope.tabs, function (item, index) {
                     });
                 }
 
@@ -355,7 +355,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                     for (var i = 0; i < $scope.bookingInfo.Guests.length; i++) {
                         var g = $scope.bookingInfo.Guests[i];
                         if (g.PrimaryGuest) {
-                            if(firstGuest) {
+                            if (firstGuest) {
                                 firstGuest = false;
                                 $scope.bookingInfo.PrimaryGuestName = g.LastName + ' ' + g.FirstName;
                             }
@@ -488,11 +488,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                         PaymentInfo: null,
                         Hotels: [],
                         Services: [],
-                        Packages:[]
+                        Packages: []
                     };
                     var i, j;
                     var hasPrimaryGuest = false;
-                    for(i = 0; i < $scope.bookingInfo.Guests.length; i++) {
+                    for (i = 0; i < $scope.bookingInfo.Guests.length; i++) {
                         var g = $scope.bookingInfo.Guests[i];
                         param.Guests.push({
                             GuestId: g.GuestId,
@@ -500,22 +500,22 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             LastName: g.LastName,
                             Title: g.Title,
                             Phone: g.Phone,
-                            Age: (g.Adult?null:parseInt(g.Age)),
+                            Age: (g.Adult ? null : parseInt(g.Age)),
                             PrimaryGuest: (g.PrimaryGuest && !hasPrimaryGuest)
                         });
-                        if(g.PrimaryGuest && !hasPrimaryGuest) {
+                        if (g.PrimaryGuest && !hasPrimaryGuest) {
                             hasPrimaryGuest = true;
                         }
                     }
-                    for(i = 0; i < $scope.bookingInfo.Hotels.length; i++) {
+                    for (i = 0; i < $scope.bookingInfo.Hotels.length; i++) {
                         var h = $scope.bookingInfo.Hotels[i];
                         param.Hotels.push({
                             RatePlanId: h.RatePlanId,
                             Nights: h.Nights,
-                           // TripItemId: (h.TripItemId==0?null: h.TripItemId),
+                            // TripItemId: (h.TripItemId==0?null: h.TripItemId),
                             ProductType: h.ProductType,
                             ProductId: h.ProductId,
-                            CategoryId:h.CategoryId,
+                            CategoryId: h.CategoryId,
                             StartDate: h.StartDate,
                             Note: h.Note,
                             AvailabilityLevel: h.AvailabilityLevel,
@@ -523,7 +523,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             Rooms: h.Rooms
                         });
                     }
-                    for(i = 0; i < $scope.bookingInfo.Services.length; i++) {
+                    for (i = 0; i < $scope.bookingInfo.Services.length; i++) {
                         var s = $scope.bookingInfo.Services[i];
                         var pick = null, drop = null;
                         param.Services.push({
@@ -541,7 +541,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             Guests: s.Guests
                         });
                     }
-                    for(i = 0; i < $scope.bookingInfo.Packages.length; i++) {
+                    for (i = 0; i < $scope.bookingInfo.Packages.length; i++) {
                         var pkg = $scope.bookingInfo.Packages[i];
                         param.Packages.push({
                             ProductType: pkg.ProductType,
@@ -552,50 +552,50 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                             AvailabilityLevel: pkg.AvailabilityLevel,
                             Price: pkg.Price,
                             Rooms: pkg.Rooms,
-                            TransportationServices:pkg.TransportationServices
+                            TransportationServices: pkg.TransportationServices
                         });
                         //for(j = 0; j < param.Packages[i].Rooms.length; j++) {
                         //    param.Packages[i].Rooms[j].
                         //}
-                        for(j = 0; j < param.Packages[i].TransportationServices.length; j++) {
-                            for(var k = 1; k <= param.Guests.length; k++) {
+                        for (j = 0; j < param.Packages[i].TransportationServices.length; j++) {
+                            for (var k = 1; k <= param.Guests.length; k++) {
                                 param.Packages[i].TransportationServices[j].Guests.GuestIds.push(k);
                             }
                         }
                     }
-                    if(paymentIncluded) {
+                    if (paymentIncluded) {
                         var p = $scope.bookingInfo.PaymentInfo;
-                            var profile = getProfile(p.ProfileId);
-                            param.PaymentInfo = {
-                                ProfileID: (profile ? p.ProfileId : null),
-                                PaymentMethod: (profile ? profile.PaymentMethod : p.PaymentMethod),
-                                CreditCardInfo: (p.PaymentMethod == 'CreditCard' ? p.CreditCardInfo : null),
-                                BankAccountInfo: (p.PaymentMethod == 'ECheck' ? p.BankAccountInfo : null),
-                                SaveInProfile: p.SaveInProfile
-                            };
+                        var profile = getProfile(p.ProfileId);
+                        param.PaymentInfo = {
+                            ProfileID: (profile ? p.ProfileId : null),
+                            PaymentMethod: (profile ? profile.PaymentMethod : p.PaymentMethod),
+                            CreditCardInfo: (p.PaymentMethod == 'CreditCard' ? p.CreditCardInfo : null),
+                            BankAccountInfo: (p.PaymentMethod == 'ECheck' ? p.BankAccountInfo : null),
+                            SaveInProfile: p.SaveInProfile
+                        };
                     }
                     return param;
                 }
 
                 function getProfile(profileId) {
-                    if(profileId == null)
+                    if (profileId == null)
                         return null;
 
-                    for(var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
-                        if(profileId == $scope.financeInfo.Profiles[i].ProfileID) {
+                    for (var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
+                        if (profileId == $scope.financeInfo.Profiles[i].ProfileID) {
                             return $scope.financeInfo.Profiles[i];
                         }
                     }
                     return null;
                 }
 
-                $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function(newValue, oldValue){
-                    if(newValue != null) {
+                $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function (newValue, oldValue) {
+                    if (newValue != null) {
                         var profile = getProfile(newValue);
                         $scope.bookingInfo.PaymentInfo.PaymentMethod = profile.PaymentMethod;
-                        if(profile.PaymentMethod == 'CreditCard') {
-                            var matches =  profile.Description.match(/\d+/g);
-                            if(matches != null && matches.length > 2) {
+                        if (profile.PaymentMethod == 'CreditCard') {
+                            var matches = profile.Description.match(/\d+/g);
+                            if (matches != null && matches.length > 2) {
                                 $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = parseInt(matches[2]) + 2000;
                                 $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = parseInt(matches[1]);
                             }
@@ -607,68 +607,85 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 $scope.bookAndPay = function (pay) {
                     $scope.message = '';
                     var msg;
-                    if(pay)
+                    if (pay)
                         msg = 'Are you sure that you will book and pay for these products?';
                     else
-                        msg = 'Are you going to save it as quote?';
-                    if ($window.confirm(msg)) {
-                        var p = getBookParam(pay);
-                        if(pay) {
-                            if(p.PaymentInfo.ProfileID == '' || p.PaymentInfo.ProfileID == null) {
-                                if(p.PaymentInfo.PaymentMethod == 'CreditCard') {
-                                    if(p.PaymentInfo.CreditCardInfo.CardNumber == '' || p.PaymentInfo.CreditCardInfo.CardCode == '' || p.PaymentInfo.CreditCardInfo.ExpirationYear == 0 || p.PaymentInfo.CreditCardInfo.ExpirationMonth == 0) {
-                                        $scope.message = 'Please fill out all information of credit card!';
-                                        return;
-                                    }
+                        msg = 'Are you sure that you will save it as quote?';
 
-                                    var now = new Date();
-                                    if(p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth()+1) {
-                                        $scope.message = 'Please fill valid year and month!';
-                                        return;
-                                    }
+                    swal({
+                        title: "Are you sure?",
+                        text: msg,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: 'No',
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                    }, function () {
+                        submitBooking(pay);
+                    });
+                };
+
+                function submitBooking(pay) {
+                    var p = getBookParam(pay);
+                    if (pay) {
+                        if (p.PaymentInfo.ProfileID == '' || p.PaymentInfo.ProfileID == null) {
+                            if (p.PaymentInfo.PaymentMethod == 'CreditCard') {
+                                if (p.PaymentInfo.CreditCardInfo.CardNumber == '' || p.PaymentInfo.CreditCardInfo.CardCode == '' || p.PaymentInfo.CreditCardInfo.ExpirationYear == 0 || p.PaymentInfo.CreditCardInfo.ExpirationMonth == 0) {
+                                    $scope.message = 'Please fill out all information of credit card!';
+                                    return;
                                 }
-                                if(p.PaymentInfo.PaymentMethod == 'ECheck') {
-                                    if(p.PaymentInfo.BankAccountInfo.BankAccountNumber == '' || p.PaymentInfo.BankAccountInfo.NameOnAccount == '' || p.PaymentInfo.BankAccountInfo.RoutingNumber == '') {
-                                        $scope.message = 'Please fill out all information of bank account!';
-                                        return;
-                                    }
-                                }
-                            } else {
-                                var profile = getProfile(p.PaymentInfo.ProfileID);
-                                if(p.PaymentInfo.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
-                                    $scope.message = "Please fill out card code!";
+
+                                var now = new Date();
+                                if (p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth() + 1) {
+                                    $scope.message = 'Please fill valid year and month!';
                                     return;
                                 }
                             }
-                            $scope.bookDisabled = true;
+                            if (p.PaymentInfo.PaymentMethod == 'ECheck') {
+                                if (p.PaymentInfo.BankAccountInfo.BankAccountNumber == '' || p.PaymentInfo.BankAccountInfo.NameOnAccount == '' || p.PaymentInfo.BankAccountInfo.RoutingNumber == '') {
+                                    $scope.message = 'Please fill out all information of bank account!';
+                                    return;
+                                }
+                            }
+                        } else {
+                            var profile = getProfile(p.PaymentInfo.ProfileID);
+                            if (p.PaymentInfo.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
+                                $scope.message = "Please fill out card code!";
+                                return;
+                            }
                         }
-
-                        // test on live
-                        if(p.PaymentInfo.PaymentMethod == '')
-                            p.PaymentInfo = null;
-
-                        ShoppingService.book(p).then(function(data){
-                            ShoppingService.removeAll();
-                            $scope.bookDisabled = true;
-                            $scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
-                        }, function(data){
-                            $scope.message = data.Message;
-                            $scope.bookDisabled = false;
-                        });
+                        $scope.bookDisabled = true;
                     }
-                };
+
+                    // test on live
+                    if (p.PaymentInfo.PaymentMethod == '')
+                        p.PaymentInfo = null;
+
+                    ShoppingService.book(p).then(function (data) {
+                        ShoppingService.removeAll();
+                        $scope.bookDisabled = true;
+                        //$scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
+                        swal("Done!", "Book successfully.", "success");
+                    }, function (data) {
+                        //$scope.message = data.Message;
+                        swal("Error!", data.Message, "error");
+                        $scope.bookDisabled = false;
+                    });
+                }
 
                 $scope.years = [];
                 $scope.months = [];
 
                 $scope.financeInfo = null;
                 function loadFinanceInfo() {
-                    AccountService.getFinanceInfo().then(function(data){
+                    AccountService.getFinanceInfo().then(function (data) {
                         $scope.financeInfo = data;
                         $scope.financeInfo.Profiles.unshift({
-                            ProfileID:null,
+                            ProfileID: null,
                             PaymentMethod: '',
-                            Description:'Please select'
+                            Description: 'Please select'
                         });
                         $scope.selectedProfile = data.Profiles[0];
                     });
@@ -677,11 +694,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'app/ut
                 function load() {
                     var year = (new Date()).getFullYear();
                     var i;
-                    for(i = 0; i < 10; i++) {
-                        $scope.years.push(year+i);
+                    for (i = 0; i < 10; i++) {
+                        $scope.years.push(year + i);
                     }
-                    for(i = 0; i < 12; i++) {
-                        $scope.months.push(1+i);
+                    for (i = 0; i < 12; i++) {
+                        $scope.months.push(1 + i);
                     }
                     loadFinanceInfo();
                 }

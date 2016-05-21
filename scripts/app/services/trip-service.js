@@ -38,7 +38,7 @@ define(['app/services/session-service'], function (modules) {
                     return invoke('/quotes/agency?includeCancelled='+includeCancelled, 'GET');
                 },
                 saveBooking:function(bookingData){
-                    return invoke('/bookings/save', 'POST', bookingData);
+                    return invoke('/bookings/save', 'POST', bookingData, null, false);
                 },
                 cancelBooking:function(bookingData){
                     return invoke('/cancel', 'DELETE', bookingData, { "Content-Type": "application/json;charset=UTF-8"}, false);
