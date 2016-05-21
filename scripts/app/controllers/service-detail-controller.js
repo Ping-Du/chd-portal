@@ -67,11 +67,13 @@ define(['app/services/services-service',
                 }
 
                 $scope.showGuests = false;
+                $scope.showGuests1 = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
 
                 $scope.closeGuests = function () {
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     $scope.showGuests = false;
+                    $scope.showGuests1 = false;
                     $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
 

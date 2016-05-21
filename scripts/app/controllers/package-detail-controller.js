@@ -55,11 +55,13 @@ define(['app/services/package-service',
                 }
 
                 $scope.showGuests = false;
+                $scope.showGuests1 = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 
 
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
+                    $scope.showGuests1 = false;
                     $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
                 };
 
