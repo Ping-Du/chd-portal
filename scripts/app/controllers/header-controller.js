@@ -2,8 +2,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading',
-            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading) {
+        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService',
+            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService) {
                 $scope.showLanguage = HeaderService.showLanguage;
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
@@ -13,12 +13,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
 
-                var isSearchPage = false;
-
-                //if($location.search().keyword)
-                //    isSearchPage = true;
-                //else
-                //    isSearchPage = false;
+                var isSearchPage = ($location.search().keyword?true:false);
 
                 $scope.search = function () {
                     var word = $scope.keyword.Trim();
@@ -56,8 +51,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.showSearchResult = false;
                 //$scope.searchResultTemplateUrl = "templates/partials/search-result-popover.html";//"GuestsTemplate.html";
                 $scope.onClick = function (e) {
-                    if(isSearchPage)
-                        return;
+                    //if(isSearchPage)
+                    //    return;
 
                     $scope.showSearchResult = true;
 
@@ -77,7 +72,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.activities = [];
 
                 $scope.$watch('keyword', function (newValue, oldValue, scope) {
-                    if(isSearchPage || newValue == oldValue)
+                    //if(isSearchPage || newValue == oldValue)
+                        if(newValue == oldValue)
                         return;
 
                     $scope.destinations = [];
@@ -120,6 +116,11 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                             }
 
                         });
+
+                        localStorageService.remove('searchResult');
+                        //if(!isSearchPage) {
+                            localStorageService.set('searchResult', $scope.results);
+                        //}
                     }, function (data) {
                         //$loading.finish('search-loading');
                     });

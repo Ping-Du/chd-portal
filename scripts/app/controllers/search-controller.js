@@ -3,8 +3,8 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
 
     modules.controllers
         .controller("SearchController", ['$rootScope', '$scope',
-            '$location', '$routeParams',  'SessionService', 'LanguageService', 'SearchService',
-            function ($rootScope, $scope, $location, $routeParams, SessionService, LanguageService, SearchService) {
+            '$location', '$routeParams',  'SessionService', 'LanguageService', 'SearchService','localStorageService',
+            function ($rootScope, $scope, $location, $routeParams, SessionService, LanguageService, SearchService, localStorageService) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -15,7 +15,9 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
 
-                $scope.results = null;
+                //var searchResult = localStorageService.get('searchResult');
+                $scope.results = localStorageService.get('searchResult');
+                localStorageService.remove('searchResult');
 
                 console.log('keyword:'+$routeParams.keyword);
 
@@ -29,6 +31,9 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                                     _.extend(item, {starClass:"icon-star-lg-" + item.StarRating * 10});
                                 } else if(item.ProductType == 'OPT') {
                                     item.DetailsURI = 'services.html#/' + getServiceType(item.ServiceType.Id) + '/' + item.ProductId + '/' + $scope.languageId;
+                                } else if (item.ProductType == 'CTY') {
+                                    item.DetailsURI = 'destinations.html#/' + item.ProductId + '/' + $scope.languageId;
+                                    _.extend(item, {showName: 'City'});
                                 }
                                 $scope.results.push(item);
                             });
@@ -43,7 +48,8 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                     }
                 });
 
-                load();
+                if(!$scope.results)
+                    load();
 
             }]);
 

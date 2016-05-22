@@ -8,7 +8,8 @@ define(['app/services/trip-service'], function (modules) {
             if (hasShoppingItems) {
                 shoppingItems = localStorageService.get('shoppingItems');
             } else {
-                localStorageService.clearAll();
+                //localStorageService.clearAll();
+                localStorageService.remove('shoppingItems');
             }
             if (!shoppingItems)
                 shoppingItems = {
@@ -40,7 +41,8 @@ define(['app/services/trip-service'], function (modules) {
                     } else {
                         return;
                     }
-                    localStorageService.clearAll();
+                    //localStorageService.clearAll();
+                    localStorageService.remove('shoppingItems');
                     localStorageService.set('shoppingItems', shoppingItems);
                     $cookieStore.put('hasShoppingItems', true);
                 },
@@ -55,11 +57,13 @@ define(['app/services/trip-service'], function (modules) {
                         return;
                     }
                     //localStorageService.clearAll();
+                    localStorageService.remove('shoppingItems');
                     localStorageService.set('shoppingItems', shoppingItems);
                     $cookieStore.put('hasShoppingItems', (shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length) > 0);
                 },
                 removeAll: function () {
-                    localStorageService.clearAll();
+                    //localStorageService.clearAll();
+                    localStorageService.remove('shoppingItems');
                     $cookieStore.put('hasShoppingItems', false);
                     shoppingItems.hotels = [];
                     shoppingItems.services = [];
