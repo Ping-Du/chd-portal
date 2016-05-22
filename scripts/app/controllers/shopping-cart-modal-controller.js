@@ -25,8 +25,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     $scope.open();
                 });
             }])
-        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService','SessionService',
-            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService) {
+        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService','SessionService','$timeout',
+            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService, $timeout) {
 
                 //function translate(key) {
                 //    $translate(key).then(function (translation) {
@@ -340,10 +340,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
 
                 $scope.tabs = [
                     {active: true, disabled: false},
-                    {active: false, disabled: true},
-                    {active: false, disabled: true},
-                    {active: false, disabled: true},
-                    {active: false, disabled: true}
+                    {active: false, disabled: false},
+                    {active: false, disabled: false},
+                    {active: false, disabled: false},
+                    {active: false, disabled: false}
                 ];
 
                 function calShowName() {
@@ -396,17 +396,69 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     reCalculateGuestId();
                 };
 
+                $scope.selectTab = function(tabIndex) {
+                    var i = 0;
+                    var count;
+                  if(tabIndex > $scope.activeTabIndex) {
+                      count = tabIndex - $scope.activeTabIndex;
+                      for(i = 0; i < count ; i++) {
+                          if (!$scope.next()) {
+                              //$scope.tabs[$scope.activeTabIndex].active = true;
+                              //$scope.tabs[tabIndex].active = false;
+                              $timeout(function(){
+                                  $scope.tabs[$scope.activeTabIndex].active = true;
+                                  $scope.tabs[tabIndex].active = false;
+                              }, 500);
+                              return;
+                          }
+                      }
+                  }  else if(tabIndex < $scope.activeTabIndex) {
+                      count = $scope.activeTabIndex - tabIndex;
+                      for(i = 0; i < count; i++) {
+                          $scope.previous();
+                      }
+                  }
+                };
+
                 $scope.previous = function () {
                     if ($scope.activeTabIndex == 1) {
                         calShowName();
                     }
                     $scope.message = '';
-                    $scope.tabs[$scope.activeTabIndex].disabled = true;
+                    //$scope.tabs[$scope.activeTabIndex].disabled = true;
                     $scope.tabs[$scope.activeTabIndex].active = false;
                     $scope.activeTabIndex = $scope.activeTabIndex - 1;
-                    $scope.tabs[$scope.activeTabIndex].disabled = false;
+                    //$scope.tabs[$scope.activeTabIndex].disabled = false;
                     $scope.tabs[$scope.activeTabIndex].active = true;
                     setButtons();
+                };
+
+                $scope.next = function () {
+                    if ($scope.activeTabIndex == 1) {
+                        if (!calShowName()) {
+                            $scope.message = "Please fill out all lead names";
+                            return false;
+                        }
+                    }
+                    if ($scope.activeTabIndex == 2) {
+                        if (!checkGuestAssignment()) {
+                            $scope.message = "Please assign all guests!";
+                            return false;
+                        }
+                    }
+
+
+                    $scope.message = '';
+                    //$scope.tabs[$scope.activeTabIndex].disabled = true;
+                    $scope.tabs[$scope.activeTabIndex].active = false;
+                    $scope.activeTabIndex = $scope.activeTabIndex + 1;
+                    //$scope.tabs[$scope.activeTabIndex].disabled = false;
+                    $scope.tabs[$scope.activeTabIndex].active = true;
+                    //if($scope.tabs.length > $scope.activeTabIndex + 1) {
+                    //    $scope.tabs[$scope.activeTabIndex+1].disabled = false;
+                    //}
+                    setButtons();
+                    return true;
                 };
 
                 $scope.message = '';
@@ -454,29 +506,6 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     return true;
                 }
 
-                $scope.next = function () {
-                    if ($scope.activeTabIndex == 1) {
-                        if (!calShowName()) {
-                            $scope.message = "Please fill out all lead names";
-                            return;
-                        }
-                    }
-                    if ($scope.activeTabIndex == 2) {
-                        if (!checkGuestAssignment()) {
-                            $scope.message = "Please assign all guests!";
-                            return;
-                        }
-                    }
-
-
-                    $scope.message = '';
-                    $scope.tabs[$scope.activeTabIndex].disabled = true;
-                    $scope.tabs[$scope.activeTabIndex].active = false;
-                    $scope.activeTabIndex = $scope.activeTabIndex + 1;
-                    $scope.tabs[$scope.activeTabIndex].disabled = false;
-                    $scope.tabs[$scope.activeTabIndex].active = true;
-                    setButtons();
-                };
 
                 //$scope.selectedProfile = null;
                 function getBookParam(paymentIncluded) {

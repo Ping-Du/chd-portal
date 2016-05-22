@@ -20,8 +20,8 @@
                     <h4>Booking Information</h4>
                 </div>
                 <div class="modal-body">
-                    <uib-tabset justified="true">
-                        <uib-tab index="0" heading="Products" active="tabs[0].active" disable="tabs[0].disabled">
+                    <uib-tabset justified="true" active="">
+                        <uib-tab index="0" heading="Products" active="tabs[0].active" disable="tabs[0].disabled" select="selectTab(0)">
                             <div class="uibtab-info">
                                 <div data-ng-show="shoppingItems.hotels.length > 0">
                                     <table class="table table-striped">
@@ -127,7 +127,8 @@
                                 <h3 class="text-info">Your cart is currently empty</h3>
                             </div>
                         </uib-tab>
-                        <uib-tab index="1" heading="Names & Details" active="tabs[1].active" disable="tabs[1].disabled">
+                        <!--disable="tabs[1].disabled"-->
+                        <uib-tab index="1" heading="Names & Details" active="tabs[1].active" select="selectTab(1)">
                             <div style="padding-top: 5px;">
                                 <div class="form-inline form-group">
                                     <label>Client Reference: &nbsp;</label><input type="text"
@@ -206,7 +207,8 @@
                             </div>
                             <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
-                        <uib-tab index="2" heading="Assignments" active="tabs[2].active" disable="tabs[2].disabled">
+                        <!--disable="tabs[2].disabled"-->
+                        <uib-tab index="2" heading="Assignments" active="tabs[2].active" disable="tabs[2].disabled" select="selectTab(2)">
                             <div style="padding-top: 5px;" class="text-info">
                                 Assignments are made automatically based on the names entered in the 'Names and Details'
                                 screen. Please review and change accordingly.
@@ -312,7 +314,7 @@
                             </div>
                             <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
-                        <uib-tab index="3" heading="Review" active="tabs[3].active" disable="tabs[3].disabled">
+                        <uib-tab index="3" heading="Review" active="tabs[3].active" disable="tabs[3].disabled" select="selectTab(3)">
                             <div class="uibtab-info" style="margin-top: 5px;">
                                 <strong>Guests - Total: {{bookingInfo.Guests.length}} Adult(s): {{bookingInfo.Adults}}
                                     Minor(s): {{bookingInfo.Minors}}</strong>
@@ -348,7 +350,7 @@
                             <div class="text-right" style="color:red;"><strong>Grand Total: ${{(bookingInfo.ServicePrice
                                 + bookingInfo.HotelPrice + bookingInfo.PackagePrice) | number:2}}</strong></div>
                         </uib-tab>
-                        <uib-tab index="4" heading="Pay" active="tabs[4].active" disable="tabs[4].disabled">
+                        <uib-tab index="4" heading="Pay" active="tabs[4].active" disable="tabs[4].disabled" select="selectTab(4)">
                             <div class="uibtab-info" style="margin-top: 5px;">
                                 <div class="form-group form-inline">
                                     <label>Payment Profile: </label>
@@ -398,7 +400,7 @@
                 </div>
                 <div class="modal-footer text-right">
                     <button type="button" class="btn btn-primary btn-sm" data-ng-click="previous()"
-                            data-ng-disabled="!showPreviousBtn">Previous
+                            data-ng-disabled="!showPreviousBtn" data-ng-show="!tabs[0].active">Previous
                     </button>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-click="next()"
                             data-ng-disabled="!showNextBtn" data-ng-show="!tabs[4].active">Next
