@@ -1,7 +1,8 @@
 define(['app/services/trip-service'], function (modules) {
     'use strict';
     modules.services
-        .service('ShoppingService', ['$cookieStore', 'localStorageService', 'TripService', function ($cookieStore, localStorageService, TripService) {
+        .service('ShoppingService', ['$cookieStore', 'localStorageService', 'TripService', '$rootScope',
+            function ($cookieStore, localStorageService, TripService, $rootScope) {
 
             var hasShoppingItems = $cookieStore.get('hasShoppingItems');
             var shoppingItems = null;
@@ -45,6 +46,7 @@ define(['app/services/trip-service'], function (modules) {
                     localStorageService.remove('shoppingItems');
                     localStorageService.set('shoppingItems', shoppingItems);
                     $cookieStore.put('hasShoppingItems', true);
+                    $rootScope.$broadcast('ShoppingItemList:Show');
                 },
                 removeItem: function (type, index) {
                     if (type == 'HTL') {
@@ -60,6 +62,7 @@ define(['app/services/trip-service'], function (modules) {
                     localStorageService.remove('shoppingItems');
                     localStorageService.set('shoppingItems', shoppingItems);
                     $cookieStore.put('hasShoppingItems', (shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length) > 0);
+                    $rootScope.$broadcast('ShoppingItemList:Show');
                 },
                 removeAll: function () {
                     //localStorageService.clearAll();
@@ -68,6 +71,7 @@ define(['app/services/trip-service'], function (modules) {
                     shoppingItems.hotels = [];
                     shoppingItems.services = [];
                     shoppingItems.packages = [];
+                    $rootScope.$broadcast('ShoppingItemList:Show');
 
                 },
                 book: function (param) {

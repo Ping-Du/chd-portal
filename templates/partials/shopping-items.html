@@ -1,0 +1,100 @@
+<div class="shopping-float-bar" data-ng-controller="ShoppingItemsController" data-ng-show="show">
+    <div class="list-wrapper">
+        <div >
+            <table class="table table-list" >
+                <thead>
+                    <tr>
+                        <td>Type</td>
+                        <td>Product</td>
+                        <td>Category</td>
+                        <td>Start Date</td>
+                        <td>Nights</td>
+                        <td>End Date</td>
+                        <td>Travelers</td>
+                        <td>Rate</td>
+                        <td>Status</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in shoppingItems.hotels">
+                        <td>Hotel</td>
+                        <td>{{item.product.Name}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
+                        <td>{{item.product.StartDate|limitTo:10}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Rooms[0].Nights.length}}</td>
+                        <td>{{item.product.EndDate|limitTo:10}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Rooms[0].Guests.length}}</td>
+                        <td>${{item.product.AvailabilityCategories[item.index].Price| number:2}}</td>
+                        <td>
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:#99cc33;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Available'"></span>
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="color:#ffcc00;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Requestable'"></span>
+                        </td>
+                        <td>
+                            <a href data-ng-click="removeItem('HTL', $index)">
+                                <i class="glyphicon glyphicon-remove main-red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="item in shoppingItems.services">
+                        <td>Service</td>
+                        <td>{{item.product.Name}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
+                        <td>{{item.product.StartDate|limitTo:10}}</td>
+                        <td></td>
+                        <td>{{item.product.EndDate|limitTo:10}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Guests.length}}</td>
+                        <td>${{item.product.AvailabilityCategories[item.index].Price| number:2}}</td>
+                        <td>
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:#99cc33;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Available'"></span>
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="color:#ffcc00;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Requestable'"></span>
+                        </td>
+                        <td>
+                            <a href data-ng-click="removeItem('OPT', $index)">
+                                <i class="glyphicon glyphicon-remove main-red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="item in shoppingItems.packages">
+                        <td>Package</td>
+                        <td>{{item.product.Name}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].StartDate|limitTo:10}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Nights.length}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].EndDate|limitTo:10}}</td>
+                        <td>{{item.product.AvailabilityCategories[item.index].Guests.length}}</td>
+                        <td>${{item.product.AvailabilityCategories[item.index].Price| number:2}}</td>
+                        <td>
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:#99cc33;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Available'"></span>
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="color:#ffcc00;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Requestable'"></span>
+                        </td>
+                        <td>
+                            <a href data-ng-click="removeItem('PKG', $index)">
+                                <i class="glyphicon glyphicon-remove main-red"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr data-ng-show="totalPrice > 0">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">Total:</td>
+                        <td class="text-red">${{totalPrice| number:2}}</td>
+                        <td>
+                            <a href data-ng-click="checkOut()" style="font-weight: bold;">Check Out</a>
+                            <!--<button type="button" class="button btn-sm btn-red" data-ng-click="checkOut()">Check Out</button>-->
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center" style="margin-top: 10px;" data-ng-show="totalPrice == 0">
+                <h4 class="text-info">Your cart is currently empty</h4>
+            </div>
+        </div>
+        <span class="icon-close2" data-ng-click="close()"></span>
+    </div>
+</div>

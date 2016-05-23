@@ -1,6 +1,7 @@
 define(['app/services/navbar-service',
     'app/services/session-service',
-    'app/controllers/shopping-cart-modal-controller'], function (modules) {
+    'app/controllers/shopping-cart-modal-controller',
+    'app/controllers/shopping-items-controller'], function (modules) {
     'use strict';
 
     modules.controllers
@@ -36,6 +37,10 @@ define(['app/services/navbar-service',
 
             $scope.openShoppingCart = function() {
                 $rootScope.$broadcast('ShoppingCart:Open');
+            };
+
+            $scope.openShoppingItemList = function() {
+                $rootScope.$broadcast('ShoppingItemList:Show', true);
             };
 
             $scope.$on('ShoppingCart:Animate', function(event){

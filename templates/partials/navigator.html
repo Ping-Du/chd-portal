@@ -1,7 +1,7 @@
 <div class="line"></div>
 <nav class="navbar-default" role="navigation">
     <div class="container relative" data-ng-controller="NavbarController">
-        <div class="shopping-car" data-ng-show="isAuthorized" data-ng-click="openShoppingCart()">
+        <div class="shopping-car" data-ng-show="isAuthorized" data-ng-click="openShoppingItemList()">
             <i class="icon-cart"></i>
             <span id='shopping-cart' class="s-car-amount"
                   data-ng-show="shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length > 0">{{shoppingItems.hotels.length + shoppingItems.services.length + shoppingItems.packages.length}}</span>
