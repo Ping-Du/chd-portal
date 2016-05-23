@@ -133,6 +133,7 @@ define(['app/services/hotel-service',
                 $scope.hotelItem = null;
                 $scope.showMap = false;
                 function loadHotel(reload) {
+                    $scope.showNotAvailable = false;
                     HotelService.getHotelDetail($routeParams.hotelId).then(function (data) {
                         $scope.hotelItem = data;
                         $scope.selectedLocation = data.Location.Id;
@@ -143,6 +144,7 @@ define(['app/services/hotel-service',
                     });
                 }
 
+                $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
 
                     if ($scope.checkInDate == "") {
@@ -174,6 +176,8 @@ define(['app/services/hotel-service',
 
                     //check availability
 
+                    $scope.showNotAvailable = false;
+
                     var param = {
                         Nights: DayDiff(new Date(checkInDate), new Date(checkOutDate)),
                         RatePlanId: null,
@@ -188,6 +192,10 @@ define(['app/services/hotel-service',
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];
+                            if(data[0].AvailabilityCategories.length == 0) {
+                                $scope.showNotAvailable = true;
+                            }
+
                             clearEmptyAddress(data[0].Address);
                             if(!reload)
                                 doAdditionalProcess(data[0]);
@@ -196,6 +204,7 @@ define(['app/services/hotel-service',
                             scrollToControl('category');
                         }
                     }, function () {
+                        $scope.showNotAvailable = true;
                     });
 
                 };

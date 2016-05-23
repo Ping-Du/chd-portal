@@ -697,7 +697,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 type: "success",
                                 showCancelButton: true,
                                 confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "Get Receipts",
+                                confirmButtonText: "Send Documents",
                                 cancelButtonText: 'No',
                                 closeOnConfirm: true
                             },function(isConfirm){

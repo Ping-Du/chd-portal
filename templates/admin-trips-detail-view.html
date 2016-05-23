@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </uib-tab>
-                <uib-tab index="4" heading="Documents" data-ng-show="showCancelBtn" active="newTrip">
+                <uib-tab index="4" heading="Documents"  active="newTrip">
                     <div class="uibtab-info row">
                         <div class="col-md-12"><h3>Available Documents</h3></div>
                         <table class="table-bordered table table-striped">
@@ -149,7 +149,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="doc in trip.DocTypes">
+                            <tr data-ng-repeat="doc in trip.DocTypes" data-ng-show="showCancelBtn || (!showCancelBtn && doc.Name != 'Service vouchers')">
                                 <td>{{doc.Name}}</td>
                                 <td>
                                     <!--<select class="form-control-sm" data-ng-model="trip.DocTypes[$index].type">-->

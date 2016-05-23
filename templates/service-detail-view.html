@@ -36,7 +36,7 @@
                        popover-trigger="none" popover-placement="bottom">
             </div>
             <div class="col-md-1 relative">
-                <a href data-ng-click="checkAvailability(true)" uib-tooltip="{{tooltips}}"
+                <a href data-ng-click="load(true)" uib-tooltip="{{tooltips}}"
                    tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
                    tooltip-trigger="none"><i class="icon-search"></i></a>
             </div>
@@ -143,7 +143,9 @@
                                    popover-trigger="none" popover-placement="bottom">
                         </div>
                         <div class="form-group pos-button">
-                            &nbsp;&nbsp;<a href data-ng-click="checkAvailability(true)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                            &nbsp;&nbsp;<a href data-ng-click="checkAvailability(true)" uib-tooltip="{{tooltips}}"
+                                           tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
+                                           tooltip-trigger="none"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
                         </div>
                     </form>
                 </div>
@@ -181,7 +183,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="text-center" data-ng-show="!serviceItem.AvailabilityCategories || serviceItem.AvailabilityCategories.length == 0">
+                        <div class="text-center" data-ng-show="showNotAvailable">
                             <h3 class="text-info">Product is not available</h3>
                         </div>
                     </div>

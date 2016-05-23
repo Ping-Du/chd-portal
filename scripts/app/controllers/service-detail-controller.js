@@ -119,6 +119,7 @@ define(['app/services/services-service',
                 $scope.serviceItem = null;
                 $scope.showMap = false;
                 function loadService(reload) {
+                    $scope.showNotAvailable = false;
                     ServicesService.getServiceDetail($routeParams.serviceId).then(function (data) {
                         $scope.serviceItem = data;
                         $scope.selectedLocation = data.Location.Id;
@@ -129,6 +130,7 @@ define(['app/services/services-service',
                     });
                 }
 
+                $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
 
                     if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 ){
@@ -160,9 +162,13 @@ define(['app/services/services-service',
                         Guests: GuestsToServiceCriteria($scope.guests)
                     };
 
+                    $scope.showNotAvailable = false;
                     ServicesService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.serviceItem = data[0];
+                            if(data[0].AvailabilityCategories.length == 0) {
+                                $scope.showNotAvailable = true;
+                            }
                             clearEmptyAddress(data[0].Address);
                             if (!reload)
                                 doAdditionalProcess(data[0]);
@@ -171,6 +177,7 @@ define(['app/services/services-service',
                             scrollToControl('category');
                         }
                     }, function () {
+                        $scope.showNotAvailable = true;
                     });
 
                 };

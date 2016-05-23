@@ -111,6 +111,7 @@ define(['app/services/package-service',
                 $scope.allPackages = [];
                 $scope.showMap = false;
                 function loadPackage(reload) {
+                    $scope.showNotAvailable = false;
                     $scope.allPackages = [];
                     PackageService.getPackageDetail($routeParams.packageId).then(function (data) {
                         $scope.allPackages.push(data);
@@ -130,6 +131,7 @@ define(['app/services/package-service',
                 //    doAdditionalProcess(newVal);
                 //});
 
+                $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
 
                     if ($scope.startDate == "") {
@@ -161,6 +163,7 @@ define(['app/services/package-service',
                         Rooms: GuestsToHotelArray($scope.guests)
                     };
 
+                    $scope.showNotAvailable = false;
                     $scope.allPackages = [];
                     PackageService.getAvailability(param).then(function (data) {
 
@@ -181,6 +184,9 @@ define(['app/services/package-service',
                         if (data.length > 0) {
                             $scope.allPackages = data;
                             $scope.packageItem = data[0];
+                            if($scope.packageItem.AvailabilityCategories.length == 0) {
+                                $scope.showNotAvailable = true;
+                            }
                             if(!reload)
                                 doAdditionalProcess(data[0]);
                         }
@@ -188,6 +194,7 @@ define(['app/services/package-service',
                             scrollToControl('category');
                         }
                     }, function () {
+                        $scope.showNotAvailable = true;
                     });
 
                 };
