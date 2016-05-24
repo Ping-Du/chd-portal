@@ -163,6 +163,13 @@ define(['app/services/package-service',
                         Rooms: GuestsToHotelArray($scope.guests)
                     };
 
+                    $cookieStore.put('packageCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName: $scope.selectedLocationName,
+                        startDate: $scope.startDate,
+                        guests: $scope.guests
+                    });
+
                     $scope.showNotAvailable = false;
                     $scope.allPackages = [];
                     PackageService.getAvailability(param).then(function (data) {

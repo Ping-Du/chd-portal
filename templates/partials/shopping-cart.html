@@ -368,15 +368,22 @@
 
                                 </div>
                             </div>
-                            <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
+                            <div class="form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
+                                <form>
+                                <div class="form-group" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">
+                                    <label class="control-label">Card No: </label>
+                                    <input class="form-control"  type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
+                                </div>
+                                <div class="form-group" data-ng-class="{'has-error':creditCardError}">
+                                    <label class="control-label" for="expirationYear">Expiration Year: </label>
+                                    <select id="expirationYear" class="form-control"  data-ng-options="item for item in years" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear"></select>
+                                </div>
+                                <div class="form-group" data-ng-class="{'has-error':creditCardError}">
+                                    <label class="control-label" for="expirationMonth">Expiration Month: </label>
+                                    <select id="expirationMonth" class="form-control"  data-ng-options="item for item in months" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth"></select>
+                                </div>
                                 <div class="form-group">
-                                    <label data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">Card No: </label>
-                                    <input class="form-control" type="text" style="width:200px" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
-                                    <label>Expiration Year: </label>
-                                    <select class="form-control" data-ng-options="item for item in years" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear"></select>
-                                    <label>Expiration Month: </label>
-                                    <select class="form-control" data-ng-options="item for item in months" style="width: 80px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth"></select>
-                                    <label>Code: </label>
+                                    <label class="control-label">Code: </label>
                                     <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
                                 </div>
                             </div>
@@ -394,6 +401,7 @@
                                 <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
                                 <label>Save In Profile</label>
                             </div>
+                            </form>
                             <p data-ng-show="message != ''" style="color:red;font-weight:bold;">{{message}}</p>
                         </uib-tab>
                     </uib-tabset>

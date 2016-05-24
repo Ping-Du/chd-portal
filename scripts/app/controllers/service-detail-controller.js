@@ -150,6 +150,12 @@ define(['app/services/services-service',
                         return;
                     }
 
+                    $cookieStore.put('serviceCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName: $scope.selectedLocationName,
+                        startDate: $scope.startDate,
+                        guests: $scope.guests
+                    });
 
                     var param = {
                         ProductId: $routeParams.serviceId,
@@ -182,7 +188,7 @@ define(['app/services/services-service',
 
                 };
 
-                function load(reload) {
+                $scope.load = function(reload) {
 
                     $cookieStore.put('serviceCriteria', {
                         locationId: $scope.selectedLocation,
@@ -195,7 +201,7 @@ define(['app/services/services-service',
                         $scope.checkAvailability(reload);
                     else
                         loadService(reload);
-                }
+                };
 
                 $scope.addToShoppingCart = function (categoryIndex) {
                     if (SessionService.user() == null) {
@@ -220,7 +226,7 @@ define(['app/services/services-service',
                     $rootScope.$broadcast('ShoppingCart:Animate');
                 });
 
-                load(false);
+                $scope.load(false);
 
                 $window.scrollTo(0, 0);
 

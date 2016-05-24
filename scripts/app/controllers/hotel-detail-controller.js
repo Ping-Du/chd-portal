@@ -189,6 +189,14 @@ define(['app/services/hotel-service',
                         Rooms: GuestsToHotelArray($scope.guests)
                     };
 
+                    $cookieStore.put('hotelCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName: $scope.selectedLocationName,
+                        checkInDate: $scope.checkInDate,
+                        checkOutDate: $scope.checkOutDate,
+                        guests: $scope.guests
+                    });
+
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];

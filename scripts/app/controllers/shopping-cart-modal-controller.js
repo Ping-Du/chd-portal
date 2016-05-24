@@ -619,6 +619,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 }
 
                 $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function (newValue, oldValue) {
+                    if(newValue == oldValue)
+                        return;
+
+                    $scope.message = "";
+
                     if (newValue != null) {
                         var profile = getProfile(newValue);
                         $scope.bookingInfo.PaymentInfo.PaymentMethod = profile.PaymentMethod;
@@ -627,8 +632,48 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             if (matches != null && matches.length > 2) {
                                 $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = parseInt(matches[2]) + 2000;
                                 $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = parseInt(matches[1]);
+                                checkExpiredYearMonth();
                             }
                         }
+                    } else {
+                        $scope.creditCardError = false;
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = 0;
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = 0;
+                    }
+                });
+
+                $scope.creditCardError = false;
+                function checkExpiredYearMonth() {
+                    if($scope.bookingInfo.PaymentInfo.ProfileId == null) {
+                        $scope.creditCardError = false;
+                        return;
+                    }
+
+                    var yearMonth = $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear * 100 + $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth;
+                    var date = new Date();
+                    var now = date.getFullYear()*100 + date.getMonth() + 1;
+                    $scope.creditCardError = !(yearMonth >= now);
+                }
+                $scope.$watch('bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear', function(newValue, oldValue){
+                    checkExpiredYearMonth();
+                });
+                $scope.$watch('bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth', function(newValue, oldValue){
+                    checkExpiredYearMonth();
+                });
+
+                $scope.$watch('bookingInfo.PaymentInfo.PaymentMethod', function(newValue, oldValue){
+                    if(newValue == oldValue)
+                        return;
+
+                    $scope.message = "";
+                    var profile = getProfile($scope.bookingInfo.PaymentInfo.ProfileId);
+                    if(profile != null) {
+                        if (newValue != profile.PaymentMethod) {
+                            $scope.bookingInfo.PaymentInfo.ProfileId = null;
+                        }
+                    } else {
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = 0;
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = 0;
                     }
                 });
 
@@ -664,15 +709,15 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             }
                         } else {
                             var profile = getProfile(p.PaymentInfo.ProfileID);
-                            if (p.PaymentInfo.PaymentMethod == 'CreditCard' && $scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') {
-                                $scope.message = "Please fill out card code!";
+                            if (p.PaymentInfo.PaymentMethod == 'CreditCard' && (($scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') || $scope.creditCardError)) {
+                                $scope.message = "Please fill out all credit card information!";
                                 return;
                             }
                         }
                     }
 
                     // test on live
-                    if (p.PaymentInfo.PaymentMethod == '')
+                    if (pay && p.PaymentInfo.PaymentMethod == '')
                         p.PaymentInfo = null;
 
                     swal({
