@@ -47,6 +47,7 @@ var serviceTypes = [
     {id: "ATTAD", type: 'activities'},
     {id: 'DINE', type: 'activities'},
     {id: 'BST', type: 'tours'},
+    {id:'ART', type:'tours'},
     {id: 'SHTTL', type: 'transportation'},
     {id: 'SHW-D', type: 'activities'}
 ];
