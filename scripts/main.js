@@ -1,13 +1,15 @@
 /**
  * Config application's dependencies and load expected application
  */
-define(['config'], function (cfg) {
+define([], function () {
     'use strict';
 
+    var version = null;
+    version = "_v=" + (version?version:(new Date()).getTime());
+
     var libs = {
-        baseUrl: cfg.webRoot + 'scripts/',
-        urlArgs: '_ts=' + (new Date()).getTime(),
-        //urlArgs: '_v=1',
+        baseUrl: 'scripts/',
+        urlArgs: version,
         waitSeconds: 0,
         paths: {
             'jquery':'libs/jquery.min',
@@ -144,9 +146,30 @@ define(['config'], function (cfg) {
 
     require.config(libs);
 
-    require(['jquery', 'ui-bootstrap', 'jquery.storageapi', 'angular-route', 'angular-translate-loader-static-files', 'angular-cookies'], function($){
+
+    require(['config', 'jquery', 'ui-bootstrap', 'jquery.storageapi', 'angular-route', 'angular-translate-loader-static-files', 'angular-cookies'], function(cfg, $){
         // enable cors
         $.support.cors = true;
+
+        cfg.urlArgs = version;
+        //// intercept xhr
+        (function(open) {
+            XMLHttpRequest.prototype.open = function() {
+                //this.addEventListener("readystatechange", function() {
+                //    if(this.readyState == 1) {
+                //        console.log(this.readyState);
+                //    }
+                //}, false);
+                if(arguments[1].indexOf(cfg.webRoot) >= 0 || (arguments[1].indexOf("/") != 0 && arguments[1].indexOf("http") != 0)) {
+                    if(arguments[1].indexOf("?") > 0)
+                        arguments[1] += "&" + version;
+                    else{
+                        arguments[1] += "?" + version;
+                    }
+                }
+                open.apply(this, arguments);
+            };
+        })(XMLHttpRequest.prototype.open);
 
         function bootstrap(apiToken) {
             cfg.apiToken = apiToken;
