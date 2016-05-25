@@ -121,11 +121,11 @@ define(['app/services/services-service',
                         if(!priced || !available) {
                             if(_.find(item.AvailabilityCategories, function(category){
                                     if(!priced && !available)
-                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available"));
+                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && servicesDestination)));
                                     else if(!priced && available)
                                         return (Math.floor(category.Price/100) == $scope.selectedPrice);
                                     else if(priced && !available) {
-                                        return category.AvailabilityLevel == "Available"
+                                        return (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && servicesDestination));
                                     } else
                                         return true;
                                 })){
@@ -226,8 +226,7 @@ define(['app/services/services-service',
                         $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
 
-                $scope.searchServices = function() {
-
+                function getParam(showTips) {
                     if($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
@@ -251,40 +250,49 @@ define(['app/services/services-service',
                     //    fillServices();
                     //} else {
 
-                        if($scope.selectedLocation == null) {
+                    if($scope.selectedLocation == null) {
+                        if(showTips)
                             showError("Please select a location!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        if($scope.startDate == "") {
+                    if($scope.startDate == "") {
+                        if(showTips)
                             showError("Start date is required!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
-                        var now = new Date();
-                        if(startDate < now.getTime()){
+                    var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
+                    var now = new Date();
+                    if(startDate < now.getTime()){
+                        if(showTips)
                             showError("Start date must be later than now!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        var param = {
-                            ProductId:null,
-                            ServiceTime:null,
-                            DestinationId:$scope.selectedLocation,
-                            LanguageId:$scope.languageId,
-                            CategoryId:null,
-                            ServiceType:getServiceId(serviceType),
-                            StartDate:$scope.startDate+'T00:00:00.000Z',
-                            Guests:GuestsToServiceCriteria($scope.guests)
-                        };
+                    var param = {
+                        ProductId:null,
+                        ServiceTime:null,
+                        DestinationId:$scope.selectedLocation,
+                        LanguageId:$scope.languageId,
+                        CategoryId:null,
+                        ServiceType:getServiceId(serviceType),
+                        StartDate:$scope.startDate+'T00:00:00.000Z',
+                        Guests:GuestsToServiceCriteria($scope.guests)
+                    };
 
+                    return param;
+                }
+
+                $scope.searchServices = function() {
+                    var param = getParam(true);
+                    if(param) {
                         ServicesService.getAvailability(param).then(function(data){
                             fillAllServices(data);
                             fillServices();
                         },function(){
                         });
-                    //}
+                    }
                 };
 
                 function loadAllServices(destinationId) {
@@ -305,13 +313,51 @@ define(['app/services/services-service',
                     }
                 }
 
+                var services1, services2;
+                function populate() {
+                    $scope.selectedStar = null;
+                    $scope.selectedType = null;
+                    var all = null;
+                    if(services1 && services2) {
+                        all = services1.concat(services2);
+                    } else if(services1){
+                        all = services1;
+                    } else if(services2) {
+                        all = services2;
+                    }
+                    services1 = null;
+                    services2 = null;
+                    fillAllServices(all);
+                    fillServices();
+                }
                 function load(loadLocations) {
-                    if(loadLocations)
+                    if (loadLocations)
                         loadSearchLocations();
-                    if($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
-                        $scope.searchServices();
-                    else
-                        loadAllServices($scope.selectedLocation);
+
+                    if (servicesDestination) {
+                        ServicesService.getServiceByTypeAndDestination(serviceType, servicesDestination.ProductId).then(function (data1) {
+                            services1 = data1;
+                            var param = getParam(false);
+                            if (param) {
+                                ServicesService.getAvailability(param).then(function (data2) {
+                                    services2 = data2;
+                                    populate();
+                                }, function () {
+                                    populate();
+                                });
+                            } else {
+                                populate();
+                            }
+                        }, function () {
+                            populate();
+                        });
+
+                    } else {
+                        if ($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
+                            $scope.searchServices();
+                        else
+                            loadAllServices($scope.selectedLocation);
+                    }
                 }
 
                 load(true);

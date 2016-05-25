@@ -76,11 +76,11 @@ define(['app/services/package-service',
                         if(!priced || !available) {
                             if(_.find(item.AvailabilityCategories, function(category){
                                     if(!priced && !available)
-                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available"));
+                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && packageDestination)));
                                     else if(!priced && available)
                                         return (Math.floor(category.Price/100) == $scope.selectedPrice);
                                     else if(priced && !available) {
-                                        return category.AvailabilityLevel == "Available"
+                                        return (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && packageDestination));
                                     } else
                                         return true;
                                 })){
@@ -212,8 +212,7 @@ define(['app/services/package-service',
                 $scope.showGuests = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 
-                $scope.searchPackages = function() {
-
+                function getParam(showTips) {
                     if($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
@@ -235,40 +234,49 @@ define(['app/services/package-service',
                     //    loadAllPackages($scope.selectedLocation);
                     //} else {
 
-                        if($scope.selectedLocation == null) {
+                    if($scope.selectedLocation == null) {
+                        if(showTips)
                             showError("Please select a location!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        if($scope.startDate == "") {
+                    if($scope.startDate == "") {
+                        if(showTips)
                             showError("Start date is required!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
-                        var now = new Date();
-                        if(startDate < now.getTime()){
+                    var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
+                    var now = new Date();
+                    if(startDate < now.getTime()){
+                        if(showTips)
                             showError("Start date must be later than now!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        if($scope.guests.length < 1 ) {
+                    if($scope.guests.length < 1 ) {
+                        if(showTips)
                             showError("Guests is required!");
-                            return;
-                        }
+                        return;
+                    }
 
-                        var param = {
-                            PackageType:null,
-                            ProductId:null,
-                            DestinationId:$scope.selectedLocation,
-                            LanguageId:$scope.languageId,
-                            CategoryId:null,
-                            StartDate:$scope.startDate+'T00:00:00.000Z',
-                            Rooms:GuestsToHotelArray($scope.guests)
-                        };
+                    var param = {
+                        PackageType:null,
+                        ProductId:null,
+                        DestinationId:$scope.selectedLocation,
+                        LanguageId:$scope.languageId,
+                        CategoryId:null,
+                        StartDate:$scope.startDate+'T00:00:00.000Z',
+                        Rooms:GuestsToHotelArray($scope.guests)
+                    };
 
+                    return param;
+                }
+
+                $scope.searchPackages = function() {
+                    var param = getParam(true);
+                    if(param)
                         getAvailability(param);
-                    //}
                 };
 
                 $scope.closeGuests = function(){
@@ -311,13 +319,51 @@ define(['app/services/package-service',
 
                 });
 
+                var packages1, packages2;
+                function populate() {
+                    $scope.selectedStar = null;
+                    $scope.selectedType = null;
+                    var all = null;
+                    if(packages1 && packages2) {
+                        all = packages1.concat(packages2);
+                    } else if(packages1){
+                        all = packages1;
+                    } else if(packages2) {
+                        all = packages2;
+                    }
+                    packages1 = null;
+                    packages2 = null;
+                    fillAllPackages(all);
+                    fillPackages();
+                }
                 function load(loadLocations){
                     if(loadLocations)
                         loadSearchLocations();
-                    if($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
-                        $scope.searchPackages();
-                    else
-                        loadAllPackages($scope.selectedLocation);
+
+                    if (packageDestination) {
+                        PackageService.getPackagesByDestinationId(packageDestination.ProductId).then(function (data1) {
+                            packages1 = data1;
+                            var param = getParam(false);
+                            if (param) {
+                                PackageService.getAvailability(param).then(function (data2) {
+                                    packages2 = data2;
+                                    populate();
+                                }, function () {
+                                    populate();
+                                });
+                            } else {
+                                populate();
+                            }
+                        }, function () {
+                            populate();
+                        });
+
+                    } else {
+                        if ($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
+                            $scope.searchPackages();
+                        else
+                            loadAllPackages($scope.selectedLocation);
+                    }
                 }
 
                 load(true);
