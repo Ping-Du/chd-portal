@@ -1,7 +1,7 @@
 <form class="search-main">
     <div class="container">
         <div class=" row">
-            <div class="col-md-4 relative">
+            <div class="col-md-5 relative">
                 <i class="icon-location2"></i>
                 <!--<input type="text" class="form-control" placeholder="Location">-->
                 <div angucomplete-alt id="searchLocation"
@@ -19,24 +19,19 @@
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
-                <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Check In Date" data-ng-model="checkInDate" data-init-date="checkInDate">
+                <input id="startDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
+                       placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
             </div>
-            <div class="col-md-2 relative">
-                <i class="icon-calendar"></i>
-                <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
-                       placeholder="Check Out Date" data-ng-model="checkOutDate" data-init-date="checkOutDate">
-            </div>
-            <div class="col-md-3 relative">
+            <div class="col-md-4 relative">
                 <i class="icon-users"></i>
-                <input type="text" class="form-control input" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
-                       data-ng-model="roomsInfo"
+                <input type="text" class="form-control input" placeholder="0 adult(s) 0 minor(s)"
+                       data-ng-model="guestsInfo"
                        uib-popover-template="guestsTemplateUrl" popover-title="Guests"
                        popover-is-open="showGuests" ng-click="showGuests = true"
                        popover-trigger="none" popover-placement="bottom">
             </div>
             <div class="col-md-1 relative">
-                <a href data-ng-click="searchHotels()"uib-tooltip="{{tooltips}}"
+                <a href data-ng-click="searchServices()" uib-tooltip="{{tooltips}}"
                    tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
                    tooltip-trigger="none"><i class="icon-search"></i></a>
             </div>
@@ -48,17 +43,17 @@
         <section class="thumbnail-part">
             <header class="header-container">
                 <div class="title position">
-                    <img src="images/hotel.png" class="big-icon">
-                    <h2>{{"HOTEL"|translate}}</h2>
+                    <img data-ng-src="images/{{imageName}}" class="big-icon">
+                    <h2>{{serviceType|translate}}</h2>
                 </div>
                 <div class="head-menu">
                     <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
-                    <a href data-ng-repeat="item in destinations" data-ng-click="loadHotels(item)" data-ng-class="{active:(item == currentDestination)}">{{item.Name}}</a>
-                    <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} In '{{currentDestination.Name}}'</a>
+                    <a href data-ng-repeat="item in destinations" data-ng-click="loadServices(item)" data-ng-class="{active:(item == currentDestination)}">{{item.Name}}</a>
+                    <a href style="float:right" data-ng-click="showServicesMainPage()">{{"MORE"|translate}} In '{{currentDestination.Name}}'</a>
                 </div>
             </header>
             <div class="row">
-                <div class="col-sm-6 col-md-4" data-ng-repeat="item in hotels">
+                <div class="col-sm-6 col-md-4" data-ng-repeat="item in services">
                     <div class="thumbnail">
                         <a data-ng-href="{{item.DetailsURI}}">
                             <!--
@@ -68,7 +63,7 @@
                         </a>
 
                         <div class="caption">
-                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name | limitTo:30}}</a><i
+                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name | limitTo:40}}</a><i
                                     data-ng-class="item.starClass"></i></h3>
                             <!--
                             <a data-ng-href="hotels.html#/{{item.Id}}/comment/{{languageId}}"><span>8.3</span>451 comments</a>

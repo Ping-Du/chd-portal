@@ -1,14 +1,16 @@
 define(['app/services/hotel-service',
     'app/services/language-service',
     'app/services/destination-service',
-    'app/services/navbar-service'
+    'app/services/navbar-service',
+    'app/services/search-service',
+    'app/utils'
 ], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller('HotelTopController', ['_','$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
-            'HotelService', 'LanguageService', 'DestinationService',
-            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, HotelService, LanguageService, DestinationService){
+        .controller('HotelTopController', ['_', '$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
+            'HotelService', 'LanguageService', 'DestinationService', 'SearchService','$filter','$timeout',
+            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, HotelService, LanguageService, DestinationService, SearchService, $filter, $timeout) {
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
@@ -19,7 +21,7 @@ define(['app/services/hotel-service',
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
-                    if($scope.languageId != data) {
+                    if ($scope.languageId != data) {
                         $scope.languageId = data;
                         load();
                     }
@@ -30,47 +32,156 @@ define(['app/services/hotel-service',
                 function loadDestinations() {
                     $scope.destinations = [];
                     $scope.currentDestination = null;
-                    DestinationService.getTopDestinations().then(function(data){
-                        if(data.length > 0) {
+                    DestinationService.getTopDestinations().then(function (data) {
+                        if (data.length > 0) {
                             //$scope.currentDestination = data[0];
                             $scope.loadHotels(data[0]);
                         }
-                        _.each(data, function(item){
+                        _.each(data, function (item) {
                             $scope.destinations.push(item);
                         });
                     });
                 }
 
-                $scope.showHotelMainPage = function(){
+                $scope.showHotelMainPage = function (destId, destName) {
                     $cookieStore.put('forDestination', {
-                        ProductId:$scope.currentDestination.ProductId,
-                        Name:$scope.currentDestination.Name
+                        ProductId: (destId?destId:$scope.currentDestination.ProductId),
+                        Name: (destName?destName:$scope.currentDestination.Name)
                     });
-                    $location.url("/"+$scope.languageId, true);
+                    $location.url("/" + $scope.languageId, true);
                 };
 
                 $scope.hotels = null;
-                $scope.loadHotels = function(destination) {
-                    if(destination == $scope.currentDestination)
+                $scope.loadHotels = function (destination) {
+                    if (destination == $scope.currentDestination)
                         return;
 
                     $scope.hotels = [];
                     $scope.currentDestination = destination;
-                    HotelService.getTopHotelsByDestinationId(destination.ProductId).then(function(data){
+                    HotelService.getTopHotelsByDestinationId(destination.ProductId).then(function (data) {
                         $scope.hotels = data; //_.first(data, 3);
 
-                        _.each($scope.hotels, function(item){
-                            item.DetailsURI = 'hotels.html#/'+item.ProductId+'/'+$scope.languageId;
+                        _.each($scope.hotels, function (item) {
+                            item.DetailsURI = 'hotels.html#/' + item.ProductId + '/' + $scope.languageId;
                             item.starClass = "icon-star-" + (item.StarRating * 10);
                         });
                     });
                 };
 
-                function load(){
+                $scope.searchLocations = [];
+                function loadSearchLocations() {
+                    $scope.searchLocations = [];
+                    SearchService.getLocations().then(function (data) {
+                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                    });
+                }
+
+                var criteria = $cookieStore.get('hotelCriteria');
+                $scope.checkInDate = (criteria ? criteria.checkInDate : "");//hotelDestination?"":(criteria?criteria.checkInDate:"");
+                $scope.checkOutDate = (criteria ? criteria.checkOutDate : ""); //hotelDestination?"":(criteria?criteria.checkOutDate:"");
+                $scope.guests = (criteria && criteria.guests.length > 0 ? criteria.guests : [
+                    //{
+                    //    Adults: '2',
+                    //    Minors: '0',
+                    //    MinorAges: []
+                    //}
+                ]);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.selectedLocation = (criteria ? criteria.locationId : null);
+                $scope.selectedLocationName = (criteria ? criteria.locationName : null);
+                $scope.selectedSearchLocation = null;
+
+                $scope.showGuests = false;
+                $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";
+
+                $scope.closeGuests = function () {
+                    $scope.showGuests = false;
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                };
+
+                $scope.addRoom = function () {
+                    $scope.guests.push({
+                        Adults: '2',
+                        Minors: '0',
+                        MinorAges: []
+                    });
+                };
+
+                $scope.deleteRoom = function (index) {
+                    $scope.guests.splice(index, 1);
+                };
+
+                $scope.minorsChange = function (index) {
+                    if ($scope.guests[index].Minors > $scope.guests[index].MinorAges.length) {
+                        while ($scope.guests[index].MinorAges.length < $scope.guests[index].Minors) {
+                            $scope.guests[index].MinorAges.push('0');
+                        }
+                    } else {
+                        $scope.guests[index].MinorAges.splice($scope.guests[index].Minors, $scope.guests[index].MinorAges.length - $scope.guests[index].Minors);
+                    }
+                };
+
+                function showError(message) {
+                    $scope.tooltips = message;
+                    $scope.showTooltip = true;
+                    $timeout(function () {
+                        $scope.tooltips = "";
+                        $scope.showTooltip = false;
+                    }, 5000);
+                }
+
+                $scope.$watch('currentDestination', function(newVal, oldVal){
+                    if(newVal == oldVal) {
+                        return;
+                    }
+
+                    $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
+                });
+
+                $scope.$watch('checkInDate', function (newVal, oldVal) {
+                    if (newVal == oldVal) {
+                        return;
+                    }
+
+                    $('#checkOutDate').datepicker('setStartDate',
+                        addDays($('#checkInDate').datepicker('getDate'), 1));
+
+                    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                        $scope.checkOutDate = '';
+                    }
+                });
+
+                $scope.searchHotels = function() {
+                    if ($scope.selectedSearchLocation === undefined) { // user delete location
+                        $scope.selectedLocation = null;
+                        $scope.selectedLocationName = '';
+                    } else {
+                        $scope.selectedLocation = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.ProductId : $scope.selectedLocation;
+                        $scope.selectedLocationName = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.Name : $scope.selectedLocationName;
+                    }
+
+                    if ($scope.selectedLocation == null) {
+                        showError("Please select a location!");
+                        return null;
+                    }
+
+                    $cookieStore.put('hotelCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName: $scope.selectedLocationName,
+                        checkInDate: $scope.checkInDate,
+                        checkOutDate: $scope.checkOutDate,
+                        guests: $scope.guests
+                    });
+
+                    $scope.showHotelMainPage($scope.selectedLocation, $scope.selectedLocationName);
+                };
+
+                function load() {
+                    loadSearchLocations();
                     loadDestinations();
                 }
 
-               load();
+                load();
 
             }]);
 });

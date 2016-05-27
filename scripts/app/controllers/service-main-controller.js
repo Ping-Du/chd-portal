@@ -32,32 +32,7 @@ define(['app/services/services-service',
                 });
 
                 $scope.serviceType = modules.angular.uppercase(serviceType);
-                $scope.imageName = getImageByServiceType();
-
-                function getImageByServiceType() {
-                    switch (serviceType) {
-                        case
-                        'hotels'
-                        :
-                            return 'hotel.png';
-                        case
-                        'activities'
-                        :
-                            return 'activity.png';
-                        case
-                        'tours'
-                        :
-                            return 'tour.png';
-                        case
-                        'transportation'
-                        :
-                            return 'transportation.png';
-                        case
-                        'packages'
-                        :
-                            return 'packages.png';
-                    }
-                }
+                $scope.imageName = getImageByServiceType(serviceType);
 
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
@@ -71,10 +46,7 @@ define(['app/services/services-service',
                 var criteria = $cookieStore.get('serviceCriteria');
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.guests = servicesDestination ? {
-                    Adults: '2',
-                    MinorAges: []
-                } : (criteria ? criteria.guests : {Adults: '2', MinorAges: []});
+                $scope.guests = (criteria && criteria.guests.length > 0? criteria.guests : {Adults: '2', MinorAges: []});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 $scope.startDate = (criteria ? criteria.startDate : ""); //servicesDestination?"":(criteria?criteria.startDate:"");
                 $scope.selectedLocation = servicesDestination ? servicesDestination.ProductId : (criteria ? criteria.locationId : null);
@@ -237,6 +209,7 @@ define(['app/services/services-service',
                 $scope.$watch('guests.Adults', function (newValue, oldValue, scope) {
                     if (newValue.Trim() == '' || parseInt(newValue) == 0) {
                         $scope.guests.MinorAges = [];
+                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                     }
                 });
 

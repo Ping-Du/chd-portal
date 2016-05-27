@@ -1,15 +1,16 @@
 define(['app/services/package-service',
     'app/services/language-service',
     'app/services/destination-service',
-    'app/services/navbar-service'
+    'app/services/navbar-service',
+    'app/services/search-service', 'app/utils'
 ], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller('PackageTopController', ['_','$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
-            'PackageService', 'LanguageService', 'DestinationService',
-            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, PackageService, LanguageService, DestinationService){
-                console.info('path:' + $location.path());
+        .controller('PackageTopController', ['_', '$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
+            'PackageService', 'LanguageService', 'DestinationService', 'SearchService', '$timeout','$filter',
+            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, PackageService, LanguageService, DestinationService, SearchService, $timeout, $filter) {
+                //console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
@@ -19,7 +20,7 @@ define(['app/services/package-service',
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
-                    if($scope.languageId != data) {
+                    if ($scope.languageId != data) {
                         $scope.languageId = data;
                         load();
                     }
@@ -30,47 +31,148 @@ define(['app/services/package-service',
                 function loadDestinations() {
                     $scope.destinations = [];
                     $scope.currentDestination = null;
-                    DestinationService.getTopDestinations().then(function(data){
-                        if(data.length > 0) {
+                    DestinationService.getTopDestinations().then(function (data) {
+                        if (data.length > 0) {
                             //$scope.currentDestination = data[0];
                             $scope.loadPackages(data[0]);
                         }
-                        _.each(data, function(item){
+                        _.each(data, function (item) {
                             $scope.destinations.push(item);
                         });
                     });
                 }
 
-                $scope.showPackagesMainPage = function(){
+                $scope.showPackagesMainPage = function (destId, destName) {
                     $cookieStore.put('forDestination', {
-                        ProductId:$scope.currentDestination.ProductId,
-                        Name:$scope.currentDestination.Name
+                        ProductId: (destId ? destId : $scope.currentDestination.ProductId),
+                        Name: (destName ? destName : $scope.currentDestination.Name)
                     });
-                    $location.url("/"+$scope.languageId, true);
+                    $location.url("/" + $scope.languageId, true);
                 };
 
                 $scope.packages = null;
-                $scope.loadPackages = function(destination) {
-                    if(destination == $scope.currentDestination)
+                $scope.loadPackages = function (destination) {
+                    if (destination == $scope.currentDestination)
                         return;
 
                     $scope.packages = [];
                     $scope.currentDestination = destination;
-                    PackageService.getTopPackagesByDestinationId(destination.ProductId).then(function(data){
+                    PackageService.getTopPackagesByDestinationId(destination.ProductId).then(function (data) {
                         $scope.packages = data;
 
-                        _.each($scope.packages, function(item){
-                            item.DetailsURI = 'packages.html#/'+item.ProductId+'/'+$scope.languageId;
+                        _.each($scope.packages, function (item) {
+                            item.DetailsURI = 'packages.html#/' + item.ProductId + '/' + $scope.languageId;
                             //item.starClass = "icon-star-" + (item.StarRating * 10);
                         });
                     });
                 };
 
-                function load(){
+                $scope.searchLocations = [];
+                function loadSearchLocations() {
+                    $scope.searchLocations = [];
+                    SearchService.getLocations().then(function (data) {
+                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                    });
+                }
+
+                var criteria = $cookieStore.get('packageCriteria');
+                var packageDestination = $cookieStore.get('forDestination');
+                $cookieStore.remove('forDestination');
+                $scope.startDate = (criteria ? criteria.startDate : "");//packageDestination?"":(criteria?criteria.startDate:"");
+                //$scope.guests = packageDestination?[]:(criteria?criteria.guests:[]);
+                $scope.guests = (criteria && criteria.guests.length > 0 ? criteria.guests : [
+                    //{
+                    //    Adults: '2',
+                    //    Minors: '0',
+                    //    MinorAges: []
+                    //}
+                ]);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.selectedLocation = packageDestination ? packageDestination.ProductId : (criteria ? criteria.locationId : null);
+                $scope.selectedLocationName = packageDestination ? packageDestination.Name : (criteria ? criteria.locationName : null);
+                $scope.selectedSearchLocation = null;
+
+                $scope.showGuests = false;
+                $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
+
+
+                $scope.closeGuests = function () {
+                    $scope.showGuests = false;
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                };
+
+                $scope.addRoom = function () {
+                    $scope.guests.push({
+                        Adults: '2',
+                        Minors: '0',
+                        MinorAges: []
+                    });
+                };
+
+                $scope.deleteRoom = function (index) {
+                    $scope.guests.splice(index, 1);
+                };
+
+                $scope.minorsChange = function (index) {
+                    if ($scope.guests[index].Minors > $scope.guests[index].MinorAges.length) {
+                        while ($scope.guests[index].MinorAges.length < $scope.guests[index].Minors) {
+                            $scope.guests[index].MinorAges.push('0');
+                        }
+                    } else {
+                        $scope.guests[index].MinorAges.splice($scope.guests[index].Minors, $scope.guests[index].MinorAges.length - $scope.guests[index].Minors);
+                    }
+                };
+
+                $scope.showTooltip = false;
+                $scope.tooltips = "";
+
+                function showError(message) {
+                    $scope.tooltips = message;
+                    $scope.showTooltip = true;
+                    $timeout(function () {
+                        $scope.tooltips = "";
+                        $scope.showTooltip = false;
+                    }, 5000);
+                }
+
+                $scope.$watch('currentDestination', function (newVal, oldVal) {
+                    if (newVal == oldVal) {
+                        return;
+                    }
+
+                    $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
+                });
+
+                $scope.searchPackages = function () {
+                    if ($scope.selectedSearchLocation === undefined) { // user delete location
+                        $scope.selectedLocation = null;
+                        $scope.selectedLocationName = '';
+                    } else {
+                        $scope.selectedLocation = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.ProductId : $scope.selectedLocation;
+                        $scope.selectedLocationName = $scope.selectedSearchLocation ? $scope.selectedSearchLocation.originalObject.Name : $scope.selectedLocationName;
+                    }
+
+                    if ($scope.selectedLocation == null) {
+                        showError("Please select a location!");
+                        return null;
+                    }
+
+                    $cookieStore.put('packageCriteria', {
+                        locationId: $scope.selectedLocation,
+                        locationName: $scope.selectedLocationName,
+                        startDate: $scope.startDate,
+                        guests: $scope.guests
+                    });
+
+                    $scope.showPackagesMainPage($scope.selectedLocation, $scope.selectedLocationName);
+                };
+
+                function load() {
+                    loadSearchLocations();
                     loadDestinations();
                 }
 
-               load();
+                load();
 
             }]);
 });

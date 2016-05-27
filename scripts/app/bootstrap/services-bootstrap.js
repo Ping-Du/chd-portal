@@ -6,7 +6,7 @@ define(['app/interceptors/http-interceptor',
         'app/controllers/login-modal-controller',
         'app/controllers/change-password-modal-controller',
         'app/controllers/register-modal-controller',
-        'app/controllers/service-activities-top-controller',
+        'app/controllers/service-top-controller',
         'app/controllers/service-main-controller',
         'app/controllers/service-detail-controller',
         'jquery.spinner'],
@@ -41,8 +41,8 @@ define(['app/interceptors/http-interceptor',
                 //    //,reloadOnSearch: true
                 //})
                 .when('/activities/top/:languageId', {
-                    templateUrl: 'templates/service-activities-top-view.html',
-                    controller: 'ServiceActivitiesTopController'
+                    templateUrl: 'templates/service-top-view.html',
+                    controller: 'ServiceTopController'
                 })
                 .when('/activities/:languageId',{
                     templateUrl:'templates/service-main-view.html',
@@ -52,6 +52,10 @@ define(['app/interceptors/http-interceptor',
                     templateUrl: 'templates/service-detail-view.html',
                     controller: 'ServiceDetailController'
                 })
+                .when('/tours/top/:languageId', {
+                    templateUrl: 'templates/service-top-view.html',
+                    controller: 'ServiceTopController'
+                })
                 .when('/tours/:languageId', {
                     templateUrl: 'templates/service-main-view.html',
                     controller: 'ServiceMainController'
@@ -59,6 +63,10 @@ define(['app/interceptors/http-interceptor',
                 .when('/tours/:serviceId/:languageId', {
                     templateUrl: 'templates/service-detail-view.html',
                     controller: 'ServiceDetailController'
+                })
+                .when('/transportation/top/:languageId', {
+                    templateUrl: 'templates/service-top-view.html',
+                    controller: 'ServiceTopController'
                 })
                 .when('/transportation/:languageId', {
                     templateUrl: 'templates/service-main-view.html',

@@ -13,7 +13,7 @@ define(['app/services/hotel-service',
             function (_, $rootScope, $scope, $location, SessionService, HotelService, LanguageService, $translate, $cookieStore, $filter, SearchService,
                       $timeout, $routeParams, DestinationService) {
 
-                console.info('path:' + $location.path());
+                //console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
@@ -229,11 +229,7 @@ define(['app/services/hotel-service',
                 $cookieStore.remove('forDestination');
                 $scope.checkInDate = (criteria ? criteria.checkInDate : "");//hotelDestination?"":(criteria?criteria.checkInDate:"");
                 $scope.checkOutDate = (criteria ? criteria.checkOutDate : ""); //hotelDestination?"":(criteria?criteria.checkOutDate:"");
-                $scope.guests = hotelDestination ? [{
-                    Adults: '2',
-                    Minors: '0',
-                    MinorAges: []
-                }] : (criteria ? criteria.guests : [{
+                $scope.guests = (criteria && criteria.guests.length > 0 ? criteria.guests : [{
                     Adults: '2',
                     Minors: '0',
                     MinorAges: []
@@ -440,6 +436,7 @@ define(['app/services/hotel-service',
                             loadAllHotels($scope.selectedLocation);
                     }
                 }
+
 
                 load(true);
 

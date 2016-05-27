@@ -158,4 +158,29 @@ function clearEmptyAddress(address) {
     address.Zip = address.Zip.Trim();
 }
 
+function getImageByServiceType(serviceType) {
+    switch (serviceType) {
+        case
+        'hotels'
+        :
+            return 'hotel.png';
+        case
+        'activities'
+        :
+            return 'activity.png';
+        case
+        'tours'
+        :
+            return 'tour.png';
+        case
+        'transportation'
+        :
+            return 'transportation.png';
+        case
+        'packages'
+        :
+            return 'packages.png';
+    }
+}
+
 
