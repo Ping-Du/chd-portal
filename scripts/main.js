@@ -42,7 +42,8 @@ define([], function () {
             'jquery.raty':'libs/jquery.raty',
             'spinjs':'libs/spin',
             'angular-loading':'libs/angular-loading.min',
-            'sweetalert':'libs/sweetalert.min'
+            'sweetalert':'libs/sweetalert.min',
+            'ui-grid':'libs/ui-grid.min'
         },
         shim: {
             'jquery':{
@@ -140,6 +141,9 @@ define([], function () {
             },
             'angular-loading':{
                 deps:['spinjs']
+            },
+            'ui-grid':{
+                deps:['angular']
             }
         }
     };
