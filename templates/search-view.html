@@ -1,7 +1,11 @@
 <div class="container-bg container-padding">
     <div class="container">
-        <div class="main-product">
-            <div class="list-product" data-ng-repeat="item in results">
+        <div class="thumbnail-part" data-ng-show="destinations.length > 0">
+            <div class="title">
+                <img src="images/location.png" class="big-icon">
+                <h2>{{"DESTINATION"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in destinations">
                 <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
                 <div class="pro-detail">
                     <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
@@ -11,21 +15,58 @@
                     <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>
-                <!--<div class="pro-separator">-->
-                    <!--&lt;!&ndash;<div class="pro-elem">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><i class="icon-coffee"></i>Cafe</li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><i class="icon-automobile"></i>Pick Up</li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><i class="icon-connection"></i>WIFI</li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><i class="icon-local_parking"></i>Parking</li>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<li><i class="icon-card_travel "></i>Luggage</li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--<div class="pro-price">-->
-                        <!--&lt;!&ndash;<span>at least<apan class="price">$842</apan></span>&ndash;&gt;-->
-                        <!--<a data-ng-href="{{item.DetailsURI}}" class="btn  btn-red">View Detail</a>-->
-                    <!--</div>-->
-                <!--</div>-->
+
+            </div>
+        </div>
+        <div class="thumbnail-part" data-ng-show="hotels.length > 0">
+            <div class="title">
+                <img src="images/hotel.png" class="big-icon">
+                <h2>{{"HOTEL"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in hotels">
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="pro-detail">
+                    <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <p class="address"><strong>Location:</strong> {{item.Location.DisplayName}}</p>
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
+                    <!--<div class="comment"><span>9.5</span>200 comments</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="thumbnail-part" data-ng-show="activities.length > 0">
+            <div class="title">
+                <img src="images/activity.png" class="big-icon">
+                <h2>{{"ACTIVITIES"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in activities">
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="pro-detail">
+                    <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <p class="address"><strong>Location:</strong> {{item.Location.DisplayName}}</p>
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
+                    <!--<div class="comment"><span>9.5</span>200 comments</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="thumbnail-part" data-ng-show="packages.length > 0">
+            <div class="title">
+                <img src="images/package.png" class="big-icon">
+                <h2>{{"PACKAGES"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in packages">
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="pro-detail">
+                    <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <p class="address"><strong>Location:</strong> {{item.Location.DisplayName}}</p>
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
+                    <!--<div class="comment"><span>9.5</span>200 comments</div>-->
+                </div>
             </div>
         </div>
     </div>

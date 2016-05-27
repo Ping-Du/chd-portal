@@ -114,6 +114,26 @@
             </div>
         </li>
         <li class="divider" data-ng-show="activities.length > 0"></li>
+        <li role="menuitem" data-ng-show="packages.length > 0">
+            <div class="row">
+                <div class="col-md-12"><img class="image-size-32" src="images/package.png">&nbsp;<span class="text-red" style="font-weight: bold" >Packages</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="packages.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in packages">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="packages.length > 0"></li>
         <li role="menuitem" data-ng-show="searched">
             <div class="row">
             <div class="col-md-10 text-warning">

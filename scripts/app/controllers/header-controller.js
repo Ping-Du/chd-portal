@@ -2,8 +2,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService',
-            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService) {
+        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService','$rootScope',
+            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService, $rootScope) {
                 $scope.showLanguage = HeaderService.showLanguage;
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
@@ -13,12 +13,17 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
 
-                var isSearchPage = ($location.search().keyword?true:false);
+                var isSearchPage = (($location.absUrl().indexOf('/search.html') > 0)?true:false);
 
                 $scope.search = function () {
                     var word = $scope.keyword.Trim();
-                    if (word != '') {
-                        $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId + '?keyword=' + word;
+                    if (word != '' && !isSearchPage) {
+                        localStorageService.remove('searchResult');
+                        localStorageService.set('searchResult', $scope.results);
+                        $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId;// + '?keyword=' + word;
+                    } else {
+                        $rootScope.$broadcast("SearchResult:Change", $scope.results);
+                        $scope.showSearchResult = false;
                     }
                 };
 
@@ -70,6 +75,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.destinations = [];
                 $scope.hotels = [];
                 $scope.activities = [];
+                $scope.packages = [];
 
                 $scope.$watch('keyword', function (newValue, oldValue, scope) {
                     //if(isSearchPage || newValue == oldValue)
@@ -79,6 +85,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     $scope.destinations = [];
                     $scope.hotels = [];
                     $scope.activities = [];
+                    $scope.packages =[];
 
                     if (newValue.length < 1) {
                         $scope.showSearchResult = true;
@@ -113,14 +120,11 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                                 $scope.hotels.push(item);
                             } else if(item.ProductType == 'OPT') {
                                 $scope.activities.push(item);
+                            } else if(item.ProductType == 'PKG') {
+                                $scope.packages.push(item);
                             }
 
                         });
-
-                        localStorageService.remove('searchResult');
-                        //if(!isSearchPage) {
-                            localStorageService.set('searchResult', $scope.results);
-                        //}
                     }, function (data) {
                         //$loading.finish('search-loading');
                     });
