@@ -87,7 +87,7 @@ define(['app/services/package-service',
                     //    MinorAges: []
                     //}
                 ]);
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.selectedLocation = packageDestination ? packageDestination.ProductId : (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = packageDestination ? packageDestination.Name : (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
@@ -98,7 +98,7 @@ define(['app/services/package-service',
 
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.addRoom = function () {
@@ -166,6 +166,15 @@ define(['app/services/package-service',
 
                     $scope.showPackagesMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
+
+                $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
+                    if (newVal == oldVal)
+                        return;
+
+                    if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
+                        $scope.showPackagesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                    }
+                });
 
                 function load() {
                     loadSearchLocations();

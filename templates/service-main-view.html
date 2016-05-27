@@ -20,13 +20,13 @@
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="startDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+                       placeholder="{{'START_DATE'|translate}}" data-ng-model="startDate" data-init-date="startDate">
             </div>
             <div class="col-md-4 relative">
                 <i class="icon-users"></i>
                 <input type="text" class="form-control input" placeholder="0 adult(s) 0 minor(s)"
                        data-ng-model="guestsInfo"
-                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                        popover-is-open="showGuests" ng-click="showGuests = true"
                        popover-trigger="none" popover-placement="bottom">
             </div>
@@ -58,7 +58,7 @@
                 <dt><i class="icon-coin-dollar"></i>&nbsp;{{"PRICE"|translate}}</dt>
                 <dd>
                     <a href data-ng-class="{'active':selectedPrice==null}"
-                       data-ng-click="filterByPrice(null)">All</a>
+                       data-ng-click="filterByPrice(null)">{{"ALL"|translate}}</a>
                     <a href data-ng-repeat="item in prices | orderBy:'+Id':false"
                        data-ng-class="{'active':selectedPrice==item.Id}"
                        data-ng-click="filterByPrice(item.Id)">{{item.Name}}</a>

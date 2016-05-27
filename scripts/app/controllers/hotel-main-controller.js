@@ -234,7 +234,7 @@ define(['app/services/hotel-service',
                     Minors: '0',
                     MinorAges: []
                 }]);
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.selectedLocation = hotelDestination ? hotelDestination.ProductId : (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = hotelDestination ? hotelDestination.Name : (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
@@ -363,7 +363,7 @@ define(['app/services/hotel-service',
 
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.addRoom = function () {

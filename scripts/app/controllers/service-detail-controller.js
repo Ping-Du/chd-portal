@@ -48,7 +48,7 @@ define(['app/services/services-service',
 
                 var criteria = $cookieStore.get('serviceCriteria');
                 $scope.guests = criteria?criteria.guests:{Adults:'2', MinorAges:[]};
-                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 $scope.startDate = criteria ? criteria.startDate : "";
                 $scope.selectedLocation = criteria ? criteria.locationId : null;
                 $scope.selectedLocationName = criteria ? criteria.locationName : '';
@@ -74,7 +74,7 @@ define(['app/services/services-service',
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     $scope.showGuests = false;
                     $scope.showGuests1 = false;
-                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.regexOption = {

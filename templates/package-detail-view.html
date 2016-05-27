@@ -25,13 +25,13 @@
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="startDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+                       placeholder="{{'START_DATE'|translate}}" data-ng-model="startDate" data-init-date="startDate">
             </div>
             <div class="col-md-3 relative">
                 <i class="icon-users"></i>
                 <input type="text" class="form-control input" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
                        data-ng-model="roomsInfo"
-                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                        popover-is-open="showGuests" ng-click="showGuests = true"
                        popover-trigger="none" popover-placement="bottom">
             </div>
@@ -88,9 +88,9 @@
                 <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
                 <div class="row tab-list">
                     <div class="col-xs-12 col-md-12 text-red" data-ng-show="packageItem.Price">${{packageItem.Price}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>ID: </span>{{packageItem.ProductId}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Type: </span>{{packageItem.PackageType.Name}}</div>
-                    <div class="col-xs-12 col-md-12"> <span>Location: </span>{{packageItem.Location.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}: </span>{{packageItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"TYPE"|translate}}: </span>{{packageItem.PackageType.Name}}</div>
+                    <div class="col-xs-12 col-md-12"> <span>{{"LOCATION"|translate}}: </span>{{packageItem.Location.Name}}</div>
                 </div>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
@@ -98,10 +98,10 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
-                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Categories</a>
+                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>
                     <!--<a href onclick="scrollToControl('detail')" data-ng-show="packageItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
-                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
-                    <br><br>
+                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
+                    <!--<br><br>-->
                     <a href onclick="scrollToControl('term')" data-ng-show="packageItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{packageItem.Warnings[0].Title}}</a>
                 </div>
             </section>
@@ -109,11 +109,11 @@
         <div class="detail-nav-wrap is-stuck">
             <nav class="container">
                 <ul>
-                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('category')">Categories</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{packageItem.AdditionalInformation[1].Title}}</a></li>
                     <li class="menu-item" data-ng-show="packageItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{packageItem.Warnings[0].Title}}</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
             </nav>
         </div>
@@ -121,20 +121,20 @@
             <!--<h3>Categories&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!packageItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>-->
             <div class="row">
                 <div class="col-sm-3 col-md-3">
-                    <h3>Categories</h3>
+                    <h3>{{"CATEGORIES"|translate}}</h3>
                 </div>
                 <div class="col-sm-9 col-md-9 search-box">
                     <form class="form-inline">
                         <div class="form-group pos-date">
                             <i class="icon-calendar icon"></i>
                             <input id="startDate1" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                                   placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+                                   placeholder="{{'START_DATE'|translate}}" data-ng-model="startDate" data-init-date="startDate">
                         </div>
                         <div class="form-group pos-number">
                             <i class="icon-users icon"></i>
                             <input type="text" class="form-control input input-guests" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
                                    data-ng-model="roomsInfo"
-                                   uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                                   uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                                    popover-is-open="showGuests1" ng-click="showGuests1 = true"
                                    popover-trigger="none" popover-placement="bottom">
                         </div>
@@ -152,12 +152,12 @@
                         <table class="table table-hover">
                             <thead>
                             <tr class="thead">
-                                <td>Category</td>
-                                <td class="tlist-4">Price</td>
-                                <td class="tlist-4">Start Date</td>
-                                <td class="tlist-4">End Date</td>
-                                <td class="tlist-4">Available</td>
-                                <td class="tlist-4">Operation</td>
+                                <td>{{"NAME"|translate}}</td>
+                                <td class="tlist-4">{{"PRICE"|translate}}</td>
+                                <td class="tlist-4">{{"START_DATE"|translate}}</td>
+                                <td class="tlist-4">{{"END_DATE"|translate}}</td>
+                                <td class="tlist-4">{{"AVAILABILITY"|translate}}</td>
+                                <td class="tlist-4">{{"ACTION"|translate}}</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -174,7 +174,7 @@
                                         <!--</div>-->
                                     <!--</div>-->
                                     <span><a href data-ng-click="showCategoryDetail($index)"><strong>{{item.Name}}</strong></a></span>
-                                    <br><span>Product ID:{{item.Id}}</span>
+                                    <br><span>{{"ID"|translate}}:{{item.Id}}</span>
                                 </td>
                                 <td><span class="price">${{item.Price}}</span></td>
                                 <td>{{item.StartDate | limitTo:10}}</td>
@@ -186,13 +186,13 @@
                                 </td>
                                 <td>
                                     <button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;Add</button>
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="text-center" data-ng-show="showNotAvailable">
-                            <h3 class="text-info">Product is not available</h3>
+                            <h3 class="text-info">{{"PRODUCT_NOT_AVAILABLE"|translate}}</h3>
                         </div>
                     </div>
                 </div>
@@ -214,9 +214,9 @@
             </div>
         </section>
         <section class="detail-wrap" id="map">
-            <h3>Location</h3>
+            <h3>{{"LOCATION"|translate}}</h3>
             <div class="content">
-                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>Location：</strong>{{packageItem.Location.Name}}</p>
+                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>{{"LOCATION"|translate}}：</strong>{{packageItem.Location.Name}}</p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>

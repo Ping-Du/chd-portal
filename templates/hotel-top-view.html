@@ -20,18 +20,18 @@
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="checkInDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Check In Date" data-ng-model="checkInDate" data-init-date="checkInDate">
+                       placeholder="{{'CHECK_IN'|translate}}" data-ng-model="checkInDate" data-init-date="checkInDate">
             </div>
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
-                       placeholder="Check Out Date" data-ng-model="checkOutDate" data-init-date="checkOutDate">
+                       placeholder="{{'CHECK_OUT'|translate}}" data-ng-model="checkOutDate" data-init-date="checkOutDate">
             </div>
             <div class="col-md-3 relative">
                 <i class="icon-users"></i>
                 <input type="text" class="form-control input" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
                        data-ng-model="roomsInfo"
-                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                        popover-is-open="showGuests" ng-click="showGuests = true"
                        popover-trigger="none" popover-placement="bottom">
             </div>
@@ -54,7 +54,7 @@
                 <div class="head-menu">
                     <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
                     <a href data-ng-repeat="item in destinations" data-ng-click="loadHotels(item)" data-ng-class="{active:(item == currentDestination)}">{{item.Name}}</a>
-                    <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} In '{{currentDestination.Name}}'</a>
+                    <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} {{"IN"|translate}} '{{currentDestination.Name}}'</a>
                 </div>
             </header>
             <div class="row">

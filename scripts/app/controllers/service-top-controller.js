@@ -90,7 +90,7 @@ define(['app/services/services-service',
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
                 $scope.guests = (criteria && criteria.guests.length > 0? criteria.guests : {Adults: '2', MinorAges: []});
-                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 $scope.startDate = (criteria ? criteria.startDate : ""); //servicesDestination?"":(criteria?criteria.startDate:"");
                 $scope.selectedLocation = servicesDestination ? servicesDestination.ProductId : (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = servicesDestination ? servicesDestination.Name : (criteria ? criteria.locationName : null);
@@ -138,14 +138,14 @@ define(['app/services/services-service',
                 $scope.$watch('guests.Adults', function (newValue, oldValue, scope) {
                     if (newValue.Trim() == '' || parseInt(newValue) == 0) {
                         $scope.guests.MinorAges = [];
-                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                     }
                 });
 
                 $scope.closeGuests = function () {
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     $scope.showGuests = false;
-                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.$watch('currentDestination', function(newVal, oldVal){
@@ -179,6 +179,15 @@ define(['app/services/services-service',
 
                     $scope.showServicesMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
+
+                $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
+                    if (newVal == oldVal)
+                        return;
+
+                    if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
+                        $scope.showServicesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                    }
+                });
 
                 function load(){
                     loadSearchLocations();

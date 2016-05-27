@@ -86,7 +86,7 @@ define(['app/services/hotel-service',
                     //    MinorAges: []
                     //}
                 ]);
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.selectedLocation = (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
@@ -96,7 +96,7 @@ define(['app/services/hotel-service',
 
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.addRoom = function () {
@@ -175,6 +175,15 @@ define(['app/services/hotel-service',
 
                     $scope.showHotelMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
+
+                $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
+                    if (newVal == oldVal)
+                        return;
+
+                    if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
+                        $scope.showHotelMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                    }
+                });
 
                 function load() {
                     loadSearchLocations();

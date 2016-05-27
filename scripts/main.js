@@ -9,7 +9,7 @@ define([], function () {
 
     var libs = {
         baseUrl: 'scripts/',
-        //urlArgs: version,
+        urlArgs: version,
         waitSeconds: 0,
         paths: {
             'jquery':'libs/jquery.min',

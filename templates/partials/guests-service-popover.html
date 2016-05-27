@@ -2,7 +2,7 @@
 <div style="width:250px;height:350px;padding: 0 10px;">
     <form>
         <div>
-            <label class="control-label">Adults:</label>
+            <label class="control-label">{{"ADULT"|translate}}:</label>
             <!--<input type="text" class="form-control" style="width:80px;" data-ng-model="$parent.guests.Adults" input-mask="'Regex'" mask-option="$parent.regexOption">-->
             <div class="input-group spinner" data-trigger="spinner" id="adults">
                 <input id="AdultQty" type="text" class="form-control text-center" data-rule="quantity" data-ng-model="$parent.guests.Adults">
@@ -26,7 +26,7 @@
             <thead>
             <tr>
                 <th style="width: 30px;">#</th>
-                <th>Minor Age</th>
+                <th>{{"MINOR"|translate}} {{"AGE"|translate}}</th>
                 <th style="width:50px;"></th>
             </tr>
             </thead>
@@ -62,8 +62,8 @@
     <br>
 
     <div class="text-right">
-        <input class="btn btn-primary" type="button" value="Add Minor" data-ng-click="$parent.addMinor()">
-        <span><input class="btn btn-warning" type="button" value="Close" data-ng-click="$parent.closeGuests()"></span>
+        <input class="btn btn-primary" type="button" value="{{'ADD_MINOR'|translate}}" data-ng-click="$parent.addMinor()">
+        <span><input class="btn btn-warning" type="button" value="{{'CLOSE'|translate}}" data-ng-click="$parent.closeGuests()"></span>
     </div>
 </div>
 <!--</script>-->

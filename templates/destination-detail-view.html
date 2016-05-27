@@ -45,12 +45,12 @@
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
                     <!--<a href onclick="scrollToControl('detail')" data-ng-show="destinationItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
-                    <a href onclick="scrollToControl('hotel')" data-ng-show="hotels.length > 0"><i class="glyphicon glyphicon-briefcase"></i>&nbsp;Hotels</a>
-                    <a href onclick="scrollToControl('activities')" data-ng-show="activities.length > 0"><i class="glyphicon glyphicon-film"></i>&nbsp;Things To Do</a>
-                    <a href onclick="scrollToControl('tours')" data-ng-show="tours.length > 0"><i class="glyphicon glyphicon-flag"></i>&nbsp;Tours</a>
+                    <a href onclick="scrollToControl('hotel')" data-ng-show="hotels.length > 0"><i class="glyphicon glyphicon-briefcase"></i>&nbsp;{{"HOTEL"|translate}}</a>
+                    <a href onclick="scrollToControl('activities')" data-ng-show="activities.length > 0"><i class="glyphicon glyphicon-film"></i>&nbsp;{{"ACTIVITIES"|translate}}</a>
+                    <a href onclick="scrollToControl('tours')" data-ng-show="tours.length > 0"><i class="glyphicon glyphicon-flag"></i>&nbsp;{{"TOURS"|translate}}</a>
                     <br><br>
-                    <a href onclick="scrollToControl('transportation')" data-ng-show="transportation.length > 0"><i class="glyphicon glyphicon-road"></i>&nbsp;Transportation</a>
-                    <a href onclick="scrollToControl('packages')" data-ng-show="packages.length > 0"><i class="glyphicon glyphicon-calendar"></i>&nbsp;Packages</a>
+                    <a href onclick="scrollToControl('transportation')" data-ng-show="transportation.length > 0"><i class="glyphicon glyphicon-road"></i>&nbsp;{{"TRANSPORTATION"|translate}}</a>
+                    <a href onclick="scrollToControl('packages')" data-ng-show="packages.length > 0"><i class="glyphicon glyphicon-calendar"></i>&nbsp;{{"PACKAGES"|translate}}</a>
                     <!--<a href onclick="scrollToControl('map')" data-ng-show="false"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>-->
                 </div>
                 <!--<div class="row">-->
@@ -64,14 +64,14 @@
         <div class="detail-nav-wrap is-stuck">
             <nav class="container">
                 <ul>
-                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="destinationItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{destinationItem.AdditionalInformation[0].Title}}</a></li>
-                    <li class="menu-item" data-ng-show="hotels.length > 0"><a href onclick="scrollToControl('hotel')">Hotels</a></li>
-                    <li class="menu-item" data-ng-show="activities.length > 0"><a href onclick="scrollToControl('activities')">Things To Do</a></li>
-                    <li class="menu-item" data-ng-show="tours.length > 0"><a href onclick="scrollToControl('tours')">Tours</a></li>
-                    <li class="menu-item" data-ng-show="transportation.length > 0"><a href onclick="scrollToControl('transportation')">Transportation</a></li>
-                    <li class="menu-item" data-ng-show="packages.length > 0"><a href onclick="scrollToControl('packages')">Packages</a></li>
-                    <li class="menu-item" data-ng-show="false"><a href onclick="scrollToControl('map')">Location</a></li>
+                    <li class="menu-item" data-ng-show="hotels.length > 0"><a href onclick="scrollToControl('hotel')">{{"HOTEL"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="activities.length > 0"><a href onclick="scrollToControl('activities')">{{"ACTIVITIES"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="tours.length > 0"><a href onclick="scrollToControl('tours')">{{"TOURS"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="transportation.length > 0"><a href onclick="scrollToControl('transportation')">{{"TRANSPORTATION"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="packages.length > 0"><a href onclick="scrollToControl('packages')">{{"PACKAGES"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="false"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
             </nav>
         </div>

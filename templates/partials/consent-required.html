@@ -11,21 +11,21 @@
                 </style>
                 <div class="modal-header">
                     <button type="button" class="close" data-ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-                    <h4>Add To Shopping Cart</h4>
+                    <h4>{{"ADD_TO_CART"|translate}}</h4>
                 </div>
                 <div class="modal-body">
                     <div data-ng-show="message != ''">
-                        <div><strong>Important Information</strong></div>
+                        <div><strong>{{"IMPORTANT_INFO"|translate}}</strong></div>
                         <div class="tab-info" data-ng-bind-html="message"></div>
                         <br>
                     </div>
                     <div data-ng-show="onRequest">
-                        <div><strong>On Request</strong></div>
-                        <span>Please note that this item is not available. For this item a inventory request is sent to the supplier. When this request is denied you will be notified and the item in your trip will be marked unavailable automatically. You will have the option to replace the item with another.</span>
+                        <div><strong>{{"ON_REQUEST"|translate}}</strong></div>
+                        <span>{{"ON_REQUEST_INFO"|translate}}</span>
                         <br>
                     </div>
                     <div data-ng-show="required" class="text-right">
-                        <input type="checkbox" data-ng-model="agreed">&nbsp;I have read and agree to the above.
+                        <input type="checkbox" data-ng-model="agreed">&nbsp;{{"HAVE_READ"|translate}}
                         <br>
                     </div>
                     <!--<hr data-ng-show="isService">-->
@@ -33,10 +33,10 @@
                         <!--<label>Service Time(24 hours format, 2:00PM is 1400):</label><input class="form-control" type="text" maxlength="4" data-ng-model="serviceTime">-->
                     <!--</div>-->
                     <div data-ng-show="isService && product.HasTransport" class="form-group">
-                        <label>Pick Up:</label><select class="form-control" data-ng-model="pickupPoint" data-ng-options="p.LocationId as p.Name for p in product.PickupPoints"></select>
+                        <label>{{"PICK_UP"|translate}}:</label><select class="form-control" data-ng-model="pickupPoint" data-ng-options="p.LocationId as p.Name for p in product.PickupPoints"></select>
                     </div>
                     <div data-ng-show="isService && product.HasTransport" class="form-group">
-                        <label>Drop Off:</label><select class="form-control" data-ng-model="dropoffPoint" data-ng-options="p.LocationId as p.Name for p in product.DropoffPoints"></select>
+                        <label>{{"DROP_OFF"|translate}}:</label><select class="form-control" data-ng-model="dropoffPoint" data-ng-options="p.LocationId as p.Name for p in product.DropoffPoints"></select>
                     </div>
                     <div data-ng-show="message == '' && !onRequest && !required">
                         <p>Are you going to add it to shopping cart?</p>

@@ -25,13 +25,13 @@
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="startDate" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                       placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+                       placeholder="{{'START_DATE'|translate}}" data-ng-model="startDate" data-init-date="startDate">
             </div>
             <div class="col-md-4 relative">
                 <i class="icon-users"></i>
                 <input type="text" class="form-control input" placeholder="0 adult(s) 0 minor(s)"
                        data-ng-model="guestsInfo"
-                       uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                       uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                        popover-is-open="showGuests" ng-click="showGuests = true"
                        popover-trigger="none" popover-placement="bottom">
             </div>
@@ -81,13 +81,13 @@
                 <div class="service-detail-info">
                         <span class="caption">{{serviceItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span >{{serviceItem.AdditionalInformation[0].PlainText | limitTo: 150}} ...</span></a></div>
+                <div><a href onclick="scrollToControl('detail')"><span >{{serviceItem.AdditionalInformation[0].PlainText | limitTo: 100}} ...</span></a></div>
                 <br/>
                 <div class="row tab-list">
-                    <div class="col-xs-6 col-md-6"> <span>ID：</span>{{serviceItem.ProductId}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Type：</span>{{serviceItem.ServiceType.Name}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>Address：</span>{{serviceItem.Address.Address1}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>City：</span>{{serviceItem.Address.City}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}：</span>{{serviceItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"TYPE"|translate}}：</span>{{serviceItem.ServiceType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"ADDRESS"|translate}}：</span>{{serviceItem.Address.Address1}}</div>
+                    <div class="col-xs-6 col-md-6"> <span>{{"CITY"|translate}}：</span>{{serviceItem.Address.City}}</div>
                 </div>
                 <br/>
                 <!--<div class="tax-com-part">-->
@@ -96,10 +96,10 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
-                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Categories</a>
+                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>
                     <!--<a href onclick="scrollToControl('detail')" data-ng-show="serviceItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
-                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;Location</a>
-                    <br><br>
+                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
+                    <!--<br><br>-->
                     <a href onclick="scrollToControl('term')" data-ng-show="serviceItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{serviceItem.Warnings[0].Title}}</a>
                 </div>
                 <!--<div class="row">-->
@@ -113,11 +113,11 @@
         <div class="detail-nav-wrap is-stuck">
             <nav class="container">
                 <ul>
-                    <li class="menu-item"><a href onclick="scrollToControl('top')">Top</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('category')">Categories</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="serviceItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{serviceItem.AdditionalInformation[1].Title}}</a></li>
                     <li class="menu-item" data-ng-show="serviceItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{serviceItem.Warnings[0].Title}}</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('map')">Location</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
             </nav>
         </div>
@@ -125,20 +125,20 @@
             <!--<h3>Categories&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!serviceItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>-->
             <div class="row">
                 <div class="col-sm-3 col-md-3">
-                    <h3>Categories</h3>
+                    <h3>{{"CATEGORIES"|translate}}</h3>
                 </div>
                 <div class="col-sm-9 col-md-9 search-box">
                     <form class="form-inline">
                         <div class="form-group pos-date">
                             <i class="icon-calendar icon"></i>
                             <input id="startDate1" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                                   placeholder="Start Date" data-ng-model="startDate" data-init-date="startDate">
+                                   placeholder="{{'START_DATE'|translate}}" data-ng-model="startDate" data-init-date="startDate">
                         </div>
                         <div class="form-group pos-number">
                             <i class="icon-users icon"></i>
                             <input type="text" class="form-control input input-guests" placeholder="0 adult(s) 0 minor(s)"
                                    data-ng-model="guestsInfo"
-                                   uib-popover-template="guestsTemplateUrl" popover-title="Guests"
+                                   uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
                                    popover-is-open="showGuests1" ng-click="showGuests1 = true"
                                    popover-trigger="none" popover-placement="bottom">
                         </div>
@@ -156,19 +156,19 @@
                         <table class="table table-hover">
                             <thead>
                             <tr class="thead">
-                                <td>Name</td>
+                                <td>{{"NAME"|translate}}</td>
                                 <!--<td class="tlist-2">Service Time</td>-->
-                                <td class="tlist-4">Price</td>
-                                <td class="tlist-4">Cancel By</td>
-                                <td class="tlist-4">Available</td>
-                                <td class="tlist-4">Operation</td>
+                                <td class="tlist-4">{{"PRICE"|translate}}</td>
+                                <td class="tlist-4">{{"CANCEL_BY"|translate}}</td>
+                                <td class="tlist-4">{{"AVAILABILITY"|translate}}</td>
+                                <td class="tlist-4">{{"ACTION"|translate}}</td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="item in serviceItem.AvailabilityCategories" data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
                                 <td>
                                     <span><strong>{{item.Name}}</strong></span>
-                                    <br><span>Product ID:{{item.Id}}</span>
+                                    <br><span>{{"ID"|translate}}:{{item.Id}}</span>
                                 </td>
                                 <!--<td>{{item.ServiceTime}}</td>-->
                                 <td><span class="price">${{item.Price}}</span></td>
@@ -179,7 +179,7 @@
                                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size:32px; color:#ffcc00;" data-ng-show="item.AvailabilityLevel == 'Requestable'"></span>
                                 </td>
                                 <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;Add</button></td>
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}</button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -205,16 +205,16 @@
             </div>
         </section>
         <section class="detail-wrap" id="map">
-            <h3>Location</h3>
+            <h3>{{"LOCATION"|translate}}</h3>
             <div class="content">
                 <!--<p><strong>Address：</strong>{{serviceItem.Address.Address1 + ', ' + serviceItem.Address.City + ', ' + serviceItem.Address.State}}</p>-->
-                <p data-ng-show="serviceItem.Address.Address1 && serviceItem.Address.Address1 != ''"><strong>Address 1：</strong>{{serviceItem.Address.Address1}}</p>
-                <p data-ng-show="serviceItem.Address.Address2 && serviceItem.Address.Address2 != ''"><strong>Address 2：</strong>{{serviceItem.Address.Address2}}</p>
-                <p data-ng-show="serviceItem.Address.Address3 && serviceItem.Address.Address3 != ''"><strong>Address 3：</strong>{{serviceItem.Address.Address3}}</p>
-                <p data-ng-show="serviceItem.Address.City && serviceItem.Address.City != ''"><strong>City：</strong>{{serviceItem.Address.City}}</p>
-                <p data-ng-show="serviceItem.Address.State && serviceItem.Address.State != ''"><strong>State：</strong>{{serviceItem.Address.State}}</p>
-                <p data-ng-show="serviceItem.Address.Country && serviceItem.Address.Country != ''"><strong>Country：</strong>{{serviceItem.Address.Country}}</p>
-                <p data-ng-show="serviceItem.Address.Zip && serviceItem.Address.Zip != ''"><strong>Zip：</strong>{{serviceItem.Address.Zip}}</p>
+                <p data-ng-show="serviceItem.Address.Address1 && serviceItem.Address.Address1 != ''"><strong>{{"ADDRESS"|translate}} 1：</strong>{{serviceItem.Address.Address1}}</p>
+                <p data-ng-show="serviceItem.Address.Address2 && serviceItem.Address.Address2 != ''"><strong>{{"ADDRESS"|translate}} 2：</strong>{{serviceItem.Address.Address2}}</p>
+                <p data-ng-show="serviceItem.Address.Address3 && serviceItem.Address.Address3 != ''"><strong>{{"ADDRESS"|translate}} 3：</strong>{{serviceItem.Address.Address3}}</p>
+                <p data-ng-show="serviceItem.Address.City && serviceItem.Address.City != ''"><strong>{{"CITY"|translate}}：</strong>{{serviceItem.Address.City}}</p>
+                <p data-ng-show="serviceItem.Address.State && serviceItem.Address.State != ''"><strong>{{"STATE"|translate}}：</strong>{{serviceItem.Address.State}}</p>
+                <p data-ng-show="serviceItem.Address.Country && serviceItem.Address.Country != ''"><strong>{{"Country"|translate}}：</strong>{{serviceItem.Address.Country}}</p>
+                <p data-ng-show="serviceItem.Address.Zip && serviceItem.Address.Zip != ''"><strong>{{"ZIP"|translate}}：</strong>{{serviceItem.Address.Zip}}</p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>

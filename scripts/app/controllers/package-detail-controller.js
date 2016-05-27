@@ -36,7 +36,7 @@ define(['app/services/package-service',
 
                 var criteria = $cookieStore.get('packageCriteria');
                 $scope.guests = criteria?criteria.guests:[];
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.startDate = criteria ? criteria.startDate : "";
                 $scope.selectedLocation = criteria ? criteria.locationId : null;
                 $scope.selectedLocationName = criteria ? criteria.locationName : '';
@@ -62,7 +62,7 @@ define(['app/services/package-service',
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
                     $scope.showGuests1 = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 };
 
                 $scope.addRoom = function() {

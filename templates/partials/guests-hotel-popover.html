@@ -4,10 +4,10 @@
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th style="width:50px;">Room</th>
-                    <th style="width:80px;">Adults</th>
-                    <th style="width:80px;">Minors</th>
-                    <th style="">Minor Ages</th>
+                    <th style="width:50px;">{{"ROOM"|translate}}</th>
+                    <th style="width:80px;">{{"ADULT"|translate}}</th>
+                    <th style="width:80px;">{{"MINOR"|translate}}</th>
+                    <th style="">{{"MINOR"|translate}} {{"AGES"|translate}}</th>
                     <th style="width:50px;"></th>
                 </tr>
                 </thead>
@@ -62,8 +62,8 @@
         </div>
         <br>
         <div class="text-right">
-            <input class="btn btn-primary" type="button" value="Add Room" data-ng-click="$parent.addRoom()">
-            <input class="btn btn-warning" type="button" value="Close" data-ng-click="$parent.closeGuests()">
+            <input class="btn btn-primary" type="button" value="{{'ADD_ROOM'|translate}}" data-ng-click="$parent.addRoom()">
+            <input class="btn btn-warning" type="button" value="{{'CLOSE'|translate}}" data-ng-click="$parent.closeGuests()">
         </div>
     </div>
 <!--</script>-->
