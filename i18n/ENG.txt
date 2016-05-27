@@ -28,6 +28,7 @@
   "HOME":"Home",
   "HOME_TITLE":"Welcome To CHD",
   "DESTINATION":"Destinations",
+  "DESTINATIONS":"Destinations",
   "DESTINATION_TITLE":"CHD - Destinations",
   "HOTEL":"Hotel",
   "HOTELS":"Hotels",
@@ -196,5 +197,7 @@
   "SAVE_QUOTE":"Save As Quote",
   "BOOK_PAY":"Book & Pay",
   "ADD_ROOM":"Add Room",
-  "CLOSE":"Close"
+  "CLOSE":"Close",
+  "SEARCH_INFO":"Start typing to see matching products and destinations. Select a single product or select the search icon to see expanded results.",
+  "KEEP_TYPE":"keep typing to refine your search"
 }

@@ -49,14 +49,14 @@
         <li role="menuitem" data-ng-show="!searched">
             <div class="row">
             <div class="col-md-10 text-warning">
-                Start typing to see matching products and destinations. Select a single product or select the search icon to see expanded results.
+                {{"SEARCH_INFO"|translate}}
             </div>
             <div class="col-md-2 text-right"><a href data-ng-click="showSearchResult = false;"><i class="glyphicon glyphicon-remove text-red"></i></a> </div>
             </div>
         </li>
         <li role="menuitem" data-ng-show="destinations.length > 0">
             <div class="row">
-            <div class="col-md-12"><img src="images/location.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >Destinations</span></div>
+            <div class="col-md-12"><img src="images/location.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >{{"DESTINATIONS"|translate}}</span></div>
             </div>
         </li>
         <li class="divider" data-ng-show="destinations.length > 0"></li>
@@ -76,7 +76,7 @@
         <li class="divider" data-ng-show="destinations.length > 0"></li>
         <li role="menuitem" data-ng-show="hotels.length > 0">
             <div class="row">
-                <div class="col-md-12"><img src="images/hotel.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >Hotels</span></div>
+                <div class="col-md-12"><img src="images/hotel.png" class="image-size-32">&nbsp;<span class="text-red" style="font-weight: bold" >{{"HOTELS"|translate}}</span></div>
             </div>
         </li>
         <li class="divider" data-ng-show="hotels.length > 0"></li>
@@ -96,7 +96,7 @@
         <li class="divider" data-ng-show="hotels.length > 0"></li>
         <li role="menuitem" data-ng-show="activities.length > 0">
             <div class="row">
-            <div class="col-md-12"><img class="image-size-32" src="images/activity.png">&nbsp;<span class="text-red" style="font-weight: bold" >Things To Do</span></div>
+            <div class="col-md-12"><img class="image-size-32" src="images/activity.png">&nbsp;<span class="text-red" style="font-weight: bold" >{{"ACTIVITIES"|translate}}</span></div>
             </div>
         </li>
         <li class="divider" data-ng-show="activities.length > 0"></li>
@@ -116,7 +116,7 @@
         <li class="divider" data-ng-show="activities.length > 0"></li>
         <li role="menuitem" data-ng-show="packages.length > 0">
             <div class="row">
-                <div class="col-md-12"><img class="image-size-32" src="images/package.png">&nbsp;<span class="text-red" style="font-weight: bold" >Packages</span></div>
+                <div class="col-md-12"><img class="image-size-32" src="images/package.png">&nbsp;<span class="text-red" style="font-weight: bold" >{{"PACKAGES"|translate}}</span></div>
             </div>
         </li>
         <li class="divider" data-ng-show="packages.length > 0"></li>
@@ -137,7 +137,7 @@
         <li role="menuitem" data-ng-show="searched">
             <div class="row">
             <div class="col-md-10 text-warning">
-                ...keep typing to refine your search
+                ...{{"KEEP_TYPE"|translate}}
             </div>
             <div class="col-md-2 text-right"><a href data-ng-click="showSearchResult = false;"><i class="glyphicon glyphicon-remove text-red"></i></a> </div>
                 </div>
