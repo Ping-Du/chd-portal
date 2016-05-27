@@ -7,8 +7,8 @@ define(['app/services/services-service',
 
     modules.controllers
         .controller('ServiceMainController', ['_', '$rootScope', '$scope', '$location', 'SessionService',
-            'ServicesService', 'LanguageService', '$translate', '$cookieStore','$filter', '$timeout', 'SearchService','$routeParams',
-            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore,$filter, $timeout, SearchService, $routeParams) {
+            'ServicesService', 'LanguageService', '$translate', '$cookieStore', '$filter', '$timeout', 'SearchService', '$routeParams',
+            function (_, $rootScope, $scope, $location, SessionService, ServicesService, LanguageService, $translate, $cookieStore, $filter, $timeout, SearchService, $routeParams) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -31,6 +31,34 @@ define(['app/services/services-service',
                     $('title').text(data);
                 });
 
+                $scope.serviceType = modules.angular.uppercase(serviceType);
+                $scope.imageName = getImageByServiceType();
+
+                function getImageByServiceType() {
+                    switch (serviceType) {
+                        case
+                        'hotels'
+                        :
+                            return 'hotel.png';
+                        case
+                        'activities'
+                        :
+                            return 'activity.png';
+                        case
+                        'tours'
+                        :
+                            return 'tour.png';
+                        case
+                        'transportation'
+                        :
+                            return 'transportation.png';
+                        case
+                        'packages'
+                        :
+                            return 'packages.png';
+                    }
+                }
+
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
@@ -43,31 +71,35 @@ define(['app/services/services-service',
                 var criteria = $cookieStore.get('serviceCriteria');
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.guests = servicesDestination?{Adults:'2', MinorAges:[]}:(criteria?criteria.guests:{Adults:'2', MinorAges:[]});
+                $scope.guests = servicesDestination ? {
+                    Adults: '2',
+                    MinorAges: []
+                } : (criteria ? criteria.guests : {Adults: '2', MinorAges: []});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
-                $scope.startDate = (criteria?criteria.startDate:""); //servicesDestination?"":(criteria?criteria.startDate:"");
-                $scope.selectedLocation = servicesDestination?servicesDestination.ProductId:(criteria?criteria.locationId:null);
-                $scope.selectedLocationName = servicesDestination?servicesDestination.Name:(criteria?criteria.locationName:null);
+                $scope.startDate = (criteria ? criteria.startDate : ""); //servicesDestination?"":(criteria?criteria.startDate:"");
+                $scope.selectedLocation = servicesDestination ? servicesDestination.ProductId : (criteria ? criteria.locationId : null);
+                $scope.selectedLocationName = servicesDestination ? servicesDestination.Name : (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
 
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
-                    SearchService.getLocations().then(function(data){
+                    SearchService.getLocations().then(function (data) {
                         $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
                     });
                 }
+
                 $scope.filterByLocation = function (id) {
                     fillServices();
                 };
 
                 $scope.types = [];
                 function fillTypes(value) {
-                    if(!_.find($scope.types, function(item){
+                    if (!_.find($scope.types, function (item) {
                             return item.Id == value.Id;
-                        })){
+                        })) {
                         _.extend(value, {
-                            selected:true
+                            selected: true
                         });
                         $scope.types.push(value);
                     }
@@ -75,7 +107,7 @@ define(['app/services/services-service',
 
                 $scope.selectedType = null;
                 $scope.showTypeFilter = (serviceType == 'activities');
-                $scope.filterByType = function(typeId) {
+                $scope.filterByType = function (typeId) {
                     $scope.selectedType = typeId;
                     fillServices();
                 };
@@ -83,23 +115,24 @@ define(['app/services/services-service',
                 $scope.selectedPrice = null;
                 $scope.prices = [];
                 function fillPrices(price) {
-                    var index = Math.floor(price/100);
-                    if(!_.find($scope.prices, function(item){
+                    var index = Math.floor(price / 100);
+                    if (!_.find($scope.prices, function (item) {
                             return item.Id == index;
-                        })){
+                        })) {
                         $scope.prices.push({
-                            Id:index,
-                            Name:(index==0?'$0-$99':'$'+index+'00-$'+index+'99')
+                            Id: index,
+                            Name: (index == 0 ? '$0-$99' : '$' + index + '00-$' + index + '99')
                         });
                     }
                 }
-                $scope.filterByPrice = function(id){
+
+                $scope.filterByPrice = function (id) {
                     $scope.selectedPrice = id;
                     fillServices();
                 };
 
                 $scope.onlyAvailable = false;
-                $scope.filterByAvailable = function() {
+                $scope.filterByAvailable = function () {
                     fillServices();
                 };
 
@@ -115,26 +148,26 @@ define(['app/services/services-service',
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
                         var typed = (item.ServiceType.Id == $scope.selectedType || $scope.selectedType == null);
-                        typed = _.find($scope.types, function(tp){
+                        typed = _.find($scope.types, function (tp) {
                             return (tp.Id == item.ServiceType.Id && tp.selected);
                         });
-                        if(!priced || !available) {
-                            if(_.find(item.AvailabilityCategories, function(category){
-                                    if(!priced && !available)
-                                        return ((Math.floor(category.Price/100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && servicesDestination)));
-                                    else if(!priced && available)
-                                        return (Math.floor(category.Price/100) == $scope.selectedPrice);
-                                    else if(priced && !available) {
+                        if (!priced || !available) {
+                            if (_.find(item.AvailabilityCategories, function (category) {
+                                    if (!priced && !available)
+                                        return ((Math.floor(category.Price / 100) == $scope.selectedPrice) && (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && servicesDestination)));
+                                    else if (!priced && available)
+                                        return (Math.floor(category.Price / 100) == $scope.selectedPrice);
+                                    else if (priced && !available) {
                                         return (category.AvailabilityLevel == "Available" || (category.AvailabilityLevel == "Requestable" && servicesDestination));
                                     } else
                                         return true;
-                                })){
+                                })) {
                                 priced = true;
                                 available = true;
                             }
                         }
-                        if(locationed && priced && available && typed) {
-                            if(item.Featured)
+                        if (locationed && priced && available && typed) {
+                            if (item.Featured)
                                 $scope.featuredServices.push(item);
                             else
                                 $scope.showServices.push(item);
@@ -142,26 +175,26 @@ define(['app/services/services-service',
                     });
                 }
 
-                function fillAllServices(data){
+                function fillAllServices(data) {
                     $scope.allServices = [];
                     $scope.prices = [];
                     $scope.types = [];
                     _.each(data, function (item, index) {
-                        if(getServiceType(item.ServiceType.Id) == serviceType) {
+                        if (getServiceType(item.ServiceType.Id) == serviceType) {
                             item.DetailsURI = 'services.html#/' + serviceType + '/' + item.ProductId + '/' + $scope.languageId;
                             //fillLocations(item.Location);
                             fillTypes(item.ServiceType);
                             $scope.allServices.push(item);
                         }
 
-                        if(item.AvailabilityCategories){
+                        if (item.AvailabilityCategories) {
                             var minPrice = 0;
                             var maxPrice = 0;
-                            _.each(item.AvailabilityCategories, function(category, index){
+                            _.each(item.AvailabilityCategories, function (category, index) {
                                 fillPrices(category.Price);
-                                if(category.Price < minPrice || minPrice == 0)
+                                if (category.Price < minPrice || minPrice == 0)
                                     minPrice = category.Price;
-                                if(category.Price > maxPrice) {
+                                if (category.Price > maxPrice) {
                                     maxPrice = category.Price;
                                 }
                             });
@@ -176,7 +209,7 @@ define(['app/services/services-service',
                 function showError(message) {
                     $scope.tooltips = message;
                     $scope.showTooltip = true;
-                    $timeout(function(){
+                    $timeout(function () {
                         $scope.tooltips = "";
                         $scope.showTooltip = false;
                     }, 5000);
@@ -189,30 +222,30 @@ define(['app/services/services-service',
                     regex: "[0-9]{1,2}"
                 };
 
-                $scope.addMinor = function() {
+                $scope.addMinor = function () {
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
-                    if($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
+                    if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0) {
                         $scope.guests.Adults = '1';
                     }
                     $scope.guests.MinorAges.push('0');
                 };
 
-                $scope.deleteMinor = function(index) {
+                $scope.deleteMinor = function (index) {
                     $scope.guests.MinorAges.splice(index, 1);
                 };
 
-                $scope.$watch('guests.Adults', function(newValue,oldValue, scope){
-                    if(newValue.Trim() == ''|| parseInt(newValue) == 0) {
+                $scope.$watch('guests.Adults', function (newValue, oldValue, scope) {
+                    if (newValue.Trim() == '' || parseInt(newValue) == 0) {
                         $scope.guests.MinorAges = [];
                     }
                 });
 
 
-                $scope.$watch('selectedSearchLocation', function(newVal, oldVal){
-                    if(newVal == oldVal)
+                $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
+                    if (newVal == oldVal)
                         return;
 
-                    if(newVal) {
+                    if (newVal) {
                         $scope.selectedLocation = newVal.originalObject.ProductId;
                         $scope.selectedLocationName = newVal.originalObject.Name;
                         load(false);
@@ -220,14 +253,14 @@ define(['app/services/services-service',
 
                 });
 
-                $scope.closeGuests = function(){
+                $scope.closeGuests = function () {
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
-                        $scope.showGuests = false;
-                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
+                    $scope.showGuests = false;
+                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests);
                 };
 
                 function getParam(showTips) {
-                    if($scope.selectedSearchLocation === undefined) { // user delete location
+                    if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
                     } else {
@@ -240,8 +273,8 @@ define(['app/services/services-service',
                     //check availability
                     $cookieStore.put('serviceCriteria', {
                         locationId: $scope.selectedLocation,
-                        locationName:$scope.selectedLocationName,
-                        startDate:$scope.startDate,
+                        locationName: $scope.selectedLocationName,
+                        startDate: $scope.startDate,
                         guests: $scope.guests
                     });
 
@@ -250,53 +283,53 @@ define(['app/services/services-service',
                     //    fillServices();
                     //} else {
 
-                    if($scope.selectedLocation == null) {
-                        if(showTips)
+                    if ($scope.selectedLocation == null) {
+                        if (showTips)
                             showError("Please select a location!");
                         return;
                     }
 
-                    if($scope.startDate == "") {
-                        if(showTips)
+                    if ($scope.startDate == "") {
+                        if (showTips)
                             showError("Start date is required!");
                         return;
                     }
 
                     var startDate = Date.parse($scope.startDate.replace(/-/g, "/"));
                     var now = new Date();
-                    if(startDate < now.getTime()){
-                        if(showTips)
+                    if (startDate < now.getTime()) {
+                        if (showTips)
                             showError("Start date must be later than now!");
                         return;
                     }
 
                     var param = {
-                        ProductId:null,
-                        ServiceTime:null,
-                        DestinationId:$scope.selectedLocation,
-                        LanguageId:$scope.languageId,
-                        CategoryId:null,
-                        ServiceType:getServiceId(serviceType),
-                        StartDate:$scope.startDate+'T00:00:00.000Z',
-                        Guests:GuestsToServiceCriteria($scope.guests)
+                        ProductId: null,
+                        ServiceTime: null,
+                        DestinationId: $scope.selectedLocation,
+                        LanguageId: $scope.languageId,
+                        CategoryId: null,
+                        ServiceType: getServiceId(serviceType),
+                        StartDate: $scope.startDate + 'T00:00:00.000Z',
+                        Guests: GuestsToServiceCriteria($scope.guests)
                     };
 
                     return param;
                 }
 
-                $scope.searchServices = function() {
+                $scope.searchServices = function () {
                     var param = getParam(true);
-                    if(param) {
-                        ServicesService.getAvailability(param).then(function(data){
+                    if (param) {
+                        ServicesService.getAvailability(param).then(function (data) {
                             fillAllServices(data);
                             fillServices();
-                        },function(){
+                        }, function () {
                         });
                     }
                 };
 
                 function loadAllServices(destinationId) {
-                    if(destinationId) {
+                    if (destinationId) {
                         ServicesService.getServiceByTypeAndDestination(serviceType, destinationId).then(function (data) {
                             fillAllServices(data);
                             fillServices();
@@ -314,15 +347,16 @@ define(['app/services/services-service',
                 }
 
                 var services1, services2;
+
                 function populate() {
                     $scope.selectedStar = null;
                     $scope.selectedType = null;
                     var all = null;
-                    if(services1 && services2) {
+                    if (services1 && services2) {
                         all = services1.concat(services2);
-                    } else if(services1){
+                    } else if (services1) {
                         all = services1;
-                    } else if(services2) {
+                    } else if (services2) {
                         all = services2;
                     }
                     services1 = null;
@@ -330,6 +364,7 @@ define(['app/services/services-service',
                     fillAllServices(all);
                     fillServices();
                 }
+
                 function load(loadLocations) {
                     if (loadLocations)
                         loadSearchLocations();

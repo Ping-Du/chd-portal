@@ -73,6 +73,7 @@
         </div>
         <section class="thumbnail-part" data-ng-show="featuredServices.length > 0">
             <div class="title">
+                <img src="images/favorite.png" class="big-icon">
                 <h2>{{"FEATURED"|translate}}</h2>
             </div>
             <div class="row">
@@ -112,6 +113,10 @@
             <!--</ul>-->
         </div>
         <section class="thumbnail-part">
+            <div class="title">
+                <img data-ng-src="images/{{imageName}}" class="big-icon">
+                <h2>{{serviceType|translate}}</h2>
+            </div>
             <div class="row">
                 <div class="col-sm-6 col-md-4" data-ng-repeat="item in showServices">
                     <div class="thumbnail">
