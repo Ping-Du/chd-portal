@@ -25,9 +25,9 @@ define(['app/services/account-service',
                 });
 
                 var title = {
-                    current: 'Current Trips',
-                    past: 'Past Trips',
-                    quote: 'Quotes'
+                    current: 'CURRENT_TRIPS',
+                    past: 'PAST_TRIPS',
+                    quote: 'QUOTES'
                 };
 
                 $scope.title = title[$routeParams.tripType];
@@ -78,7 +78,7 @@ define(['app/services/account-service',
                     enableFiltering: true,
                     enableSorting: true,
                     columnDefs: [
-                        {displayName: 'TRIP_ID', name: 'Trip Id', field: 'TripId', headerCellFilter: 'translate'},
+                        {displayName: 'ID', name: 'Trip Id', field: 'TripId', headerCellFilter: 'translate'},
                         {displayName: 'PRIMARY_GUEST', field: 'Primary', headerCellFilter: 'translate'},
                         {
                             displayName: 'GUESTS', field: 'Guests', headerCellFilter: 'translate', filters: [
@@ -175,7 +175,8 @@ define(['app/services/account-service',
                             }
                         },
                         {
-                            displayName: 'ACTION', name: 'Action', enableFiltering: false, enableSorting: false,
+                            name: ($scope.languageId=='CHI'?'操作':'Action'),
+                            enableFiltering: false, enableSorting: false,
                             cellTemplate: '<button id="editBtn" type="button" style="margin-left:10px;" class="btn-small" ng-click="grid.appScope.viewDetails(row.entity.TripId)" >{{"DETAIL"|translate}}</button>'
                         }
                     ],

@@ -22,11 +22,11 @@ define(['app/services/account-service'], function (modules) {
 
                 $scope.menuItems = [{
                     id: 1,
-                    title: 'My Trips',
+                    title: 'MY_TRIPS',
                     active: false,
                     items: [{
                         id: 101,
-                        title: 'Current Trips',
+                        title: 'CURRENT_TRIPS',
                         canSelect: true,
                         path: '/trips/current/' + languageId,
                         click: function (context) {
@@ -35,7 +35,7 @@ define(['app/services/account-service'], function (modules) {
                         active: false
                     }, {
                         id: 102,
-                        title: 'Past Trips',
+                        title: 'PAST_TRIPS',
                         canSelect: true,
                         path: '/trips/past/' + languageId,
                         click: function (context) {
@@ -44,7 +44,7 @@ define(['app/services/account-service'], function (modules) {
                         active: false
                     }, {
                         id: 103,
-                        title: 'Quotes',
+                        title: 'QUOTES',
                         canSelect: true,
                         path: '/trips/quote/' + languageId,
                         click: function (context) {
@@ -54,11 +54,11 @@ define(['app/services/account-service'], function (modules) {
                     }]
                 }, {
                     id: 2,
-                    title: 'My Account',
+                    title: 'MY_ACCOUNT',
                     active: false,
                     items: [{
                         id: 201,
-                        title: 'Finance Information',
+                        title: 'FINANCE_INFO',
                         canSelect: true,
                         path: '/finance/' + languageId,
                         click: function (context) {
@@ -67,7 +67,7 @@ define(['app/services/account-service'], function (modules) {
                         active: false
                     }, {
                         id: 202,
-                        title: 'Change Password',
+                        title: 'CHANGE_PASSWORD',
                         canSelect: false,
                         message: 'OpenChangePasswordModal',
                         click: function (context) {

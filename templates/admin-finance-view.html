@@ -1,26 +1,26 @@
 <div style="float: left; margin: 0 15px; width: 940px;">
     <div class="myorder-wrap">
         <div class="path">
-            <h3>Finance Information</h3>
+            <h3>{{"FINANCE_INFO"|translate}}</h3>
         </div>
         <hr>
         <div class="row">
-            <div class="col-sm-3"><strong>Name: </strong>{{userName}}</div>
+            <div class="col-sm-3"><strong>{{"NAME"|translate}}: </strong>{{userName}}</div>
 
-            <div class="col-sm-3"><strong>Credit Balance: </strong> ${{financeInfo.CreditBalance}}</div>
+            <div class="col-sm-3"><strong>{{"CREDIT_BALANCE"|translate}}: </strong> ${{financeInfo.CreditBalance}}</div>
 
-            <div class="col-sm-3"><strong>Percent Remaining: </strong>{{financeInfo.CreditPercentRemaining}}%</div>
+            <div class="col-sm-3"><strong>{{"PERCENT_REMAINING"|translate}}: </strong>{{financeInfo.CreditPercentRemaining}}%</div>
 
-            <div class="col-sm-3"><strong>Card Code Required: </strong>{{financeInfo.CardCodeRequired}}</div>
+            <div class="col-sm-3"><strong>{{"CARD_CODE"|translate}}: </strong>{{financeInfo.CardCodeRequired}}</div>
         </div>
         <br>
         <div class="row">
             <table class="table-bordered table">
                 <thead>
                 <tr class="active">
-                    <th>Profile ID</th>
-                    <th>Payment Method</th>
-                    <th>Description</th>
+                    <th>{{"ID"|translate}}</th>
+                    <th>{{"PAYMENT_METHOD"|translate}}</th>
+                    <th>{{"DESCRIPTION"|translate}}</th>
                 </tr>
                 </thead>
                 <tbody>

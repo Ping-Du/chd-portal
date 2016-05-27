@@ -1,8 +1,8 @@
 <nav class="side-nav myorder-wrap" data-ng-controller="AdminMenuController">
     <dl data-ng-repeat="group in menuItems">
-        <dt data-ng-class="{active:group.active}"><i class="icon-caret-right"></i>{{group.title}}</dt>
+        <dt data-ng-class="{active:group.active}"><i class="icon-caret-right"></i>{{group.title | translate}}</dt>
         <dd data-ng-repeat="item in group.items">
-            <a href data-ng-click="clickMenuItem(item.id)" data-ng-class="{active:item.active}">{{item.title}}</a>
+            <a href data-ng-click="clickMenuItem(item.id)" data-ng-class="{active:item.active}">{{item.title | translate}}</a>
         </dd>
     </dl>
     <!--<dl>-->

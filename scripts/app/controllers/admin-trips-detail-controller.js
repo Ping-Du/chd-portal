@@ -6,10 +6,10 @@ define(['app/services/account-service',
 
     modules.controllers
         .controller("AdminTripsDetailController", ['$rootScope', '$scope', 'SessionService',
-            '$log', '$location', 'LanguageService', '$window', '$routeParams', 'TripService', 'DocumentService',
-            function ($rootScope, $scope, SessionService, $log, $location, LanguageService, $window, $routeParams, TripService, DocumentService) {
+            '$log', '$location', 'LanguageService', '$window', '$routeParams', 'TripService', 'DocumentService', '$translate',
+            function ($rootScope, $scope, SessionService, $log, $location, LanguageService, $window, $routeParams, TripService, DocumentService, $translate) {
 
-                console.info('path:' + $location.path());
+                //console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
@@ -26,24 +26,62 @@ define(['app/services/account-service',
                 });
 
                 var title = {
-                    current: 'Current Trips',
-                    past: 'Past Trips',
-                    quote: 'Quotes'
+                    current: 'CURRENT_TRIPS',
+                    past: 'PAST_TRIPS',
+                    quote: 'QUOTES'
                 };
 
-                $scope.title = title[$routeParams.tripType] + ' - ' + $routeParams.tripId;
+                $scope.tripId = $routeParams.tripId;
+                $scope.title = title[$routeParams.tripType];
                 $scope.trip = null;
                 $scope.showCancelBtn = false;
 
+                var title1;
+                var text1;
+                var confirmBtn1;
+                var cancelBtn1;
+
+                $translate("CONFIRM?").then(function (translation) {
+                    title1 = translation;
+                });
+                $translate("CONFIRM_CANCEL_TRIP").then(function (translation) {
+                    text1 = translation;
+                });
+                $translate("CONFIRM_CANCEL").then(function (translation) {
+                    confirmBtn1 = translation;
+                });
+                $translate("NO").then(function (translation) {
+                    cancelBtn1 = translation;
+                });
+
+                var success;
+                var failed;
+                var successInfo;
+                var failedInfo;
+
+                $translate("SUCCESS").then(function (translation) {
+                    success = translation + "!";
+                });
+                $translate("SUCCESS_INFO").then(function (translation) {
+                    successInfo = translation;
+                });
+                $translate("FAILED").then(function (translation) {
+                    failed = translation + "!";
+                });
+                $translate("FAILED_INFO").then(function (translation) {
+                    failedInfo = translation;
+                });
+
+
                 $scope.cancelTrip = function () {
                     swal({
-                        title: "Are you sure?",
-                        text: "Are you sure you want to cancel this trip?",
+                        title: title1,//"Are you sure?",
+                        text: text1,//"Are you sure you want to cancel this trip?",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes, cancel it!",
-                        cancelButtonText:'No',
+                        confirmButtonText: confirmBtn1,//"Yes, cancel it!",
+                        cancelButtonText: cancelBtn1,//'No',
                         closeOnConfirm: false,
                         showLoaderOnConfirm: true
                     }, function () {
@@ -55,9 +93,9 @@ define(['app/services/account-service',
                             $scope.showCancelBtn = false;
                             $scope.trip.AvailabilityLevel = 'Cancelled';
                             $scope.trip.Status = 'Cancelled';
-                            swal("Cancelled!", "This trip has been cancelled.", "success");
+                            swal(success, successInfo, "success");
                         }, function (data) {
-                            swal("Error!", "There is a error when cancelling the trip!", "error");
+                            swal(failed, failedInfo, "error");
                         });
 
                     });
@@ -109,10 +147,10 @@ define(['app/services/account-service',
                     }
                     DocumentService.sendDocByUrl(docItem.SendUri, list).then(function (data) {
                         //$window.alert('Request for sending document to your email address has been submitted!');
-                        swal("Success!", "Request for sending document to your email address has been submitted!", "success")
+                        swal(success, successInfo, "success")
                     }, function () {
                         //$window.alert('There is an error when sending request!');
-                        swal("Failed!", "There is an error while sending request!", "error");
+                        swal(failed, failedInfo, "error");
                     });
                 };
 
