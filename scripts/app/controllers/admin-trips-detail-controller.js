@@ -41,7 +41,7 @@ define(['app/services/account-service',
                 var confirmBtn1;
                 var cancelBtn1;
 
-                $translate("CONFIRM?").then(function (translation) {
+                $translate("CONFIRM").then(function (translation) {
                     title1 = translation;
                 });
                 $translate("CONFIRM_CANCEL_TRIP").then(function (translation) {

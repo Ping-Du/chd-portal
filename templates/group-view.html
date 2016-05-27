@@ -1,10 +1,10 @@
 <div class="container-bg" style="padding: 10px;" >
     <div class="col-md-6 col-center-block myorder-wrap">
-        <h3>Group Information</h3>
+        <h3>{{"INFORMATION"|translate}}</h3>
         <hr>
     <form name="group_form" class="form-horizontal" data-ng-submit="submitForm()" novalidate>
         <div class="form-group">
-            <label class="control-label col-sm-4">Adults: </label>
+            <label class="control-label col-sm-4">{{"ADULT"|translate}}: </label>
             <div class="col-sm-8">
                 <!--<input class="form-control" type="text" placeholder="0">-->
                 <div class="input-group spinner" data-trigger="spinner" id="adults">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">Children: </label>
+            <label class="control-label col-sm-4">{{"MINOR"|translate}}: </label>
             <div class="col-sm-8">
                 <!--<input class="form-control" type="text" placeholder="under 18 years old">-->
                 <div class="input-group spinner" data-trigger="spinner" id="children">
@@ -30,17 +30,17 @@
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : group_form.startDate.$invalid && group_form.$submitted }">
-            <label class="control-label col-sm-4">Start Date: </label>
+            <label class="control-label col-sm-4">{{"START_DATE"|translate}}: </label>
             <div class="col-sm-8">
                 <input id="startDate" name="startDate" type="text" class="form-control input" data-date-picker data-start-date="+10d"
-                       placeholder="Start Date" data-ng-model="group.startDate" required>
+                       placeholder="" data-ng-model="group.startDate" required>
                 <div class="text-red" data-ng-messages="group_form.startDate.$error" data-ng-show="group_form.startDate.$invalid && group_form.$submitted">
                     <small data-ng-message="required">Please input start date</small>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">Nights: </label>
+            <label class="control-label col-sm-4">{{"NIGHTS"|translate}}: </label>
             <div class="col-sm-8">
                 <!--<input class="form-control" type="text" placeholder="How many nights will you stay?">-->
                 <div class="input-group spinner" data-trigger="spinner" id="nights">
@@ -53,40 +53,40 @@
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : group_form.destinations.$invalid && group_form.$submitted }">
-            <label class="control-label col-sm-4">Destinations: </label>
+            <label class="control-label col-sm-4">{{"DESTINATION"|translate}}: </label>
             <div class="col-sm-8">
                 <input type="hidden" name="destinations" data-ng-model="destinations" required>
                 <label class="checkbox-inline" data-ng-repeat="item in group.destinations">
                     <input type="checkbox" data-ng-model="group.destinations[$index].selected" data-ng-change="changeDestinations()">{{item.name}}&nbsp;
                 </label>
-                <br><input class="form-control" type="text" placeholder="input your destinations not listed above" data-ng-model="group.otherDestinations" data-ng-change="changeDestinations()">
+                <br><input class="form-control" type="text" placeholder="{{'DEST_HOLDER'|translate}}" data-ng-model="group.otherDestinations" data-ng-change="changeDestinations()">
                 <div class="text-red" data-ng-messages="group_form.destinations.$error" data-ng-show="group_form.destinations.$invalid && group_form.$submitted">
                     <small data-ng-message="required">Please select or input destinations</small>
                 </div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : group_form.services.$invalid && group_form.$submitted }">
-            <label class="control-label col-sm-4">Services: </label>
+            <label class="control-label col-sm-4">{{"SERVICES"|translate}}: </label>
             <div class="col-sm-8">
                 <input type="hidden" name="services" data-ng-model="services" required>
                 <label class="checkbox-inline" data-ng-repeat="item in group.services" >
                     <input type="checkbox" data-ng-model="group.services[$index].selected" data-ng-change="changeServices()"> {{item.name}}
                 </label>
-                <br><input class="form-control" type="text" placeholder="input services not listed above" data-ng-model="group.otherServices" data-ng-change="changeDestinations()">
+                <br><input class="form-control" type="text" placeholder="{{'SERVICE_HOLDER'|translate}}" data-ng-model="group.otherServices" data-ng-change="changeDestinations()">
                 <div class="text-red" data-ng-messages="group_form.services.$error" data-ng-show="group_form.services.$invalid && group_form.$submitted">
                     <small data-ng-message="required">Please select or input services</small>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">Minimum Star: </label>
+            <label class="control-label col-sm-4">{{"MINIMUM"|translate}} {{"STAR"|translate}}: </label>
             <div class="col-sm-8">
                 <!--<input class="form-control" type="text" placeholder="0">-->
                 <div id="star"></div>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : group_form.email.$invalid && group_form.$submitted }">
-            <label class="control-label col-sm-4">Email Address: </label>
+            <label class="control-label col-sm-4">{{"EMAIL"|translate}}: </label>
             <div class="col-sm-8">
                 <input class="form-control" type="email" name="email" placeholder="example@example.com" data-ng-model="group.email" required>
                 <div class="text-red" data-ng-messages="group_form.email.$error" data-ng-show="group_form.email.$invalid && group_form.$submitted">
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="form-group text-right">
-            <button type="submit" class="btn btn-info" >Get Group Quote</button>
+            <button type="submit" class="btn btn-info" >{{"SUBMIT"|translate}}</button>
         </div>
     </form>
     </div>

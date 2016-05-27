@@ -149,7 +149,7 @@
                     <div class="head-menu">
                         <!--<a data-ng-href="hotels.html#/{{languageId}}" class="active">{{"ALL"|translate}}</a>-->
                         <a href data-ng-repeat="item in destinations" data-ng-click="loadHotels(item)" data-ng-class="{active:(item == currentHotelsDestination)}">{{item.Name}}</a>
-                        <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} In '{{currentHotelsDestination.Name}}'</a>
+                        <a href style="float:right" data-ng-click="showHotelMainPage()">{{"MORE"|translate}} {{"IN"|translate}} '{{currentHotelsDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">
@@ -191,7 +191,7 @@
                         <h2>{{"ACTIVITIES"|translate}}</h2></div>
                     <div class="head-menu">
                         <a href data-ng-repeat="item in destinations" data-ng-click="loadActivities(item)" data-ng-class="{active:(item == currentActivitiesDestination)}">{{item.Name}}</a>
-                        <a href style="float:right" data-ng-click="showActivitiesMainPage()">{{"MORE"|translate}} In '{{currentActivitiesDestination.Name}}'</a>
+                        <a href style="float:right" data-ng-click="showActivitiesMainPage()">{{"MORE"|translate}} {{"IN"|translate}} '{{currentActivitiesDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">
@@ -220,7 +220,7 @@
                         <h2>{{"TOURS"|translate}}</h2></div>
                     <div class="head-menu">
                         <a href data-ng-repeat="item in destinations" data-ng-click="loadTours(item)" data-ng-class="{active:(item == currentToursDestination)}">{{item.Name}}</a>
-                        <a href style="float:right" data-ng-click="showToursMainPage()">{{"MORE"|translate}} In '{{currentToursDestination.Name}}'</a>
+                        <a href style="float:right" data-ng-click="showToursMainPage()">{{"MORE"|translate}} {{"IN"|translate}} '{{currentToursDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">
@@ -249,7 +249,7 @@
                         <h2>{{"PACKAGES"|translate}}</h2></div>
                     <div class="head-menu">
                         <a href data-ng-repeat="item in destinations" data-ng-click="loadPackages(item)" data-ng-class="{active:(item == currentPackagesDestination)}">{{item.Name}}</a>
-                        <a href style="float:right" data-ng-click="showPackagesMainPage()">{{"MORE"|translate}} In '{{currentPackagesDestination.Name}}'</a>
+                        <a href style="float:right" data-ng-click="showPackagesMainPage()">{{"MORE"|translate}} {{"IN"|translate}} '{{currentPackagesDestination.Name}}'</a>
                     </div>
                 </header>
                 <div class="row">

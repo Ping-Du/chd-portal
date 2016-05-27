@@ -4,21 +4,21 @@
             <table class="table table-list" >
                 <thead>
                     <tr>
-                        <td>Type</td>
-                        <td>Product</td>
-                        <td>Category</td>
-                        <td>Start Date</td>
-                        <td>Nights</td>
-                        <td>End Date</td>
-                        <td>Travelers</td>
-                        <td>Rate</td>
-                        <td>Status</td>
-                        <td></td>
+                        <td>{{"TYPE"|translate}}</td>
+                        <td>{{"PRODUCT"|translate}}</td>
+                        <td>{{"CATEGORY"|translate}}</td>
+                        <td>{{"START_DATE"|translate}}</td>
+                        <td>{{"NIGHTS"|translate}}</td>
+                        <td>{{"END_DATE"|translate}}</td>
+                        <td>{{"GUESTS"|translate}}</td>
+                        <td>{{"PRICE"|translate}}</td>
+                        <td>{{"STATUS"|translate}}</td>
+                        <td>{{"ACTION"|translate}}</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr data-ng-repeat="item in shoppingItems.hotels">
-                        <td>Hotel</td>
+                        <td>{{"HOTEL"|translate}}</td>
                         <td>{{item.product.Name}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
                         <td>{{item.product.StartDate|limitTo:10}}</td>
@@ -37,7 +37,7 @@
                         </td>
                     </tr>
                     <tr data-ng-repeat="item in shoppingItems.services">
-                        <td>Service</td>
+                        <td>{{"SERVICE"|translate}}</td>
                         <td>{{item.product.Name}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
                         <td>{{item.product.StartDate|limitTo:10}}</td>
@@ -56,7 +56,7 @@
                         </td>
                     </tr>
                     <tr data-ng-repeat="item in shoppingItems.packages">
-                        <td>Package</td>
+                        <td>{{"PACKAGE"|translate}}</td>
                         <td>{{item.product.Name}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].StartDate|limitTo:10}}</td>
@@ -81,10 +81,10 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="text-right">Total:</td>
+                        <td class="text-right">{{"TOTAL"|translate}}:</td>
                         <td class="text-red">${{totalPrice| number:2}}</td>
                         <td>
-                            <a href data-ng-click="checkOut()" style="font-weight: bold;">Check Out</a>
+                            <a href data-ng-click="checkOut()" style="font-weight: bold;">{{"CHECKOUT"|translate}}</a>
                             <!--<button type="button" class="button btn-sm btn-red" data-ng-click="checkOut()">Check Out</button>-->
                         </td>
                         <td></td>
@@ -92,7 +92,7 @@
                 </tbody>
             </table>
             <div class="text-center" style="margin-top: 10px;" data-ng-show="totalPrice == 0">
-                <h4 class="text-info">Your cart is currently empty</h4>
+                <h4 class="text-info">{{"EMPTY_CART"|translate}}</h4>
             </div>
         </div>
         <span class="icon-close2" data-ng-click="close()"></span>
