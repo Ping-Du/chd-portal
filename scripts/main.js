@@ -4,6 +4,11 @@
 define([], function () {
     'use strict';
 
+    if(window.location.href.indexOf("flexnet.chdestination.com") >= 0) {
+        window.location.href = "https://www.chdestination.com/notice.html";
+        return;
+    }
+
     var version = null;
     version = "_v=" + (version?version:(new Date()).getTime());
 
