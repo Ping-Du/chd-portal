@@ -9,7 +9,7 @@ define([], function () {
         return;
     }
 
-    var version = null;
+    var version = "1.0";
     version = "_v=" + (version?version:(new Date()).getTime());
 
     var libs = {

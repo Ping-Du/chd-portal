@@ -3,8 +3,8 @@ define([], function(){
 
     return {
         //webRoot:'http://chdtraceweb.azurewebsites.net/',
-        apiRoot:'https://flexservices.chdestination.com/tracelink/', // production
-        webRoot:'http://localhost:63342/chd-portal/',
+        apiRoot:'https://link.chdestination.com/', // production
+        webRoot:'https://www.chdestination.com/',
         //apiRoot:'https://chdtracelink.azurewebsites.net/', // development
         apiUser:'apiuser',
         apiPassword:'I^Rf23i!VoV6',
