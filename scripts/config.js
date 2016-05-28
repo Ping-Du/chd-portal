@@ -3,7 +3,8 @@ define([], function(){
 
     return {
         //webRoot:'http://chdtraceweb.azurewebsites.net/',
-        apiRoot:'https://link.chdestination.com/', // production
+        //apiRoot:'https://link.chdestination.com/', // production
+        apiRoot:'https://chdtracelink.azurewebsites.net/',
         webRoot:'https://www.chdestination.com/',
         //apiRoot:'https://chdtracelink.azurewebsites.net/', // development
         apiUser:'apiuser',
