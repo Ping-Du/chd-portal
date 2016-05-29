@@ -9,10 +9,10 @@ define([], function () {
         return;
     }
 
-    if(window.location.href.indexOf('http://') == 0) {
-        window.location.href = window.location.href.replace(/http/, 'https');
-        return;
-    }
+    //if(window.location.href.indexOf('http://') == 0) {
+    //    window.location.href = window.location.href.replace(/http/, 'https');
+    //    return;
+    //}
 
     var version = "1.0.2";
     version = "_v=" + (version?version:(new Date()).getTime());

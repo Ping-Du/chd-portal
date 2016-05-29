@@ -80,11 +80,11 @@ define(['app/services/hotel-service',
                 $scope.checkInDate = (criteria ? criteria.checkInDate : "");//hotelDestination?"":(criteria?criteria.checkInDate:"");
                 $scope.checkOutDate = (criteria ? criteria.checkOutDate : ""); //hotelDestination?"":(criteria?criteria.checkOutDate:"");
                 $scope.guests = (criteria && criteria.guests.length > 0 ? criteria.guests : [
-                    //{
-                    //    Adults: '2',
-                    //    Minors: '0',
-                    //    MinorAges: []
-                    //}
+                    {
+                        Adults: '2',
+                        Minors: '0',
+                        MinorAges: []
+                    }
                 ]);
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.selectedLocation = (criteria ? criteria.locationId : null);

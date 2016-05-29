@@ -81,11 +81,11 @@ define(['app/services/package-service',
                 $scope.startDate = (criteria ? criteria.startDate : "");//packageDestination?"":(criteria?criteria.startDate:"");
                 //$scope.guests = packageDestination?[]:(criteria?criteria.guests:[]);
                 $scope.guests = (criteria && criteria.guests.length > 0 ? criteria.guests : [
-                    //{
-                    //    Adults: '2',
-                    //    Minors: '0',
-                    //    MinorAges: []
-                    //}
+                    {
+                        Adults: '2',
+                        Minors: '0',
+                        MinorAges: []
+                    }
                 ]);
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
                 $scope.selectedLocation = packageDestination ? packageDestination.ProductId : (criteria ? criteria.locationId : null);
