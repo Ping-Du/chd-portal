@@ -147,6 +147,11 @@ define(['app/services/hotel-service',
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
 
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return null;
+                    }
+
                     if ($scope.checkInDate == "") {
                         showError("Check in date is required!");
                         return;
@@ -200,6 +205,8 @@ define(['app/services/hotel-service',
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];
+                            if($scope.hotelItem.AvailabilityCategories == null)
+                                $scope.hotelItem.AvailabilityCategories = [];
                             if(data[0].AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }

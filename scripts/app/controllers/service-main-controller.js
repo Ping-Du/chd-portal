@@ -291,6 +291,10 @@ define(['app/services/services-service',
                 }
 
                 $scope.searchServices = function () {
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
                     var param = getParam(true);
                     if (param) {
                         ServicesService.getAvailability(param).then(function (data) {

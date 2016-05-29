@@ -8,7 +8,8 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 token: token,
                 user: (token ? $.cookie('user') : null),
                 //password:(token?$cookies.get('password'):''),
-                languageId: (token? $.cookie('languageId') :null)
+                languageId: (token? $.cookie('languageId') :null),
+                roleId:(token? $.cookie('roleId'):null)
             };
 
             console.log('user:' + session.user + ' languageId:'+session.languageId);
@@ -40,6 +41,15 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 }
             };
 
+            this.roleId = function(value) {
+                if(arguments.length == 0)
+                    return (session.roleId);
+                else {
+                    setCookie('roleId', value);
+                    session.roleId = value;
+                }
+            };
+
             this.config = function(){
                 return session.config;
             };
@@ -60,7 +70,8 @@ define(['config', 'app/modules'], function (cfg, modules) {
                     config: self.config,
                     token: self.token,
                     user: self.user,
-                    languageId: self.languageId
+                    languageId: self.languageId,
+                    roleId:self.roleId
                 };
             };
         });

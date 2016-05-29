@@ -133,6 +133,10 @@ define(['app/services/package-service',
 
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
 
                     if ($scope.startDate == "") {
                         showError("Start date is required!");
@@ -191,6 +195,8 @@ define(['app/services/package-service',
                         if (data.length > 0) {
                             $scope.allPackages = data;
                             $scope.packageItem = data[0];
+                            if($scope.packageItem.AvailabilityCategories == null)
+                                $scope.packageItem.AvailabilityCategories = [];
                             if($scope.packageItem.AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }

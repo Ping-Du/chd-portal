@@ -1,13 +1,14 @@
 define(['app/services/account-service'], function (modules) {
     'use strict';
     modules.controllers
-        .controller('AccountController', ['$rootScope', '$scope', 'SessionService', 'AccountService',
-            function ($rootScope, $scope, SessionService, AccountService) {
+        .controller('AccountController', ['$rootScope', '$scope', 'SessionService', 'AccountService', '$cookieStore',
+            function ($rootScope, $scope, SessionService, AccountService, $cookieStore) {
 
                 $scope.user = SessionService.user();
                 $scope.token = SessionService.token();
                 $scope.config = SessionService.config();
                 $scope.isAuthorized = $scope.token != null;
+                $scope.showRegister = (SessionService.roleId() == "Manager");
 
                 $scope.openLoginModal = function (size) {
                     $rootScope.$broadcast('OpenLoginModal', size);
@@ -20,6 +21,9 @@ define(['app/services/account-service'], function (modules) {
                 $scope.logout = function () {
                     var promise = AccountService.logout();
                     promise.then(function () {
+                        $cookieStore.remove('serviceCriteria');
+                        $cookieStore.remove('hotelCriteria');
+                        $cookieStore.remove('packageCriteria');
                         $rootScope.$broadcast('LOGOUT');
                     });
                 };
@@ -32,12 +36,14 @@ define(['app/services/account-service'], function (modules) {
                     $scope.user = SessionService.user();
                     $scope.token = SessionService.token();
                     $scope.isAuthorized = true;
+                    $scope.showRegister = (SessionService.roleId() == "Manager");
                 });
 
                 $scope.$on('LOGOUT', function (event, data) {
                     $scope.user = null;
                     $scope.token = null;
                     $scope.isAuthorized = false;
+                    $scope.showRegister = false;
                 });
             }]);
 });

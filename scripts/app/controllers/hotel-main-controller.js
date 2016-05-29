@@ -279,6 +279,7 @@ define(['app/services/hotel-service',
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";
 
                 function getParam(showTips) {
+
                     if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
@@ -355,6 +356,10 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.searchHotels = function () {
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return null;
+                    }
                     var param = getParam(true);
                     if (param) {
                         getAvailability(param);

@@ -195,7 +195,7 @@
   "ROUTING_NUMBER":"Routing Number",
   "SAVE_PROFILE":"Save In Profile",
   "SAVE_QUOTE":"Save As Quote",
-  "BOOK_PAY":"Book & Pay",
+  "BOOK_PAY":"Book And Pay",
   "ADD_ROOM":"Add Room",
   "CLOSE":"Close",
   "SEARCH_INFO":"Start typing to see matching products and destinations. Select a single product or select the search icon to see expanded results.",

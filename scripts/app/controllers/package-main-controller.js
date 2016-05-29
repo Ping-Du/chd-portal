@@ -270,6 +270,10 @@ define(['app/services/package-service',
                 }
 
                 $scope.searchPackages = function() {
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
                     var param = getParam(true);
                     if(param)
                         getAvailability(param);

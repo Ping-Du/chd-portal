@@ -132,7 +132,10 @@ define(['app/services/services-service',
 
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
-
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
                     if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 ){
                         showError('Guests required!');
                         return;
@@ -172,6 +175,8 @@ define(['app/services/services-service',
                     ServicesService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.serviceItem = data[0];
+                            if($scope.serviceItem.AvailabilityCategories == null)
+                                $scope.serviceItem.AvailabilityCategories = [];
                             if(data[0].AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }

@@ -20,6 +20,7 @@ define(['app/services/session-service'], function (modules) {
                         case 3:// Login
                             SessionService.user(userName);
                             SessionService.token(data.access_token);
+                            invoke('/UserProperties','GET',null, 10);
                             break;
                         case 4://logout
                         case 6://reset password
@@ -29,6 +30,8 @@ define(['app/services/session-service'], function (modules) {
                         case 5://set password
                             SessionService.password(newPassword);
                             break;
+                        case 10://
+                            SessionService.roleId(data.AspNetRoles_Id)
                     }
                     deferred.resolve(data);
                 }).error(function (data, status/*, headers, cfg, statusText*/) {
@@ -108,6 +111,9 @@ define(['app/services/session-service'], function (modules) {
                 },
                 getFinanceInfo:function(){
                     return invoke('/FinanceInfo', 'GET', null, 9);
+                },
+                getUserProperties:function() {
+                    return invoke('/UserProperties','GET',null, 10);
                 }
             };
         }]);

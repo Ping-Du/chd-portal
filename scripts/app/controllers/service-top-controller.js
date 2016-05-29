@@ -157,6 +157,11 @@ define(['app/services/services-service',
                 });
 
                 $scope.searchServices = function () {
+                    if (SessionService.user() == null) {
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
+
                     if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
