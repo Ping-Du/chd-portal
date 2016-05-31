@@ -43,7 +43,8 @@ define(['app/services/account-service'], function (modules) {
                         return;
                     }
                     AccountService.resetPassword($scope.userName, $scope.newPassword, $scope.confirmPassword, $scope.code, "").then(function () {
-                        $scope.message = 'Your password is reset!';
+                        //$scope.message = 'Your password is reset!';
+                        translate('PASSWORD_RESET');
                     }, function (data) {
                         $scope.message = data.ModelState.ResetPassword;
                     });

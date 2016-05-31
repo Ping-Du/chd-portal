@@ -199,5 +199,18 @@
   "ADD_ROOM":"Add Room",
   "CLOSE":"Close",
   "SEARCH_INFO":"Start typing to see matching products and destinations. Select a single product or select the search icon to see expanded results.",
-  "KEEP_TYPE":"keep typing to refine your search"
+  "KEEP_TYPE":"keep typing to refine your search",
+  "PASSWORD_RESET":"Password is reset!",
+  "GROUP_SUBMIT_OK":"Group Information has been submitted successfully!",
+  "GROUP_SUBMIT_FAILED":"Submit failed, please try later!",
+  "INPUT_USER_NAME":"Please input your user name!",
+  "PASSWORD_RESET_OK":"The reset password email will be sent to you.",
+  "FILL_LEADS":"Please fill out all lead names",
+  "ASSIGN_GUESTS":"Please assign all guests!",
+  "PAY_MSG":"Are you sure that you will book and pay for these products?",
+  "QUOTE_MSG":"Are you sure that you will save it as quote?",
+  "PLEASE_SELECT":"Please select",
+  "FILL_CREDIT_CARD":"Please fill out all information of credit card!",
+  "FILL_YEAR_MONTH":"Please fill valid year and month!",
+  "FILL_ECHECK":"Please fill out all information of ECheck!"
 }

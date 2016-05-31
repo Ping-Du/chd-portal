@@ -125,7 +125,7 @@
   "DISPLAY":"显示",
   "OR":"或",
   "SEND":"发送",
-  "CONFIRM?":"您确定吗？",
+  "CONFIRM":"您确定吗？",
   "CONFIRM_CANCEL_TRIP":"您确定要取消此行程吗？",
   "CONFIRM_CANCEL":"是的，我要取消！",
   "NO":"不",
@@ -199,5 +199,18 @@
   "ADD_ROOM":"加房",
   "CLOSE":"关闭",
   "SEARCH_INFO":"输入关键字查找目的地或相关的产品。点击单个产品查看详细介绍或查找按钮查看结果。",
-  "KEEP_TYPE":"继续输入以便精确查找"
+  "KEEP_TYPE":"继续输入以便精确查找",
+  "PASSWORD_RESET":"密码已经重置！",
+  "GROUP_SUBMIT_OK":"团队信息已经成功提交!",
+  "GROUP_SUBMIT_FAILED":"团队信息提交失败，请稍后重试！",
+  "INPUT_USER_NAME":"请输入用户名！",
+  "PASSWORD_RESET_OK":"重置密码的邮件将会发送到您的邮箱。",
+  "FILL_LEADS":"请填写主客人信息！",
+  "ASSIGN_GUESTS":"请分配游客！",
+  "PAY_MSG":"您确定要预订和支付这些产品吗？",
+  "QUOTE_MSG":"您确定要保存为报价信息吗？",
+  "PLEASE_SELECT":"请选择",
+  "FILL_CREDIT_CARD":"请填写所有的信用卡信息！",
+  "FILL_YEAR_MONTH":"请选择有效的信用卡年/月！",
+  "FILL_ECHECK":"请填写所有的ECheck信息！"
 }

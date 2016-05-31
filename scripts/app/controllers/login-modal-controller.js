@@ -36,8 +36,12 @@ define(['app/services/account-service'], function (modules) {
                 }
                 var promise = AccountService.login($scope.userName, $scope.password);
                 promise.then(function(data) {
-                    $uibModalInstance.close('ok');
-                    $rootScope.$broadcast('LOGIN',$scope.userName);
+                    AccountService.getUserProperties().then(function(up){
+                        $uibModalInstance.close('ok');
+                        $rootScope.$broadcast('LOGIN',$scope.userName);
+                    }, function(){
+                        translate('API_FAILED')
+                    });
                 }, function(status){
                     if(status == '400')
                         translate('LOGIN_WRONG');
@@ -52,12 +56,12 @@ define(['app/services/account-service'], function (modules) {
 
             $scope.forgotPassword = function() {
                 if($scope.userName == "") {
-                    $scope.message = "Please input your user name!";
+                    translate('INPUT_USER_NAME');
                     return;
                 }
 
                 AccountService.forgotPassword($scope.userName).then(function(){
-                    $scope.message = "The reset password email will be sent to you."
+                   translate('PASSWORD_RESET_OK');
                 }, function(){
                     translate('API_FAILED');
                 });

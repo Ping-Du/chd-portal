@@ -1,12 +1,13 @@
 define(['app/services/destination-service',
     'app/directives/datepicker-directive',
+    'sweetalert',
     'app/services/group-service'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller("GroupController", ['_','$rootScope', '$scope', 'SessionService',
-            'DestinationService', '$log', '$location', 'LanguageService','GroupService','$window',
-            function (_, $rootScope, $scope, SessionService, DestinationService, $log, $location, LanguageService, GroupService, $window) {
+            'DestinationService', '$log', '$location', 'LanguageService','GroupService','$window','$translate',
+            function (_, $rootScope, $scope, SessionService, DestinationService, $log, $location, LanguageService, GroupService, $window,$translate) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -21,6 +22,24 @@ define(['app/services/destination-service',
                         $scope.languageId = data;
                         load();
                     }
+                });
+
+                var success = "";
+                var successInfo = "";
+                var failed = "";
+                var failedInfo = "";
+
+                $translate("SUCCESS").then(function (translation) {
+                    success = translation + "!";
+                });
+                $translate("GROUP_SUBMIT_OK").then(function (translation) {
+                    successInfo = translation;
+                });
+                $translate("FAILED").then(function (translation) {
+                    failed = translation + "!";
+                });
+                $translate("GROUP_SUBMIT_FAILED").then(function (translation) {
+                    failedInfo = translation;
                 });
 
                 $scope.group = {
@@ -111,9 +130,9 @@ define(['app/services/destination-service',
                             MinimumStarRating:$scope.group.star,
                             ContactAddresses:["" + $scope.group.email]
                         }).then(function(data){
-                            $window.alert('Group Information has been submitted successfully!');
+                            swal(success, successInfo, "success");
                         }, function(data){
-                            $window.alert('Submit failed, please try later!');
+                            swal(failed, failedInfo, "error");
                         });
                     } else {
                         $scope.group_form.submitted = true;

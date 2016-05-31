@@ -28,11 +28,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
         .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService','SessionService','$timeout',
             function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService, $timeout) {
 
-                //function translate(key) {
-                //    $translate(key).then(function (translation) {
-                //        $scope.message = translation;
-                //    });
-                //}
+                function translate(key) {
+                    $translate(key).then(function (translation) {
+                        $scope.message = translation;
+                    });
+                }
 
                 $scope.shoppingItems = ShoppingService.getItems();
 
@@ -436,13 +436,13 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 $scope.next = function () {
                     if ($scope.activeTabIndex == 1) {
                         if (!calShowName()) {
-                            $scope.message = "Please fill out all lead names";
+                            translate('FILL_LEADS');
                             return false;
                         }
                     }
                     if ($scope.activeTabIndex == 2) {
                         if (!checkGuestAssignment()) {
-                            $scope.message = "Please assign all guests!";
+                            translate('ASSIGN_GUESTS');
                             return false;
                         }
                     }
@@ -677,40 +677,81 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     }
                 });
 
+                var confirmTitle = '';
+                var yesBtn = '';
+                var noBtn = '';
+                var payMsg = '';
+                var quoteMsg = '';
+                var success = "";
+                var successInfo = "";
+                var failed = "";
+                var docBtn = "";
+                var pleaseSelect = "";
+                $translate('CONFIRM').then(function (translation) {
+                    confirmTitle = translation;
+                });
+                $translate('YES').then(function (translation) {
+                    yesBtn = translation;
+                });
+                $translate('NO').then(function (translation) {
+                    noBtn = translation;
+                });
+                $translate('PAY_MSG').then(function (translation) {
+                    payMsg = translation;
+                });
+                $translate('QUOTE_MSG').then(function (translation) {
+                    quoteMsg = translation;
+                });
+                $translate("SUCCESS").then(function (translation) {
+                    success = translation + "!";
+                });
+                $translate("SUCCESS_INFO").then(function (translation) {
+                    successInfo = translation;
+                });
+                $translate("FAILED").then(function (translation) {
+                    failed = translation + "!";
+                });
+                $translate("DOCUMENTS").then(function (translation) {
+                    docBtn = translation;
+                });
+                $translate("PLEASE_SELECT").then(function (translation) {
+                    pleaseSelect = translation;
+                });
+
                 $scope.bookDisabled = false;
                 $scope.bookAndPay = function (pay) {
                     $scope.message = '';
                     var msg;
                     if (pay)
-                        msg = 'Are you sure that you will book and pay for these products?';
+                        msg = payMsg;
                     else
-                        msg = 'Are you sure that you will save it as quote?';
+                        msg = quoteMsg;
 
                     var p = getBookParam(pay);
                     if (pay) {
                         if (p.PaymentInfo.ProfileID == '' || p.PaymentInfo.ProfileID == null) {
                             if (p.PaymentInfo.PaymentMethod == 'CreditCard') {
                                 if (p.PaymentInfo.CreditCardInfo.CardNumber == '' || p.PaymentInfo.CreditCardInfo.CardCode == '' || p.PaymentInfo.CreditCardInfo.ExpirationYear == 0 || p.PaymentInfo.CreditCardInfo.ExpirationMonth == 0) {
-                                    $scope.message = 'Please fill out all information of credit card!';
+                                    translate('FILL_CREDIT_CARD');
                                     return;
                                 }
 
                                 var now = new Date();
                                 if (p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth() + 1) {
-                                    $scope.message = 'Please fill valid year and month!';
+                                    translate('FILL_YEAR_MONTH');
                                     return;
                                 }
                             }
                             if (p.PaymentInfo.PaymentMethod == 'ECheck') {
                                 if (p.PaymentInfo.BankAccountInfo.BankAccountNumber == '' || p.PaymentInfo.BankAccountInfo.NameOnAccount == '' || p.PaymentInfo.BankAccountInfo.RoutingNumber == '') {
-                                    $scope.message = 'Please fill out all information of bank account!';
+                                    translate("FILL_ECHECK");
                                     return;
                                 }
                             }
                         } else {
                             var profile = getProfile(p.PaymentInfo.ProfileID);
                             if (p.PaymentInfo.PaymentMethod == 'CreditCard' && (($scope.financeInfo.CardCodeRequired && p.PaymentInfo.CreditCardInfo.CardCode == '') || $scope.creditCardError)) {
-                                $scope.message = "Please fill out all credit card information!";
+                                translate('FILL_CREDIT_CARD');
                                 return;
                             }
                         }
@@ -721,13 +762,13 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         p.PaymentInfo = null;
 
                     swal({
-                        title: "Are you sure?",
+                        title: confirmTitle,
                         text: msg,
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes",
-                        cancelButtonText: 'No',
+                        confirmButtonText: yesBtn,
+                        cancelButtonText: noBtn,
                         closeOnConfirm: false,
                         showLoaderOnConfirm: true
                     }, function () {
@@ -737,13 +778,13 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             //$scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
                             //swal("Done!", "Book successfully.", "success");
                             swal({
-                                title: "Done!",
-                                text: "Book successfully.",
+                                title: success,
+                                text: successInfo,
                                 type: "success",
                                 showCancelButton: true,
                                 confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "Send Documents",
-                                cancelButtonText: 'No',
+                                confirmButtonText: docBtn,
+                                cancelButtonText: noBtn,
                                 closeOnConfirm: true
                             },function(isConfirm){
                                 if(isConfirm) {
@@ -754,7 +795,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             });
                         }, function (data) {
                             //$scope.message = data.Message;
-                            swal("Error!", data.Message, "error");
+                            swal(failed, data.Message, "error");
                             $scope.bookDisabled = false;
                         });
                     });
@@ -770,7 +811,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         $scope.financeInfo.Profiles.unshift({
                             ProfileID: null,
                             PaymentMethod: '',
-                            Description: 'Please select'
+                            Description: pleaseSelect
                         });
                         $scope.selectedProfile = data.Profiles[0];
                     });
