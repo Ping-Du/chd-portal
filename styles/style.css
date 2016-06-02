@@ -1393,7 +1393,8 @@ a {
   margin-bottom: 20px; }
   .slider-wrap .slider-list-wrap {
     width: 770px;
-    height: 433px; }
+    height: 370px;
+    background-color: darkgrey; }
   .slider-wrap .thum-wrap {
     position: absolute;
     left: 0;
