@@ -212,5 +212,10 @@
   "PLEASE_SELECT":"请选择",
   "FILL_CREDIT_CARD":"请填写所有的信用卡信息！",
   "FILL_YEAR_MONTH":"请选择有效的信用卡年/月！",
-  "FILL_ECHECK":"请填写所有的ECheck信息！"
+  "FILL_ECHECK":"请填写所有的ECheck信息！",
+  "SELECT_LOCATION":"请选择目的地！",
+  "CHECK_IN_REQUIRED":"请输入入住日期！",
+  "CHECK_OUT_REQUIRED":"请输入退房日期！",
+  "GUESTS_REQUIRED":"请输入客人信息！",
+  "START_DATE_REQUIRED":"请输入开始日期！"
 }

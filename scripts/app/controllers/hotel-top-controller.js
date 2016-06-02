@@ -9,8 +9,8 @@ define(['app/services/hotel-service',
 
     modules.controllers
         .controller('HotelTopController', ['_', '$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
-            'HotelService', 'LanguageService', 'DestinationService', 'SearchService','$filter','$timeout',
-            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, HotelService, LanguageService, DestinationService, SearchService, $filter, $timeout) {
+            'HotelService', 'LanguageService', 'DestinationService', 'SearchService','$filter','$timeout','$translate',
+            function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, HotelService, LanguageService, DestinationService, SearchService, $filter, $timeout, $translate) {
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
@@ -139,15 +139,18 @@ define(['app/services/hotel-service',
                 });
 
                 $scope.$watch('checkInDate', function (newVal, oldVal) {
-                    if (newVal == oldVal) {
+                    if (newVal == oldVal && newVal == '') {
                         return;
                     }
 
                     $('#checkOutDate').datepicker('setStartDate',
                         addDays($('#checkInDate').datepicker('getDate'), 1));
+                    $('#checkOutDate').datepicker('setEndDate',
+                        addDays($('#checkInDate').datepicker('getDate'), 30));
 
                     if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        $scope.checkOutDate = '';
+                        //$scope.checkOutDate = '';
+                        $('#checkOutDate').datepicker('update', '');
                     }
                 });
 
@@ -166,7 +169,7 @@ define(['app/services/hotel-service',
                     }
 
                     if ($scope.selectedLocation == null) {
-                        showError("Please select a location!");
+                        showError('SELECT_LOCATION');
                         return null;
                     }
 

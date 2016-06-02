@@ -58,7 +58,7 @@ define(['app/services/hotel-service',
                     }, 5000);
                 }
 
-                $scope.$watch('checkInDate', function(newVal, oldVal){
+                $scope.$watch('checkOutDate', function(newVal, oldVal){
                     if(newVal == oldVal) {
                         return;
                     }
@@ -68,13 +68,38 @@ define(['app/services/hotel-service',
                     if(!date)
                         return;
 
+                    $('#checkOutDate').datepicker('update', date);
+                    $('#checkOutDate2').datepicker('update', date);
+
+                });
+
+                $scope.$watch('checkInDate', function(newVal, oldVal){
+                    if(newVal == oldVal && newVal == '') {
+                        return;
+                    }
+
+                    var str = newVal.replace(/-/g,"/");
+                    var date = new Date(str);
+                    if(!date)
+                        return;
+
+                    $('#checkInDate').datepicker('update', date);
+                    $('#checkInDate2').datepicker('update', date);
+
                     $('#checkOutDate').datepicker('setStartDate',
                         addDays(date, 1));
+                    $('#checkOutDate').datepicker('setEndDate',
+                        addDays(date, 30));
+
                     $('#checkOutDate2').datepicker('setStartDate',
                         addDays(date, 1));
+                    $('#checkOutDate2').datepicker('setEndDate',
+                        addDays(date, 30));
 
                     if($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        $scope.checkOutDate = '';
+                        //$scope.checkOutDate = '';
+                        $('#checkOutDate').datepicker('update', '');
+                        $('#checkOutDate2').datepicker('update', '');
                     }
                 });
 
@@ -125,8 +150,9 @@ define(['app/services/hotel-service',
                         initSlider(sliderImageData);
                     }
                     if (hotel.Latitude != 0 && hotel.Longitude != 0) {
-                        $scope.showMap = true;
-                        initMap(hotel.Latitude, hotel.Longitude, hotel.Name);
+                        $scope.showMap = false;
+                        //$scope.showMap = true;
+                        //initMap(hotel.Latitude, hotel.Longitude, hotel.Name);
                     }
                 }
 
@@ -153,12 +179,12 @@ define(['app/services/hotel-service',
                     }
 
                     if ($scope.checkInDate == "") {
-                        showError("Check in date is required!");
+                        showError('CHECK_IN_REQUIRED');
                         return;
                     }
 
                     if ($scope.checkOutDate == "") {
-                        showError("Check Out date is required!");
+                        showError('CHECK_OUT_REQUIRED');
                         return;
                     }
 
@@ -175,7 +201,7 @@ define(['app/services/hotel-service',
                     }
 
                     if ($scope.guests.length < 1) {
-                        showError("Guests is required!");
+                        showError('GUESTS_REQUIRED');
                         return;
                     }
 

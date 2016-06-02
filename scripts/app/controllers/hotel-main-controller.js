@@ -263,15 +263,18 @@ define(['app/services/hotel-service',
                 });
 
                 $scope.$watch('checkInDate', function (newVal, oldVal) {
-                    if (newVal == oldVal) {
+                    if (newVal == oldVal && newVal == '') {
                         return;
                     }
 
                     $('#checkOutDate').datepicker('setStartDate',
                         addDays($('#checkInDate').datepicker('getDate'), 1));
+                    $('#checkOutDate').datepicker('setEndDate',
+                        addDays($('#checkInDate').datepicker('getDate'), 30));
 
                     if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        $scope.checkOutDate = '';
+                        $('#checkOutDate').datepicker('update', '');
+                        //$scope.checkOutDate = '';
                     }
                 });
 
@@ -305,19 +308,19 @@ define(['app/services/hotel-service',
 
                     if ($scope.selectedLocation == null) {
                         if(showTips)
-                            showError("Please select a location!");
+                            showError('SELECT_LOCATION');
                         return null;
                     }
 
                     if ($scope.checkInDate == "") {
                         if(showTips)
-                            showError("Check in date is required!");
+                            showError('CHECK_IN_REQUIRED');
                         return null;
                     }
 
                     if ($scope.checkOutDate == "") {
                         if(showTips)
-                            showError("Check Out date is required!");
+                            showError('CHECK_OUT_REQUIRED');
                         return null;
                     }
 
@@ -337,7 +340,7 @@ define(['app/services/hotel-service',
 
                     if ($scope.guests.length < 1) {
                         if(showTips)
-                            showError("Guests is required!");
+                            showError('GUESTS_REQUIRED');
                         return null;
                     }
 

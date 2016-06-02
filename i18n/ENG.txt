@@ -212,5 +212,10 @@
   "PLEASE_SELECT":"Please select",
   "FILL_CREDIT_CARD":"Please fill out all information of credit card!",
   "FILL_YEAR_MONTH":"Please fill valid year and month!",
-  "FILL_ECHECK":"Please fill out all information of ECheck!"
+  "FILL_ECHECK":"Please fill out all information of ECheck!",
+  "SELECT_LOCATION":"Please select a location!",
+  "CHECK_IN_REQUIRED":"Check in date is required!",
+  "CHECK_OUT_REQUIRED":"Check out date is required!",
+  "GUESTS_REQUIRED":"Guests information is required!",
+  "START_DATE_REQUIRED":"Start date is required!"
 }

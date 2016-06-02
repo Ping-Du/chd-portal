@@ -258,13 +258,13 @@ define(['app/services/services-service',
 
                     if ($scope.selectedLocation == null) {
                         if (showTips)
-                            showError("Please select a location!");
+                            showError('SELECT_LOCATION');
                         return;
                     }
 
                     if ($scope.startDate == "") {
                         if (showTips)
-                            showError("Start date is required!");
+                            showError("START_DATE_REQUIRED");
                         return;
                     }
 

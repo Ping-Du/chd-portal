@@ -111,8 +111,9 @@ define(['app/services/services-service',
                         initSlider(sliderImageData);
                     }
                     if (serviceItem.Latitude != 0 && serviceItem.Longitude != 0) {
-                        $scope.showMap = true;
-                        initMap(serviceItem.Latitude, serviceItem.Longitude, serviceItem.Name);
+                        $scope.showMap = false;
+                        //$scope.showMap = true;
+                        //initMap(serviceItem.Latitude, serviceItem.Longitude, serviceItem.Name);
                     }
                 }
 
@@ -137,12 +138,12 @@ define(['app/services/services-service',
                         return;
                     }
                     if ($scope.guests.Adults.Trim() == '' || parseInt($scope.guests.Adults) == 0 ){
-                        showError('Guests required!');
+                        showError('GUESTS_REQUIRED');
                         return;
                     }
 
                     if ($scope.startDate == "") {
-                        showError("Start date is required!");
+                        showError("START_DATE_REQUIRED");
                         return;
                     }
 

@@ -171,7 +171,7 @@ define(['app/services/services-service',
                     }
 
                     if ($scope.selectedLocation == null) {
-                        showError("Please select a location!");
+                        showError('SELECT_LOCATION');
                         return null;
                     }
 

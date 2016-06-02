@@ -100,8 +100,9 @@ define(['app/services/package-service',
                         initSlider(sliderImageData);
                     }
                     if (pkg.Latitude != 0 && pkg.Longitude != 0) {
-                        $scope.showMap = true;
-                        initMap(pkg.Latitude, pkg.Longitude, pkg.Location.Name);
+                        $scope.showMap = false;
+                        //$scope.showMap = true;
+                        //initMap(pkg.Latitude, pkg.Longitude, pkg.Location.Name);
                     }
 
 
@@ -139,7 +140,7 @@ define(['app/services/package-service',
                     }
 
                     if ($scope.startDate == "") {
-                        showError("Start date is required!");
+                        showError("START_DATE_REQUIRED");
                         return;
                     }
 
@@ -151,7 +152,7 @@ define(['app/services/package-service',
                     }
 
                     if ($scope.guests.length < 1) {
-                        showError("Guests is required!");
+                        showError("GUESTS_REQUIRED");
                         return;
                     }
 
