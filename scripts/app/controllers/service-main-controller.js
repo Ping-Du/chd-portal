@@ -46,7 +46,7 @@ define(['app/services/services-service',
                 var criteria = $cookieStore.get('serviceCriteria');
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.guests = (criteria && criteria.guests.length > 0? criteria.guests : {Adults: '2', MinorAges: []});
+                $scope.guests = (criteria? criteria.guests : {Adults: '2', MinorAges: []});
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 $scope.startDate = (criteria ? criteria.startDate : ""); //servicesDestination?"":(criteria?criteria.startDate:"");
                 $scope.selectedLocation = servicesDestination ? servicesDestination.ProductId : (criteria ? criteria.locationId : null);
