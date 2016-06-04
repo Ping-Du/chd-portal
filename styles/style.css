@@ -1922,4 +1922,15 @@ table.fixed-header {
   .loading span {
     display: block; }
 
+.tooltip.customClass .tooltip-inner {
+  color: #161616;
+  background-color: lightgrey;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  max-width: 2000px;
+  padding: 5px 5px; }
+
+/* Hide arrow */
+.tooltip.customClass .tooltip-arrow {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */

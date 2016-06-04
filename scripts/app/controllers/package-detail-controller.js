@@ -124,6 +124,17 @@ define(['app/services/package-service',
                     });
                 }
 
+                $scope.currentCategory = null;
+                $scope.showPrice = function(index) {
+                    $scope.packageItem.AvailabilityCategories[index].showPrice = true;
+                    $scope.currentCategory = $scope.packageItem.AvailabilityCategories[index];
+                };
+
+                $scope.hidePrice = function(index) {
+                    $scope.packageItem.AvailabilityCategories[index].showPrice = false;
+                    $scope.currentCategory = null;
+                };
+
                 //$scope.$watch('packageItem', function(newVal, oldVal){
                 //    if(!newVal)
                 //        return;

@@ -149,6 +149,30 @@
             <div class="table-content">
                 <div class="table-content">
                     <div class="table-responsive">
+                        <script type="text/ng-template" id="myTooltipTemplate.html">
+                            <table class="table table-bordered" style="margin-bottom:0;">
+                                <thead>
+                                <tr>
+                                    <td>{{'GUEST'|translate}} #</td>
+                                    <td>{{'TYPE'|translate}}</td>
+                                    <td>{{'AGE'|translate}}</td>
+                                    <td>{{"PRICE"|translate}}</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="guest in currentCategory.Guests">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{guest.Type}}</td>
+                                    <td>{{guest.Age}}</td>
+                                    <td>${{guest.Price}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" colspan="3">{{"TOTAL"|translate}}</td>
+                                    <td class="text-red">${{currentCategory.Price}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </script>
                         <table class="table table-hover">
                             <thead>
                             <tr class="thead">
@@ -176,7 +200,16 @@
                                     <span><a href data-ng-click="showCategoryDetail($index)"><strong>{{item.Name}}</strong></a></span>
                                     <br><span>{{"ID"|translate}}:{{item.Id}}</span>
                                 </td>
-                                <td><span class="price">${{item.Price}}</span></td>
+                                <td>
+                                    <span class="price">${{item.Price}}</span>
+                                    &nbsp;<i class="icon-price-tags" style="color:lightblue;"
+                                             tooltip-trigger="none"
+                                             tooltip-is-open="packageItem.AvailabilityCategories[$index].showPrice"
+                                             tooltip-placement="bottom" tooltip-class="customClass"
+                                             uib-tooltip-template="'myTooltipTemplate.html'"
+                                             data-ng-mouseenter="showPrice($index)"
+                                             data-ng-mouseleave="hidePrice($index)"></i>
+                                </td>
                                 <td>{{item.StartDate | limitTo:10}}</td>
                                 <td>{{item.EndDate | limitTo:10}}</td>
                                 <td>

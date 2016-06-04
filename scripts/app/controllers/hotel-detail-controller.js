@@ -170,6 +170,17 @@ define(['app/services/hotel-service',
                     });
                 }
 
+                $scope.currentCategory = null;
+                $scope.showPrice = function(index) {
+                  $scope.hotelItem.AvailabilityCategories[index].showPrice = true;
+                  $scope.currentCategory = $scope.hotelItem.AvailabilityCategories[index];
+                };
+
+                $scope.hidePrice = function(index) {
+                    $scope.hotelItem.AvailabilityCategories[index].showPrice = false;
+                    $scope.currentCategory = null;
+                };
+
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
 

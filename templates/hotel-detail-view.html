@@ -2,21 +2,21 @@
     <div class="container">
         <div class=" row">
             <!--<div class="col-md-4 relative">-->
-                <!--<i class="icon-location2"></i>-->
-                <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Location">&ndash;&gt;-->
-                <!--<div angucomplete-alt id="searchLocation"-->
-                     <!--placeholder="Location"-->
-                     <!--pause="1000"-->
-                     <!--selected-object="selectedSearchLocation"-->
-                     <!--local-data="searchLocations"-->
-                     <!--search-fields="ProductId,Name"-->
-                     <!--title-field="Name"-->
-                     <!--minlength="1"-->
-                     <!--input-class="form-control input"-->
-                     <!--match-class="highlight"-->
-                     <!--initial-value="selectedLocationName"-->
-                     <!--disable-input="true" >-->
-                <!--</div>-->
+            <!--<i class="icon-location2"></i>-->
+            <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="Location">&ndash;&gt;-->
+            <!--<div angucomplete-alt id="searchLocation"-->
+            <!--placeholder="Location"-->
+            <!--pause="1000"-->
+            <!--selected-object="selectedSearchLocation"-->
+            <!--local-data="searchLocations"-->
+            <!--search-fields="ProductId,Name"-->
+            <!--title-field="Name"-->
+            <!--minlength="1"-->
+            <!--input-class="form-control input"-->
+            <!--match-class="highlight"-->
+            <!--initial-value="selectedLocationName"-->
+            <!--disable-input="true" >-->
+            <!--</div>-->
             <!--</div>-->
             <div class="col-md-4 relative">
                 <!--<i class="icon-location2"></i>-->
@@ -30,7 +30,8 @@
             <div class="col-md-2 relative">
                 <i class="icon-calendar"></i>
                 <input id="checkOutDate" type="text" class="form-control input" data-date-picker data-start-date="+2d"
-                       placeholder="{{'CHECK_OUT'|translate}}" data-ng-model="checkOutDate" data-init-date="checkOutDate">
+                       placeholder="{{'CHECK_OUT'|translate}}" data-ng-model="checkOutDate"
+                       data-init-date="checkOutDate">
             </div>
             <div class="col-md-3 relative">
                 <i class="icon-users"></i>
@@ -43,7 +44,7 @@
             <div class="col-md-1 relative">
                 <a href data-ng-click="checkAvailability(true)" uib-tooltip="{{tooltips|translate}}"
                    tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
-                   tooltip-trigger="none" ><i class="icon-search"></i></a>
+                   tooltip-trigger="none"><i class="icon-search"></i></a>
             </div>
         </div>
     </div>
@@ -53,7 +54,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="relative">
-                    <div class="slides-container slider-wrap" >
+                    <div class="slides-container slider-wrap">
                         <!-- Loading Screen -->
                         <div data-u="loading" style="position: absolute;top:0;left:0;">
                             <div class="loading-icon"></div>
@@ -86,14 +87,18 @@
                 <div class="service-detail-info">
                     <span class="caption">{{hotelItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:100}} ...</span></a></div>
+                <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.AdditionalInformation[0].PlainText|limitTo:100}} ...</span></a>
+                </div>
                 <br/>
+
                 <div class="row tab-list">
-                    <div class="col-xs-12 col-md-12"><span>{{"STAR"|translate}}: </span><i data-ng-class="starClass"></i></div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}: </span>{{hotelItem.ProductId}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"TYPE"|translate}}: </span>{{hotelItem.HotelType.Name}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"ADDRESS"|translate}}: </span>{{hotelItem.Address.Address1}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"CITY"|translate}}: </span>{{hotelItem.Address.City}}</div>
+                    <div class="col-xs-12 col-md-12"><span>{{"STAR"|translate}}: </span><i
+                            data-ng-class="starClass"></i></div>
+                    <div class="col-xs-6 col-md-6"><span>{{"ID"|translate}}: </span>{{hotelItem.ProductId}}</div>
+                    <div class="col-xs-6 col-md-6"><span>{{"TYPE"|translate}}: </span>{{hotelItem.HotelType.Name}}</div>
+                    <div class="col-xs-6 col-md-6"><span>{{"ADDRESS"|translate}}: </span>{{hotelItem.Address.Address1}}
+                    </div>
+                    <div class="col-xs-6 col-md-6"><span>{{"CITY"|translate}}: </span>{{hotelItem.Address.City}}</div>
                 </div>
                 <br/>
                 <!--<div class="tax-com-part">-->
@@ -106,13 +111,14 @@
                     <!--<a href onclick="scrollToControl('detail')" data-ng-show="hotelItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
                     <br><br>
-                    <a href onclick="scrollToControl('term')" data-ng-show="hotelItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{hotelItem.Warnings[0].Title}}</a>
+                    <a href onclick="scrollToControl('term')" data-ng-show="hotelItem.Warnings.length > 0"><i
+                            class="glyphicon glyphicon-info-sign"></i>&nbsp;{{hotelItem.Warnings[0].Title}}</a>
                 </div>
                 <!--<div class="row">-->
-                    <!--<div class="price-btn-part">-->
-                        <!--<div class="col-xs-12 col-md-12 text-right">-->
-                            <!--<a href class="btn btn-red">Check Availability</a></div>-->
-                    <!--</div>-->
+                <!--<div class="price-btn-part">-->
+                <!--<div class="col-xs-12 col-md-12 text-right">-->
+                <!--<a href class="btn btn-red">Check Availability</a></div>-->
+                <!--</div>-->
                 <!--</div>-->
             </section>
         </div>
@@ -120,9 +126,14 @@
             <nav class="container">
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('category')">{{"ROOM_TYPE"|translate}}</a></li>
-                    <li class="menu-item" data-ng-show="hotelItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{hotelItem.AdditionalInformation[1].Title}}</a></li>
-                    <li class="menu-item" data-ng-show="hotelItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{hotelItem.Warnings[0].Title}}</a></li>
+                    <li class="menu-item"><a href onclick="scrollToControl('category')">{{"ROOM_TYPE"|translate}}</a>
+                    </li>
+                    <li class="menu-item" data-ng-show="hotelItem.AdditionalInformation.length > 0"><a href
+                                                                                                       onclick="scrollToControl('detail')">{{hotelItem.AdditionalInformation[1].Title}}</a>
+                    </li>
+                    <li class="menu-item" data-ng-show="hotelItem.Warnings.length > 0"><a href
+                                                                                          onclick="scrollToControl('term')">{{hotelItem.Warnings[0].Title}}</a>
+                    </li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
             </nav>
@@ -133,37 +144,67 @@
                 <div class="col-sm-3 col-md-3">
                     <h3>{{"ROOM_TYPE"|translate}}</h3>
                 </div>
-            <div class="col-sm-9 col-md-9 search-box">
-                <form class="form-inline">
-                    <div class="form-group pos-date">
-                        <i class="icon-calendar icon"></i>
-                        <input id="checkInDate2" type="text" class="form-control input" data-date-picker data-start-date="+1d"
-                               placeholder="{{'CHECK_IN'|translate}}" data-ng-model="checkInDate" data-init-date="checkInDate">
-                    </div>
-                    <div class="form-group pos-date ">
-                        <i class="icon-calendar icon"></i>
-                        <input id="checkOutDate2" type="text" class="form-control input" data-date-picker data-start-date="+2d"
-                               placeholder="{{'CHECK_OUT'|translate}}" data-ng-model="checkOutDate" data-init-date="checkOutDate">
-                    </div>
-                    <div class="form-group pos-number">
-                        <i class="icon-users icon"></i>
-                        <input type="text" class="form-control input input-guests" placeholder="0 room(s) 0 adult(s) 0 minor(s)"
-                               data-ng-model="roomsInfo"
-                               uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
-                               popover-is-open="showGuests1" ng-click="showGuests1 = true"
-                               popover-trigger="none" popover-placement="bottom">
-                    </div>
-                    <div class="form-group pos-button">
-                        &nbsp;&nbsp;<a href data-ng-click="checkAvailability(true)" uib-tooltip="{{tooltips|translate}}"
-                                       tooltip-class="error" tooltip-is-open="showTooltip" tooltip-placement="auto top"
-                                       tooltip-trigger="none" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
-                    </div>
-                </form>
-            </div>
+                <div class="col-sm-9 col-md-9 search-box">
+                    <form class="form-inline">
+                        <div class="form-group pos-date">
+                            <i class="icon-calendar icon"></i>
+                            <input id="checkInDate2" type="text" class="form-control input" data-date-picker
+                                   data-start-date="+1d"
+                                   placeholder="{{'CHECK_IN'|translate}}" data-ng-model="checkInDate"
+                                   data-init-date="checkInDate">
+                        </div>
+                        <div class="form-group pos-date ">
+                            <i class="icon-calendar icon"></i>
+                            <input id="checkOutDate2" type="text" class="form-control input" data-date-picker
+                                   data-start-date="+2d"
+                                   placeholder="{{'CHECK_OUT'|translate}}" data-ng-model="checkOutDate"
+                                   data-init-date="checkOutDate">
+                        </div>
+                        <div class="form-group pos-number">
+                            <i class="icon-users icon"></i>
+                            <input type="text" class="form-control input input-guests"
+                                   placeholder="0 room(s) 0 adult(s) 0 minor(s)"
+                                   data-ng-model="roomsInfo"
+                                   uib-popover-template="guestsTemplateUrl" popover-title="{{'GUESTS'|translate}}"
+                                   popover-is-open="showGuests1" ng-click="showGuests1 = true"
+                                   popover-trigger="none" popover-placement="bottom">
+                        </div>
+                        <div class="form-group pos-button">
+                            &nbsp;&nbsp;<a href data-ng-click="checkAvailability(true)"
+                                           uib-tooltip="{{tooltips|translate}}"
+                                           tooltip-class="error" tooltip-is-open="showTooltip"
+                                           tooltip-placement="auto top"
+                                           tooltip-trigger="none"><span class="glyphicon glyphicon-search"
+                                                                        aria-hidden="true"></span></a>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="table-content">
                 <div class="table-content">
                     <div class="table-responsive">
+                        <script type="text/ng-template" id="myTooltipTemplate.html">
+                            <table class="table table-bordered" style="margin-bottom:0;">
+                                <thead>
+                                    <tr>
+                                        <td>{{'ROOM'|translate}} #</td>
+                                        <td data-ng-repeat="item in currentCategory.Rooms[0].Nights">{{'NIGHT'|translate}} {{item.NightId + 1}}</td>
+                                        <td>{{"SUBTOTAL"|translate}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="room in currentCategory.Rooms">
+                                        <td>{{room.RoomId + 1}}</td>
+                                        <td data-ng-repeat="night in room.Nights">${{night.Price}}</td>
+                                        <td>${{room.Price}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="{{currentCategory.Rooms[0].Nights.length + 1}}">{{"TOTAL"|translate}}</td>
+                                        <td class="text-red">${{currentCategory.Price}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </script>
                         <table class="table table-hover">
                             <thead>
                             <tr class="thead">
@@ -175,30 +216,49 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in hotelItem.AvailabilityCategories" data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
+                            <tr data-ng-repeat="item in hotelItem.AvailabilityCategories"
+                                data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
                                 <td>
                                     <!--<div class="media media-roomlist">-->
-                                        <!--<div class="media-left media-middle">-->
-                                            <!--<img class="media-object" src="images/na.png">-->
-                                        <!--</div>-->
-                                        <!--<div class="media-body">-->
-                                            <!--<h5 class="media-heading">{{item.Name}}</h5>-->
-                                            <!--<p class="p-detail">Product ID: {{item.Id}}</p>-->
-                                        <!--</div>-->
+                                    <!--<div class="media-left media-middle">-->
+                                    <!--<img class="media-object" src="images/na.png">-->
+                                    <!--</div>-->
+                                    <!--<div class="media-body">-->
+                                    <!--<h5 class="media-heading">{{item.Name}}</h5>-->
+                                    <!--<p class="p-detail">Product ID: {{item.Id}}</p>-->
+                                    <!--</div>-->
                                     <!--</div>-->
                                     <span><strong>{{item.Name}}</strong></span>
                                     <br><span>{{"ID"|translate}}:{{item.Id}}</span>
                                 </td>
-                                <td><span class="price">${{item.Price}}</span></td>
+                                <td>
+                                    <span class="price">${{item.Price}}</span>
+                                    &nbsp;<i class="icon-price-tags" style="color:lightblue;"
+                                             tooltip-trigger="none"
+                                             tooltip-is-open="hotelItem.AvailabilityCategories[$index].showPrice"
+                                             tooltip-placement="bottom" tooltip-class="customClass"
+                                             uib-tooltip-template="'myTooltipTemplate.html'"
+                                             data-ng-mouseenter="showPrice($index)"
+                                             data-ng-mouseleave="hidePrice($index)"></i>
+                                </td>
                                 <td>{{item.CancelBy | limitTo:10}}</td>
                                 <td>
-                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:32px; color:#99cc33;" data-ng-show="item.AvailabilityLevel == 'Available'"></span>
-                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="font-size:32px; color:#ff9900;" data-ng-show="item.AvailabilityLevel == 'NotAvailable'"></span>
-                                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size:32px; color:#ffcc00;" data-ng-show="item.AvailabilityLevel == 'Requestable'"></span>
+                                    <span class=" glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:32px;
+                                    color:#99cc33;" data-ng-show="item.AvailabilityLevel == 'Available'"></span>
+                                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"
+                                          style="font-size:32px; color:#ff9900;"
+                                          data-ng-show="item.AvailabilityLevel == 'NotAvailable'"></span>
+                                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+                                          style="font-size:32px; color:#ffcc00;"
+                                          data-ng-show="item.AvailabilityLevel == 'Requestable'"></span>
                                 </td>
-                                <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)">
-                                    <span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}</button>
+                                <td>
+                                    <button type="button"
+                                            data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}"
+                                            data-ng-click="addToShoppingCart($index)">
+                                        <span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
@@ -212,6 +272,7 @@
         </section>
         <section class="detail-wrap" id="detail" data-ng-show="hotelItem.AdditionalInformation.length > 0">
             <h3>{{hotelItem.AdditionalInformation[1].Title}}</h3>
+
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-bind-html="hotelItem.AdditionalInformation[1].FormattedText"></p>
@@ -219,6 +280,7 @@
         </section>
         <section class="detail-wrap" id="term" data-ng-show="hotelItem.Warnings.length > 0">
             <h3>{{hotelItem.Warnings[0].Title}}</h3>
+
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-repeat="item in hotelItem.Warnings" data-ng-bind-html="item.FormattedText"></p>
@@ -226,15 +288,29 @@
         </section>
         <section class="detail-wrap" id="map">
             <h3>{{"LOCATION"|translate}}</h3>
+
             <div class="content">
                 <!--<p><strong>Address：</strong>{{hotelItem.Address.Address1 + ', ' + hotelItem.Address.City + ', ' + hotelItem.Address.State}}</p>-->
-                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>{{"ADDRESS"|translate}} 1：</strong>{{hotelItem.Address.Address1}}</p>
-                <p data-ng-show="hotelItem.Address.Address2 != ''"><strong>{{"ADDRESS"|translate}} 2：</strong>{{hotelItem.Address.Address2}}</p>
-                <p data-ng-show="hotelItem.Address.Address3 != ''"><strong>{{"ADDRESS"|translate}} 3：</strong>{{hotelItem.Address.Address3}}</p>
-                <p data-ng-show="hotelItem.Address.City != ''"><strong>{{"CITY"|translate}}：</strong>{{hotelItem.Address.City}}</p>
-                <p data-ng-show="hotelItem.Address.State != ''"><strong>{{"STATE"|translate}}：</strong>{{hotelItem.Address.State}}</p>
-                <p data-ng-show="hotelItem.Address.Country != '' && hotelItem.Address.Country"><strong>{{"COUNTRY"|translate}}：</strong>{{hotelItem.Address.Country}}</p>
-                <p data-ng-show="hotelItem.Address.Zip != ''"><strong>{{"ZIP"|translate}}：</strong>{{hotelItem.Address.Zip}}</p>
+                <p data-ng-show="hotelItem.Address.Address1 != ''"><strong>{{"ADDRESS"|translate}} 1：</strong>{{hotelItem.Address.Address1}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.Address2 != ''"><strong>{{"ADDRESS"|translate}} 2：</strong>{{hotelItem.Address.Address2}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.Address3 != ''"><strong>{{"ADDRESS"|translate}} 3：</strong>{{hotelItem.Address.Address3}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.City != ''"><strong>{{"CITY"|translate}}：</strong>{{hotelItem.Address.City}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.State != ''"><strong>{{"STATE"|translate}}：</strong>{{hotelItem.Address.State}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.Country != '' && hotelItem.Address.Country"><strong>{{"COUNTRY"|translate}}：</strong>{{hotelItem.Address.Country}}
+                </p>
+
+                <p data-ng-show="hotelItem.Address.Zip != ''"><strong>{{"ZIP"|translate}}：</strong>{{hotelItem.Address.Zip}}
+                </p>
                 <!--ui-map="myMap" ui-options="mapOptions"-->
                 <div class="map-box" id="map_canvas" data-ng-show="showMap">
                 </div>
@@ -267,10 +343,10 @@
             container.attr("id", new Date().getTime());
 
         var innerHtml = '';
-        for(var i = 0; i < imageData.length; i++ ) {
+        for (var i = 0; i < imageData.length; i++) {
             innerHtml += '<div data-p="112.50">';
             innerHtml += '<img data-u="image" src="' + imageData[i].image + '" />';
-            if(imageData[i].thumb) {
+            if (imageData[i].thumb) {
                 innerHtml += '<img data-u="thumb" src="' + imageData[i].thumb + '" />';
             }
             innerHtml += '</div>';
@@ -298,18 +374,20 @@
     }
 
     //initiating jQuery
-    jQuery(function($) {
-        $(document).ready( function() {
+    jQuery(function ($) {
+        $(document).ready(function () {
             // 为 '.navbar-wrapper' class 启用stickUp插件
             $('.detail-nav-wrap').stickUp({
                 parts: {
-                    0:'top',
+                    0: 'top',
                     1: 'category',
                     2: 'detail',
-                    3:'term',
-                    4: 'map'},
+                    3: 'term',
+                    4: 'map'
+                },
                 itemClass: 'menu-item',
-                itemHover: 'active' });
+                itemHover: 'active'
+            });
         });
     });
 
