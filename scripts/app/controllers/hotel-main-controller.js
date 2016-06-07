@@ -436,7 +436,7 @@ define(['app/services/hotel-service',
                             //hotels1 = null;
                             populate();
                         });
-
+                        hotelDestination = null;
                     } else {
                         if ($scope.guests.length > 0 && $scope.checkInDate != "" && $scope.checkOutDate != "" && $scope.selectedLocation != null)
                             $scope.searchHotels();

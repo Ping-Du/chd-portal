@@ -219,5 +219,8 @@
   "CHECK_IN_REQUIRED":"请输入入住日期！",
   "CHECK_OUT_REQUIRED":"请输入退房日期！",
   "GUESTS_REQUIRED":"请输入客人信息！",
-  "START_DATE_REQUIRED":"请输入开始日期！"
+  "START_DATE_REQUIRED":"请输入开始日期！",
+  "SAVE_AS":"保存为",
+  "RESERVATION":"预订",
+  "QUOTE":"报价"
 }

@@ -5,6 +5,7 @@ define(['app/services/session-service'], function (modules) {
             function invoke(url, method, data, headers) {
                 var deferred = $q.defer();
                 var newUrl = url.replace(/\/tracelink\/documentation/i, '');
+                newUrl = newUrl.replace(/\/documentation/i, '');
                 $http({
                     method: method,
                     url: ( SessionService.config().apiRoot + 'documentation' + newUrl),

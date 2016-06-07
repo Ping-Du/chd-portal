@@ -363,7 +363,7 @@ define(['app/services/services-service',
                         }, function () {
                             populate();
                         });
-
+                        servicesDestination = null;
                     } else {
                         if ($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
                             $scope.searchServices();

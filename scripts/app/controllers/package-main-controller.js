@@ -357,6 +357,7 @@ define(['app/services/package-service',
                         }, function () {
                             populate();
                         });
+                        packageDestination = null;
 
                     } else {
                         if ($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)

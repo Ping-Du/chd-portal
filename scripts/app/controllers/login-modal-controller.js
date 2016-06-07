@@ -42,9 +42,12 @@ define(['app/services/account-service'], function (modules) {
                     }, function(){
                         translate('API_FAILED')
                     });
-                }, function(status){
-                    if(status == '400')
-                        translate('LOGIN_WRONG');
+                }, function(data){
+                    if(data && data.ModelState && data.ModelState.Login && data.ModelState.Login.length > 0) {
+                        //translate('LOGIN_WRONG');
+
+                        $scope.message = modules.angular.fromJson(data.ModelState.Login[0]).error_description;
+                    }
                     else
                         translate('API_FAILED');
                 });

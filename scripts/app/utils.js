@@ -152,16 +152,26 @@ function makePriceString(lowPrice, highPrice) {
 }
 
 function clearEmptyAddress(address) {
-    address.Address1 = address.Address1.Trim();
-    address.Address2 = address.Address2.Trim();
-    address.Address3 = address.Address3.Trim();
-    address.City = address.City.Trim();
-    address.State = address.State.Trim();
-    if (address.Country == null)
+    if(!address) {
+        address.Address1 = address.Address1.Trim();
+        address.Address2 = address.Address2.Trim();
+        address.Address3 = address.Address3.Trim();
+        address.City = address.City.Trim();
+        address.State = address.State.Trim();
+        if (address.Country == null)
+            address.Country = "";
+        else
+            address.Country = address.Country.Trim();
+        address.Zip = address.Zip.Trim();
+    } else {
+        address.Address1 = '';
+        address.Address2 = '';
+        address.Address3 = '';
+        address.City = "";
+        address.State = "";
         address.Country = "";
-    else
-        address.Country = address.Country.Trim();
-    address.Zip = address.Zip.Trim();
+        address.Zip = "";
+    }
 }
 
 function getImageByServiceType(serviceType) {

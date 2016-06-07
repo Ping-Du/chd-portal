@@ -350,10 +350,19 @@
                         <uib-tab index="4" heading="{{'PAY'|translate}}" active="tabs[4].active" disable="tabs[4].disabled" select="selectTab(4)">
                             <div class="uibtab-info" style="margin-top: 5px;">
                                 <div class="form-group form-inline">
+                                    <label>{{"SAVE_AS"|translate}}: </label>
+
+                                    <label class="radio-inline"><input type="radio"
+                                                                       value="Reservation" data-ng-model="bookingInfo.SaveType">{{"RESERVATION"|translate}}</label>
+                                    <label class="radio-inline"><input type="radio"
+                                                                       value="Quote" data-ng-model="bookingInfo.SaveType">{{"QUOTE"|translate}}</label>
+
+                                </div>
+                                <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation'">
                                     <label>{{"PAYMENT_PROFILE"|translate}}: </label>
                                     <select class="form-control" style="width:250px;" data-ng-options="Profile.ProfileID as Profile.Description for Profile in financeInfo.Profiles" data-ng-model="bookingInfo.PaymentInfo.ProfileId"></select>
                                 </div>
-                                <div class="form-group form-inline">
+                                <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation'">
                                     <label>{{"METHOD"|translate}}: </label>
 
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
@@ -365,8 +374,9 @@
 
                                 </div>
                             </div>
-                            <div class="form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
-                                <form>
+                            <form name="PayForm">
+                            <div class="form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation' && bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
+
                                 <div class="form-group" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null">
                                     <label class="control-label">{{"CARD_NO"|translate}}: </label>
                                     <input class="form-control"  type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
@@ -384,7 +394,7 @@
                                     <input class="form-control" type="text" style="width: 50px;" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardCode">
                                 </div>
                             </div>
-                            <div class="from-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck'">
+                            <div class="from-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation' && bookingInfo.PaymentInfo.PaymentMethod == 'ECheck'">
                                 <div class="form-group">
                                     <label>{{"BANK_ACCOUNT"|translate}}: </label>
                                     <input class="form-control" type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.BankAccountNumber">
@@ -394,7 +404,7 @@
                                     <input class="form-control" type="text" style="width: 150px;" data-ng-model="bookingInfo.PaymentInfo.BankAccountInfo.RoutingNumber">
                                 </div>
                             </div>
-                            <div class="form-group form-inline" data-ng-show="bookingInfo.PaymentInfo.PaymentMethod == 'ECheck' || bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard'">
+                            <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation' && (bookingInfo.PaymentInfo.PaymentMethod == 'ECheck' || bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard')">
                                 <input type="checkbox" data-ng-model="bookingInfo.PaymentInfo.SaveInProfile">
                                 <label>{{"SAVE_PROFILE"|translate}}</label>
                             </div>
@@ -410,11 +420,11 @@
                     <button type="button" class="btn btn-primary btn-sm" data-ng-click="next()"
                             data-ng-disabled="!showNextBtn" data-ng-show="!tabs[4].active">{{"NEXT"|translate}}
                     </button>
-                    <button type="button" class="btn btn-primary btn-sm" data-ng-click="bookAndPay(false)"
-                            data-ng-show="tabs[4].active">{{"SAVE_QUOTE"|translate}}
+                    <button type="button" class="btn btn-warning btn-sm" data-ng-click="bookAndPay(false)"
+                            data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Quote'">{{"SAVE"|translate}}
                     </button>
                     <button type="button" class="btn btn-warning btn-sm" data-ng-click="bookAndPay(true)"
-                            data-ng-show="tabs[4].active" data-ng-disabled="bookDisabled">{{"BOOK_PAY"|translate}}
+                            data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Reservation'" data-ng-disabled="bookDisabled">{{"BOOK_PAY"|translate}}
                     </button>
                 </div>
             </script>

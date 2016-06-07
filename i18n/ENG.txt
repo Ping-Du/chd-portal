@@ -219,5 +219,8 @@
   "CHECK_IN_REQUIRED":"Check in date is required!",
   "CHECK_OUT_REQUIRED":"Check out date is required!",
   "GUESTS_REQUIRED":"Guests information is required!",
-  "START_DATE_REQUIRED":"Start date is required!"
+  "START_DATE_REQUIRED":"Start date is required!",
+  "SAVE_AS":"Save As",
+  "RESERVATION":"Reservation",
+  "QUOTE":"Quote"
 }

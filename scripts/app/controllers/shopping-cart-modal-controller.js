@@ -43,7 +43,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     Guests: [],
                     PaymentInfo: {
                         ProfileId: null,
-                        PaymentMethod: 'CreditCard',
+                        PaymentMethod: '',
                         CreditCardInfo: {
                             CardNumber: '',
                             ExpirationMonth: 0,
@@ -64,7 +64,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     Minors: 0,
                     HotelPrice: 0,
                     ServicePrice: 0,
-                    PackagePrice: 0
+                    PackagePrice: 0,
+                    SaveType:'Reservation'
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -94,6 +95,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         var index = $scope.shoppingItems.hotels[i].index;
                         var category = hotel.AvailabilityCategories[index];
                         var guestId = 1;
+                        if(category.PaymentRequired)
+                            $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
+
                         $scope.bookingInfo.Hotels.push({
                             RatePlanId: category.RatePlan.Id,
                             Nights: 0,
@@ -156,6 +160,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
 
                         var pickUpPoint = null;
                         var dropOffPoint = null;
+
+                        if(serviceCategory.PaymentRequired)
+                            $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
 
                         for (k = 0; k < service.PickupPoints.length; k++) {
                             if (service.PickupPoints[k].LocationId == service.PickupPoint) {
@@ -230,6 +237,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         var category = pkg.AvailabilityCategories[index];
                         var guestId = 1;
                         $scope.bookingInfo.PackagePrice += category.Price;
+                        if(category.PaymentRequired)
+                            $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
                         $scope.bookingInfo.Packages.push({
                             TripItemId: 0,
                             ProductType: pkg.ProductType,
@@ -462,6 +471,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 };
 
                 $scope.message = '';
+                $scope.bookDisabled = false;
 
                 function checkGuestAssignment() {
                     var i, j, k;
@@ -644,7 +654,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
 
                 $scope.creditCardError = false;
                 function checkExpiredYearMonth() {
-                    if($scope.bookingInfo.PaymentInfo.ProfileId == null) {
+                    if($scope.bookingInfo.PaymentInfo.PaymentMethod != "CreditCard") {
                         $scope.creditCardError = false;
                         return;
                     }
@@ -653,6 +663,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     var date = new Date();
                     var now = date.getFullYear()*100 + date.getMonth() + 1;
                     $scope.creditCardError = !(yearMonth >= now);
+                    return $scope.creditCardError;
                 }
                 $scope.$watch('bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear', function(newValue, oldValue){
                     checkExpiredYearMonth();
@@ -718,14 +729,15 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     pleaseSelect = translation;
                 });
 
-                $scope.bookDisabled = false;
                 $scope.bookAndPay = function (pay) {
                     $scope.message = '';
                     var msg;
+                    //var pay = ($scope.saveType == 'Reservation');
                     if (pay)
                         msg = payMsg;
                     else
                         msg = quoteMsg;
+
 
                     var p = getBookParam(pay);
                     if (pay) {
@@ -736,11 +748,13 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     return;
                                 }
 
-                                var now = new Date();
-                                if (p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth() + 1) {
+                                //var now = new Date();
+                                //if (p.PaymentInfo.CreditCardInfo.ExpirationYear == now.getFullYear() && p.PaymentInfo.CreditCardInfo.ExpirationMonth < now.getMonth() + 1) {
+                                if($scope.creditCardError) {
                                     translate('FILL_YEAR_MONTH');
                                     return;
                                 }
+                                //}
                             }
                             if (p.PaymentInfo.PaymentMethod == 'ECheck') {
                                 if (p.PaymentInfo.BankAccountInfo.BankAccountNumber == '' || p.PaymentInfo.BankAccountInfo.NameOnAccount == '' || p.PaymentInfo.BankAccountInfo.RoutingNumber == '') {
