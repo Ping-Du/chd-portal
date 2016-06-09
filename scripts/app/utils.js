@@ -152,7 +152,7 @@ function makePriceString(lowPrice, highPrice) {
 }
 
 function clearEmptyAddress(address) {
-    if(!address) {
+    if(address) {
         address.Address1 = address.Address1.Trim();
         address.Address2 = address.Address2.Trim();
         address.Address3 = address.Address3.Trim();

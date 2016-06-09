@@ -125,14 +125,16 @@ define(['app/services/package-service',
                 }
 
                 $scope.currentCategory = null;
-                $scope.showPrice = function(index) {
-                    $scope.packageItem.AvailabilityCategories[index].showPrice = true;
-                    $scope.currentCategory = $scope.packageItem.AvailabilityCategories[index];
-                };
-
-                $scope.hidePrice = function(index) {
-                    $scope.packageItem.AvailabilityCategories[index].showPrice = false;
+                $scope.showHidePrice = function(index) {
                     $scope.currentCategory = null;
+                    for (var i = 0; i < $scope.packageItem.AvailabilityCategories.length; i++) {
+                        if (i == index)
+                            continue;
+                        else
+                            $scope.packageItem.AvailabilityCategories[i].showPrice = false;
+                    }
+                    $scope.packageItem.AvailabilityCategories[index].showPrice = !$scope.packageItem.AvailabilityCategories[index].showPrice;
+                    $scope.currentCategory = $scope.packageItem.AvailabilityCategories[index];
                 };
 
                 //$scope.$watch('packageItem', function(newVal, oldVal){

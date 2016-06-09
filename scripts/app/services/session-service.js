@@ -9,10 +9,11 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 user: (token ? $.cookie('user') : null),
                 //password:(token?$cookies.get('password'):''),
                 languageId: (token? $.cookie('languageId') :null),
-                roleId:(token? $.cookie('roleId'):null)
+                roleId:(token? $.cookie('roleId'):null),
+                agencyNo:(token? $.cookie('agencyNo'):null)
             };
 
-            console.log('user:' + session.user + ' languageId:'+session.languageId);
+            //console.log('user:' + session.user + ' languageId:'+session.languageId);
 
             function setCookie(key, value) {
                 if (value != null) {
@@ -64,6 +65,16 @@ define(['config', 'app/modules'], function (cfg, modules) {
                 }
             };
 
+            this.agencyNo = function(value) {
+                if (arguments.length == 0) {
+                    return session.agencyNo;
+                }
+                else {
+                    setCookie('agencyNo', value);
+                    session.agencyNo = value;
+                }
+            };
+
             this.$get = function () {
                 var self = this;
                 return {
@@ -71,7 +82,8 @@ define(['config', 'app/modules'], function (cfg, modules) {
                     token: self.token,
                     user: self.user,
                     languageId: self.languageId,
-                    roleId:self.roleId
+                    roleId:self.roleId,
+                    agencyNo:self.agencyNo
                 };
             };
         });

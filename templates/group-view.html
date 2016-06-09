@@ -1,6 +1,7 @@
 <div class="container-bg" style="padding: 10px;" >
     <div class="col-md-6 col-center-block myorder-wrap">
-        <h3>{{"INFORMATION"|translate}}</h3>
+        <h3 data-ng-show="languageId == 'ENG'">Please fill out and submit the information below and we will contact you to provide a quote for your group.</h3>
+        <h3 data-ng-show="languageId == 'CHI'">请填写下面的表格并提交。我们将会联系您并为您提供为团队报价。</h3>
         <hr>
     <form name="group_form" class="form-horizontal" data-ng-submit="submitForm()" novalidate>
         <div class="form-group">

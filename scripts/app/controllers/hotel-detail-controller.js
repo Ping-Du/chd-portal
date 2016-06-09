@@ -11,7 +11,7 @@ define(['app/services/hotel-service',
 
     modules.controllers
         .controller('HotelDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore','$timeout','ShoppingService',
+            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore', '$timeout', 'ShoppingService',
             function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
@@ -34,9 +34,9 @@ define(['app/services/hotel-service',
                 $scope.searchLocations = [];
 
                 var criteria = $cookieStore.get('hotelCriteria');
-                $scope.guests = criteria?criteria.guests:[{
+                $scope.guests = criteria ? criteria.guests : [{
                     Adults: '2',
-                    Minors:'0',
+                    Minors: '0',
                     MinorAges: []
                 }];
                 $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
@@ -58,14 +58,14 @@ define(['app/services/hotel-service',
                     }, 5000);
                 }
 
-                $scope.$watch('checkOutDate', function(newVal, oldVal){
-                    if(newVal == oldVal) {
+                $scope.$watch('checkOutDate', function (newVal, oldVal) {
+                    if (newVal == oldVal) {
                         return;
                     }
 
-                    var str = newVal.replace(/-/g,"/");
+                    var str = newVal.replace(/-/g, "/");
                     var date = new Date(str);
-                    if(!date)
+                    if (!date)
                         return;
 
                     $('#checkOutDate').datepicker('update', date);
@@ -73,14 +73,14 @@ define(['app/services/hotel-service',
 
                 });
 
-                $scope.$watch('checkInDate', function(newVal, oldVal){
-                    if(newVal == oldVal && newVal == '') {
+                $scope.$watch('checkInDate', function (newVal, oldVal) {
+                    if (newVal == oldVal && newVal == '') {
                         return;
                     }
 
-                    var str = newVal.replace(/-/g,"/");
+                    var str = newVal.replace(/-/g, "/");
                     var date = new Date(str);
-                    if(!date)
+                    if (!date)
                         return;
 
                     $('#checkInDate').datepicker('update', date);
@@ -96,7 +96,7 @@ define(['app/services/hotel-service',
                     $('#checkOutDate2').datepicker('setEndDate',
                         addDays(date, 30));
 
-                    if($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
                         //$scope.checkOutDate = '';
                         $('#checkOutDate').datepicker('update', '');
                         $('#checkOutDate2').datepicker('update', '');
@@ -111,24 +111,24 @@ define(['app/services/hotel-service',
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
                     $scope.showGuests1 = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 };
 
-                $scope.addRoom = function() {
+                $scope.addRoom = function () {
                     $scope.guests.push({
                         Adults: '2',
-                        Minors:'0',
+                        Minors: '0',
                         MinorAges: []
                     });
                 };
 
-                $scope.deleteRoom = function(index) {
+                $scope.deleteRoom = function (index) {
                     $scope.guests.splice(index, 1);
                 };
 
-                $scope.minorsChange = function(index) {
-                    if($scope.guests[index].Minors > $scope.guests[index].MinorAges.length) {
-                        while($scope.guests[index].MinorAges.length < $scope.guests[index].Minors) {
+                $scope.minorsChange = function (index) {
+                    if ($scope.guests[index].Minors > $scope.guests[index].MinorAges.length) {
+                        while ($scope.guests[index].MinorAges.length < $scope.guests[index].Minors) {
                             $scope.guests[index].MinorAges.push('0');
                         }
                     } else {
@@ -137,7 +137,7 @@ define(['app/services/hotel-service',
                 };
 
                 $scope.starClass = '';
-                function doAdditionalProcess(hotel){
+                function doAdditionalProcess(hotel) {
                     $scope.starClass = 'icon-star-' + (hotel.StarRating * 10);
                     var sliderImageData = [];
                     modules.angular.forEach(hotel.SliderImages, function (item, index) {
@@ -165,20 +165,53 @@ define(['app/services/hotel-service',
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
                         clearEmptyAddress(data.Address);
-                        if(!reload)
+                        if (!reload)
                             doAdditionalProcess(data);
                     });
                 }
 
-                $scope.currentCategory = null;
-                $scope.showPrice = function(index) {
-                  $scope.hotelItem.AvailabilityCategories[index].showPrice = true;
-                  $scope.currentCategory = $scope.hotelItem.AvailabilityCategories[index];
-                };
+                $scope.currentCategory = [];
+                $scope.showHidePrice = function (index) {
+                    var i, j, k;
+                    $scope.currentCategory = [];
+                    for (i = 0; i < $scope.hotelItem.AvailabilityCategories.length; i++) {
+                        if (i == index)
+                            continue;
+                        else
+                            $scope.hotelItem.AvailabilityCategories[i].showPrice = false;
+                    }
+                    $scope.hotelItem.AvailabilityCategories[index].showPrice = !$scope.hotelItem.AvailabilityCategories[index].showPrice;
+                    if (!$scope.hotelItem.AvailabilityCategories[index].showPrice) {
+                        return;
+                    }
 
-                $scope.hidePrice = function(index) {
-                    $scope.hotelItem.AvailabilityCategories[index].showPrice = false;
-                    $scope.currentCategory = null;
+                    var category = $scope.hotelItem.AvailabilityCategories[index];
+                    //$scope.currentCategory = $scope.hotelItem.AvailabilityCategories[index];
+
+                    for (i = 0; i < category.Rooms.length; i++) {
+                        var room = category.Rooms[i];
+                        for (j = 0; j < room.Nights.length; j++) {
+                            var night = room.Nights[j];
+                            for (k = 0; k < room.Guests.length; k++) {
+                                var guest = room.Guests[k];
+                                $scope.currentCategory.push({
+                                    roomId: room.RoomId + 1,
+                                    roomPrice: room.Price,
+                                    roomSpan: room.Guests.length * room.Nights.length,
+                                    roomShow: (j == 0 && k == 0),
+                                    nightId: night.NightId + 1,
+                                    nightPrice: night.Price,
+                                    nightSpan: room.Guests.length,
+                                    nightShow: (k == 0),
+                                    guestId: guest.GuestId,
+                                    guestType: guest.Type,
+                                    guestAge: guest.Age,
+                                    guestPrice: guest.Nights[j].Price,
+                                    totalPrice: category.Price
+                                });
+                            }
+                        }
+                    }
                 };
 
                 $scope.showNotAvailable = false;
@@ -242,17 +275,17 @@ define(['app/services/hotel-service',
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];
-                            if($scope.hotelItem.AvailabilityCategories == null)
+                            if ($scope.hotelItem.AvailabilityCategories == null)
                                 $scope.hotelItem.AvailabilityCategories = [];
-                            if(data[0].AvailabilityCategories.length == 0) {
+                            if (data[0].AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }
 
                             clearEmptyAddress(data[0].Address);
-                            if(!reload)
+                            if (!reload)
                                 doAdditionalProcess(data[0]);
                         }
-                        if(reload) {
+                        if (reload) {
                             scrollToControl('category');
                         }
                     }, function () {
@@ -265,8 +298,8 @@ define(['app/services/hotel-service',
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
-                        if($scope.hotelItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
-                            $scope.hotelItem.Warnings.length > 0 && $scope.hotelItem.Warnings[0].ConsentRequired
+                        if ($scope.hotelItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
+                                $scope.hotelItem.Warnings.length > 0 && $scope.hotelItem.Warnings[0].ConsentRequired
                             ))
                             $rootScope.$broadcast('ConsentRequired:Open', $scope.hotelItem, categoryIndex);
                         else {
@@ -277,14 +310,14 @@ define(['app/services/hotel-service',
                     }
                 };
 
-                $scope.$on('ConsentRequired:Confirmed', function(event, product, index){
+                $scope.$on('ConsentRequired:Confirmed', function (event, product, index) {
                     ShoppingService.addItem(product, index);
                     scrollToControl('header');
                     $rootScope.$broadcast('ShoppingCart:Animate');
                 });
 
-                $scope.load = function(reload) {
-                    if(reload) {
+                $scope.load = function (reload) {
+                    if (reload) {
                         $cookieStore.put('hotelCriteria', {
                             locationId: $scope.selectedLocation,
                             locationName: $scope.selectedLocationName,

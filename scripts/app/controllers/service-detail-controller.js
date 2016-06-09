@@ -132,15 +132,18 @@ define(['app/services/services-service',
                 }
 
                 $scope.currentCategory = null;
-                $scope.showPrice = function(index) {
-                    $scope.serviceItem.AvailabilityCategories[index].showPrice = true;
+                $scope.showHidePrice = function(index) {
+                    $scope.currentCategory = null;
+                    for (var i = 0; i < $scope.serviceItem.AvailabilityCategories.length; i++) {
+                        if (i == index)
+                            continue;
+                        else
+                            $scope.serviceItem.AvailabilityCategories[i].showPrice = false;
+                    }
+                    $scope.serviceItem.AvailabilityCategories[index].showPrice = !$scope.serviceItem.AvailabilityCategories[index].showPrice;
                     $scope.currentCategory = $scope.serviceItem.AvailabilityCategories[index];
                 };
 
-                $scope.hidePrice = function(index) {
-                    $scope.serviceItem.AvailabilityCategories[index].showPrice = false;
-                    $scope.currentCategory = null;
-                };
 
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {

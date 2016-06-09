@@ -1927,10 +1927,10 @@ table.fixed-header {
   background-color: lightgrey;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   max-width: 2000px;
-  padding: 5px 5px; }
+  padding: 5px 5px;
+  max-height: 300px;
+  overflow: auto; }
 
 /* Hide arrow */
-.tooltip.customClass .tooltip-arrow {
-  display: none; }
 
 /*# sourceMappingURL=style.css.map */

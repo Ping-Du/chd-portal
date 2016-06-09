@@ -196,14 +196,12 @@
                                 </td>
                                 <!--<td>{{item.ServiceTime}}</td>-->
                                 <td>
-                                    <span class="price">${{item.Price}}</span>
-                                    &nbsp;<i class="icon-price-tags" style="color:lightblue;"
+                                    <span class="price" >${{item.Price}}</span>
+                                    &nbsp;<i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
                                              tooltip-trigger="none"
                                              tooltip-is-open="serviceItem.AvailabilityCategories[$index].showPrice"
                                              tooltip-placement="bottom" tooltip-class="customClass"
-                                             uib-tooltip-template="'myTooltipTemplate.html'"
-                                             data-ng-mouseenter="showPrice($index)"
-                                             data-ng-mouseleave="hidePrice($index)"></i>
+                                             uib-tooltip-template="'myTooltipTemplate.html'" data-ng-click="showHidePrice($index)"></i>
                                 </td>
                                 <td>{{item.CancelBy | limitTo:10}}</td>
                                 <td>

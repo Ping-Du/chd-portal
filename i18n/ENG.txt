@@ -133,7 +133,7 @@
   "NO":"No",
   "YES":"Yes",
   "SUCCESS":"Success",
-  "SUCCESS_INFO":"This trip has been cancelled",
+  "SUCCESS_INFO":"The operation successfully completed",
   "FAILED":"Failed",
   "FAILED_INFO":"There is an error, please try later!",
   "IN":"In",

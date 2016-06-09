@@ -31,7 +31,9 @@ define(['app/services/session-service'], function (modules) {
                             SessionService.password(newPassword);
                             break;
                         case 10://
-                            SessionService.roleId(data.AspNetRoles_Id)
+                            SessionService.roleId(data.AspNetRoles_Id);
+                            SessionService.agencyNo(data.Agy_No);
+                            break;
                     }
                     deferred.resolve(data);
                 }).error(function (data, status/*, headers, cfg, statusText*/) {
@@ -62,7 +64,7 @@ define(['app/services/session-service'], function (modules) {
                         "ConfirmPassword": confirmPassword,
                         "SecretCode": 'T0pS3cr3t',
                         "Role": (SessionService.user?'agent':'consumer'),
-                        "Agency": SessionService.user(),
+                        "Agency": SessionService.agencyNo(),
                         "UrlToConfirmationPage": (SessionService.config().webRoot + 'account.html#/confirm-email/'+SessionService.languageId())
                     });
                     return invoke('/Register', 'POST', requestData, 2, userName);
