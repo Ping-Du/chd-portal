@@ -51,6 +51,10 @@ define(['app/services/hotel-service',
                     $location.url("/" + $scope.languageId, true);
                 };
 
+                $scope.showHotelDetailPage = function(hotelId) {
+                    $location.url("/" + hotelId + "/" + $scope.languageId);
+                };
+
                 $scope.hotels = null;
                 $scope.loadHotels = function (destination) {
                     if (destination == $scope.currentDestination)
@@ -71,8 +75,13 @@ define(['app/services/hotel-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
+                    var allItems = [];
                     SearchService.getLocations().then(function (data) {
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        HotelService.getHotelsByLanguageId().then(function(hotelList){
+                            allItems = data.concat(hotelList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
 
@@ -189,7 +198,10 @@ define(['app/services/hotel-service',
                         return;
 
                     if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
-                        $scope.showHotelMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        if(newVal.originalObject.ProductType == 'HTL')
+                            $scope.showHotelDetailPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        else
+                            $scope.showHotelMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
                     }
                 });
 

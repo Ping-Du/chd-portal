@@ -32,18 +32,19 @@ define(['app/services/hotel-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
+                    var allItems = [];
                     SearchService.getLocations().then(function (data) {
-                        //DestinationService.getDestinationsByLanguageId().then(function(data){
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        //var dest = _.find(data, function(item){
-                        //    return item.ProductId == $routeParams.locationId;
-                        //});
-                        //if(dest) {
-                        //    $scope.selectedLocation = dest.ProductId;
-                        //    $scope.selectedLocationName = dest.Name;
-                        //}
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        HotelService.getHotelsByLanguageId().then(function(hotelList){
+                            allItems = data.concat(hotelList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
+
+                $scope.showHotelDetailPage = function(hotelId) {
+                    $location.url("/" + hotelId + "/" + $scope.languageId);
+                };
 
 
                 $scope.selectedStar = null;
@@ -255,9 +256,13 @@ define(['app/services/hotel-service',
                         return;
 
                     if (newVal) {
-                        $scope.selectedLocation = newVal.originalObject.ProductId;
-                        $scope.selectedLocationName = newVal.originalObject.Name;
-                        load(false);
+                        if(newVal.originalObject.ProductType == 'HTL')
+                            $scope.showHotelDetailPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        else {
+                            $scope.selectedLocation = newVal.originalObject.ProductId;
+                            $scope.selectedLocationName = newVal.originalObject.Name;
+                            load(false);
+                        }
                     }
 
                 });

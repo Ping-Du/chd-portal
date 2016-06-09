@@ -92,17 +92,26 @@ function GetHotelGuestsInfo(guests, languageId) {
         minors += guests[i].MinorAges.length;
     }
 
-    if(languageId == 'CHI')
-        return ( rooms + '间房 ' + adults + '成人 ' + minors + '儿童');
-    else
-        return ( rooms + ' room(s) ' + adults + ' adult(s) ' + minors + ' minor(s)');
+    var rtn = '';
+    if(languageId == 'CHI') {
+        rtn = rooms + '间房 ' + adults + '成人 ';
+        if(minors > 0)
+            rtn += ( minors + '儿童');
+    }
+    else {
+        rtn = rooms + ' room(s) ' + adults + ' adult(s) ';
+        if(minors > 0)
+            rtn += ( minors + ' minor(s)');
+    }
+
+    return rtn;
 }
 
 function GetServiceGuestsInfo(guests, languageId) {
     if(languageId == 'CHI')
-        return ((guests.Adults.Trim() == '' ? '0' : guests.Adults) + '成人 ' + guests.MinorAges.length + '儿童');
+        return ((guests.Adults.Trim() == '' ? '0' : guests.Adults) + '成人 ' + (guests.MinorAges.length > 0?guests.MinorAges.length + '儿童':''));
     else
-        return ((guests.Adults.Trim() == '' ? '0' : guests.Adults) + ' adult(s) ' + guests.MinorAges.length + ' minor(s)');
+        return ((guests.Adults.Trim() == '' ? '0' : guests.Adults) + ' adult(s) ' + (guests.MinorAges.length>0?guests.MinorAges.length + ' minor(s)':''));
 }
 
 

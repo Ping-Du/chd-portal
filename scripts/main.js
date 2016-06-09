@@ -14,7 +14,7 @@ define([], function () {
     //    return;
     //}
 
-    var version = "1.0.11";
+    var version = "1.0.12";
     version = "_v=" + (version?version:(new Date()).getTime());
 
     var libs = {

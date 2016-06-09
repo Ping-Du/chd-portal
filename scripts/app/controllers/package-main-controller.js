@@ -31,10 +31,19 @@ define(['app/services/package-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
-                    SearchService.getLocations().then(function(data){
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                    var allItems = [];
+                    SearchService.getLocations().then(function (data) {
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        PackageService.getPackagesByLanguageId().then(function(pkgList){
+                            allItems = data.concat(pkgList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
+
+                $scope.showPackageDetailPage = function(packageId) {
+                    $location.url("/" + packageId + "/" + $scope.languageId);
+                };
 
                 $scope.selectedType = null;
                 $scope.types = [];
@@ -311,10 +320,14 @@ define(['app/services/package-service',
                     if(newVal == oldVal)
                         return;
 
-                    if(newVal) {
-                        $scope.selectedLocation = newVal.originalObject.ProductId;
-                        $scope.selectedLocationName = newVal.originalObject.Name;
-                        load(false);
+                    if (newVal) {
+                        if(newVal.originalObject.ProductType == 'PKG')
+                            $scope.showPackageDetailPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        else {
+                            $scope.selectedLocation = newVal.originalObject.ProductId;
+                            $scope.selectedLocationName = newVal.originalObject.Name;
+                            load(false);
+                        }
                     }
 
                 });

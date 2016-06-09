@@ -24,7 +24,7 @@
                         <td>{{item.product.StartDate|limitTo:10}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].Rooms[0].Nights.length}}</td>
                         <td>{{item.product.EndDate|limitTo:10}}</td>
-                        <td>{{item.product.AvailabilityCategories[item.index].Rooms[0].Guests.length}}</td>
+                        <td>{{item.totalGuests}}</td>
                         <td>${{item.product.AvailabilityCategories[item.index].Price| number:2}}</td>
                         <td>
                             <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:#99cc33;" data-ng-show="item.product.AvailabilityCategories[item.index].AvailabilityLevel == 'Available'"></span>
@@ -84,10 +84,13 @@
                         <td class="text-right">{{"TOTAL"|translate}}:</td>
                         <td class="text-red">${{totalPrice| number:2}}</td>
                         <td>
-                            <a href data-ng-click="checkOut()" style="font-weight: bold;">{{"CHECKOUT"|translate}}</a>
-                            <!--<button type="button" class="button btn-sm btn-red" data-ng-click="checkOut()">Check Out</button>-->
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color:#99cc33;" data-ng-show="availability == 1"></span>
+                            <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="color:#ffcc00;" data-ng-show="availability == 2"></span>
+                            <img src="images/RequestAndConfirmed.png" style="width: 12px;height: 12px;" data-ng-show="availability == 3">
                         </td>
-                        <td></td>
+                        <td>
+                            <a href data-ng-click="checkOut()" style="font-weight: bold;font-size: 16px;">{{"CHECKOUT"|translate}}</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

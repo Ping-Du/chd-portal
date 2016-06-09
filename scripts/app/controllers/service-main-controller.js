@@ -56,10 +56,19 @@ define(['app/services/services-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
+                    var allItems = [];
                     SearchService.getLocations().then(function (data) {
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        ServicesService.getServiceByType(serviceType).then(function(serviceList){
+                            allItems = data.concat(serviceList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
+
+                $scope.showServiceDetailPage = function(serviceId) {
+                    $location.url("/" + serviceType + '/'+ serviceId+'/'+ $scope.languageId, true);
+                };
 
                 $scope.filterByLocation = function (id) {
                     fillServices();
@@ -219,9 +228,14 @@ define(['app/services/services-service',
                         return;
 
                     if (newVal) {
-                        $scope.selectedLocation = newVal.originalObject.ProductId;
-                        $scope.selectedLocationName = newVal.originalObject.Name;
-                        load(false);
+
+                        if(newVal.originalObject.ProductType == 'OPT')
+                            $scope.showServiceDetailPage(newVal.originalObject.ProductId, newVal.originalObject.ServiceType.Id);
+                        else {
+                            $scope.selectedLocation = newVal.originalObject.ProductId;
+                            $scope.selectedLocationName = newVal.originalObject.Name;
+                            load(false);
+                        }
                     }
 
                 });

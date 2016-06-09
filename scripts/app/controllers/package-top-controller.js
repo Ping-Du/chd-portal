@@ -50,6 +50,10 @@ define(['app/services/package-service',
                     $location.url("/" + $scope.languageId, true);
                 };
 
+                $scope.showPackageDetailPage = function(packageId) {
+                    $location.url("/" + packageId + "/" + $scope.languageId);
+                };
+
                 $scope.packages = null;
                 $scope.loadPackages = function (destination) {
                     if (destination == $scope.currentDestination)
@@ -70,8 +74,13 @@ define(['app/services/package-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
+                    var allItems = [];
                     SearchService.getLocations().then(function (data) {
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        PackageService.getPackagesByLanguageId().then(function(pkgList){
+                            allItems = data.concat(pkgList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
 
@@ -177,7 +186,10 @@ define(['app/services/package-service',
                         return;
 
                     if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
-                        $scope.showPackagesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        if(newVal.originalObject.ProductType == 'PKG')
+                            $scope.showPackageDetailPage(newVal.originalObject.ProductId);
+                        else
+                            $scope.showPackagesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
                     }
                 });
 

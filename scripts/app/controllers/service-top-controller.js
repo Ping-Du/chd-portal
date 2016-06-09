@@ -69,6 +69,10 @@ define(['app/services/services-service',
                     $location.url("/" + serviceType + '/'+ $scope.languageId, true);
                 };
 
+                $scope.showServiceDetailPage = function(serviceId) {
+                    $location.url("/" + serviceType + '/'+ serviceId+'/'+ $scope.languageId, true);
+                };
+
                 $scope.services = null;
                 $scope.loadServices = function(destination) {
                     if(destination == $scope.currentDestination)
@@ -80,7 +84,7 @@ define(['app/services/services-service',
                         $scope.services = data; // _.first(data, 3);
 
                         _.each($scope.services, function(item){
-                            item.DetailsURI = 'services.html#/activities/'+item.ProductId+'/'+$scope.languageId;
+                            item.DetailsURI = 'services.html#/' + serviceType + '/'+item.ProductId+'/'+$scope.languageId;
                             //item.starClass = "icon-star-" + (item.StarRating * 10);
                         });
                     });
@@ -99,8 +103,13 @@ define(['app/services/services-service',
                 $scope.searchLocations = [];
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
+                    var allItems = [];
                     SearchService.getLocations().then(function (data) {
-                        $scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
+                        ServicesService.getServiceByType(serviceType).then(function(serviceList){
+                            allItems = data.concat(serviceList);
+                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                        });
                     });
                 }
 
@@ -190,7 +199,10 @@ define(['app/services/services-service',
                         return;
 
                     if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
-                        $scope.showServicesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        if(newVal.originalObject.ProductType == 'OPT')
+                          $scope.showServiceDetailPage(newVal.originalObject.ProductId, newVal.originalObject.ServiceType.Id);
+                        else
+                            $scope.showServicesMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
                     }
                 });
 
