@@ -58,11 +58,12 @@ define(['app/services/account-service',
                 var failed;
                 var successInfo;
                 var failedInfo;
+                var docSentInfo;
 
                 $translate("SUCCESS").then(function (translation) {
                     success = translation + "!";
                 });
-                $translate("SUCCESS_INFO").then(function (translation) {
+                $translate("TRIP_CANCELLED").then(function (translation) {
                     successInfo = translation;
                 });
                 $translate("FAILED").then(function (translation) {
@@ -70,6 +71,9 @@ define(['app/services/account-service',
                 });
                 $translate("FAILED_INFO").then(function (translation) {
                     failedInfo = translation;
+                });
+                $translate("DOC_SENT").then(function (translation) {
+                    docSentInfo = translation;
                 });
 
 
@@ -147,7 +151,7 @@ define(['app/services/account-service',
                     }
                     DocumentService.sendDocByUrl(docItem.SendUri, list).then(function (data) {
                         //$window.alert('Request for sending document to your email address has been submitted!');
-                        swal(success, successInfo, "success")
+                        swal(success, docSentInfo, "success")
                     }, function () {
                         //$window.alert('There is an error when sending request!');
                         swal(failed, failedInfo, "error");

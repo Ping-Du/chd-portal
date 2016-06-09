@@ -209,7 +209,7 @@
   "INPUT_USER_NAME":"Please input your user name!",
   "PASSWORD_RESET_OK":"The reset password email will be sent to you.",
   "FILL_LEADS":"Please fill out all lead names",
-  "ASSIGN_GUESTS":"Please assign all guests!",
+  "ASSIGN_GUESTS":"Please assign primary guests and other guests correctly!",
   "PAY_MSG":"Are you sure you want to book and pay for these products?",
   "BOOK_MSG":"Are you sure you want to book these products?",
   "QUOTE_MSG":"Are you sure that you will save it as quote?",
@@ -226,5 +226,8 @@
   "RESERVATION":"Reservation",
   "QUOTE":"Quote",
   "PAY_LATER":"Invoice and Pay Later",
-  "START_NEW_TRIP":"Start New Trip"
+  "START_NEW_TRIP":"Start New Trip",
+  "TRIP_BOOKED":"The trip has been booked successfully.",
+  "TRIP_CANCELLED":"The trip has been cancelled successfully.",
+  "DOC_SENT":"Your documents have been sent."
 }

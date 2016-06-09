@@ -189,7 +189,7 @@
                                         </select><span data-ng-show="!guest.Adult">{{"CHILD"|translate}}</span></td>
                                         <td><input type="text" class="form-control input-sm"
                                                    data-ng-model="guest.Phone" data-ng-show="guest.Adult"></td>
-                                        <td><a href data-ng-click="removeGuest($index)"><i
+                                        <td><a href data-ng-click="removeGuest($index)" data-ng-show="guest.deletable"><i
                                                 class="glyphicon glyphicon-remove main-red"></i></a></td>
                                     </tr>
                                     </tbody>
@@ -233,14 +233,17 @@
                                             <td>{{hotel.CategoryName}}</td>
                                             <td>{{$index+1}}</td>
                                             <td style="color:red">${{room.Price}}</td>
-                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId"
-                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                            <td><select class="form-control"
+                                                        data-ng-model="room.Guests.PrimaryGuestId"
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                        data-ng-change="changePrimaryGuest(room.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
                                                     <select class="form-control"
                                                             data-ng-model="room.Guests.GuestIds[$index]"
-                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                            data-ng-show="$index != 0"></select>
                                                 </div>
                                             </td>
                                         </tr>
@@ -266,13 +269,15 @@
                                             <td style="color:red">${{service.Price}}</td>
                                             <td><select class="form-control"
                                                         data-ng-model="service.Guests.PrimaryGuestId"
-                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                        data-ng-change="changePrimaryGuest(service.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in service.Guests.GuestIds track by $index">
                                                     <select class="form-control"
                                                             data-ng-model="service.Guests.GuestIds[$index]"
-                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests" ></select>
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                            data-ng-show="$index != 0"></select>
                                                 </div>
                                             </td>
                                         </tr>
@@ -296,14 +301,17 @@
                                             <td>{{$index+1}}</td>
                                             <td>{{package.Nights}}</td>
                                             <td style="color:red">${{room.Price}}</td>
-                                            <td><select class="form-control" data-ng-model="room.Guests.PrimaryGuestId"
-                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                            <td><select class="form-control"
+                                                        data-ng-model="room.Guests.PrimaryGuestId"
+                                                        data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                        data-ng-change="changePrimaryGuest(room.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
                                                     <select class="form-control"
                                                             data-ng-model="room.Guests.GuestIds[$index]"
-                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
+                                                            data-ng-show="$index != 0"></select>
                                                 </div>
                                             </td>
                                         </tr>
