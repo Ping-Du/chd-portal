@@ -323,8 +323,8 @@
                         </uib-tab>
                         <uib-tab index="3" heading="{{'REVIEW'|translate}}" active="tabs[3].active" disable="tabs[3].disabled" select="selectTab(3)">
                             <div class="uibtab-info" style="margin-top: 5px;">
-                                <strong>{{"GUESTS"|translate}} - {{"SUBTOTAL"|translate}}: {{bookingInfo.Guests.length}} {{"ADULT"|translate}}: {{bookingInfo.Adults}}
-                                    {{"MINOR"|translate}}: {{bookingInfo.Minors}}</strong>
+                                <strong>{{"GUESTS"|translate}} - {{"TOTAL"|translate}}: {{bookingInfo.Guests.length}}       {{"ADULT"|translate}}: {{bookingInfo.Adults}}
+                                    <span data-ng-show="bookingInfo.Minors > 0">       {{"MINOR"|translate}}: {{bookingInfo.Minors}}</span></strong>
 
                                 <p><span data-ng-repeat="guest in bookingInfo.Guests">{{guest.ShowName}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 </p>

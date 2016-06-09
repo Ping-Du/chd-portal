@@ -101,6 +101,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     }
                 }
 
+                var adultStr = (SessionService.languageId() == "CHI")?' 成人 ':' adult(s) ';
+                var childStr = (SessionService.languageId() == "CHI")?' 儿童 ':' minor(s) ';
+
                 function calculateInfo() {
                     $scope.bookingInfo.Guests = [];
                     $scope.bookingInfo.Hotels = [];
@@ -150,7 +153,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             var adults = 0, minors = 0;
                             for (k = 0; k < room.Guests.length; k++) {
 
-                                if (room.Guests[k].Type == 'ADULT' && (room.Guests[k].Age >= 18 || room.Guests[k].Age == 0)) {
+                                if (room.Guests[k].Type == 'ADULT' && room.Guests[k].Age == null) {
                                     adults++;
                                     //if (i == 0) {
                                         addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
@@ -171,7 +174,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     //}
                                 }
                             }
-                            room.guestsInfo = adults + " adult(s) " + minors + ' minor(s)';
+                            room.guestsInfo = adults + adultStr + (minors>0?minors + childStr:'');
                         }
                         setMinimumGuest(productGuests, startPos);
                     }
@@ -237,7 +240,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         for (j = 0; j < serviceCategory.Guests.length; j++) {
                             var guest = serviceCategory.Guests[j];
                             //$scope.bookingInfo.Services[i].Guests.GuestIds.push(j+1);
-                            if (guest.Type == 'ADULT' && (guest.Age >= 18 || guest.Age == 0)) {
+                            if (guest.Type == 'ADULT' && guest.Age == null) {
                                 serviceAdults++;
                                 //if (i == 0) {
                                     addEmptyGuest(serviceGuestId, j == 0, guest.Age, true);
@@ -255,7 +258,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     serviceGuestId++;
                                 //}
                             }
-                            serviceCategory.guestsInfo = serviceAdults + " adult(s) " + serviceMinors + ' minor(s)';
+                            serviceCategory.guestsInfo = serviceAdults + adultStr + (serviceMinors>0?serviceMinors + childStr:'');
                         }
                         setMinimumGuest(productGuests, startPos);
                     }
@@ -317,7 +320,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             });
                             var adults = 0, minors = 0;
                             for (k = 0; k < room.Guests.length; k++) {
-                                if (room.Guests[k].Type == 'ADULT' && (room.Guests[k].Age >= 18 || room.Guests[k].Age == 0)) {
+                                if (room.Guests[k].Type == 'ADULT' && room.Guests[k].Age == null) {
                                     adults++;
                                     //if (i == 0) {
                                         addEmptyGuest(packageGuestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
@@ -338,7 +341,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     //}
                                 }
                             }
-                            category.guestsInfo = adults + " adult(s) " + minors + ' minor(s)';
+                            category.guestsInfo = adults + adultStr + (minors>0?minors + childStr:'');
 
                         }
                         setMinimumGuest(productGuests, startPos);
