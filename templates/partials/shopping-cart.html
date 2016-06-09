@@ -272,7 +272,7 @@
                                                 <div data-ng-repeat="guest in service.Guests.GuestIds track by $index">
                                                     <select class="form-control"
                                                             data-ng-model="service.Guests.GuestIds[$index]"
-                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"></select>
+                                                            data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests" ></select>
                                                 </div>
                                             </td>
                                         </tr>
@@ -359,19 +359,19 @@
 
                                 </div>
                                 <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation'">
-                                    <label>{{"PAYMENT_PROFILE"|translate}}: </label>
-                                    <select class="form-control" style="width:250px;" data-ng-options="Profile.ProfileID as Profile.Description for Profile in financeInfo.Profiles" data-ng-model="bookingInfo.PaymentInfo.ProfileId"></select>
-                                </div>
-                                <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation'">
-                                    <label>{{"METHOD"|translate}}: </label>
+                                    <label>{{"PAYMENT_METHOD"|translate}}: </label>
 
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
                                                                            value="CreditCard" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod" checked>{{"CREDIT_CARD"|translate}}</label>
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
                                                                            value="ECheck" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">{{"ECHECK"|translate}}</label>
                                     <label class="radio-inline"><input type="radio" name="paymentMethod"
-                                                                       value="" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">{{"CREDIT_BALANCE"|translate}}</label>
+                                                                       value="" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">{{"PAY_LATER"|translate}}</label>
 
+                                </div>
+                                <div class="form-group form-inline" data-ng-show="bookingInfo.SaveType == 'Reservation' && (bookingInfo.PaymentInfo.PaymentMethod == 'CreditCard' || bookingInfo.PaymentInfo.PaymentMethod == 'ECheck')">
+                                    <label>{{"PAYMENT_PROFILE"|translate}}: </label>
+                                    <select class="form-control" style="width:250px;" data-ng-options="Profile.ProfileID as Profile.Description for Profile in financeInfo.Profiles" data-ng-model="bookingInfo.PaymentInfo.ProfileId"></select>
                                 </div>
                             </div>
                             <form name="PayForm">
@@ -424,7 +424,10 @@
                             data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Quote'">{{"SAVE"|translate}}
                     </button>
                     <button type="button" class="btn btn-warning btn-sm" data-ng-click="bookAndPay(true)"
-                            data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Reservation'" data-ng-disabled="bookDisabled">{{"BOOK_PAY"|translate}}
+                            data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Reservation' && bookingInfo.PaymentInfo.PaymentMethod != ''" data-ng-disabled="bookDisabled">{{"BOOK_PAY"|translate}}
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" data-ng-click="bookAndPay(true)"
+                            data-ng-show="tabs[4].active && bookingInfo.SaveType == 'Reservation' && bookingInfo.PaymentInfo.PaymentMethod == ''" data-ng-disabled="bookDisabled">{{"BOOK"|translate}}
                     </button>
                 </div>
             </script>

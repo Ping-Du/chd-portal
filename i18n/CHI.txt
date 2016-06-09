@@ -185,7 +185,7 @@
   "ADD_ADULT":"添加成人",
   "ADD_MINOR":"添加儿童",
   "PAYMENT_PROFILE":"支付信息",
-  "METHOD":"方法",
+  "PAYMENT_METHOD":"付款方法",
   "CREDIT_CARD":"信用卡",
   "ECHECK":"电子支票",
   "CREDIT_BALANCE":"信用余额",
@@ -198,6 +198,7 @@
   "SAVE_PROFILE":"保存支付信息",
   "SAVE_QUOTE":"保存为报价",
   "BOOK_PAY":"预订并付款",
+  "BOOK":"预订",
   "ADD_ROOM":"加房",
   "CLOSE":"关闭",
   "SEARCH_INFO":"输入关键字查找目的地或相关的产品。点击单个产品查看详细介绍或查找按钮查看结果。",
@@ -210,6 +211,7 @@
   "FILL_LEADS":"请填写主客人信息！",
   "ASSIGN_GUESTS":"请分配游客！",
   "PAY_MSG":"您确定要预订和支付这些产品吗？",
+  "BOOK_MSG":"您确定要预订这些产品吗？",
   "QUOTE_MSG":"您确定要保存为报价信息吗？",
   "PLEASE_SELECT":"请选择",
   "FILL_CREDIT_CARD":"请填写所有的信用卡信息！",
@@ -222,5 +224,7 @@
   "START_DATE_REQUIRED":"请输入开始日期！",
   "SAVE_AS":"保存为",
   "RESERVATION":"预订",
-  "QUOTE":"报价"
+  "QUOTE":"报价",
+  "PAY_LATER":"预订（暂不付款）",
+  "START_NEW_TRIP":"开始新的行程"
 }

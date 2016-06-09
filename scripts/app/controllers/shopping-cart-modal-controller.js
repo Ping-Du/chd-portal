@@ -68,7 +68,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     SaveType:'Reservation'
                 };
 
-                function addEmptyGuest(guestId, primaryGuest, age, adult) {
+                function addEmptyGuest(guestId, primaryGuest, age, adult, deletable) {
                     $scope.bookingInfo.Guests.push({
                         GuestId: guestId,
                         FirstName: '',
@@ -79,7 +79,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         PrimaryGuest: primaryGuest,
                         Adult: adult,
                         ShowName: '',
-                        deletable: false
+                        deletable: (deletable?false:true)
                     });
                 }
 
@@ -691,7 +691,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 var confirmTitle = '';
                 var yesBtn = '';
                 var noBtn = '';
+                var newTripBtn = '';
                 var payMsg = '';
+                var bookMsg = '';
                 var quoteMsg = '';
                 var success = "";
                 var successInfo = "";
@@ -707,8 +709,14 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 $translate('NO').then(function (translation) {
                     noBtn = translation;
                 });
+                $translate('START_NEW_TRIP').then(function (translation) {
+                    newTripBtn = translation;
+                });
                 $translate('PAY_MSG').then(function (translation) {
                     payMsg = translation;
+                });
+                $translate('BOOK_MSG').then(function (translation) {
+                    bookMsg = translation;
                 });
                 $translate('QUOTE_MSG').then(function (translation) {
                     quoteMsg = translation;
@@ -772,8 +780,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     }
 
                     // test on live
-                    if (pay && p.PaymentInfo.PaymentMethod == '')
+                    if (pay && p.PaymentInfo.PaymentMethod == '') {
                         p.PaymentInfo = null;
+                        msg = bookMsg;
+                    }
 
                     swal({
                         title: confirmTitle,
@@ -798,13 +808,14 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 showCancelButton: true,
                                 confirmButtonColor: "#DD6B55",
                                 confirmButtonText: docBtn,
-                                cancelButtonText: noBtn,
+                                cancelButtonText: newTripBtn,
                                 closeOnConfirm: true
                             },function(isConfirm){
+                                $scope.cancel();
                                 if(isConfirm) {
                                     $window.location.href = SessionService.config().webRoot + 'admin.html#/trips/current/' + data.TripId + '/' + SessionService.languageId() + "?newTrip=true";
                                 } else {
-                                    $scope.cancel();
+                                    $window.location.href = SessionService.config().webRoot + 'home.html#/' + SessionService.languageId();
                                 }
                             });
                         }, function (data) {
