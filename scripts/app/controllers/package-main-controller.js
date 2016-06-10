@@ -36,7 +36,7 @@ define(['app/services/package-service',
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
                         PackageService.getPackagesByLanguageId().then(function(pkgList){
                             allItems = data.concat(pkgList);
-                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                            $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
                 }

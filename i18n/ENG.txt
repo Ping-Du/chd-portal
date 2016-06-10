@@ -86,6 +86,8 @@
   "CURRENT_TRIPS":"Current Trips",
   "PAST_TRIPS":"Past Trips",
   "QUOTES":"Quotes",
+  "CURRENT_TRIP":"Current Trip",
+  "PAST_TRIP":"Past Trip",
   "QUOTE":"Quote",
   "FINANCE_INFO":"Finance Information",
   "ID":"ID",

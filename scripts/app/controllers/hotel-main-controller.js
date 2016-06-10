@@ -37,7 +37,7 @@ define(['app/services/hotel-service',
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
                         HotelService.getHotelsByLanguageId().then(function(hotelList){
                             allItems = data.concat(hotelList);
-                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                            $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
                 }

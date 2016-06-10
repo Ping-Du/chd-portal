@@ -11,21 +11,21 @@
 
             <div class="col-sm-3"><strong>{{"PERCENT_REMAINING"|translate}}: </strong>{{financeInfo.CreditPercentRemaining}}%</div>
 
-            <div class="col-sm-3"><strong>{{"CARD_CODE"|translate}}: </strong>{{financeInfo.CardCodeRequired}}</div>
+            <!--<div class="col-sm-3"><strong>{{"CARD_CODE"|translate}}: </strong>{{financeInfo.CardCodeRequired}}</div>-->
         </div>
         <br>
         <div class="row">
             <table class="table-bordered table">
                 <thead>
                 <tr class="active">
-                    <th>{{"ID"|translate}}</th>
+                    <!--<th>{{"ID"|translate}}</th>-->
                     <th>{{"PAYMENT_METHOD"|translate}}</th>
                     <th>{{"DESCRIPTION"|translate}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr data-ng-repeat="item in financeInfo.Profiles">
-                    <td>{{item.ProfileID}}</td>
+                    <!--<td>{{item.ProfileID}}</td>-->
                     <td>{{item.PaymentMethod}}</td>
                     <td>{{item.Description}}</td>
                 </tr>

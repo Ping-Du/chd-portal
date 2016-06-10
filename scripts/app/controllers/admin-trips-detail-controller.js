@@ -26,9 +26,9 @@ define(['app/services/account-service',
                 });
 
                 var title = {
-                    current: 'CURRENT_TRIPS',
-                    past: 'PAST_TRIPS',
-                    quote: 'QUOTES'
+                    current: 'CURRENT_TRIP',
+                    past: 'PAST_TRIP',
+                    quote: 'QUOTE'
                 };
 
                 $scope.tripId = $routeParams.tripId;

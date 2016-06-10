@@ -61,7 +61,7 @@ define(['app/services/services-service',
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
                         ServicesService.getServiceByType(serviceType).then(function(serviceList){
                             allItems = data.concat(serviceList);
-                            $scope.searchLocations = $filter('orderBy')(allItems, '+Name', false);
+                            $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
                 }

@@ -86,6 +86,8 @@
   "CURRENT_TRIPS":"当前行程",
   "PAST_TRIPS":"过期行程",
   "QUOTES":"报价",
+  "CURRENT_TRIP":"当前行程",
+  "PAST_TRIP":"过期行程",
   "QUOTE":"报价",
   "FINANCE_INFO":"财务信息",
   "ID":"编号",

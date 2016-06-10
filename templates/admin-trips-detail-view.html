@@ -44,8 +44,8 @@
                         <table class="table-bordered table table-striped">
                             <thead>
                             <tr class="active">
-                                <th>{{"ID"|translate}}</th>
-                                <th>{{"PRIMARY_GUEST"|translate}}</th>
+                                <th>#</th>
+                                <!--<th>{{"PRIMARY_GUEST"|translate}}</th>-->
                                 <th>{{"LAST_NAME"|translate}}</th>
                                 <th>{{"FIRST_NAME"|translate}}</th>
                                 <th>{{"AGE"|translate}}</th>
@@ -55,8 +55,8 @@
                             </thead>
                             <tbody>
                             <tr data-ng-repeat="guest in trip.Passengers">
-                                <td>{{guest.GuestId}}</td>
-                                <td>{{guest.PrimaryGuest}}</td>
+                                <td>{{$index+1}}</td>
+                                <!--<td>{{guest.PrimaryGuest}}</td>-->
                                 <td>{{guest.LastName}}</td>
                                 <td>{{guest.FirstName}}</td>
                                 <td>{{guest.Age}}</td>
