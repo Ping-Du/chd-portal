@@ -29,6 +29,7 @@ define(['app/services/session-service'], function (modules) {
                 request: function (cfg) {
                     showOrHideLoading(cfg, true);
                     cfg.headers.Authorization = ('Bearer ' + (SessionService.token() ? SessionService.token() : SessionService.config().apiToken));
+                    cfg.headers["X-API-Duration"] = 0;
                     return cfg;
                 },
                 response: function (response) {
