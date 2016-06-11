@@ -231,6 +231,9 @@
   "START_NEW_TRIP":"开始新的行程",
   "TRIP_BOOKED":"行程已经成功预订。",
   "TRIP_CANCELLED":"预订行程已经成功取消。",
-  "DOC_SENT":"文档已经发送至您的邮箱，请查收。"
-
+  "DOC_SENT":"文档已经发送至您的邮箱，请查收。",
+  "USE_EXISTING_PROFILE":"已保存的支付信息",
+  "NEW_PAYMENT_INFO":"新的支付信息",
+  "EXISTING_PROFILES":"已保存的支付信息",
+  "PAYMENT_INFO":"支付信息"
 }

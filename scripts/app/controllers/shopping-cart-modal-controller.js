@@ -65,7 +65,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     HotelPrice: 0,
                     ServicePrice: 0,
                     PackagePrice: 0,
-                    SaveType: 'Reservation'
+                    SaveType: 'Reservation',
+                    paymentProfile:'new'
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -688,6 +689,19 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     return null;
                 }
 
+                function hasProfileByMethod(type) {
+                    if(type == '')
+                        return false;
+
+                    for (var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
+                        if (type == $scope.financeInfo.Profiles[i].PaymentMethod) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
                 $scope.$watch('bookingInfo.PaymentInfo.ProfileId', function (newValue, oldValue) {
                     if (newValue == oldValue)
                         return;
@@ -746,7 +760,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     } else {
                         $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = 0;
                         $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = 0;
+                        $scope.creditCardError = false;
                     }
+
+                    $scope.bookingInfo.paymentProfile = hasProfileByMethod(newValue)?'existing':'new';
+
                 });
 
                 var confirmTitle = '';
@@ -900,8 +918,18 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             Description: pleaseSelect
                         });
                         $scope.selectedProfile = data.Profiles[0];
+                        $scope.bookingInfo.paymentProfile = (data.Profiles.length > 0?'existing':'new');
                     });
                 }
+
+                $scope.$watch('bookingInfo.paymentProfile', function(newVal, oldVal){
+                    if(newVal == 'new'){
+                        $scope.bookingInfo.PaymentInfo.ProfileId = null;
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = 0;
+                        $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = 0;
+                        $scope.creditCardError = false;
+                    }
+                });
 
                 function load() {
                     var year = (new Date()).getFullYear();

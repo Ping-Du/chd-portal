@@ -231,5 +231,9 @@
   "START_NEW_TRIP":"Start New Trip",
   "TRIP_BOOKED":"The trip has been booked successfully.",
   "TRIP_CANCELLED":"The trip has been cancelled successfully.",
-  "DOC_SENT":"Your documents have been sent."
+  "DOC_SENT":"Your documents have been sent.",
+  "USE_EXISTING_PROFILE":"Use Existing Profile",
+  "NEW_PAYMENT_INFO":"New Payment Information",
+  "EXISTING_PROFILES":"Existing Profiles",
+  "PAYMENT_INFO":"Payment Information"
 }
