@@ -37,7 +37,7 @@ define(['app/services/session-service'], function (modules) {
                     return response;
                 },
                 responseError: function (rejection) {
-                    console.error('requests:' + requests + ' url:' + rejection.config.url);
+                    //console.error('requests:' + requests + ' url:' + rejection.config.url);
                     showOrHideLoading(rejection.config, false);
                     return $q.reject(rejection);
                 }

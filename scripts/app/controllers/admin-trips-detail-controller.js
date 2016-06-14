@@ -128,14 +128,25 @@ define(['app/services/account-service',
                 $scope.docFormats = null;
                 $scope.docTypes = null;
                 $scope.docContent = null;
+                $scope.docName = '';
                 $scope.showDocument = function (docItem) {
                     //var url = SessionService.config().apiRoot + docItem.RetrieveUri.substring(1).replace(/%7BformatId%7D/,docItem.type);
                     //url = url.replace(/\/\//, '/');
+                    $scope.docName = docItem.Name;
+                    $("#docContent").html("");
                     var url = docItem.RetrieveUri.replace(/%7BformatId%7D/, 'html');
                     DocumentService.getDocByUrl(url).then(function (data) {
-                        $scope.docContent = data;
+                        //$scope.docContent = data;
+                        $scope.docName = docItem.Name;
+                        $("#docContent").html(data);
+                        //createImage(url);
                     });
                 };
+
+                function createImage(url) {
+                    var fullUrl = SessionService.config().apiRoot + url;
+                    $("#docContent").html('<img src="' + fullUrl + '">');
+                }
 
                 $scope.sendDocument = function (docItem) {
 

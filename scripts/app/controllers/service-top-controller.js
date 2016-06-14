@@ -78,7 +78,7 @@ define(['app/services/services-service',
                     if(destination == $scope.currentDestination)
                         return;
 
-                    $scope.hotels = [];
+                    $scope.services = [];
                     $scope.currentDestination = destination;
                     ServicesService.getTopServiceByTypeAndDestination(serviceType, destination.ProductId).then(function(data){
                         $scope.services = data; // _.first(data, 3);
