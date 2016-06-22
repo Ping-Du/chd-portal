@@ -10,6 +10,7 @@ define([], function(){
         apiUser:'apiuser',
         apiPassword:'I^Rf23i!VoV6',
         secretCode:'T0pS3cr3t',
+        provider:'CHD',
         dateFormat:'yyyy-mm-dd'
     };
 

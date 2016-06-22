@@ -65,7 +65,8 @@ define(['app/services/session-service'], function (modules) {
                         "SecretCode": 'T0pS3cr3t',
                         "Role": (SessionService.user?'agent':'consumer'),
                         "Agency": SessionService.agencyNo(),
-                        "UrlToConfirmationPage": (SessionService.config().webRoot + 'account.html#/confirm-email/'+SessionService.languageId())
+                        "UrlToConfirmationPage": (SessionService.config().webRoot + 'account.html#/confirm-email/'+SessionService.languageId()),
+                        "Provider":SessionService.config().provider
                     });
                     return invoke('/Register', 'POST', requestData, 2, userName);
                 },
