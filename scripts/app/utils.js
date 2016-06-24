@@ -43,14 +43,29 @@ function initMap(lat, lng, title) {
 }
 
 var serviceTypes = [
-    {id: "SHOW", type: 'activities'},
+    {id: "ACTIV", type: 'activities'},
     {id: "ATTAD", type: 'activities'},
+    {id: "BST", type: 'activities'},
+    {id: "CNCRT", type: 'activities'},
     {id: 'DINE', type: 'activities'},
-    {id: 'BST', type: 'tours'},
-    {id:'ART', type:'tours'},
-    {id: 'SHTTL', type: 'transportation'},
-    {id: 'SHW-D', type: 'activities'}
+    {id: 'GOLF', type: 'activities'},
+    {id: 'GREET', type: 'activities'},
+    {id: 'SHOW', type: 'activities'},
+    {id: 'THMPK', type: 'activities'},
+    {id: 'SHW-D', type: 'activities'},
+    {id: 'WED', type: 'activities'},
+    {id: 'TIC', type: 'activities'},
+    {id: 'ART', type: 'tours'},
+    {id: 'SIC', type: 'tours'},
+    {id: 'EXCUR', type: 'tours'},
+    {id:'HOP', type:'transportation'},
+    {id:'PPT', type:'transportation'},
+    {id:'SHTTL', type:'transportation'},
+    {id:'T-IN', type:'transportation'},
+    {id:'T-OUT', type:'transportation'},
+    {id:'TRANS', type:'transportation'}
 ];
+
 function getServiceType(serviceTypeId) {
     for (var i = 0; i < serviceTypes.length; i++) {
         if (serviceTypes[i].id == serviceTypeId)

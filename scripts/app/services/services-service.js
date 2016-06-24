@@ -20,6 +20,9 @@ define(['app/services/session-service'], function (modules) {
                 getServices: function () {
                     return invoke('', 'GET');
                 },
+                getServiceTypes:function() {
+                    return invoke('/types', 'GET');
+                },
                 getServiceDetail:function(serviceId) {
                     return invoke('/'+serviceId+'/languages/'+SessionService.languageId(), 'GET');
                 },

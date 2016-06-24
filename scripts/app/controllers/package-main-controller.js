@@ -278,8 +278,17 @@ define(['app/services/package-service',
                     return param;
                 }
 
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function() {
+                    if(searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchPackages();
+                    }
+                });
+
                 $scope.searchPackages = function() {
                     if (SessionService.user() == null) {
+                        searchAfterLogin = true;
                         $rootScope.$broadcast("OpenLoginModal");
                         return;
                     }
@@ -338,7 +347,18 @@ define(['app/services/package-service',
                     $scope.selectedType = null;
                     var all = null;
                     if(packages1 && packages2) {
-                        all = packages1.concat(packages2);
+                        all = [];
+                        _.each(packages1, function(item1, index){
+                            var find = _.find(packages2, function(item2){
+                                return item2.ProductId == item1.ProductId;
+                            });
+                            if(find) {
+                                all.push(find);
+                            } else {
+                                all.push(item1);
+                            }
+                        });
+                        //all = packages1.concat(packages2);
                     } else if(packages1){
                         all = packages1;
                     } else if(packages2) {

@@ -165,11 +165,16 @@ define(['app/services/services-service',
                     $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
                 });
 
-                $scope.searchServices = function () {
-                    if (SessionService.user() == null) {
-                        $rootScope.$broadcast("OpenLoginModal");
-                        return;
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function() {
+                    if(searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchServices();
                     }
+                });
+
+                $scope.searchServices = function () {
+
 
                     if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
@@ -190,6 +195,12 @@ define(['app/services/services-service',
                         startDate: $scope.startDate,
                         guests: $scope.guests
                     });
+
+                    if (SessionService.user() == null) {
+                        searchAfterLogin = true;
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
 
                     $scope.showServicesMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };

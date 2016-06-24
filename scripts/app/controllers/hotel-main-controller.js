@@ -33,16 +33,18 @@ define(['app/services/hotel-service',
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
                     var allItems = [];
+
                     SearchService.getLocations().then(function (data) {
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        HotelService.getHotelsByLanguageId().then(function(hotelList){
+                        HotelService.getHotelsByLanguageId().then(function (hotelList) {
                             allItems = data.concat(hotelList);
                             $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
+
                 }
 
-                $scope.showHotelDetailPage = function(hotelId) {
+                $scope.showHotelDetailPage = function (hotelId) {
                     $location.url("/" + hotelId + "/" + $scope.languageId);
                 };
 
@@ -111,10 +113,7 @@ define(['app/services/hotel-service',
                         typed = _.find($scope.types, function (tp) {
                             return (tp.Id == item.HotelType.Id && tp.selected);
                         });
-                        if (item.StarRating >= star1 && item.StarRating <= star2)
-                            stared = true;
-                        else
-                            stared = false;
+                        stared = (item.StarRating >= star1 && item.StarRating <= star2);
                         var priced = ($scope.selectedPrice == null);
                         var available = ($scope.onlyAvailable == false);
                         if (!priced || !available) {
@@ -190,7 +189,7 @@ define(['app/services/hotel-service',
                 function loadAllHotels(locationId) {
                     $scope.selectedStar = null;
                     $scope.selectedType = null;
-                    //$loading.start('main');
+
                     if (locationId) {
                         HotelService.getHotelsByDestinationId(locationId).then(function (data) {
                             fillAllHotels(data);
@@ -235,7 +234,7 @@ define(['app/services/hotel-service',
                     Minors: '0',
                     MinorAges: []
                 }]);
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 $scope.selectedLocation = hotelDestination ? hotelDestination.ProductId : (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = hotelDestination ? hotelDestination.Name : (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
@@ -256,8 +255,8 @@ define(['app/services/hotel-service',
                         return;
 
                     if (newVal) {
-                        if(newVal.originalObject.ProductType == 'HTL')
-                            $scope.showHotelDetailPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        if (newVal.originalObject.ProductType == 'HTL')
+                            $scope.showHotelDetailPage(newVal.originalObject.ProductId, newVal.originalObject.Name);
                         else {
                             $scope.selectedLocation = newVal.originalObject.ProductId;
                             $scope.selectedLocationName = newVal.originalObject.Name;
@@ -312,19 +311,19 @@ define(['app/services/hotel-service',
                     //} else {
 
                     if ($scope.selectedLocation == null) {
-                        if(showTips)
+                        if (showTips)
                             showError('SELECT_LOCATION');
                         return null;
                     }
 
                     if ($scope.checkInDate == "") {
-                        if(showTips)
+                        if (showTips)
                             showError('CHECK_IN_REQUIRED');
                         return null;
                     }
 
                     if ($scope.checkOutDate == "") {
-                        if(showTips)
+                        if (showTips)
                             showError('CHECK_OUT_REQUIRED');
                         return null;
                     }
@@ -333,18 +332,18 @@ define(['app/services/hotel-service',
                     var checkOutDate = Date.parse($scope.checkOutDate.replace(/-/g, "/"));
                     var now = new Date();
                     if (checkInDate < now.getTime()) {
-                        if(showTips)
+                        if (showTips)
                             showError("Check in date must be later than now!");
                         return null;
                     }
                     if (checkOutDate < checkInDate) {
-                        if(showTips)
+                        if (showTips)
                             showError("Check out date must be later than check in date!");
                         return null;
                     }
 
                     if ($scope.guests.length < 1) {
-                        if(showTips)
+                        if (showTips)
                             showError('GUESTS_REQUIRED');
                         return null;
                     }
@@ -365,6 +364,7 @@ define(['app/services/hotel-service',
 
                 $scope.searchHotels = function () {
                     if (SessionService.user() == null) {
+                        searchAfterLogin = true;
                         $rootScope.$broadcast("OpenLoginModal");
                         return null;
                     }
@@ -374,9 +374,17 @@ define(['app/services/hotel-service',
                     }
                 };
 
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function () {
+                    if (searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchHotels();
+                    }
+                });
+
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 };
 
                 $scope.addRoom = function () {
@@ -402,15 +410,27 @@ define(['app/services/hotel-service',
                 };
 
                 var hotels1, hotels2;
+
                 function populate() {
                     $scope.selectedStar = null;
                     $scope.selectedType = null;
                     var all = null;
-                    if(hotels1 && hotels2) {
-                        all = hotels1.concat(hotels2);
-                    } else if(hotels1){
+                    if (hotels1 && hotels2) {
+                        all = [];
+                        _.each(hotels1, function (item1, index) {
+                            var find = _.find(hotels2, function (item2) {
+                                return item2.ProductId == item1.ProductId;
+                            });
+                            if (find) {
+                                all.push(find);
+                            } else {
+                                all.push(item1);
+                            }
+                        });
+                        //all = hotels1.concat(hotels2);
+                    } else if (hotels1) {
                         all = hotels1;
-                    } else if(hotels2) {
+                    } else if (hotels2) {
                         all = hotels2;
                     }
                     hotels1 = null;
@@ -418,6 +438,7 @@ define(['app/services/hotel-service',
                     fillAllHotels(all);
                     fillHotels();
                 }
+
                 function load(loadLocations) {
                     if (loadLocations)
                         loadSearchLocations();
@@ -426,12 +447,11 @@ define(['app/services/hotel-service',
                         HotelService.getHotelsByDestinationId(hotelDestination.ProductId).then(function (data1) {
                             hotels1 = data1;
                             var param = getParam(false);
-                            if(param) {
+                            if (param) {
                                 HotelService.getAvailability(param).then(function (data2) {
                                     hotels2 = data2;
                                     populate();
                                 }, function () {
-                                    //hotels2 = null;
                                     populate();
                                 });
                             } else {

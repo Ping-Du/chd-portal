@@ -152,12 +152,15 @@ define(['app/services/package-service',
                     $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
                 });
 
-                $scope.searchPackages = function () {
-                    if (SessionService.user() == null) {
-                        $rootScope.$broadcast("OpenLoginModal");
-                        return;
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function() {
+                    if(searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchPackages();
                     }
+                });
 
+                $scope.searchPackages = function () {
                     if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
                         $scope.selectedLocationName = '';
@@ -177,6 +180,12 @@ define(['app/services/package-service',
                         startDate: $scope.startDate,
                         guests: $scope.guests
                     });
+
+                    if (SessionService.user() == null) {
+                        searchAfterLogin = true;
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
 
                     $scope.showPackagesMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };

@@ -1,8 +1,8 @@
 define(['app/services/account-service'], function (modules) {
     'use strict';
     modules.controllers
-        .controller('LoginModalController', ['$scope', '$uibModal', 'AccountService',
-            function ($scope, $uibModal, AccountService) {
+        .controller('LoginModalController', ['$scope', '$rootScope', '$uibModal', 'AccountService',
+            function ($scope, $rootScope, $uibModal, AccountService) {
             $scope.open = function(size){
                 var modalInstance = $uibModal.open({
                     templateUrl:'loginModal.html',

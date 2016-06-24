@@ -46,8 +46,8 @@ define(['app/services/services-service',
                 var criteria = $cookieStore.get('serviceCriteria');
                 var servicesDestination = $cookieStore.get('forDestination');
                 $cookieStore.remove('forDestination');
-                $scope.guests = (criteria? criteria.guests : {Adults: '2', MinorAges: []});
-                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
+                $scope.guests = (criteria ? criteria.guests : {Adults: '2', MinorAges: []});
+                $scope.guestsInfo = GetServiceGuestsInfo($scope.guests, $scope.languageId);
                 $scope.startDate = (criteria ? criteria.startDate : ""); //servicesDestination?"":(criteria?criteria.startDate:"");
                 $scope.selectedLocation = servicesDestination ? servicesDestination.ProductId : (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = servicesDestination ? servicesDestination.Name : (criteria ? criteria.locationName : null);
@@ -57,17 +57,18 @@ define(['app/services/services-service',
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
                     var allItems = [];
+
                     SearchService.getLocations().then(function (data) {
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        ServicesService.getServiceByType(serviceType).then(function(serviceList){
+                        ServicesService.getServiceByType(serviceType).then(function (serviceList) {
                             allItems = data.concat(serviceList);
                             $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
                 }
 
-                $scope.showServiceDetailPage = function(serviceId) {
-                    $location.url("/" + serviceType + '/'+ serviceId+'/'+ $scope.languageId, true);
+                $scope.showServiceDetailPage = function (serviceId) {
+                    $location.url("/" + serviceType + '/' + serviceId + '/' + $scope.languageId, true);
                 };
 
                 $scope.filterByLocation = function (id) {
@@ -87,7 +88,7 @@ define(['app/services/services-service',
                 }
 
                 $scope.selectedType = null;
-                $scope.showTypeFilter = (serviceType == 'activities');
+                $scope.showTypeFilter = true; //(serviceType == 'activities');
                 $scope.filterByType = function (typeId) {
                     $scope.selectedType = typeId;
                     fillServices();
@@ -218,7 +219,7 @@ define(['app/services/services-service',
                 $scope.$watch('guests.Adults', function (newValue, oldValue, scope) {
                     if (newValue.Trim() == '' || parseInt(newValue) == 0) {
                         $scope.guests.MinorAges = [];
-                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
+                        $scope.guestsInfo = GetServiceGuestsInfo($scope.guests, $scope.languageId);
                     }
                 });
 
@@ -229,7 +230,7 @@ define(['app/services/services-service',
 
                     if (newVal) {
 
-                        if(newVal.originalObject.ProductType == 'OPT')
+                        if (newVal.originalObject.ProductType == 'OPT')
                             $scope.showServiceDetailPage(newVal.originalObject.ProductId, newVal.originalObject.ServiceType.Id);
                         else {
                             $scope.selectedLocation = newVal.originalObject.ProductId;
@@ -243,7 +244,7 @@ define(['app/services/services-service',
                 $scope.closeGuests = function () {
                     $scope.guests.Adults = modules.angular.element('#AdultQty').val();
                     $scope.showGuests = false;
-                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
+                    $scope.guestsInfo = GetServiceGuestsInfo($scope.guests, $scope.languageId);
                 };
 
                 function getParam(showTips) {
@@ -304,8 +305,17 @@ define(['app/services/services-service',
                     return param;
                 }
 
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function () {
+                    if (searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchServices();
+                    }
+                });
+
                 $scope.searchServices = function () {
                     if (SessionService.user() == null) {
+                        searchAfterLogin = true;
                         $rootScope.$broadcast("OpenLoginModal");
                         return;
                     }
@@ -344,7 +354,18 @@ define(['app/services/services-service',
                     $scope.selectedType = null;
                     var all = null;
                     if (services1 && services2) {
-                        all = services1.concat(services2);
+                        all = [];
+                        _.each(services1, function (item1, index) {
+                            var find = _.find(services2, function (item2) {
+                                return item2.ProductId == item1.ProductId;
+                            });
+                            if (find) {
+                                all.push(find);
+                            } else {
+                                all.push(item1);
+                            }
+                        });
+                        //all = services1.concat(services2);
                     } else if (services1) {
                         all = services1;
                     } else if (services2) {

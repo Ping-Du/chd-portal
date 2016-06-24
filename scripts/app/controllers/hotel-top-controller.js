@@ -9,7 +9,7 @@ define(['app/services/hotel-service',
 
     modules.controllers
         .controller('HotelTopController', ['_', '$rootScope', '$scope', '$location', '$routeParams', '$cookieStore', 'SessionService',
-            'HotelService', 'LanguageService', 'DestinationService', 'SearchService','$filter','$timeout','$translate',
+            'HotelService', 'LanguageService', 'DestinationService', 'SearchService', '$filter', '$timeout', '$translate',
             function (_, $rootScope, $scope, $location, $routeParams, $cookieStore, SessionService, HotelService, LanguageService, DestinationService, SearchService, $filter, $timeout, $translate) {
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -45,13 +45,13 @@ define(['app/services/hotel-service',
 
                 $scope.showHotelMainPage = function (destId, destName) {
                     $cookieStore.put('forDestination', {
-                        ProductId: (destId?destId:$scope.currentDestination.ProductId),
-                        Name: (destName?destName:$scope.currentDestination.Name)
+                        ProductId: (destId ? destId : $scope.currentDestination.ProductId),
+                        Name: (destName ? destName : $scope.currentDestination.Name)
                     });
                     $location.url("/" + $scope.languageId, true);
                 };
 
-                $scope.showHotelDetailPage = function(hotelId) {
+                $scope.showHotelDetailPage = function (hotelId) {
                     $location.url("/" + hotelId + "/" + $scope.languageId);
                 };
 
@@ -76,13 +76,15 @@ define(['app/services/hotel-service',
                 function loadSearchLocations() {
                     $scope.searchLocations = [];
                     var allItems = [];
+
                     SearchService.getLocations().then(function (data) {
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        HotelService.getHotelsByLanguageId().then(function(hotelList){
+                        HotelService.getHotelsByLanguageId().then(function (hotelList) {
                             allItems = data.concat(hotelList);
                             $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
+
                 }
 
                 var criteria = $cookieStore.get('hotelCriteria');
@@ -95,7 +97,7 @@ define(['app/services/hotel-service',
                         MinorAges: []
                     }
                 ]);
-                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
+                $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 $scope.selectedLocation = (criteria ? criteria.locationId : null);
                 $scope.selectedLocationName = (criteria ? criteria.locationName : null);
                 $scope.selectedSearchLocation = null;
@@ -105,7 +107,7 @@ define(['app/services/hotel-service',
 
                 $scope.closeGuests = function () {
                     $scope.showGuests = false;
-                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests,$scope.languageId);
+                    $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 };
 
                 $scope.addRoom = function () {
@@ -139,8 +141,8 @@ define(['app/services/hotel-service',
                     }, 5000);
                 }
 
-                $scope.$watch('currentDestination', function(newVal, oldVal){
-                    if(newVal == oldVal) {
+                $scope.$watch('currentDestination', function (newVal, oldVal) {
+                    if (newVal == oldVal) {
                         return;
                     }
 
@@ -163,11 +165,15 @@ define(['app/services/hotel-service',
                     }
                 });
 
-                $scope.searchHotels = function() {
-                    if (SessionService.user() == null) {
-                        $rootScope.$broadcast("OpenLoginModal");
-                        return;
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function () {
+                    if (searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.searchHotels();
                     }
+                });
+
+                $scope.searchHotels = function () {
 
                     if ($scope.selectedSearchLocation === undefined) { // user delete location
                         $scope.selectedLocation = null;
@@ -190,6 +196,12 @@ define(['app/services/hotel-service',
                         guests: $scope.guests
                     });
 
+                    if (SessionService.user() == null) {
+                        searchAfterLogin = true;
+                        $rootScope.$broadcast("OpenLoginModal");
+                        return;
+                    }
+
                     $scope.showHotelMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
 
@@ -198,10 +210,10 @@ define(['app/services/hotel-service',
                         return;
 
                     if (newVal && $scope.currentDestination != null && newVal.originalObject.ProductId != $scope.currentDestination.ProductId) {
-                        if(newVal.originalObject.ProductType == 'HTL')
-                            $scope.showHotelDetailPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                        if (newVal.originalObject.ProductType == 'HTL')
+                            $scope.showHotelDetailPage(newVal.originalObject.ProductId, newVal.originalObject.Name);
                         else
-                            $scope.showHotelMainPage(newVal.originalObject.ProductId,newVal.originalObject.Name );
+                            $scope.showHotelMainPage(newVal.originalObject.ProductId, newVal.originalObject.Name);
                     }
                 });
 

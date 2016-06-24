@@ -154,10 +154,18 @@ define(['app/services/services-service',
                     $scope.currentCategory = $scope.serviceItem.AvailabilityCategories[index];
                 };
 
+                var searchAfterLogin = false;
+                $scope.$on('LOGIN', function() {
+                    if(searchAfterLogin) {
+                        searchAfterLogin = false;
+                        $scope.checkAvailability(true);
+                    }
+                });
 
                 $scope.showNotAvailable = false;
                 $scope.checkAvailability = function (reload) {
                     if (SessionService.user() == null) {
+                        searchAfterLogin = true;
                         $rootScope.$broadcast("OpenLoginModal");
                         return;
                     }

@@ -1,4 +1,4 @@
-define(['config', 'app/modules'], function (cfg, modules) {
+define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
     'use strict';
     modules.services
         .provider('SessionService', function () {
@@ -24,9 +24,12 @@ define(['config', 'app/modules'], function (cfg, modules) {
             }
 
             this.languageId = function (languageId) {
-                if(languageId) {
+                if(languageId && languageId != session.languageId) {
                     setCookie('languageId', languageId);
                     session.languageId = languageId;
+                    session.availability.data = null;
+                    session.locations.data = null;
+                    session.products.data = null;
                 }
                 else
                     return session.languageId;
