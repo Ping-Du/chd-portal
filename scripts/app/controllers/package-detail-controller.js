@@ -104,8 +104,15 @@ define(['app/services/package-service',
                         //$scope.showMap = true;
                         //initMap(pkg.Latitude, pkg.Longitude, pkg.Location.Name);
                     }
+                }
 
-
+                $scope.detailTitle = "";
+                function setDetailTitle(data) {
+                    _.each(data.AdditionalInformation, function(item, index){
+                        if(item.Section == 'HDFULLDESC') {
+                            $scope.detailTitle = item.Title;
+                        }
+                    });
                 }
 
                 $scope.packageItem = null;
@@ -117,6 +124,7 @@ define(['app/services/package-service',
                     PackageService.getPackageDetail($routeParams.packageId).then(function (data) {
                         $scope.allPackages.push(data);
                         $scope.packageItem = data;
+                        setDetailTitle(data);
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
                         if(!reload)
@@ -209,6 +217,7 @@ define(['app/services/package-service',
                         if (data.length > 0) {
                             $scope.allPackages = data;
                             $scope.packageItem = data[0];
+                            setDetailTitle(data[0]);
                             if($scope.packageItem.AvailabilityCategories == null)
                                 $scope.packageItem.AvailabilityCategories = [];
                             if($scope.packageItem.AvailabilityCategories.length == 0) {

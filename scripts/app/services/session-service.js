@@ -17,7 +17,7 @@ define(['config', 'app/modules'], function (cfg, modules) {
 
             function setCookie(key, value) {
                 if (value != null) {
-                    $.cookie(key, value, {expires: 14});
+                    $.cookie(key, value, {expires: 12});
                 } else {
                     $.removeCookie(key);
                 }

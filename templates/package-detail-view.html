@@ -85,7 +85,7 @@
                 <div class="service-detail-info">
                     <span class="caption">{{packageItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.AdditionalInformation[0].PlainText|limitTo:150}} ...</span></a></div>
+                <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.MainInformation.PlainText|limitTo:150}} ...</span></a></div>
                 <div class="row tab-list">
                     <div class="col-xs-12 col-md-12 text-red" data-ng-show="packageItem.Price">${{packageItem.Price}}</div>
                     <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}: </span>{{packageItem.ProductId}}</div>
@@ -111,7 +111,7 @@
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{packageItem.AdditionalInformation[1].Title}}</a></li>
+                    <li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{detailTitle}}</a></li>
                     <li class="menu-item" data-ng-show="packageItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{packageItem.Warnings[0].Title}}</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
@@ -230,11 +230,11 @@
             </div>
         </section>
         <section class="detail-wrap" id="detail" data-ng-show="packageItem.AdditionalInformation.length > 0">
-            <h3>{{packageItem.AdditionalInformation[1].Title}}</h3>
+            <h3>{{detailTitle}}</h3>
             <div class="content">
                 <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
                 <p data-ng-repeat="item in packageItem.PrimaryAlternates">{{item}}</p>
-                <p data-ng-bind-html="packageItem.AdditionalInformation[1].FormattedText"></p>
+                <p data-ng-repeat="item in packageItem.AdditionalInformation" data-ng-bind-html="item.FormattedText"></p>
             </div>
         </section>
         <section class="detail-wrap" id="term" data-ng-show="packageItem.Warnings.length > 0">

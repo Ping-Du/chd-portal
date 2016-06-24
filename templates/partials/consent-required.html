@@ -35,10 +35,10 @@
                     <div data-ng-show="isService && product.HasTransport" class="form-group">
                         <label>{{"PICK_UP"|translate}}:</label><select class="form-control" data-ng-model="pickupPoint" data-ng-options="p.LocationId as p.Name for p in product.PickupPoints"></select>
                     </div>
-                    <div data-ng-show="isService && product.HasTransport" class="form-group">
+                    <div data-ng-show="isService && product.HasTransport && product.DropoffPoints.length > 0" class="form-group">
                         <label>{{"DROP_OFF"|translate}}:</label><select class="form-control" data-ng-model="dropoffPoint" data-ng-options="p.LocationId as p.Name for p in product.DropoffPoints"></select>
                     </div>
-                    <div data-ng-show="message == '' && !onRequest && !required">
+                    <div data-ng-show="message == '' && !onRequest && !required && !product.HasTransport">
                         <p>Are you going to add it to shopping cart?</p>
                     </div>
                 </div>

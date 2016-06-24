@@ -14,7 +14,7 @@ define([], function () {
     //    return;
     //}
 
-    var version = "1.1.3";
+    var version = "1.1.4";
     version = "_v=" + (version?version:(new Date()).getTime());
 
     var libs = {
@@ -210,7 +210,7 @@ define([], function () {
                 success: function (data/*, status*/) {
                     //{"access_token": "string","token_type": "bearer","expires_in": 0,"userName": "string","issued": "2016-02-17T11:39:45.637Z","expires": "2016-02-17T11:39:45.639Z"}
                     console.debug('login using api account');
-                    storage.setExpires(14).set('apiToken', data.access_token);
+                    storage.setExpires(12).set('apiToken', data.access_token);
                     token = data.access_token;
                     bootstrap(token);
                 },

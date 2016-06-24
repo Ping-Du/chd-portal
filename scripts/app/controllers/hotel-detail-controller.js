@@ -156,12 +156,22 @@ define(['app/services/hotel-service',
                     }
                 }
 
+                $scope.detailTitle = "";
+                function setDetailTitle(data) {
+                    _.each(data.AdditionalInformation, function(item, index){
+                        if(item.Section == 'HDFULLDESC') {
+                            $scope.detailTitle = item.Title;
+                        }
+                    });
+                }
+
                 $scope.hotelItem = null;
                 $scope.showMap = false;
                 function loadHotel(reload) {
                     $scope.showNotAvailable = false;
                     HotelService.getHotelDetail($routeParams.hotelId).then(function (data) {
                         $scope.hotelItem = data;
+                        setDetailTitle(data);
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
                         clearEmptyAddress(data.Address);
@@ -275,6 +285,7 @@ define(['app/services/hotel-service',
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.hotelItem = data[0];
+                            setDetailTitle(data[0]);
                             if ($scope.hotelItem.AvailabilityCategories == null)
                                 $scope.hotelItem.AvailabilityCategories = [];
                             if (data[0].AvailabilityCategories.length == 0) {

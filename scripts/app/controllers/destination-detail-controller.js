@@ -28,6 +28,15 @@ define(['app/services/language-service',
                         }
                     });
 
+                    $scope.detailTitle = "";
+                    function setDetailTitle(data) {
+                        _.each(data.AdditionalInformation, function(item, index){
+                            if(item.Section == 'HDFULLDESC') {
+                                $scope.detailTitle = item.Title;
+                            }
+                        });
+                    }
+
                     $scope.destinationItem = null;
                     $scope.showMap = false;
                     function loadDestination() {
@@ -35,6 +44,7 @@ define(['app/services/language-service',
                         var sliderImageData = [];
                         DestinationService.getDestinationDetail($routeParams.destinationId).then(function (data) {
                             $scope.destinationItem = data;
+                            setDetailTitle(data);
                             _.each(data.SliderImages, function(item, index){
                             sliderImageData.push({
                                 image:item.ImagePath,

@@ -67,10 +67,10 @@ define(['app/services/shopping-service'], function (modules) {
 
                 if($scope.isService) {
                     if(product.PickupPoints.length > 0) {
-                        $scope.pickupPoint = product.PickupPoints[0].ProductId;
+                        $scope.pickupPoint = product.PickupPoints[0].LocationId;
                     }
                     if(product.DropoffPoints.length > 0) {
-                        $scope.dropoffPoint = product.DropoffPoints[0].ProductId;
+                        $scope.dropoffPoint = product.DropoffPoints[0].LocationId;
                     }
                 }
 

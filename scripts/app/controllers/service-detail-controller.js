@@ -117,12 +117,22 @@ define(['app/services/services-service',
                     }
                 }
 
+                $scope.detailTitle = "";
+                function setDetailTitle(data) {
+                    _.each(data.AdditionalInformation, function(item, index){
+                        if(item.Section == 'HDFULLDESC') {
+                            $scope.detailTitle = item.Title;
+                        }
+                    });
+                }
+
                 $scope.serviceItem = null;
                 $scope.showMap = false;
                 function loadService(reload) {
                     $scope.showNotAvailable = false;
                     ServicesService.getServiceDetail($routeParams.serviceId).then(function (data) {
                         $scope.serviceItem = data;
+                        setDetailTitle(data);
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
                         clearEmptyAddress(data.Address);
@@ -190,6 +200,7 @@ define(['app/services/services-service',
                     ServicesService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.serviceItem = data[0];
+                            setDetailTitle(data[0]);
                             if($scope.serviceItem.AvailabilityCategories == null)
                                 $scope.serviceItem.AvailabilityCategories = [];
                             if(data[0].AvailabilityCategories.length == 0) {
@@ -228,7 +239,7 @@ define(['app/services/services-service',
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
 
-                        if($scope.serviceItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
+                        if($scope.serviceItem.HasTransport || $scope.serviceItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
                                 $scope.serviceItem.Warnings.length > 0 && $scope.serviceItem.Warnings[0].ConsentRequired
                             ))
                             $rootScope.$broadcast('ConsentRequired:Open', $scope.serviceItem, categoryIndex);
