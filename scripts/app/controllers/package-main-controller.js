@@ -369,32 +369,38 @@ define(['app/services/package-service',
                     fillAllPackages(all);
                     fillPackages();
                 }
+
+                function loadAll(location) {
+                    PackageService.getPackagesByDestinationId(location).then(function (data1) {
+                        packages1 = data1;
+                        var param = getParam(false);
+                        if (param) {
+                            PackageService.getAvailability(param).then(function (data2) {
+                                packages2 = data2;
+                                populate();
+                            }, function () {
+                                populate();
+                            });
+                        } else {
+                            populate();
+                        }
+                    }, function () {
+                        populate();
+                    });
+                }
+
                 function load(loadLocations){
                     if(loadLocations)
                         loadSearchLocations();
 
                     if (packageDestination) {
-                        PackageService.getPackagesByDestinationId(packageDestination.ProductId).then(function (data1) {
-                            packages1 = data1;
-                            var param = getParam(false);
-                            if (param) {
-                                PackageService.getAvailability(param).then(function (data2) {
-                                    packages2 = data2;
-                                    populate();
-                                }, function () {
-                                    populate();
-                                });
-                            } else {
-                                populate();
-                            }
-                        }, function () {
-                            populate();
-                        });
+                        loadAll(packageDestination.ProductId);
                         packageDestination = null;
 
                     } else {
                         if ($scope.guests.length > 0 && $scope.startDate != '' && $scope.selectedLocation != null)
-                            $scope.searchPackages();
+                            //$scope.searchPackages();
+                            loadAll($scope.selectedLocation);
                         else
                             loadAllPackages($scope.selectedLocation);
                     }

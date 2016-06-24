@@ -1,16 +1,30 @@
-define(['app/services/session-service'], function (modules) {
+define(['app/services/session-service', 'app/services/cache-service'], function (modules) {
     'use strict';
     modules.services
-        .service('PackageService', ['$http', '$q', 'SessionService', function($http, $q, SessionService){
-            function invoke(url, method, requestData) {
+        .service('PackageService', ['$http', '$q', 'SessionService', 'CacheService', function($http, $q, SessionService, CacheService){
+            function invoke(url, method, requestData, useCache) {
                 var deferred = $q.defer();
+                var useCachedData = (useCache === undefined)?true:useCache;
+                if (useCachedData) {
+                    var cachedData = CacheService.get(url, method, requestData);
+                    if (cachedData) {
+                        deferred.resolve(cachedData);
+                        return deferred.promise;
+                    }
+                }
                 $http({
                     method: method,
                     url: SessionService.config().apiRoot + 'packages' + url,
                     data: requestData
                 }).success(function (data/*, status, headers, cfg*/) {
+                    if (useCachedData) {
+                        CacheService.put(url, method, requestData, data);
+                    }
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
+                    if (useCachedData) {
+                        CacheService.remove(url, method, requestData);
+                    }
                     deferred.reject(data);
                 });
                 return deferred.promise;

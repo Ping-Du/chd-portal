@@ -377,31 +377,36 @@ define(['app/services/services-service',
                     fillServices();
                 }
 
+                function loadAll(location) {
+                    ServicesService.getServiceByTypeAndDestination(serviceType, location).then(function (data1) {
+                        services1 = data1;
+                        var param = getParam(false);
+                        if (param) {
+                            ServicesService.getAvailability(param).then(function (data2) {
+                                services2 = data2;
+                                populate();
+                            }, function () {
+                                populate();
+                            });
+                        } else {
+                            populate();
+                        }
+                    }, function () {
+                        populate();
+                    });
+                }
+
                 function load(loadLocations) {
                     if (loadLocations)
                         loadSearchLocations();
 
                     if (servicesDestination) {
-                        ServicesService.getServiceByTypeAndDestination(serviceType, servicesDestination.ProductId).then(function (data1) {
-                            services1 = data1;
-                            var param = getParam(false);
-                            if (param) {
-                                ServicesService.getAvailability(param).then(function (data2) {
-                                    services2 = data2;
-                                    populate();
-                                }, function () {
-                                    populate();
-                                });
-                            } else {
-                                populate();
-                            }
-                        }, function () {
-                            populate();
-                        });
+                        loadAll(servicesDestination.ProductId);
                         servicesDestination = null;
                     } else {
                         if ($scope.guests.Adults != '0' && $scope.guests.Adults != '' && $scope.startDate != '' && $scope.selectedLocation != null)
-                            $scope.searchServices();
+                            //$scope.searchServices();
+                            loadAll($scope.selectedLocation);
                         else
                             loadAllServices($scope.selectedLocation);
                     }

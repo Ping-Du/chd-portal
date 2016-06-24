@@ -439,32 +439,37 @@ define(['app/services/hotel-service',
                     fillHotels();
                 }
 
+                function loadAll(destinationId) {
+                    HotelService.getHotelsByDestinationId(destinationId).then(function (data1) {
+                        hotels1 = data1;
+                        var param = getParam(false);
+                        if (param) {
+                            HotelService.getAvailability(param).then(function (data2) {
+                                hotels2 = data2;
+                                populate();
+                            }, function () {
+                                populate();
+                            });
+                        } else {
+                            populate();
+                        }
+                    }, function () {
+                        //hotels1 = null;
+                        populate();
+                    });
+                }
+
                 function load(loadLocations) {
                     if (loadLocations)
                         loadSearchLocations();
 
                     if (hotelDestination) {
-                        HotelService.getHotelsByDestinationId(hotelDestination.ProductId).then(function (data1) {
-                            hotels1 = data1;
-                            var param = getParam(false);
-                            if (param) {
-                                HotelService.getAvailability(param).then(function (data2) {
-                                    hotels2 = data2;
-                                    populate();
-                                }, function () {
-                                    populate();
-                                });
-                            } else {
-                                populate();
-                            }
-                        }, function () {
-                            //hotels1 = null;
-                            populate();
-                        });
+                        loadAll(hotelDestination.ProductId);
                         hotelDestination = null;
                     } else {
                         if ($scope.guests.length > 0 && $scope.checkInDate != "" && $scope.checkOutDate != "" && $scope.selectedLocation != null)
-                            $scope.searchHotels();
+                            //$scope.searchHotels();
+                            loadAll($scope.selectedLocation);
                         else
                             loadAllHotels($scope.selectedLocation);
                     }
