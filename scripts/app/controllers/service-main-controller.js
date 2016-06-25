@@ -401,8 +401,18 @@ define(['app/services/services-service',
                         }
                     }
 
-                    $scope.featuredServices = $filter('orderBy')($scope.featuredServices, $scope.sortBy, $scope.sortReverse);
-                    $scope.showServices = $filter('orderBy')($scope.showServices, $scope.sortBy, $scope.sortReverse);
+                    var sortField;
+                    if($scope.sortBy == 'Price') {
+                        if($scope.sortReverse)
+                            sortField = 'MaxPrice';
+                        else
+                            sortField = 'MinPrice'
+                    } else {
+                        sortField = $scope.sortBy;
+                    }
+
+                    $scope.featuredServices = $filter('orderBy')($scope.featuredServices, sortField, $scope.sortReverse);
+                    $scope.showServices = $filter('orderBy')($scope.showServices, sortField, $scope.sortReverse);
                 };
 
                 function loadAll(location) {

@@ -385,9 +385,17 @@ define(['app/services/package-service',
                             $scope.sortReverse = false;
                         }
                     }
-
-                    $scope.featuredPackages = $filter('orderBy')($scope.featuredPackages, $scope.sortBy, $scope.sortReverse);
-                    $scope.showPackages = $filter('orderBy')($scope.showPackages, $scope.sortBy, $scope.sortReverse);
+                    var sortField;
+                    if($scope.sortBy == 'Price') {
+                        if($scope.sortReverse)
+                            sortField = 'MaxPrice';
+                        else
+                            sortField = 'MinPrice'
+                    } else {
+                        sortField = $scope.sortBy;
+                    }
+                    $scope.featuredPackages = $filter('orderBy')($scope.featuredPackages, sortField, $scope.sortReverse);
+                    $scope.showPackages = $filter('orderBy')($scope.showPackages, sortField, $scope.sortReverse);
                 };
 
                 function loadAll(location) {

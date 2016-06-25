@@ -74,8 +74,7 @@
         <div class="sortbar">
             <ul>
                 <li><a href data-ng-click="sort('Name')">{{"NAME"|translate}}</a><i data-ng-class="{'icon-caret-down':sortBy=='Name' && sortReverse,'icon-caret-up':sortBy=='Name' && !sortReverse}"></i></li>
-                <li data-ng-show="prices.length > 0"><a href data-ng-click="sort('MinPrice')">{{"LOW_PRICE"|translate}}</a><i data-ng-class="{'icon-caret-down':(sortBy=='MinPrice' && sortReverse),'icon-caret-up':(sortBy=='MinPrice' && !sortReverse)}"></i></li>
-                <li data-ng-show="prices.length > 0"><a href data-ng-click="sort('MaxPrice')">{{"HIGH_PRICE"|translate}}</a><i data-ng-class="{'icon-caret-down':(sortBy=='MaxPrice' && sortReverse),'icon-caret-up':(sortBy=='MaxPrice' && !sortReverse)}"></i></li>
+                <li data-ng-show="prices.length > 0 "><a href data-ng-click="sort('Price')">{{"PRICE"|translate}}</a><i data-ng-class="{'icon-caret-down':(sortBy=='Price' && sortReverse),'icon-caret-up':(sortBy=='Price' && !sortReverse)}"></i></li>
             </ul>
             <span><b>{{featuredServices.length + showServices.length}}</b>{{serviceType|translate}}</span>
         </div>

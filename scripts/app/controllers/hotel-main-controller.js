@@ -455,9 +455,18 @@ define(['app/services/hotel-service',
                             $scope.sortReverse = false;
                         }
                     }
+                    var sortField;
+                    if($scope.sortBy == 'Price') {
+                        if($scope.sortReverse)
+                            sortField = 'MaxPrice';
+                        else
+                            sortField = 'MinPrice'
+                    } else {
+                        sortField = $scope.sortBy;
+                    }
 
-                    $scope.featuredHotels = $filter('orderBy')($scope.featuredHotels, $scope.sortBy, $scope.sortReverse);
-                    $scope.showHotels = $filter('orderBy')($scope.showHotels, $scope.sortBy, $scope.sortReverse);
+                    $scope.featuredHotels = $filter('orderBy')($scope.featuredHotels, sortField, $scope.sortReverse);
+                    $scope.showHotels = $filter('orderBy')($scope.showHotels, sortField, $scope.sortReverse);
                 };
 
                 function loadAll(destinationId) {
