@@ -1,4 +1,4 @@
-define(['app/services/trip-service'], function (modules) {
+define(['app/services/trip-service', 'underscore'], function (modules, _) {
     'use strict';
     modules.services
         .service('ShoppingService', ['$cookieStore', 'localStorageService', 'TripService', '$rootScope',
@@ -23,7 +23,8 @@ define(['app/services/trip-service'], function (modules) {
                 getItems: function () {
                     return shoppingItems;
                 },
-                addItem: function (product, categoryIndex) {
+                addItem: function (item, categoryIndex) {
+                    var product = _.clone(item);
                     if (product.ProductType == 'HTL') {
                         shoppingItems.hotels.push({
                             product: product,
