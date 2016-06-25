@@ -235,5 +235,7 @@
   "USE_EXISTING_PROFILE":"已保存的支付信息",
   "NEW_PAYMENT_INFO":"新的支付信息",
   "EXISTING_PROFILES":"已保存的支付信息",
-  "PAYMENT_INFO":"支付信息"
+  "PAYMENT_INFO":"支付信息",
+  "LOW_PRICE":"最低价",
+  "HIGH_PRICE":"最高价"
 }

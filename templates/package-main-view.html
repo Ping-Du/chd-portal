@@ -71,6 +71,14 @@
                 </dd>
             </dl>
         </div>
+        <div class="sortbar">
+            <ul>
+                <li><a href data-ng-click="sort('Name')">{{"NAME"|translate}}</a><i data-ng-class="{'icon-caret-down':sortBy=='Name' && sortReverse,'icon-caret-up':sortBy=='Name' && !sortReverse}"></i></li>
+                <li data-ng-show="prices.length > 0"><a href data-ng-click="sort('MinPrice')">{{"PRICE"|translate}}</a><i data-ng-class="{'icon-caret-down':(sortBy=='MinPrice' && sortReverse),'icon-caret-up':(sortBy=='MinPrice' && !sortReverse)}"></i></li>
+                <!--<li data-ng-show="prices.length > 0"><a href data-ng-click="sort('MaxPrice')">{{"HIGH_PRICE"|translate}}</a><i data-ng-class="{'icon-caret-down':(sortBy=='MaxPrice' && sortReverse),'icon-caret-up':(sortBy=='MaxPrice' && !sortReverse)}"></i></li>-->
+            </ul>
+            <span><b>{{featuredPackages.length + showPackages.length}}</b>{{'PACKAGES'|translate}}</span>
+        </div>
         <section class="thumbnail-part" data-ng-show="featuredPackages.length > 0">
             <div class="title">
                 <img src="images/favorite.png" class="big-icon">
@@ -99,13 +107,6 @@
                 </div>
             </div>
         </section>
-        <div class="sortbar" data-ng-show="featuredPackages.length > 0">
-            <!--<ul>-->
-            <!--<li><a href="#">Price</a><i class="icon-caret-down"></i></li>-->
-            <!--<li><a href="#">Sale Volumn</a><i class="icon-caret-down"></i></li>-->
-            <!--<li><a href="#">Score</a><i class="icon-caret-down"></i></li>-->
-            <!--</ul>-->
-        </div>
         <section class="thumbnail-part">
             <div class="title">
                 <img src="images/package.png" class="big-icon">

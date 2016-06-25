@@ -235,5 +235,7 @@
   "USE_EXISTING_PROFILE":"Use Existing Profile",
   "NEW_PAYMENT_INFO":"New Payment Information",
   "EXISTING_PROFILES":"Existing Profiles",
-  "PAYMENT_INFO":"Payment Information"
+  "PAYMENT_INFO":"Payment Information",
+  "LOW_PRICE":"Low Price",
+  "HIGH_PRICE":"High Price"
 }

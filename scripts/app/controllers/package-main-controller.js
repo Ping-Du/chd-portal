@@ -105,6 +105,8 @@ define(['app/services/package-service',
                                 $scope.showPackages.push(item);
                         }
                     });
+
+                    $scope.sort();
                 }
 
                 $scope.selectedPrice = null;
@@ -148,6 +150,8 @@ define(['app/services/package-service',
                                     maxPrice = category.Price;
                                 }
                             });
+                            item.MinPrice = minPrice;
+                            item.MaxPrice = maxPrice;
                             item.price = makePriceString(minPrice, maxPrice);
                         }
                     });
@@ -179,7 +183,7 @@ define(['app/services/package-service',
                 function getAvailability(param) {
                     $scope.allPackages = [];
                     $scope.showPackages = [];
-                    //$loading.start('main');
+                    $scope.featuredPackages = [];
                     PackageService.getAvailability(param).then(function(data){
                         fillAllPackages(data);
                         fillPackages();
@@ -369,6 +373,22 @@ define(['app/services/package-service',
                     fillAllPackages(all);
                     fillPackages();
                 }
+
+                $scope.sortReverse = false;
+                $scope.sortBy = "Name";
+                $scope.sort = function(sortBy) {
+                    if(sortBy != undefined) {
+                        if ($scope.sortBy == sortBy) {
+                            $scope.sortReverse = !$scope.sortReverse;
+                        } else {
+                            $scope.sortBy = sortBy;
+                            $scope.sortReverse = false;
+                        }
+                    }
+
+                    $scope.featuredPackages = $filter('orderBy')($scope.featuredPackages, $scope.sortBy, $scope.sortReverse);
+                    $scope.showPackages = $filter('orderBy')($scope.showPackages, $scope.sortBy, $scope.sortReverse);
+                };
 
                 function loadAll(location) {
                     PackageService.getPackagesByDestinationId(location).then(function (data1) {

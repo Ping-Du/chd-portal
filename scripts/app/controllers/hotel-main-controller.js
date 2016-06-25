@@ -139,6 +139,8 @@ define(['app/services/hotel-service',
                                 $scope.showHotels.push(item);
                         }
                     });
+
+                    $scope.sort();
                 }
 
                 $scope.selectedPrice = null;
@@ -181,6 +183,8 @@ define(['app/services/hotel-service',
                                     maxPrice = category.Price;
                                 }
                             });
+                            item.MinPrice = minPrice;
+                            item.MaxPrice = maxPrice;
                             item.price = makePriceString(minPrice, maxPrice);
                         }
                     });
@@ -214,6 +218,7 @@ define(['app/services/hotel-service',
                 function getAvailability(param) {
                     $scope.allHotels = [];
                     $scope.showHotels = [];
+                    $scope.featuredHotels = [];
                     //$loading.start('main');
                     HotelService.getAvailability(param).then(function (data) {
                         fillAllHotels(data);
@@ -438,6 +443,22 @@ define(['app/services/hotel-service',
                     fillAllHotels(all);
                     fillHotels();
                 }
+
+                $scope.sortReverse = false;
+                $scope.sortBy = "Name";
+                $scope.sort = function(sortBy) {
+                    if(sortBy != undefined) {
+                        if ($scope.sortBy == sortBy) {
+                            $scope.sortReverse = !$scope.sortReverse;
+                        } else {
+                            $scope.sortBy = sortBy;
+                            $scope.sortReverse = false;
+                        }
+                    }
+
+                    $scope.featuredHotels = $filter('orderBy')($scope.featuredHotels, $scope.sortBy, $scope.sortReverse);
+                    $scope.showHotels = $filter('orderBy')($scope.showHotels, $scope.sortBy, $scope.sortReverse);
+                };
 
                 function loadAll(destinationId) {
                     HotelService.getHotelsByDestinationId(destinationId).then(function (data1) {

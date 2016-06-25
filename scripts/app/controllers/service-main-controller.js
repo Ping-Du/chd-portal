@@ -155,6 +155,8 @@ define(['app/services/services-service',
                                 $scope.showServices.push(item);
                         }
                     });
+
+                    $scope.sort();
                 }
 
                 function fillAllServices(data) {
@@ -180,6 +182,8 @@ define(['app/services/services-service',
                                     maxPrice = category.Price;
                                 }
                             });
+                            item.MinPrice = minPrice;
+                            item.MaxPrice = maxPrice;
                             item.price = makePriceString(minPrice, maxPrice);
                         }
                     });
@@ -313,6 +317,18 @@ define(['app/services/services-service',
                     }
                 });
 
+                function getAvailability(param) {
+                    $scope.allServices = [];
+                    $scope.showServices = [];
+                    $scope.featuredServices = [];
+                    //$loading.start('main');
+                    ServicesService.getAvailability(param).then(function (data) {
+                        fillAllServices(data);
+                        fillServices();
+                    }, function () {
+                    });
+                }
+
                 $scope.searchServices = function () {
                     if (SessionService.user() == null) {
                         searchAfterLogin = true;
@@ -321,11 +337,7 @@ define(['app/services/services-service',
                     }
                     var param = getParam(true);
                     if (param) {
-                        ServicesService.getAvailability(param).then(function (data) {
-                            fillAllServices(data);
-                            fillServices();
-                        }, function () {
-                        });
+                       getAvailability(param);
                     }
                 };
 
@@ -376,6 +388,22 @@ define(['app/services/services-service',
                     fillAllServices(all);
                     fillServices();
                 }
+
+                $scope.sortReverse = false;
+                $scope.sortBy = "Name";
+                $scope.sort = function(sortBy) {
+                    if(sortBy != undefined) {
+                        if ($scope.sortBy == sortBy) {
+                            $scope.sortReverse = !$scope.sortReverse;
+                        } else {
+                            $scope.sortBy = sortBy;
+                            $scope.sortReverse = false;
+                        }
+                    }
+
+                    $scope.featuredServices = $filter('orderBy')($scope.featuredServices, $scope.sortBy, $scope.sortReverse);
+                    $scope.showServices = $filter('orderBy')($scope.showServices, $scope.sortBy, $scope.sortReverse);
+                };
 
                 function loadAll(location) {
                     ServicesService.getServiceByTypeAndDestination(serviceType, location).then(function (data1) {
