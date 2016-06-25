@@ -193,6 +193,25 @@ define(['app/services/account-service',
                         if ($scope.trip.Status == 'Booked') {
                             $scope.showCancelBtn = true;
                         }
+                        modules.angular.forEach($scope.trip.Services, function(item){
+                            if(item.HasTransport) {
+                                item.PickupPoint.ShowName = item.PickupPoint.Name;
+                                if(item.PickupPoint.StartTime != '') {
+                                    item.PickupPoint.ShowName = item.PickupPoint.Name + ' - ' + item.PickupPoint.StartTime;
+                                    if(item.PickupPoint.EndTime != '') {
+                                        item.PickupPoint.ShowName = item.PickupPoint.ShowName + ' to ' + item.PickupPoint.EndTime;
+                                    }
+                                }
+
+                                item.DropoffPoint.ShowName = item.DropoffPoint.Name;
+                                if(item.DropoffPoint.StartTime != '') {
+                                    item.DropoffPoint.ShowName = item.DropoffPoint.Name + ' - ' + item.DropoffPoint.StartTime;
+                                    if(item.DropoffPoint.EndTime != '') {
+                                        item.DropoffPoint.ShowName = item.DropoffPoint.ShowName + ' to ' + item.DropoffPoint.EndTime;
+                                    }
+                                }
+                            }
+                        });
                     });
 
                     DocumentService.getFormats().then(function (data) {

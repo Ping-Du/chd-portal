@@ -33,10 +33,10 @@
                         <!--<label>Service Time(24 hours format, 2:00PM is 1400):</label><input class="form-control" type="text" maxlength="4" data-ng-model="serviceTime">-->
                     <!--</div>-->
                     <div data-ng-show="isService && product.HasTransport" class="form-group">
-                        <label>{{"PICK_UP"|translate}}:</label><select class="form-control" data-ng-model="pickupPoint" data-ng-options="p.LocationId as p.Name for p in product.PickupPoints"></select>
+                        <label>{{"PICK_UP"|translate}}:</label><select class="form-control" data-ng-model="pickupPoint" data-ng-options="p.LocationId as p.ShowName for p in product.PickupPoints"></select>
                     </div>
                     <div data-ng-show="isService && product.HasTransport && product.DropoffPoints.length > 0" class="form-group">
-                        <label>{{"DROP_OFF"|translate}}:</label><select class="form-control" data-ng-model="dropoffPoint" data-ng-options="p.LocationId as p.Name for p in product.DropoffPoints"></select>
+                        <label>{{"DROP_OFF"|translate}}:</label><select class="form-control" data-ng-model="dropoffPoint" data-ng-options="p.LocationId as p.ShowName for p in product.DropoffPoints"></select>
                     </div>
                     <div data-ng-show="message == '' && !onRequest && !required && !product.HasTransport">
                         <p>Are you going to add it to shopping cart?</p>

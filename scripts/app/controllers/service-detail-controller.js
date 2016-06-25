@@ -204,11 +204,36 @@ define(['app/services/services-service',
                         Guests: GuestsToServiceCriteria($scope.guests)
                     };
 
+                    function modifyAvailability(data) {
+                        if(data.HasTransport) {
+                            _.each(data.PickupPoints, function (pp) {
+                                pp.ShowName = pp.Name;
+                                if(pp.StartTime != '') {
+                                    pp.ShowName = pp.Name + ' - ' + pp.StartTime;
+                                    if(pp.EndTime != '') {
+                                        pp.ShowName = pp.ShowName + ' to ' + pp.EndTime;
+                                    }
+                                }
+                            });
+
+                            _.each(data.DropoffPoints, function (pp) {
+                                pp.ShowName = pp.Name;
+                                if(pp.StartTime != '') {
+                                    pp.ShowName = pp.Name + ' - ' + pp.StartTime;
+                                    if(pp.EndTime != '') {
+                                        pp.ShowName = pp.ShowName + ' to ' + pp.EndTime;
+                                    }
+                                }
+                            });
+                        }
+                    }
+
                     $scope.showNotAvailable = false;
                     ServicesService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
                             $scope.serviceItem = data[0];
                             setDetailTitle(data[0]);
+                            modifyAvailability(data[0]);
                             if($scope.serviceItem.AvailabilityCategories == null)
                                 $scope.serviceItem.AvailabilityCategories = [];
                             if(data[0].AvailabilityCategories.length == 0) {

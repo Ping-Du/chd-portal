@@ -8,7 +8,7 @@ define(['app/services/shopping-service'], function (modules) {
                         templateUrl: 'ConsentRequiredModal.html',
                         controller: 'ConsentRequiredModalInstanceController',
                         backdrop: 'static',
-                        //size: 'lg',
+                        size: 'lg',
                         resolve: {
                             product: function () {
                                 return product;

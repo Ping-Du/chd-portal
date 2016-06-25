@@ -193,6 +193,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         if (serviceCategory.PaymentRequired)
                             $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
 
+                        var pickUpShowName = '';
                         for (k = 0; k < service.PickupPoints.length; k++) {
                             if (service.PickupPoints[k].LocationId == service.PickupPoint) {
                                 pickUpPoint = {
@@ -200,10 +201,12 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     LocationId: service.PickupPoint,
                                     Time: ''
                                 };
+                                pickUpShowName = service.PickupPoints[k].ShowName;
                                 break;
                             }
                         }
 
+                        var dropOffShowName = '';
                         for (k = 0; k < service.DropoffPoints.length; k++) {
                             if (service.DropoffPoints[k].LocationId == service.DropoffPoint) {
                                 dropOffPoint = {
@@ -211,6 +214,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                     LocationId: service.DropoffPoint,
                                     Time: ''
                                 };
+                                dropOffShowName = service.DropoffPoints[k].ShowName;
                                 break;
                             }
                         }
@@ -218,7 +222,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         $scope.bookingInfo.Services.push({
                             ServiceTime: serviceCategory.ServiceTime,
                             PickupPoint: pickUpPoint, //service.PickupPoint,
+                            PickupShowName:pickUpShowName,
                             DropoffPoint: dropOffPoint, //service.DropoffPoint,
+                            DropoffShowName: dropOffShowName,
                             TripItemId: 0,
                             ProductType: service.ProductType,
                             ProductId: service.ProductId,

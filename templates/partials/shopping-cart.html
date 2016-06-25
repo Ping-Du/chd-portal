@@ -19,7 +19,7 @@
                     </button>
                     <h4>{{"BOOKING_INFO"|translate}}</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" >
                     <uib-tabset justified="true" active="">
                         <uib-tab index="0" heading="{{'PRODUCTS'|translate}}" active="tabs[0].active" disable="tabs[0].disabled" select="selectTab(0)">
                             <div class="uibtab-info">
@@ -30,7 +30,7 @@
                                             <td>{{"NAME"|translate}}</td>
                                             <td>{{"ROOM_TYPE"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"CHECK_IN"|translate}}</td>
+                                            <td >{{"CHECK_IN"|translate}}</td>
                                             <td>{{"NIGHTS"|translate}}</td>
                                             <td>{{"GUESTS"|translate}}</td>
                                             <td></td>
@@ -69,7 +69,7 @@
                                             <td style="width:230px;">{{"CATEGORY"|translate}}</td>
                                             <td style="width:100px;">{{"START_DATE"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"GUESTS"|translate}}</td>
+                                            <td style="width:100px;">{{"GUESTS"|translate}}</td>
                                             <td></td>
                                         </tr>
                                         </thead>
@@ -100,7 +100,7 @@
                                             <td style="width:100px;">{{"START_DATE"|translate}}</td>
                                             <td style="width:100px;">{{"END_DATE"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"GUESTS"|translate}}</td>
+                                            <td style="width:100px;">{{"GUESTS"|translate}}</td>
                                             <td></td>
                                         </tr>
                                         </thead>
@@ -212,9 +212,11 @@
                             <div style="padding-top: 5px;" class="text-info">
                                 {{"ASSIGNMENTS_INFO"|translate}}
                             </div>
+                            <br>
                             <div class="form-inline">
-                                <label>{{"PRIMARY_GUEST"|translate}}: &nbsp;</label><select class="form-control input-sm" data-ng-options="(guest.LastName + ' ' + guest.FirstName) as guest.ShowName for guest in bookingInfo.Guests" data-ng-model="bookingInfo.PrimaryGuestName"></select>
+                                <label>{{"PRIMARY_GUEST"|translate}}: &nbsp;</label><select class="form-control input-sm" style="width:250px;" data-ng-options="(guest.LastName + ' ' + guest.FirstName) as guest.ShowName for guest in bookingInfo.Guests" data-ng-model="bookingInfo.PrimaryGuestName"></select>
                             </div>
+                            <br>
                             <div class="table-scroll">
                                 <div data-ng-repeat="hotel in bookingInfo.Hotels" data-ng-show="shoppingItems.hotels.length > 0">
                                     <p style="color: #e32b19;font-weight: bold;">{{"HOTEL"|translate}} - {{hotel.HotelName}}</p>
@@ -224,8 +226,8 @@
                                             <td>{{"ROOM_TYPE"|translate}}</td>
                                             <td>{{"ROOM"|translate}} #</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td>{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
+                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -233,14 +235,14 @@
                                             <td>{{hotel.CategoryName}}</td>
                                             <td>{{$index+1}}</td>
                                             <td style="color:red">${{room.Price}}</td>
-                                            <td><select class="form-control"
+                                            <td><select class="form-control input-sm"
                                                         data-ng-model="room.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                         data-ng-change="changePrimaryGuest(room.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
-                                                    <select class="form-control"
+                                                    <select class="form-control input-sm"
                                                             data-ng-model="room.Guests.GuestIds[$index]"
                                                             data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                             data-ng-show="$index != 0"></select>
@@ -258,8 +260,8 @@
                                             <td>{{"NAME"|translate}}</td>
                                             <td>{{"CATEGORY"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td>{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
+                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -267,14 +269,14 @@
                                             <td>{{service.ServiceName}}</td>
                                             <td>{{service.CategoryName}}</td>
                                             <td style="color:red">${{service.Price}}</td>
-                                            <td><select class="form-control"
+                                            <td><select class="form-control input-sm"
                                                         data-ng-model="service.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                         data-ng-change="changePrimaryGuest(service.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in service.Guests.GuestIds track by $index">
-                                                    <select class="form-control"
+                                                    <select class="form-control input-sm"
                                                             data-ng-model="service.Guests.GuestIds[$index]"
                                                             data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                             data-ng-show="$index != 0"></select>
@@ -292,8 +294,8 @@
                                             <td>{{"ROOM"|translate}} #</td>
                                             <td>{{"NIGHTS"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td>{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td>{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
+                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -301,14 +303,14 @@
                                             <td>{{$index+1}}</td>
                                             <td>{{package.Nights}}</td>
                                             <td style="color:red">${{room.Price}}</td>
-                                            <td><select class="form-control"
+                                            <td><select class="form-control input-sm"
                                                         data-ng-model="room.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                         data-ng-change="changePrimaryGuest(room.Guests)"></select>
                                             </td>
                                             <td>
                                                 <div data-ng-repeat="guest in room.Guests.GuestIds track by $index">
-                                                    <select class="form-control"
+                                                    <select class="form-control input-sm"
                                                             data-ng-model="room.Guests.GuestIds[$index]"
                                                             data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
                                                             data-ng-show="$index != 0"></select>
@@ -323,8 +325,8 @@
                         </uib-tab>
                         <uib-tab index="3" heading="{{'REVIEW'|translate}}" active="tabs[3].active" disable="tabs[3].disabled" select="selectTab(3)">
                             <div class="uibtab-info" style="margin-top: 5px;">
-                                <strong>{{"GUESTS"|translate}} - {{"TOTAL"|translate}}: {{bookingInfo.Guests.length}}       {{"ADULT"|translate}}: {{bookingInfo.Adults}}
-                                    <span data-ng-show="bookingInfo.Minors > 0">       {{"MINOR"|translate}}: {{bookingInfo.Minors}}</span></strong>
+                                <strong>{{"GUESTS"|translate}} - {{"TOTAL"|translate}}: {{bookingInfo.Guests.length}}&nbsp;&nbsp;&nbsp;&nbsp;{{"ADULT"|translate}}: {{bookingInfo.Adults}}
+                                    <span data-ng-show="bookingInfo.Minors > 0">&nbsp;&nbsp;&nbsp;&nbsp;{{"MINOR"|translate}}: {{bookingInfo.Minors}}</span></strong>
 
                                 <p><span data-ng-repeat="guest in bookingInfo.Guests">{{guest.ShowName}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 </p>
@@ -338,10 +340,15 @@
                                 <div data-ng-show="bookingInfo.Services.length > 0">
                                     <hr>
                                     <strong>{{"SERVICES"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.ServicePrice}}</strong>
-                                    <p data-ng-repeat="service in bookingInfo.Services">{{"NAME"|translate}}: {{service.ServiceName}}&nbsp;&nbsp;&nbsp;&nbsp;{{"CATEGORY"|translate}}:
-                                        {{service.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;{{"START_DATE"|translate}}: {{service.StartDate |
-                                        limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;{{"TIME"|translate}}: {{service.ServiceTime}}&nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}:
-                                        ${{service.Price}}</p>
+                                    <p data-ng-repeat="service in bookingInfo.Services">
+                                        {{"NAME"|translate}}: {{service.ServiceName}}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{"CATEGORY"|translate}}: {{service.CategoryName}}
+                                        <span data-ng-show="service.PickupShowName != ''">&nbsp;&nbsp;&nbsp;&nbsp;{{"PICK_UP"|translate}}: {{service.PickupShowName}}</span>
+                                        <span data-ng-show="service.DropoffShowName != ''">&nbsp;&nbsp;&nbsp;&nbsp;{{"DROP_OFF"|translate}}: {{service.DropoffShowName}}</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{"START_DATE"|translate}}: {{service.StartDate | limitTo:10}}
+                                        <span data-ng-show="service.ServiceTime != ''">&nbsp;&nbsp;&nbsp;&nbsp;{{"TIME"|translate}}: {{service.ServiceTime}}</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{service.Price}}
+                                    </p>
                                 </div>
                                 <div data-ng-show="bookingInfo.Packages.length > 0">
                                     <hr>

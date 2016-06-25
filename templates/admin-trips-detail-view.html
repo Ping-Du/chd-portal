@@ -117,21 +117,14 @@
                             <br>
                             <h3 class="text-info">{{"CATEGORY"|translate}}</h3>
                             <div class="row">
-                                <div class="col-md-4"><strong>{{"NAME"|translate}}:</strong>{{service.Category.Name}}</div>
+                                <div class="col-md-12"><strong>{{"NAME"|translate}}:</strong> {{service.Category.Name}}</div>
                             </div>
-                            <!--<br>-->
-                            <!--<h3 class="text-info">Guests</h3>-->
-                            <!--<div class="row" data-ng-repeat="room in hotel.Rooms">-->
-                                <!--<div class="col-md-2" >-->
-                                    <!--<strong>Room #{{$index+1}}</strong>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-2" >-->
-                                    <!--<strong>${{room.Price}}</strong>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-2" data-ng-repeat="g in room.Guests" data-ng-class="{'text-red':getGuest(g.GuestId).PrimaryGuest}">-->
-                                    <!--{{getGuest(g.GuestId).FormattedName}}-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <div class="row" data-ng-show="service.PickupPoint.Name != ''">
+                                <div class="col-md-12"><strong>{{"PICK_UP"|translate}}:</strong> {{service.PickupPoint.ShowName}}</div>
+                            </div>
+                            <div class="row" data-ng-show="service.DropoffPoint.Name != ''">
+                                <div class="col-md-12"><strong>{{"DROP_OFF"|translate}}:</strong> {{service.DropoffPoint.ShowName}}</div>
+                            </div>
                         </div>
                         <hr>
                         </div>
