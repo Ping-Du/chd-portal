@@ -23,7 +23,7 @@ define(['app/services/hotel-service',
                 $scope.$on('LanguageChanged', function (event, data) {
                     if ($scope.languageId != data) {
                         $scope.languageId = data;
-                        load();
+                        //load();
                     }
                 });
 
@@ -33,13 +33,16 @@ define(['app/services/hotel-service',
                     $scope.destinations = [];
                     $scope.currentDestination = null;
                     DestinationService.getTopDestinations().then(function (data) {
-                        if (data.length > 0) {
-                            //$scope.currentDestination = data[0];
-                            $scope.loadHotels(data[0]);
-                        }
-                        _.each(data, function (item) {
+                        var locationId = SessionService.options('hotel.top.location');
+                        var selected = 0;
+                        _.each(data, function (item, index) {
                             $scope.destinations.push(item);
+                            if(item.ProductId == locationId)
+                                selected = index;
                         });
+                        if(data.length > 0) {
+                            $scope.loadHotels(data[selected]);
+                        }
                     });
                 }
 
@@ -62,6 +65,7 @@ define(['app/services/hotel-service',
 
                     $scope.hotels = [];
                     $scope.currentDestination = destination;
+                    SessionService.options('hotel.top.location', destination.ProductId);
                     HotelService.getTopHotelsByDestinationId(destination.ProductId).then(function (data) {
                         $scope.hotels = data; //_.first(data, 3);
 
@@ -142,11 +146,8 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.$watch('currentDestination', function (newVal, oldVal) {
-                    if (newVal == oldVal) {
-                        return;
-                    }
-
-                    $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
+                    if (newVal)
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
                 });
 
                 $scope.$watch('checkInDate', function (newVal, oldVal) {

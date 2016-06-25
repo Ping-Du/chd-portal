@@ -23,7 +23,7 @@ define(['app/services/services-service',
                 $scope.$on('LanguageChanged', function (event, data) {
                     if($scope.languageId != data) {
                         $scope.languageId = data;
-                        load();
+                        //load();
                     }
                 });
 
@@ -50,14 +50,17 @@ define(['app/services/services-service',
                 function loadDestinations() {
                     $scope.destinations = [];
                     $scope.currentDestination = null;
-                    DestinationService.getTopDestinations().then(function(data){
-                        if(data.length > 0) {
-                            //$scope.currentDestination = data[0];
-                            $scope.loadServices(data[0]);
-                        }
-                        _.each(data, function(item){
+                    DestinationService.getTopDestinations().then(function (data) {
+                        var locationId = SessionService.options('service.top.location');
+                        var selected = 0;
+                        _.each(data, function (item, index) {
                             $scope.destinations.push(item);
+                            if(item.ProductId == locationId)
+                                selected = index;
                         });
+                        if(data.length > 0) {
+                            $scope.loadServices(data[selected]);
+                        }
                     });
                 }
 
@@ -80,6 +83,7 @@ define(['app/services/services-service',
 
                     $scope.services = [];
                     $scope.currentDestination = destination;
+                    SessionService.options('service.top.location', destination.ProductId);
                     ServicesService.getTopServiceByTypeAndDestination(serviceType, destination.ProductId).then(function(data){
                         $scope.services = data; // _.first(data, 3);
 
@@ -158,11 +162,8 @@ define(['app/services/services-service',
                 };
 
                 $scope.$watch('currentDestination', function(newVal, oldVal){
-                    if(newVal == oldVal) {
-                        return;
-                    }
-
-                    $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
+                    if(newVal)
+                        $scope.$broadcast('angucomplete-alt:changeInput', 'searchLocation', $scope.currentDestination);
                 });
 
                 var searchAfterLogin = false;

@@ -8,10 +8,12 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 token: token,
                 user: (token ? $.cookie('user') : null),
                 //password:(token?$cookies.get('password'):''),
-                languageId: (token? $.cookie('languageId') :null),
-                roleId:(token? $.cookie('roleId'):null),
-                agencyNo:(token? $.cookie('agencyNo'):null)
+                languageId: (token ? $.cookie('languageId') : null),
+                roleId: (token ? $.cookie('roleId') : null),
+                agencyNo: (token ? $.cookie('agencyNo') : null)
             };
+
+            var savedOptions = [];
 
             //console.log('user:' + session.user + ' languageId:'+session.languageId);
 
@@ -24,7 +26,7 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
             }
 
             this.languageId = function (languageId) {
-                if(languageId && languageId != session.languageId) {
+                if (languageId && languageId != session.languageId) {
                     setCookie('languageId', languageId);
                     session.languageId = languageId;
                 }
@@ -42,8 +44,8 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 }
             };
 
-            this.roleId = function(value) {
-                if(arguments.length == 0)
+            this.roleId = function (value) {
+                if (arguments.length == 0)
                     return (session.roleId);
                 else {
                     setCookie('roleId', value);
@@ -51,7 +53,7 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 }
             };
 
-            this.config = function(){
+            this.config = function () {
                 return session.config;
             };
 
@@ -65,13 +67,30 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 }
             };
 
-            this.agencyNo = function(value) {
+            this.agencyNo = function (value) {
                 if (arguments.length == 0) {
                     return session.agencyNo;
                 }
                 else {
                     setCookie('agencyNo', value);
                     session.agencyNo = value;
+                }
+            };
+
+            this.options = function (key, value) {
+                var opt = _.find(savedOptions, function (item) {
+                    return (item.key === key);
+                });
+                if (value === undefined) {
+                    return (opt === undefined)?null:opt.value;
+                } else {
+                    if(opt === undefined)
+                        savedOptions.push({
+                            key:key,
+                            value:value
+                        });
+                    else
+                        opt.value = value;
                 }
             };
 
@@ -82,8 +101,9 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                     token: self.token,
                     user: self.user,
                     languageId: self.languageId,
-                    roleId:self.roleId,
-                    agencyNo:self.agencyNo
+                    roleId: self.roleId,
+                    agencyNo: self.agencyNo,
+                    options: self.options
                 };
             };
         });
