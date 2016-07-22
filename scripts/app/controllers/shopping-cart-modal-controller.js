@@ -43,6 +43,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     Guests: [],
                     PaymentInfo: {
                         ProfileId: null,
+                        PaymentRequired:false,
                         PaymentMethod: '',
                         CreditCardInfo: {
                             CardNumber: '',
@@ -119,8 +120,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         var index = $scope.shoppingItems.hotels[i].index;
                         var category = hotel.AvailabilityCategories[index];
                         var guestId = $scope.bookingInfo.Guests.length + 1;
-                        if (category.PaymentRequired)
+                        if (category.PaymentRequired) {
                             $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
+                            $scope.bookingInfo.PaymentInfo.PaymentRequired = true;
+                        }
 
                         $scope.bookingInfo.Hotels.push({
                             RatePlanId: category.RatePlan.Id,
@@ -190,8 +193,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         var pickUpPoint = null;
                         var dropOffPoint = null;
 
-                        if (serviceCategory.PaymentRequired)
+                        if (serviceCategory.PaymentRequired) {
                             $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
+                            $scope.bookingInfo.PaymentInfo.PaymentRequired = true;
+                        }
 
                         var pickUpShowName = '';
                         for (k = 0; k < service.PickupPoints.length; k++) {
@@ -276,8 +281,11 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         var category = pkg.AvailabilityCategories[index];
                         var packageGuestId = $scope.bookingInfo.Guests.length + 1;
                         $scope.bookingInfo.PackagePrice += category.Price;
-                        if (category.PaymentRequired)
+                        if (category.PaymentRequired) {
                             $scope.bookingInfo.PaymentInfo.PaymentMethod = 'CreditCard';
+                            $scope.bookingInfo.PaymentInfo.PaymentRequired = true;
+                        }
+
                         $scope.bookingInfo.Packages.push({
                             TripItemId: 0,
                             ProductType: pkg.ProductType,

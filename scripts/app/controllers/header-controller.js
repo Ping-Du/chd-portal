@@ -111,6 +111,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                             } else if (item.ProductType == 'CTY') {
                                 item.DetailsURI = 'destinations.html#/' + item.ProductId + '/' + $scope.languageId;
                                 _.extend(item, {showName: 'City'});
+                            } else if(item.ProductType == 'PKG') {
+                                item.DetailsURI = 'packages.html#/' + item.ProductId + '/' + $scope.languageId;
                             }
                             $scope.results.push(item);
 

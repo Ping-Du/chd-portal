@@ -380,7 +380,7 @@
                                                                            value="CreditCard" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod" checked>{{"CREDIT_CARD"|translate}}</label>
                                         <label class="radio-inline"><input type="radio" name="paymentMethod"
                                                                            value="ECheck" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">{{"ECHECK"|translate}}</label>
-                                    <label class="radio-inline"><input type="radio" name="paymentMethod"
+                                    <label class="radio-inline" data-ng-show="!bookingInfo.PaymentInfo.PaymentRequired"><input type="radio" name="paymentMethod"
                                                                        value="" data-ng-model="bookingInfo.PaymentInfo.PaymentMethod">{{"PAY_LATER"|translate}}</label>
 
                                 </div>

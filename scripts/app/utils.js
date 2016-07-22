@@ -160,11 +160,15 @@ function GuestsToServiceCriteria(guests) {
 }
 
 function DayDiff(startDate, endDate) {
-    return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
+    if(startDate === null || endDate === null)
+        return 0;
+    else
+        return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
 }
 
 function addDays(startDate, days) {
-    return new Date(startDate.valueOf() + days * 24 * 3600000);
+    var now = (startDate?startDate:addDays(new Date(), 1));
+    return new Date(now.valueOf() + days * 24 * 3600000);
 }
 
 function makePriceString(lowPrice, highPrice) {

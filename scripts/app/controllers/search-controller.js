@@ -62,6 +62,9 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                         } else if (item.ProductType == 'CTY') {
                             item.DetailsURI = 'destinations.html#/' + item.ProductId + '/' + $scope.languageId;
                             _.extend(item, {showName: 'City'});
+                        } else if (item.ProductType == 'PKG') {
+                            item.DetailsURI = 'packages.html#/' + item.ProductId + '/' + $scope.languageId;
+                            //_.extend(item, {showName: 'Package'});
                         }
                         //$scope.results.push(item);
 

@@ -151,8 +151,12 @@ define(['app/services/hotel-service',
                 });
 
                 $scope.$watch('checkInDate', function (newVal, oldVal) {
-                    if (newVal == oldVal && newVal == '') {
+                    if (newVal === oldVal) {
                         return;
+                    }
+
+                    if(newVal === '') {
+                        $('#checkInDate').datepicker('update','');
                     }
 
                     $('#checkOutDate').datepicker('setStartDate',
@@ -160,9 +164,21 @@ define(['app/services/hotel-service',
                     $('#checkOutDate').datepicker('setEndDate',
                         addDays($('#checkInDate').datepicker('getDate'), 30));
 
-                    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        //$scope.checkOutDate = '';
-                        $('#checkOutDate').datepicker('update', '');
+                    if(newVal === '') {
+                        $('#checkOutDate').datepicker('update','');
+                    } else {
+                        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //var days = DayDiff($('#checkInDate').datepicker('getDate'), $('#checkOutDate').datepicker('getDate'));
+                        //if ($scope.checkOutDate != '') {
+                        //    var days = DayDiff($('#checkInDate').datepicker('getDate'), $('#checkOutDate').datepicker('getDate'));
+                        //    if(days >= 30)
+                        //        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 30));
+                        //    else if(days <= 0) {
+                        //        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //    }
+                        //} else {
+                        //    $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //}
                     }
                 });
 

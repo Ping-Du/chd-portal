@@ -271,9 +271,28 @@ define(['app/services/hotel-service',
 
                 });
 
+                //$scope.$watch('checkInDate', function (newVal, oldVal) {
+                //    if (newVal == oldVal && newVal == '') {
+                //        return;
+                //    }
+                //
+                //    $('#checkOutDate').datepicker('setStartDate',
+                //        addDays($('#checkInDate').datepicker('getDate'), 1));
+                //    $('#checkOutDate').datepicker('setEndDate',
+                //        addDays($('#checkInDate').datepicker('getDate'), 30));
+                //
+                //    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                //        $('#checkOutDate').datepicker('update', '');
+                //        //$scope.checkOutDate = '';
+                //    }
+                //});
                 $scope.$watch('checkInDate', function (newVal, oldVal) {
-                    if (newVal == oldVal && newVal == '') {
+                    if (newVal === oldVal) {
                         return;
+                    }
+
+                    if(newVal === '') {
+                        $('#checkInDate').datepicker('update','');
                     }
 
                     $('#checkOutDate').datepicker('setStartDate',
@@ -281,11 +300,24 @@ define(['app/services/hotel-service',
                     $('#checkOutDate').datepicker('setEndDate',
                         addDays($('#checkInDate').datepicker('getDate'), 30));
 
-                    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        $('#checkOutDate').datepicker('update', '');
-                        //$scope.checkOutDate = '';
+                    if(newVal === '') {
+                        $('#checkOutDate').datepicker('update','');
+                    } else {
+                        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //var days = DayDiff($('#checkInDate').datepicker('getDate'), $('#checkOutDate').datepicker('getDate'));
+                        //if ($scope.checkOutDate != '') {
+                        //    var days = DayDiff($('#checkInDate').datepicker('getDate'), $('#checkOutDate').datepicker('getDate'));
+                        //    if(days >= 30)
+                        //        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 30));
+                        //    else if(days <= 0) {
+                        //        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //    }
+                        //} else {
+                        //    $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        //}
                     }
                 });
+
 
                 $scope.showGuests = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-hotel-popover.html";//"GuestsTemplate.html";

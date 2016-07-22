@@ -64,27 +64,35 @@ define(['app/services/hotel-service',
                     }
 
                     var str = newVal.replace(/-/g, "/");
-                    var date = new Date(str);
-                    if (!date)
-                        return;
+                    if(str == '') {
+                        $('#checkOutDate').datepicker('update', '');
+                        $('#checkOutDate2').datepicker('update', '');
+                    } else {
+                        var date = new Date(str);
+                        if (!date)
+                            return;
 
-                    $('#checkOutDate').datepicker('update', date);
-                    $('#checkOutDate2').datepicker('update', date);
+                        $('#checkOutDate').datepicker('update', date);
+                        $('#checkOutDate2').datepicker('update', date);
+                    }
 
                 });
 
                 $scope.$watch('checkInDate', function (newVal, oldVal) {
-                    if (newVal == oldVal && newVal == '') {
+                    if (newVal == oldVal) {
                         return;
                     }
 
-                    var str = newVal.replace(/-/g, "/");
-                    var date = new Date(str);
-                    if (!date)
-                        return;
+                    if(newVal === '') {
+                        $('#checkInDate').datepicker('update','');
+                        $('#checkInDate2').datepicker('update','');
+                    } else {
+                        var str = newVal.replace(/-/g, "/");
+                        var date = new Date(str);
 
-                    $('#checkInDate').datepicker('update', date);
-                    $('#checkInDate2').datepicker('update', date);
+                        $('#checkInDate').datepicker('update', date ? date : '');
+                        $('#checkInDate2').datepicker('update', date ? date : '');
+                    }
 
                     $('#checkOutDate').datepicker('setStartDate',
                         addDays(date, 1));
@@ -96,10 +104,18 @@ define(['app/services/hotel-service',
                     $('#checkOutDate2').datepicker('setEndDate',
                         addDays(date, 30));
 
-                    if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
-                        //$scope.checkOutDate = '';
-                        $('#checkOutDate').datepicker('update', '');
-                        $('#checkOutDate2').datepicker('update', '');
+                    //if ($scope.checkOutDate != '' && $scope.checkInDate >= $scope.checkOutDate) {
+                    //    //$scope.checkOutDate = '';
+                    //    $('#checkOutDate').datepicker('update', '');
+                    //    $('#checkOutDate2').datepicker('update', '');
+                    //}
+
+                    if(newVal === '') {
+                        $('#checkOutDate').datepicker('update','');
+                        $('#checkOutDate2').datepicker('update','');
+                    } else {
+                        $('#checkOutDate').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
+                        $('#checkOutDate2').datepicker('update', addDays($('#checkInDate').datepicker('getDate'), 1));
                     }
                 });
 
