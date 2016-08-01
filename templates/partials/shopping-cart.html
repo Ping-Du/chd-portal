@@ -30,31 +30,36 @@
                                             <td>{{"NAME"|translate}}</td>
                                             <td>{{"ROOM_TYPE"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
-                                            <td >{{"CHECK_IN"|translate}}</td>
-                                            <td>{{"NIGHTS"|translate}}</td>
+                                            <td style="width:120px;">{{"CHECK_IN"|translate}}</td>
+                                            <td style="width:100px;">{{"NIGHTS"|translate}}</td>
                                             <td>{{"GUESTS"|translate}}</td>
                                             <td></td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr data-ng-repeat="hotel in shoppingItems.hotels"
+                                        <tr data-ng-repeat="item in getNumber(shoppingItems.hotels.length * 2) track by $index"
                                             style="vertical-align: middle;">
-                                            <td>{{hotel.product.Name}}</td>
-                                            <td>{{hotel.product.AvailabilityCategories[hotel.index].Name}}</td>
-                                            <td style="color:red">
-                                                ${{hotel.product.AvailabilityCategories[hotel.index].Price}}
+                                            <!--hotel in shoppingItems.hotels-->
+                                            <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Name}}</td>
+                                            <td data-ng-show="$even" style="color:red">
+                                                ${{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Price}}
                                             </td>
-                                            <td>{{hotel.product.StartDate | limitTo:10 }}</td>
-                                            <td>
-                                                {{hotel.product.AvailabilityCategories[hotel.index].Rooms[0].Nights.length}}
+                                            <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.StartDate | limitTo:10 }}</td>
+                                            <td data-ng-show="$even">
+                                                {{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Rooms[0].Nights.length}}
                                             </td>
-                                            <td>
-                                                <p data-ng-repeat="room in hotel.product.AvailabilityCategories[hotel.index].Rooms">
+                                            <td data-ng-show="$even">
+                                                <p data-ng-repeat="room in shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Rooms">
                                                     {{'room #' + (room.RoomId + 1) + ' - ' + room.guestsInfo}}
                                                 </p>
                                             </td>
-                                            <td><a href data-ng-click="removeHotel($index)"><i
+                                            <td data-ng-show="$even"><a href data-ng-click="removeHotel($index/2)"><i
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                            <td data-ng-show="$odd" colspan="7">
+                                                <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
+                                                        data-ng-model="bookingInfo.Hotels[($index-1)/2].Note">
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -74,19 +79,23 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr data-ng-repeat="service in shoppingItems.services"
+                                        <tr data-ng-repeat="item in getNumber(shoppingItems.services.length * 2) track by $index"
                                             style="vertical-align: middle;">
-                                            <td>{{service.product.Name}}</td>
-                                            <td>{{service.product.ServiceType.Name}}</td>
-                                            <td>{{service.product.AvailabilityCategories[service.index].Name}}</td>
-                                            <td>{{service.product.StartDate | limitTo:10 }}</td>
-                                            <td style="color:red">
-                                                ${{service.product.AvailabilityCategories[service.index].Price}}
+                                            <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.ServiceType.Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.StartDate | limitTo:10 }}</td>
+                                            <td data-ng-show="$even" style="color:red">
+                                                ${{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].Price}}
                                             </td>
-                                            <td>{{service.product.AvailabilityCategories[service.index].guestsInfo}}
+                                            <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].guestsInfo}}
                                             </td>
-                                            <td><a href data-ng-click="removeService($index)"><i
+                                            <td data-ng-show="$even"><a href data-ng-click="removeService($index/2)"><i
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                            <td data-ng-show="$odd" colspan="7">
+                                                <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
+                                                       data-ng-model="bookingInfo.Services[($index-1)/2].Note">
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -105,19 +114,23 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr data-ng-repeat="package in shoppingItems.packages"
+                                        <tr data-ng-repeat="item in getNumber(shoppingItems.packages.length * 2) track by $index"
                                             style="vertical-align: middle;">
-                                            <td>{{package.product.Name}}</td>
-                                            <td>{{package.product.PackageType.Name}}</td>
-                                            <td>{{package.product.AvailabilityCategories[package.index].StartDate | limitTo:10 }}</td>
-                                            <td>{{package.product.AvailabilityCategories[package.index].EndDate | limitTo:10 }}</td>
-                                            <td style="color:red">
-                                                ${{package.product.AvailabilityCategories[package.index].Price}}
+                                            <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.PackageType.Name}}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].StartDate | limitTo:10 }}</td>
+                                            <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].EndDate | limitTo:10 }}</td>
+                                            <td data-ng-show="$even" style="color:red">
+                                                ${{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].Price}}
                                             </td>
-                                            <td>{{package.product.AvailabilityCategories[package.index].guestsInfo}}
+                                            <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].guestsInfo}}
                                             </td>
-                                            <td><a href data-ng-click="removePackage($index)"><i
+                                            <td data-ng-show="$even"><a href data-ng-click="removePackage($index/2)"><i
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
+                                            <td data-ng-show="$odd" colspan="7">
+                                                <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
+                                                       data-ng-model="bookingInfo.Packages[($index-1)/2].Note">
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>

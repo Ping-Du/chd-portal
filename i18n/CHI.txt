@@ -237,5 +237,6 @@
   "EXISTING_PROFILES":"已保存的支付信息",
   "PAYMENT_INFO":"支付信息",
   "LOW_PRICE":"最低价",
-  "HIGH_PRICE":"最高价"
+  "HIGH_PRICE":"最高价",
+  "REMARK":"备注"
 }

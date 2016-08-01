@@ -237,5 +237,6 @@
   "EXISTING_PROFILES":"Existing Profiles",
   "PAYMENT_INFO":"Payment Information",
   "LOW_PRICE":"Low Price",
-  "HIGH_PRICE":"High Price"
+  "HIGH_PRICE":"High Price",
+  "REMARK":"Remark"
 }

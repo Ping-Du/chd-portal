@@ -36,6 +36,10 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
 
                 $scope.shoppingItems = ShoppingService.getItems();
 
+                $scope.getNumber = function(num) {
+                    return new Array(num);
+                };
+
                 $scope.bookingInfo = {
                     TripId: 0,
                     Reference: '',
