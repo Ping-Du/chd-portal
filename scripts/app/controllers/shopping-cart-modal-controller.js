@@ -1,4 +1,4 @@
-define(['app/services/account-service', 'app/services/shopping-service', 'sweetalert', 'app/utils'], function (modules) {
+define(['app/services/account-service', 'app/services/message-service', 'app/services/shopping-service', 'sweetalert', 'app/utils'], function (modules) {
     'use strict';
     modules.controllers
         .controller('ShoppingCartModalController', ['$scope', '$uibModal', 'ShoppingService',
@@ -25,8 +25,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     $scope.open();
                 });
             }])
-        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService', 'SessionService', '$timeout',
-            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService, $timeout) {
+        .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService', 'SessionService', '$timeout', 'MessageService',
+            function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService, $timeout, MessageService) {
 
                 function translate(key) {
                     $translate(key).then(function (translation) {
@@ -36,7 +36,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
 
                 $scope.shoppingItems = ShoppingService.getItems();
 
-                $scope.getNumber = function(num) {
+                $scope.getNumber = function (num) {
                     return new Array(num);
                 };
 
@@ -47,7 +47,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     Guests: [],
                     PaymentInfo: {
                         ProfileId: null,
-                        PaymentRequired:false,
+                        PaymentRequired: false,
                         PaymentMethod: '',
                         CreditCardInfo: {
                             CardNumber: '',
@@ -71,7 +71,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     ServicePrice: 0,
                     PackagePrice: 0,
                     SaveType: 'Reservation',
-                    paymentProfile:'new'
+                    paymentProfile: 'new'
                 };
 
                 function addEmptyGuest(guestId, primaryGuest, age, adult) {
@@ -107,8 +107,8 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                     }
                 }
 
-                var adultStr = (SessionService.languageId() == "CHI")?' 成人 ':' adult(s) ';
-                var childStr = (SessionService.languageId() == "CHI")?' 儿童 ':' minor(s) ';
+                var adultStr = (SessionService.languageId() == "CHI") ? ' 成人 ' : ' adult(s) ';
+                var childStr = (SessionService.languageId() == "CHI") ? ' 儿童 ' : ' minor(s) ';
 
                 function calculateInfo() {
                     $scope.bookingInfo.Guests = [];
@@ -164,7 +164,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 if (room.Guests[k].Type == 'ADULT' && room.Guests[k].Age == null) {
                                     adults++;
                                     //if (i == 0) {
-                                        addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
+                                    addEmptyGuest(guestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
                                     //}
                                     $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
                                     if (k == 0)
@@ -175,14 +175,14 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 else {
                                     minors++;
                                     //if (i == 0) {
-                                        addEmptyGuest(guestId, false, room.Guests[k].Age, false);
+                                    addEmptyGuest(guestId, false, room.Guests[k].Age, false);
                                     //}
                                     $scope.bookingInfo.Hotels[i].Rooms[j].Guests.GuestIds.push(guestId);
                                     guestId++;
                                     //}
                                 }
                             }
-                            room.guestsInfo = adults + adultStr + (minors>0?minors + childStr:'');
+                            room.guestsInfo = adults + adultStr + (minors > 0 ? minors + childStr : '');
                         }
                         setMinimumGuest(productGuests, startPos);
                     }
@@ -231,7 +231,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         $scope.bookingInfo.Services.push({
                             ServiceTime: serviceCategory.ServiceTime,
                             PickupPoint: pickUpPoint, //service.PickupPoint,
-                            PickupShowName:pickUpShowName,
+                            PickupShowName: pickUpShowName,
                             DropoffPoint: dropOffPoint, //service.DropoffPoint,
                             DropoffShowName: dropOffShowName,
                             TripItemId: 0,
@@ -259,22 +259,22 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             if (guest.Type == 'ADULT' && guest.Age == null) {
                                 serviceAdults++;
                                 //if (i == 0) {
-                                    addEmptyGuest(serviceGuestId, j == 0, guest.Age, true);
-                                    $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
-                                    if (j == 0)
-                                        $scope.bookingInfo.Services[i].Guests.PrimaryGuestId = serviceGuestId;
-                                    serviceGuestId++;
+                                addEmptyGuest(serviceGuestId, j == 0, guest.Age, true);
+                                $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
+                                if (j == 0)
+                                    $scope.bookingInfo.Services[i].Guests.PrimaryGuestId = serviceGuestId;
+                                serviceGuestId++;
                                 //}
                             }
                             else {
                                 serviceMinors++;
                                 //if (i == 0) {
-                                    addEmptyGuest(serviceGuestId, false, guest.Age, false);
-                                    $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
-                                    serviceGuestId++;
+                                addEmptyGuest(serviceGuestId, false, guest.Age, false);
+                                $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
+                                serviceGuestId++;
                                 //}
                             }
-                            serviceCategory.guestsInfo = serviceAdults + adultStr + (serviceMinors>0?serviceMinors + childStr:'');
+                            serviceCategory.guestsInfo = serviceAdults + adultStr + (serviceMinors > 0 ? serviceMinors + childStr : '');
                         }
                         setMinimumGuest(productGuests, startPos);
                     }
@@ -342,7 +342,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 if (room.Guests[k].Type == 'ADULT' && room.Guests[k].Age == null) {
                                     adults++;
                                     //if (i == 0) {
-                                        addEmptyGuest(packageGuestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
+                                    addEmptyGuest(packageGuestId, (k + 1) == room.PrimaryGuestId, room.Guests[k].Age, true);
                                     //}
                                     $scope.bookingInfo.Packages[i].Rooms[j].Guests.GuestIds.push(packageGuestId);
                                     if (k == 0)
@@ -353,14 +353,14 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                                 else {
                                     minors++;
                                     //if (i == 0) {
-                                        addEmptyGuest(packageGuestId, false, room.Guests[k].Age, false);
+                                    addEmptyGuest(packageGuestId, false, room.Guests[k].Age, false);
                                     //}
                                     $scope.bookingInfo.Packages[i].Rooms[j].Guests.GuestIds.push(packageGuestId);
                                     packageGuestId++;
                                     //}
                                 }
                             }
-                            category.guestsInfo = adults + adultStr + (minors>0?minors + childStr:'');
+                            category.guestsInfo = adults + adultStr + (minors > 0 ? minors + childStr : '');
 
                         }
                         setMinimumGuest(productGuests, startPos);
@@ -708,7 +708,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 }
 
                 function hasProfileByMethod(type) {
-                    if(type == '')
+                    if (type == '')
                         return false;
 
                     for (var i = 0; i < $scope.financeInfo.Profiles.length; i++) {
@@ -781,7 +781,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         $scope.creditCardError = false;
                     }
 
-                    $scope.bookingInfo.paymentProfile = hasProfileByMethod(newValue)?'existing':'new';
+                    $scope.bookingInfo.paymentProfile = hasProfileByMethod(newValue) ? 'existing' : 'new';
 
                 });
 
@@ -797,6 +797,7 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 var failed = "";
                 var docBtn = "";
                 var pleaseSelect = "";
+                var notify = "";
                 $translate('CONFIRM').then(function (translation) {
                     confirmTitle = translation;
                 });
@@ -832,6 +833,9 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                 });
                 $translate("PLEASE_SELECT").then(function (translation) {
                     pleaseSelect = translation;
+                });
+                $translate("NOTIFY_SUPPORT").then(function (translation) {
+                    notify = translation;
                 });
 
                 $scope.bookAndPay = function (pay) {
@@ -893,33 +897,55 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                         closeOnConfirm: false,
                         showLoaderOnConfirm: true
                     }, function () {
-                        ShoppingService.book(p).then(function (data) {
-                            ShoppingService.removeAll();
-                            $scope.bookDisabled = true;
-                            //$scope.message = "Book successfully. You can get invoices or receipts on 'My Account'.";
-                            //swal("Done!", "Book successfully.", "success");
-                            swal({
-                                title: success,
-                                text: successInfo,
-                                type: "success",
-                                showCancelButton: true,
-                                confirmButtonColor: "#DD6B55",
-                                confirmButtonText: docBtn,
-                                cancelButtonText: newTripBtn,
-                                closeOnConfirm: true
-                            }, function (isConfirm) {
-                                $scope.cancel();
-                                if (isConfirm) {
-                                    $window.location.href = SessionService.config().webRoot + 'admin.html#/trips/current/' + data.TripId + '/' + SessionService.languageId() + "?newTrip=true";
-                                } else {
-                                    $window.location.href = SessionService.config().webRoot + 'home.html#/' + SessionService.languageId();
-                                }
+                        ShoppingService.book(p).then(
+                            function (data) {
+                                ShoppingService.removeAll();
+                                $scope.bookDisabled = true;
+                                swal({
+                                    title: success,
+                                    text: successInfo,
+                                    type: "success",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: docBtn,
+                                    cancelButtonText: newTripBtn,
+                                    closeOnConfirm: true
+                                }, function (isConfirm) {
+                                    $scope.cancel();
+                                    if (isConfirm) {
+                                        $window.location.href = SessionService.config().webRoot + 'admin.html#/trips/current/' + data.TripId + '/' + SessionService.languageId() + "?newTrip=true";
+                                    } else {
+                                        $window.location.href = SessionService.config().webRoot + 'home.html#/' + SessionService.languageId();
+                                    }
+                                });
+                            },
+                            function (data) {
+                                //$scope.message = data.Message;
+                                //swal(failed, data.Message, "error");
+                                swal({
+                                    title: failed,
+                                    text: data.Message,
+                                    type: "error",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: notify,
+                                    cancelButtonText: noBtn,
+                                    closeOnConfirm: true
+                                }, function (isConfirm) {
+                                    if (isConfirm) {
+                                        var sendData = {
+                                            Request: (JSON.stringify(p)),
+                                            Response: (JSON.stringify(data))
+                                        };
+                                        MessageService.sendForSupport(sendData).then(function (data) {
+                                            swal(success);
+                                        }, function (data) {
+                                            swal(failed, data.Message, "error");
+                                        });
+                                    }
+                                });
+                                $scope.bookDisabled = false;
                             });
-                        }, function (data) {
-                            //$scope.message = data.Message;
-                            swal(failed, data.Message, "error");
-                            $scope.bookDisabled = false;
-                        });
                     });
                 };
 
@@ -936,12 +962,12 @@ define(['app/services/account-service', 'app/services/shopping-service', 'sweeta
                             Description: pleaseSelect
                         });
                         $scope.selectedProfile = data.Profiles[0];
-                        $scope.bookingInfo.paymentProfile = (data.Profiles.length > 0?'existing':'new');
+                        $scope.bookingInfo.paymentProfile = (data.Profiles.length > 0 ? 'existing' : 'new');
                     });
                 }
 
-                $scope.$watch('bookingInfo.paymentProfile', function(newVal, oldVal){
-                    if(newVal == 'new'){
+                $scope.$watch('bookingInfo.paymentProfile', function (newVal, oldVal) {
+                    if (newVal == 'new') {
                         $scope.bookingInfo.PaymentInfo.ProfileId = null;
                         $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationYear = 0;
                         $scope.bookingInfo.PaymentInfo.CreditCardInfo.ExpirationMonth = 0;

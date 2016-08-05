@@ -7,8 +7,8 @@ define([], function(){
         webRoot:'http://localhost:63342/chd-portal/', // local host
 
         //apiRoot:'https://link.chdestination.com/', // production api US, not work
-        //apiRoot:'https://chdtracelink.azurewebsites.net/', // production api US
-        apiRoot:'https://chdtracelink-hk.azurewebsites.net/', // production api HK
+        apiRoot:'https://chdtracelink.azurewebsites.net/', // production api US
+        //apiRoot:'https://chdtracelink-hk.azurewebsites.net/', // production api HK
 
         apiUser:'apiuser',
         apiPassword:'I^Rf23i!VoV6',

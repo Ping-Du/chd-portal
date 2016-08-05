@@ -238,5 +238,6 @@
   "PAYMENT_INFO":"Payment Information",
   "LOW_PRICE":"Low Price",
   "HIGH_PRICE":"High Price",
-  "REMARK":"Remark"
+  "REMARK":"Remark",
+  "NOTIFY_SUPPORT":"Notify tech support of this problem"
 }
