@@ -9,8 +9,10 @@ define(['app/interceptors/http-interceptor',
     function (modules) {
         'use strict';
 
-        modules.app.config(['NavbarServiceProvider', function (NavbarServiceProvider) {
+        modules.app.config(['NavbarServiceProvider',  'SessionServiceProvider', 'insightsProvider',function (NavbarServiceProvider, SessionServiceProvider, insightsProvider) {
             NavbarServiceProvider.setActiveItem('');
+
+            insightsProvider.start(SessionServiceProvider.config().appInsightsKey);
         }]);
 
         // boot app

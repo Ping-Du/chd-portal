@@ -14,7 +14,7 @@ define([], function () {
     //    return;
     //}
 
-    var version = "1.3";
+    var version = "1.3.1";
     version = "_v=" + (version?version:(new Date()).getTime());
 
     var libs = {
@@ -53,7 +53,8 @@ define([], function () {
             'spinjs':'libs/spin',
             'angular-loading':'libs/angular-loading.min',
             'sweetalert':'libs/sweetalert.min',
-            'ui-grid':'libs/ui-grid.min'
+            'ui-grid':'libs/ui-grid.min',
+            'angular-appinsights':'libs/angular-appinsights'
         },
         shim: {
             'jquery':{
@@ -153,6 +154,9 @@ define([], function () {
                 deps:['spinjs']
             },
             'ui-grid':{
+                deps:['angular']
+            },
+            'angular-appinsights': {
                 deps:['angular']
             }
         }

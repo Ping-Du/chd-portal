@@ -23,7 +23,7 @@ define(['app/interceptors/http-interceptor',
         //}]);
 
         // config route
-        modules.app.config(['$routeProvider', 'SessionServiceProvider', function($routeProvider, SessionServiceProvider){
+        modules.app.config(['$routeProvider', 'SessionServiceProvider', 'insightsProvider', function($routeProvider, SessionServiceProvider, insightsProvider){
             console.log('user:' + SessionServiceProvider.user() + ' languageId:'+ SessionServiceProvider.languageId());
             $routeProvider
                 .when('/trips/:tripType/:languageId', {
@@ -41,6 +41,8 @@ define(['app/interceptors/http-interceptor',
                 .otherwise({
                     redirectTo: '/trips/current/' + SessionServiceProvider.languageId() //$.cookie('languageId')
                 });
+
+            insightsProvider.start(SessionServiceProvider.config().appInsightsKey);
         }]);
 
         // boot app

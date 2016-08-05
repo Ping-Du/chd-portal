@@ -28,7 +28,7 @@ define(['app/interceptors/http-interceptor',
         }]);
 
         // config route
-        modules.app.config(['$routeProvider', function ($routeProvider) {
+        modules.app.config(['$routeProvider',  'SessionServiceProvider', 'insightsProvider',function ($routeProvider, SessionServiceProvider,insightsProvider) {
             $routeProvider
                 //.when('/shows/:languageId', {
                 //    templateUrl: 'templates/service-main-view.html',
@@ -89,6 +89,8 @@ define(['app/interceptors/http-interceptor',
                 .otherwise({
                     redirectTo: '/activities/top/' + $.cookie('languageId')
                 });
+
+            insightsProvider.start(SessionServiceProvider.config().appInsightsKey);
         }]);
 
         // boot app
