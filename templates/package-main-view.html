@@ -78,44 +78,46 @@
             </ul>
             <span><b>{{featuredPackages.length + showPackages.length}}</b>{{'PACKAGES'|translate}}</span>
         </div>
-        <section class="thumbnail-part" data-ng-show="featuredPackages.length > 0">
-            <div class="title">
-                <img src="images/favorite.png" class="big-icon">
-                <h2>{{"FEATURED"|translate}}</h2>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 col-md-4" data-ng-repeat="item in featuredPackages">
-                    <div class="thumbnail">
-                        <a href data-ng-href="{{item.DetailsURI}}"><img
-                                data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;"></a>
+        <!--<section class="thumbnail-part" data-ng-show="featuredPackages.length > 0">-->
+            <!--<div class="title">-->
+                <!--<img src="images/favorite.png" class="big-icon">-->
+                <!--<h2>{{"FEATURED"|translate}}</h2>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-sm-6 col-md-4" data-ng-repeat="item in featuredPackages">-->
+                    <!--<div class="thumbnail">-->
+                        <!--<a href data-ng-href="{{item.DetailsURI}}"><img-->
+                                <!--data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;"></a>-->
 
-                        <div class="caption">
-                            <!--<ul class="ticket">-->
-                            <!--<li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>-->
-                            <!--&lt;!&ndash;<li class="text-right"><s>$120</s>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p class="price">$89.00</p></li>&ndash;&gt;-->
+                        <!--<div class="caption">-->
+                            <!--&lt;!&ndash;<ul class="ticket">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li class="title"><h3><a href data-ng-href="{{item.url}}">{{item.Name}}</a></h3></li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;<li class="text-right"><s>$120</s>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;<p class="price">$89.00</p></li>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                            <!--<h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>-->
+                            <!--&lt;!&ndash;<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>&ndash;&gt;-->
+                            <!--<ul class="hotel">-->
+                                <!--<li>{{item.PackageType.Name}}<br/>{{item.Location.Name}}</li>-->
+                                <!--<li class="text-right price"><span>{{item.price}}</span></li>-->
                             <!--</ul>-->
-                            <h3><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a></h3>
-                            <!--<a href="hotel-detail.html#comment"><span>8.3</span>451 comments</a>-->
-                            <ul class="hotel">
-                                <li>{{item.PackageType.Name}}<br/>{{item.Location.Name}}</li>
-                                <li class="text-right price"><span>{{item.price}}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</section>-->
         <section class="thumbnail-part">
-            <div class="title">
-                <img src="images/package.png" class="big-icon">
-                <h2>{{"PACKAGES"|translate}}</h2>
-            </div>
+            <!--<div class="title">-->
+                <!--<img src="images/package.png" class="big-icon">-->
+                <!--<h2>{{"PACKAGES"|translate}}</h2>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col-sm-6 col-md-4" data-ng-repeat="item in showPackages">
                     <div class="thumbnail">
                         <a data-ng-href="{{item.DetailsURI}}">
-                            <!--<span class="new-layer"></span>-->
+                            <span class="new-layer" data-ng-show="item.Featured"><div class="rotate-div">{{"FEATURED"|translate}}</div></span>
+                            <!--<span class="hot-layer" >No.1</span>-->
+                            <!--<span class="sales-layer" >Type 2</span>-->
                             <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
                         </a>
 

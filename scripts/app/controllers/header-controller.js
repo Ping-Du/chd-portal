@@ -1,9 +1,9 @@
-define(['app/services/header-service', 'app/services/search-service', 'app/utils'], function (modules) {
+define(['app/services/header-service', 'app/services/search-service', 'app/utils', 'app/services/services-service'], function (modules) {
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService','$rootScope',
-            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService, $rootScope) {
+        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService','$rootScope','ServicesService',
+            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService, $rootScope, ServicesService) {
                 $scope.showLanguage = HeaderService.showLanguage;
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
@@ -52,6 +52,33 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     }
                 }
 
+                if(serviceTypes.length == 0) {
+                    ServicesService.getServiceTypes().then(function(data){
+                        var arrays = data.Activities.split(",");
+                        var i;
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'activities'
+                            });
+                        }
+                        arrays = data.Tours.split(",");
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'tours'
+                            });
+                        }
+                        arrays = data.Transportation.split(",");
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'transportation'
+                            });
+                        }
+                    });
+                }
+
                 var httpCanceller;
                 $scope.showSearchResult = false;
                 //$scope.searchResultTemplateUrl = "templates/partials/search-result-popover.html";//"GuestsTemplate.html";
@@ -76,6 +103,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.hotels = [];
                 $scope.activities = [];
                 $scope.packages = [];
+                $scope.tours = [];
+                $scope.transportation = [];
 
                 $scope.$watch('keyword', function (newValue, oldValue, scope) {
                     //if(isSearchPage || newValue == oldValue)
@@ -86,6 +115,8 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     $scope.hotels = [];
                     $scope.activities = [];
                     $scope.packages =[];
+                    $scope.tours = [];
+                    $scope.transportation = [];
 
                     if (newValue.length < 1) {
                         $scope.showSearchResult = true;
@@ -121,7 +152,14 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                             } else if(item.ProductType == 'HTL') {
                                 $scope.hotels.push(item);
                             } else if(item.ProductType == 'OPT') {
-                                $scope.activities.push(item);
+                                var type = getServiceType(item.ServiceType.Id);
+                                if(type == 'activities')
+                                    $scope.activities.push(item);
+                                else if(type == 'tours') {
+                                    $scope.tours.push(item);
+                                } else if(type == 'transportation') {
+                                    $scope.transportation.push(item);
+                                }
                             } else if(item.ProductType == 'PKG') {
                                 $scope.packages.push(item);
                             }

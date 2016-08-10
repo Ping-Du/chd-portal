@@ -68,6 +68,7 @@
   "LINKS":"Links",
   "ALL":"All",
   "FEATURED":"Featured",
+  "PREFERRED":"Preferred",
   "FIRST_NAME":"First Name",
   "LAST_NAME":"Last Name",
   "EMAIL":"Email",

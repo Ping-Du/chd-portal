@@ -1,10 +1,10 @@
-define(['app/services/search-service', 'app/utils'], function (modules) {
+define(['app/services/search-service', 'app/utils', 'app/services/services-service'], function (modules) {
     'use strict';
 
     modules.controllers
         .controller("SearchController", ['$rootScope', '$scope',
-            '$location', '$routeParams',  'SessionService', 'LanguageService', 'SearchService','localStorageService',
-            function ($rootScope, $scope, $location, $routeParams, SessionService, LanguageService, SearchService, localStorageService) {
+            '$location', '$routeParams',  'SessionService', 'LanguageService', 'SearchService','localStorageService','ServicesService',
+            function ($rootScope, $scope, $location, $routeParams, SessionService, LanguageService, SearchService, localStorageService, ServicesService) {
 
                 //console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -25,6 +25,8 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                 $scope.hotels = [];
                 $scope.activities = [];
                 $scope.packages = [];
+                $scope.tours = [];
+                $scope.transportation = [];
 
                 function load() {
                     //$scope.results = [];
@@ -52,6 +54,8 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                     $scope.hotels = [];
                     $scope.activities = [];
                     $scope.packages = [];
+                    $scope.tours = [];
+                    $scope.transportation = [];
 
                     modules.angular.forEach(data, function(item, index){
                         if(item.ProductType == 'HTL') {
@@ -73,7 +77,14 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                         } else if(item.ProductType == 'HTL') {
                             $scope.hotels.push(item);
                         } else if(item.ProductType == 'OPT') {
-                            $scope.activities.push(item);
+                            var type = getServiceType(item.ServiceType.Id);
+                            if(type == 'activities')
+                                $scope.activities.push(item);
+                            else if(type == 'tours') {
+                                $scope.tours.push(item);
+                            } else if(type == 'transportation') {
+                                $scope.transportation.push(item);
+                            }
                         } else if(item.ProductType == 'PKG') {
                             $scope.packages.push(item);
                         }
@@ -85,11 +96,42 @@ define(['app/services/search-service', 'app/utils'], function (modules) {
                     populateData(data);
                 });
 
-                if(!$scope.results)
-                    load();
-                else
-                    populateData($scope.results);
+                if(serviceTypes.length == 0) {
+                    ServicesService.getServiceTypes().then(function(data){
+                        var arrays = data.Activities.split(",");
+                        var i;
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'activities'
+                            });
+                        }
+                        arrays = data.Tours.split(",");
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'tours'
+                            });
+                        }
+                        arrays = data.Transportation.split(",");
+                        for(i = 0; i < arrays.length; i++) {
+                            serviceTypes.push({
+                                id:arrays[i],
+                                type:'transportation'
+                            });
+                        }
+                        init();
+                    });
+                } else {
+                    init();
+                }
 
+                function init() {
+                    if (!$scope.results)
+                        load();
+                    else
+                        populateData($scope.results);
+                }
             }]);
 
     return modules;

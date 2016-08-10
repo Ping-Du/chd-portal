@@ -5,8 +5,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
             function invoke(url, method, requestData, useCache) {
                 var deferred = $q.defer();
                 var useCachedData = (useCache === undefined)?true:useCache;
+                var apiUrl = SessionService.config().apiRoot + 'packages' + url;
                 if (useCachedData) {
-                    var cachedData = CacheService.get(url, method, requestData);
+                    var cachedData = CacheService.get(apiUrl, method, requestData);
                     if (cachedData) {
                         deferred.resolve(cachedData);
                         return deferred.promise;
@@ -14,16 +15,16 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 }
                 $http({
                     method: method,
-                    url: SessionService.config().apiRoot + 'packages' + url,
+                    url: apiUrl,
                     data: requestData
                 }).success(function (data/*, status, headers, cfg*/) {
                     if (useCachedData) {
-                        CacheService.put(url, method, requestData, data);
+                        CacheService.put(apiUrl, method, requestData, data);
                     }
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
                     if (useCachedData) {
-                        CacheService.remove(url, method, requestData);
+                        CacheService.remove(apiUrl, method, requestData);
                     }
                     deferred.reject(data);
                 });

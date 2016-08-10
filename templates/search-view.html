@@ -3,15 +3,22 @@
         <div class="thumbnail-part" data-ng-show="destinations.length > 0">
             <div class="title">
                 <img src="images/location.png" class="big-icon">
-                <h2>{{"DESTINATION"|translate}}</h2>
+
+                <h2>{{"DESTINATIONS"|translate}}</h2>
             </div>
             <div class="list-product" data-ng-repeat="item in destinations">
-                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
                 <div class="pro-detail">
                     <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
-                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
-                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
                     <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
                     <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>
@@ -21,15 +28,22 @@
         <div class="thumbnail-part" data-ng-show="hotels.length > 0">
             <div class="title">
                 <img src="images/hotel.png" class="big-icon">
-                <h2>{{"HOTEL"|translate}}</h2>
+
+                <h2>{{"HOTELS"|translate}}</h2>
             </div>
             <div class="list-product" data-ng-repeat="item in hotels">
-                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
                 <div class="pro-detail">
                     <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
-                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
-                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
                     <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
                     <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>
@@ -38,15 +52,70 @@
         <div class="thumbnail-part" data-ng-show="activities.length > 0">
             <div class="title">
                 <img src="images/activity.png" class="big-icon">
+
                 <h2>{{"ACTIVITIES"|translate}}</h2>
             </div>
             <div class="list-product" data-ng-repeat="item in activities">
-                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
                 <div class="pro-detail">
                     <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
-                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
-                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
                     <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
+                    <!--<div class="comment"><span>9.5</span>200 comments</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="thumbnail-part" data-ng-show="tours.length > 0">
+            <div class="title">
+                <img src="images/tour.png" class="big-icon">
+
+                <h2>{{"TOURS"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in tours">
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="pro-detail">
+                    <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
+                    <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
+                    <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
+                    <!--<div class="comment"><span>9.5</span>200 comments</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="thumbnail-part" data-ng-show="transportation.length > 0">
+            <div class="title">
+                <img src="images/transportation.png" class="big-icon">
+
+                <h2>{{"TRANSPORTATION"|translate}}</h2>
+            </div>
+            <div class="list-product" data-ng-repeat="item in transportation">
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="pro-detail">
+                    <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
+                    <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
                     <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>
@@ -55,15 +124,22 @@
         <div class="thumbnail-part" data-ng-show="packages.length > 0">
             <div class="title">
                 <img src="images/package.png" class="big-icon">
+
                 <h2>{{"PACKAGES"|translate}}</h2>
             </div>
             <div class="list-product" data-ng-repeat="item in packages">
-                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
+                <div class="product-img"><a data-ng-href="{{item.DetailsURI}}"><img
+                        data-ng-src="{{item.MainInformation.LargeImageURI}}"></a></div>
                 <div class="pro-detail">
                     <!--<h2><a data-ng-href="item.DetailsURI">{{item.Name}}</a><i class="icon-star-lg-5"></i></h2>-->
-                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i></h2>
-                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+                    <h2><a data-ng-href="{{item.DetailsURI}}">{{item.Name}}</a><i data-ng-class="item.starClass"></i>
+                    </h2>
+
+                    <p class="address"><strong>Product ID:</strong> {{item.ProductId}}&nbsp;&nbsp;&nbsp;&nbsp;<strong>Product
+                        Type: </strong>{{item.ProductType=='OPT'?item.ServiceType.Name:item.ProductType}}</p>
+
                     <p class="address"><strong>{{"LOCATION"|translate}}:</strong> {{item.Location.DisplayName}}</p>
+
                     <p class="desc">{{item.MainInformation.PlainText | limitTo:200}}...</p>
                     <!--<div class="comment"><span>9.5</span>200 comments</div>-->
                 </div>

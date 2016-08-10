@@ -26,7 +26,7 @@ define(['app/services/hotel-service',
                 $scope.$on('LanguageChanged', function (event, data) {
                     if ($scope.languageId != data) {
                         $scope.languageId = data;
-                        $scope.load();
+                        $scope.load(true);
                     }
                 });
 

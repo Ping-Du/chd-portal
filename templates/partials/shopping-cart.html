@@ -58,7 +58,7 @@
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
                                             <td data-ng-show="$odd" colspan="7">
                                                 <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
-                                                        data-ng-model="bookingInfo.Hotels[($index-1)/2].Note">
+                                                        data-ng-model="bookingInfo.Hotels[($index-1)/2].Note" maxlength="100">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -94,7 +94,7 @@
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
                                             <td data-ng-show="$odd" colspan="7">
                                                 <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
-                                                       data-ng-model="bookingInfo.Services[($index-1)/2].Note">
+                                                       data-ng-model="bookingInfo.Services[($index-1)/2].Note" maxlength="100">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -129,7 +129,7 @@
                                                     class="glyphicon glyphicon-remove main-red"></i></a></td>
                                             <td data-ng-show="$odd" colspan="7">
                                                 <input type="text" class="form-control input-sm" placeholder="{{'REMARK'|translate}}"
-                                                       data-ng-model="bookingInfo.Packages[($index-1)/2].Note">
+                                                       data-ng-model="bookingInfo.Packages[($index-1)/2].Note" maxlength="100">
                                             </td>
                                         </tr>
                                         </tbody>
@@ -415,7 +415,7 @@
 
                                 <div class="form-group" data-ng-show="bookingInfo.PaymentInfo.ProfileId == null && bookingInfo.paymentProfile == 'new'">
                                     <label class="control-label">{{"CARD_NO"|translate}}: </label>
-                                    <input class="form-control"  type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber">
+                                    <input class="form-control"  type="text" style="width:200px" data-ng-model="bookingInfo.PaymentInfo.CreditCardInfo.CardNumber" data-ng-keydown="checkKeydown($event)">
                                 </div>
                                 <div class="form-group" data-ng-class="{'has-error':creditCardError}">
                                     <label class="control-label" for="expirationYear">{{"EXP_YEAR"|translate}}: </label>

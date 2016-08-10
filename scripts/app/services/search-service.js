@@ -5,8 +5,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
             function invoke(url, method, showLoading, returnDefer, useCache) {
                 var deferred = $q.defer();
                 var useCachedData = (useCache===undefined)?true:useCache;
+                var apiUrl = ( SessionService.config().apiRoot + 'search' + url);
                 if (useCachedData && !returnDefer) {
-                    var cachedData = CacheService.get(url, method, null);
+                    var cachedData = CacheService.get(apiUrl, method, null);
                     if (cachedData) {
                         deferred.resolve(cachedData);
                         return deferred.promise;
@@ -16,15 +17,15 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 $http({
                     method: method,
                     showLoading:showLoading,
-                    url: ( SessionService.config().apiRoot + 'search' + url)
+                    url: apiUrl
                 }).success(function (data/*, status, headers, cfg*/) {
                     if(useCachedData && !returnDefer){
-                        CacheService.put(url, method, null, data);
+                        CacheService.put(apiUrl, method, null, data);
                     }
                     deferred.resolve(data);
                 }).error(function (data/*, status, headers, cfg*/) {
                     if(useCachedData && !returnDefer){
-                        CacheService.remove(url, method, null);
+                        CacheService.remove(apiUrl, method, null);
                     }
                     deferred.reject(data);
                 });

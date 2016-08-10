@@ -133,9 +133,9 @@ define(['app/services/hotel-service',
                         }
                         var locationed = true; //(item.Location.Id == $scope.selectedLocation || $scope.selectedLocation == null);
                         if (stared && typed && locationed && priced && available) {
-                            if (item.Featured)
-                                $scope.featuredHotels.push(item);
-                            else
+                            //if (item.Featured)
+                            //    $scope.featuredHotels.push(item);
+                            //else
                                 $scope.showHotels.push(item);
                         }
                     });
@@ -499,6 +499,7 @@ define(['app/services/hotel-service',
 
                     $scope.featuredHotels = $filter('orderBy')($scope.featuredHotels, sortField, $scope.sortReverse);
                     $scope.showHotels = $filter('orderBy')($scope.showHotels, sortField, $scope.sortReverse);
+
                 };
 
                 function loadAll(destinationId) {

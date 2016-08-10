@@ -24,7 +24,7 @@ define(['app/services/language-service',
                     $scope.$on('LanguageChanged', function (event, data) {
                         if ($scope.languageId != data) {
                             $scope.languageId = data;
-                            load();
+                            load(true);
                         }
                     });
 
@@ -39,7 +39,7 @@ define(['app/services/language-service',
 
                     $scope.destinationItem = null;
                     $scope.showMap = false;
-                    function loadDestination() {
+                    function loadDestination(reload) {
                         $scope.destinationItem = null;
                         var sliderImageData = [];
                         DestinationService.getDestinationDetail($routeParams.destinationId).then(function (data) {
@@ -53,7 +53,8 @@ define(['app/services/language-service',
                             });
 
                             if(sliderImageData.length > 0) {
-                                initSliderDetail(sliderImageData);
+                                if(!reload)
+                                    initSliderDetail(sliderImageData);
                             }
 
                             if(data.Latitude != 0 && data.Longitude != 0) {
@@ -178,8 +179,8 @@ define(['app/services/language-service',
                         $window.location.href = $scope.webRoot + url + $scope.languageId;
                     };
 
-                    function load() {
-                        loadDestination();
+                    function load(reload) {
+                        loadDestination(reload);
                         loadHotels();
                         loadActivities();
                         loadTours();

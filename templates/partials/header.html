@@ -20,7 +20,7 @@
                 </span>
             </li>
             <li data-ng-show="isAuthorized">
-                <a data-ng-href="admin.html#/{{languageId}}">{{"MY_ACCOUNT"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a data-ng-href="admin.html#/{{languageId}}">{{user}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <!--<a href data-ng-click="changePassword()">{{"CHANGE_PASSWORD"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
                 <span data-ng-show="showRegister"><a href data-ng-click="openRegisterModal()" >{{"REGISTER"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <a href data-ng-click="logout()">{{"LOGOUT"|translate}}</a>
@@ -114,6 +114,50 @@
             </div>
         </li>
         <li class="divider" data-ng-show="activities.length > 0"></li>
+
+
+        <li role="menuitem" data-ng-show="tours.length > 0">
+            <div class="row">
+                <div class="col-md-12"><img class="image-size-32" src="images/tour.png">&nbsp;<span class="text-red" style="font-weight: bold" >{{"TOURS"|translate}}</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="tours.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in tours">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="tours.length > 0"></li>
+
+        <li role="menuitem" data-ng-show="transportation.length > 0">
+            <div class="row">
+                <div class="col-md-12"><img class="image-size-32" src="images/transportation.png">&nbsp;<span class="text-red" style="font-weight: bold" >{{"TRANSPORTATION"|translate}}</span></div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="transportation.length > 0"></li>
+        <li role="menuitem" data-ng-repeat="item in transportation">
+            <div class="row">
+                <div class="col-sm-1">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                </div>
+                <div class="col-sm-7">
+                    <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
+                </div>
+                <div class="col-sm-4">
+                    <span style="font-size: 9px;">{{item.Location.Name}}</span>
+                </div>
+            </div>
+        </li>
+        <li class="divider" data-ng-show="transportation.length > 0"></li>
+
         <li role="menuitem" data-ng-show="packages.length > 0">
             <div class="row">
                 <div class="col-md-12"><img class="image-size-32" src="images/package.png">&nbsp;<span class="text-red" style="font-weight: bold" >{{"PACKAGES"|translate}}</span></div>

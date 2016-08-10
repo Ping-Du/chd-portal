@@ -56,9 +56,10 @@
                 <div class="col-sm-6 col-md-4" data-ng-repeat="item in services">
                     <div class="thumbnail">
                         <a data-ng-href="{{item.DetailsURI}}">
-                            <!--
-                            <span class="sales-layer">Pref</span>
-                            -->
+                            <span class="new-layer" data-ng-show="item.Featured"><div class="rotate-div">{{"FEATURED"|translate}}</div></span>
+                            <!--<span class="hot-layer" >No.1</span>-->
+                            <!--<span class="sales-layer" >Type 2</span>-->
+
                             <img data-ng-src="{{item.MainInformation.LargeImageURI}}" style="width:100%;height:260px;">
                         </a>
 

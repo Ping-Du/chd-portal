@@ -1045,7 +1045,7 @@ a {
   position: absolute;
   right: 0;
   top: 0;
-  background: url("../images/icon-all.png") no-repeat;
+  background: url("../images/icon-all.png?v=1") no-repeat;
   font-weight: 600;
   color: #fff;
   display: block;
@@ -1072,6 +1072,21 @@ a {
   height: 80px;
   padding: 10px 5px 0 5px;
   font-size: 18px; }
+
+.rotate-div {
+  position: relative;
+  left: 20px;
+  top: 5px;
+  text-align: center;
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  /* Internet Explorer */
+  -moz-transform: rotate(45deg);
+  /* Firefox */
+  -webkit-transform: rotate(45deg);
+  /* Safari and Chrome */
+  -o-transform: rotate(45deg);
+  /* Opera */ }
 
 /*  order page for show/ticket/ect. detail page*/
 .modal-content .modal-body .sel-time span {

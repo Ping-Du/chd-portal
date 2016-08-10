@@ -40,14 +40,14 @@ define(['app/services/services-service',
                 $scope.$on('LanguageChanged', function (event, data) {
                     if ($scope.languageId != data) {
                         $scope.languageId = data;
-                        load();
+                        $scope.load(true);
                     }
                 });
 
                 $scope.searchLocations = [];
 
                 var criteria = $cookieStore.get('serviceCriteria');
-                $scope.guests = criteria?criteria.guests:{Adults:'2', MinorAges:[]};
+                $scope.guests = criteria?criteria.guests:{Adults:'1', MinorAges:[]};
                 $scope.guestsInfo = GetServiceGuestsInfo($scope.guests,$scope.languageId);
                 $scope.startDate = criteria ? criteria.startDate : "";
                 $scope.selectedLocation = criteria ? criteria.locationId : null;

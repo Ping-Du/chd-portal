@@ -966,6 +966,13 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                     });
                 }
 
+                $scope.checkKeydown = function(event) {
+                    if(!((event.key >= '0' && event.key <= '9') || event.key === 'Backspace' || event.key === 'Delete' ||
+                        event.key === 'ArrowLeft' || event.key === 'ArrowRight' ) ) {
+                        event.preventDefault();
+                    }
+                };
+
                 $scope.$watch('bookingInfo.paymentProfile', function (newVal, oldVal) {
                     if (newVal == 'new') {
                         $scope.bookingInfo.PaymentInfo.ProfileId = null;
