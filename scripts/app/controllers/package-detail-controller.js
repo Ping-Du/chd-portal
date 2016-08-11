@@ -5,6 +5,7 @@ define(['app/services/package-service',
     'app/directives/datepicker-directive',
     'app/controllers/category-detail-modal-controller',
     'app/controllers/consent-required-modal-controller',
+    'app/controllers/warnings-modal-controller',
     'app/services/shopping-service',
     'jssor.slider',
     'stickup', 'app/utils'], function (modules) {
@@ -244,26 +245,36 @@ define(['app/services/package-service',
 
                 };
 
+                function add(product, index) {
+                    ShoppingService.addItem(product, index);
+                    scrollToControl('header');
+                    $rootScope.$broadcast('ShoppingCart:Animate');
+                }
+
                 $scope.addToShoppingCart = function (categoryIndex) {
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {
-                        if($scope.packageItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable" || (
-                                $scope.packageItem.Warnings.length > 0 && $scope.packageItem.Warnings[0].ConsentRequired
-                            ))
+                        if( $scope.packageItem.Warnings.length > 0 || $scope.packageItem.AvailabilityCategories[categoryIndex].Warnings.length > 0 ) {
+                            $rootScope.$broadcast('Warnings:Open', $scope.packageItem, categoryIndex);
+                        } else if($scope.packageItem.AvailabilityCategories[categoryIndex].AvailabilityLevel == "Requestable") {
                             $rootScope.$broadcast('ConsentRequired:Open', $scope.packageItem, categoryIndex);
-                        else {
-                            ShoppingService.addItem($scope.packageItem, categoryIndex);
-                            scrollToControl('header');
-                            $rootScope.$broadcast('ShoppingCart:Animate');
+                        } else {
+                            add($scope.packageItem, categoryIndex);
                         }
                     }
                 };
 
                 $scope.$on('ConsentRequired:Confirmed', function(event, product, index){
-                    ShoppingService.addItem(product, index);
-                    scrollToControl('header');
-                    $rootScope.$broadcast('ShoppingCart:Animate');
+                    add(product, index);
+                });
+
+                $scope.$on('Warnings:Confirmed', function(event, product, index){
+                    if(product.AvailabilityCategories[index].AvailabilityLevel == "Requestable") {
+                        $rootScope.$broadcast('ConsentRequired:Open', product, index);
+                    } else {
+                        add(product, index);
+                    }
                 });
 
                 $scope.showCategoryDetail = function(index) {

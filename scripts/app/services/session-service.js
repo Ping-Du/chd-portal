@@ -10,7 +10,8 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 //password:(token?$cookies.get('password'):''),
                 languageId: (token ? $.cookie('languageId') : null),
                 roleId: (token ? $.cookie('roleId') : null),
-                agencyNo: (token ? $.cookie('agencyNo') : null)
+                agencyNo: (token ? $.cookie('agencyNo') : null),
+                displayName:(token? $.cookie('displayName'):null)
             };
 
             var savedOptions = [];
@@ -77,6 +78,16 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                 }
             };
 
+            this.displayName = function(value) {
+                if (arguments.length == 0) {
+                    return (session.displayName?session.displayName:session.user);
+                }
+                else {
+                    setCookie('displayName', value);
+                    session.displayName = value;
+                }
+            };
+
             this.options = function (key, value) {
                 var opt = _.find(savedOptions, function (item) {
                     return (item.key === key);
@@ -103,7 +114,8 @@ define(['config', 'underscore', 'app/modules'], function (cfg, _, modules) {
                     languageId: self.languageId,
                     roleId: self.roleId,
                     agencyNo: self.agencyNo,
-                    options: self.options
+                    options: self.options,
+                    displayName:self.displayName
                 };
             };
         });

@@ -1635,7 +1635,7 @@ a {
     left: 35%;
     display: block; }
     .search-position .input-text {
-      min-width: 400px; }
+      min-width: 320px; }
 
   .list-product .pro-separator {
     margin: 10px 0 20px 345px;
@@ -1665,7 +1665,7 @@ a {
     left: 37%;
     display: block; }
     .search-position .input-text {
-      min-width: 480px; }
+      min-width: 400px; }
 
   .list-product .comment {
     /*comment for list part*/

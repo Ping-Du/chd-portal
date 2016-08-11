@@ -34,6 +34,9 @@ define(['app/services/session-service'], function (modules) {
                             SessionService.roleId(data.AspNetRoles_Id);
                             SessionService.agencyNo(data.Agy_No);
                             break;
+                        case 11:
+                            SessionService.displayName(data.Name);
+                            break;
                     }
                     deferred.resolve(data);
                 }).error(function (data, status/*, headers, cfg, statusText*/) {
@@ -117,6 +120,9 @@ define(['app/services/session-service'], function (modules) {
                 },
                 getUserProperties:function() {
                     return invoke('/UserProperties','GET',null, 10);
+                },
+                getAgency:function() {
+                    return invoke('/Agency', 'GET', null, 11);
                 }
             };
         }]);

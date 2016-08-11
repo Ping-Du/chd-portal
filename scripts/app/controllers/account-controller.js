@@ -9,6 +9,7 @@ define(['app/services/account-service'], function (modules) {
                 $scope.config = SessionService.config();
                 $scope.isAuthorized = $scope.token != null;
                 $scope.showRegister = (SessionService.roleId() == "Manager");
+                $scope.displayName = SessionService.displayName();
 
                 $scope.openLoginModal = function (size) {
                     $rootScope.$broadcast('OpenLoginModal', size);
@@ -37,6 +38,7 @@ define(['app/services/account-service'], function (modules) {
                     $scope.token = SessionService.token();
                     $scope.isAuthorized = true;
                     $scope.showRegister = (SessionService.roleId() == "Manager");
+                    $scope.displayName = SessionService.displayName();
                 });
 
                 $scope.$on('LOGOUT', function (event, data) {
@@ -44,6 +46,7 @@ define(['app/services/account-service'], function (modules) {
                     $scope.token = null;
                     $scope.isAuthorized = false;
                     $scope.showRegister = false;
+                    $scope.displayName = null;
                 });
             }]);
 });

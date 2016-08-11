@@ -12,6 +12,7 @@ define(['app/services/account-service'], function (modules) {
                 }
 
                 $scope.webRoot = SessionService.config().webRoot;
+                //$scope.showRegister = (SessionService.roleId() == "Manager");
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
@@ -24,9 +25,11 @@ define(['app/services/account-service'], function (modules) {
                     id: 1,
                     title: 'MY_TRIPS',
                     active: false,
+                    show:true,
                     items: [{
                         id: 101,
                         title: 'CURRENT_TRIPS',
+                        show:true,
                         canSelect: true,
                         path: '/trips/current/' + languageId,
                         click: function (context) {
@@ -36,6 +39,7 @@ define(['app/services/account-service'], function (modules) {
                     }, {
                         id: 102,
                         title: 'PAST_TRIPS',
+                        show:true,
                         canSelect: true,
                         path: '/trips/past/' + languageId,
                         click: function (context) {
@@ -45,6 +49,7 @@ define(['app/services/account-service'], function (modules) {
                     }, {
                         id: 103,
                         title: 'QUOTES',
+                        show:true,
                         canSelect: true,
                         path: '/trips/quote/' + languageId,
                         click: function (context) {
@@ -55,10 +60,12 @@ define(['app/services/account-service'], function (modules) {
                 }, {
                     id: 2,
                     title: 'MY_ACCOUNT',
+                    show:true,
                     active: false,
                     items: [{
                         id: 201,
                         title: 'FINANCE_INFO',
+                        show:true,
                         canSelect: true,
                         path: '/finance/' + languageId,
                         click: function (context) {
@@ -68,8 +75,19 @@ define(['app/services/account-service'], function (modules) {
                     }, {
                         id: 202,
                         title: 'CHANGE_PASSWORD',
+                        show:true,
                         canSelect: false,
                         message: 'OpenChangePasswordModal',
+                        click: function (context) {
+                            $rootScope.$broadcast(context.message);
+                        },
+                        active: false
+                    }, {
+                        id: 203,
+                        title: 'REGISTER',
+                        show:(SessionService.roleId() == "Manager"),
+                        canSelect: false,
+                        message: 'OpenRegisterModal',
                         click: function (context) {
                             $rootScope.$broadcast(context.message);
                         },

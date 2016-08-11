@@ -37,11 +37,16 @@ define(['app/services/account-service'], function (modules) {
                 var promise = AccountService.login($scope.userName, $scope.password);
                 promise.then(function(data) {
                     AccountService.getUserProperties().then(function(up){
-                        $uibModalInstance.close('ok');
-                        $rootScope.$broadcast('LOGIN',$scope.userName);
+                        AccountService.getAgency().then(function(agency) {
+                            $uibModalInstance.close('ok');
+                            $rootScope.$broadcast('LOGIN',$scope.userName);
+                        }, function(){
+                            translate('API_FAILED')
+                        });
                     }, function(){
                         translate('API_FAILED')
                     });
+
                 }, function(data){
                     if(data && data.ModelState && data.ModelState.Login && data.ModelState.Login.length > 0) {
                         //translate('LOGIN_WRONG');

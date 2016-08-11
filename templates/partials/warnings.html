@@ -1,0 +1,30 @@
+<div class="modal fade" data-ng-controller="WarningsModalController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <script type="text/ng-template" id="WarningsModal.html">
+                <style>
+                    .tab-info {
+                        padding:10px;
+                        max-height:200px;
+                        overflow: auto;
+                    }
+                </style>
+                <div class="modal-header">
+                    <button type="button" class="close" data-ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4>{{"IMPORTANT_INFO"|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div data-ng-show="message != ''">
+                        <!--<div><strong>{{"IMPORTANT_INFO"|translate}}</strong></div>-->
+                        <div class="tab-info" data-ng-bind-html="message"></div>
+                        <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg" data-ng-click="ok()">{{"OK"|translate}}</button>
+                    <button class="btn btn-warning btn-lg" type="button" data-ng-click="cancel()">{{"CANCEL"|translate}}</button>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

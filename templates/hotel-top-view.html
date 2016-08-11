@@ -62,6 +62,7 @@
                     <div class="thumbnail">
                         <a data-ng-href="{{item.DetailsURI}}">
                             <span class="new-layer" data-ng-show="item.Preferred"><div class="rotate-div">{{"PREFERRED"|translate}}</div></span>
+                            <span class="new-layer" data-ng-show="item.Preferred == false && item.Featured == true"><div class="rotate-div">{{"FEATURED"|translate}}</div></span>
                             <!--<span class="hot-layer" >No.1</span>-->
                             <!--<span class="sales-layer" >Type 2</span>-->
 

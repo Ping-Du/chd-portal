@@ -43,16 +43,16 @@ define(['app/services/shopping-service'], function (modules) {
                 $scope.onRequest = true;
                 $scope.agreed = false;
 
-                var i = 0;
-                for(i = 0; i < product.Warnings.length; i++) {
-                    if(product.Warnings[i].ConsentRequired)
-                        $scope.message += product.Warnings[i].FormattedText;
-                }
-
-                for(i = 0; i < product.AvailabilityCategories[index].Warnings.length; i++) {
-                    if(product.AvailabilityCategories[index].Warnings[i].ConsentRequired)
-                        $scope.message += product.AvailabilityCategories[index].Warnings[i].FormattedText;
-                }
+                //var i = 0;
+                //for(i = 0; i < product.Warnings.length; i++) {
+                //    if(product.Warnings[i].ConsentRequired)
+                //        $scope.message += product.Warnings[i].FormattedText;
+                //}
+                //
+                //for(i = 0; i < product.AvailabilityCategories[index].Warnings.length; i++) {
+                //    if(product.AvailabilityCategories[index].Warnings[i].ConsentRequired)
+                //        $scope.message += product.AvailabilityCategories[index].Warnings[i].FormattedText;
+                //}
 
                 $scope.onRequest = (product.AvailabilityCategories[index].AvailabilityLevel == "Requestable");
                 $scope.required = ($scope.message != '' || $scope.onRequest);

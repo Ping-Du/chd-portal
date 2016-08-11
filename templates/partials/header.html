@@ -20,9 +20,9 @@
                 </span>
             </li>
             <li data-ng-show="isAuthorized">
-                <a data-ng-href="admin.html#/{{languageId}}">{{user}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a data-ng-href="admin.html#/{{languageId}}">{{displayName}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <!--<a href data-ng-click="changePassword()">{{"CHANGE_PASSWORD"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
-                <span data-ng-show="showRegister"><a href data-ng-click="openRegisterModal()" >{{"REGISTER"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <!--<span data-ng-show="showRegister"><a href data-ng-click="openRegisterModal()" >{{"REGISTER"|translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
                 <a href data-ng-click="logout()">{{"LOGOUT"|translate}}</a>
             </li>
             <li data-ng-show="!isAuthorized">
