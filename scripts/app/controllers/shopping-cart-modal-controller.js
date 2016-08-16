@@ -533,6 +533,14 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                 $scope.message = '';
                 $scope.bookDisabled = false;
 
+                function checkGuestsForOneProduct(guests) {
+                    var g = _.uniq(guests);
+                    if(g.length != guests.length)
+                        return false;
+                    else
+                        return true;
+                }
+
                 function checkGuestAssignment() {
                     var i, j, k;
 
@@ -542,6 +550,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         var hotel = $scope.bookingInfo.Hotels[i];
                         for (j = 0; j < hotel.Rooms.length; j++) {
                             primaryOk = false;
+                            if(!checkGuestsForOneProduct(hotel.Rooms[j].Guests.GuestIds))
+                                return false;
                             for (k = 0; k < hotel.Rooms[j].Guests.GuestIds.length; k++) {
                                 if (hotel.Rooms[j].Guests.GuestIds[k] == 0 || hotel.Rooms[j].Guests.GuestIds[k] > total) {
                                     return false;
@@ -561,6 +571,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                     for (i = 0; i < $scope.bookingInfo.Services.length; i++) {
                         var service = $scope.bookingInfo.Services[i];
                         primaryOk = false;
+                        if(!checkGuestsForOneProduct(service.Guests.GuestIds))
+                            return false;
                         for (j = 0; j < service.Guests.GuestIds.length; j++) {
                             if (service.Guests.GuestIds[j] == 0 || service.Guests.GuestIds[j] > total)
                                 return false;
@@ -577,6 +589,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         var pkg = $scope.bookingInfo.Packages[i];
                         for (j = 0; j < pkg.Rooms.length; j++) {
                             primaryOk = false;
+                            if(!checkGuestsForOneProduct(pkg.Rooms[j].Guests.GuestIds))
+                                return false;
                             for (k = 0; k < pkg.Rooms[j].Guests.GuestIds.length; k++) {
                                 if (pkg.Rooms[j].Guests.GuestIds[k] == 0 || pkg.Rooms[j].Guests.GuestIds[k] > total) {
                                     return false;

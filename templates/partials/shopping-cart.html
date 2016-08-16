@@ -146,7 +146,7 @@
                                 <div class="form-inline form-group">
                                     <label>{{"REFERENCE"|translate}}: &nbsp;</label><input type="text"
                                                                                   class="form-control input-sm"
-                                                                                  data-ng-model="bookingInfo.Reference">
+                                                                                  data-ng-model="bookingInfo.Reference" maxlength="50">
                                 </div>
                             </div>
                             <div class="table-scroll">
@@ -169,9 +169,9 @@
                                                   style="color:red;font-weight: bold;">*</span></td>
                                         <td>{{guest.GuestId}}</td>
                                         <td><input type="text" class="form-control input-sm"
-                                                   data-ng-model="guest.LastName"></td>
+                                                   data-ng-model="guest.LastName" maxlength="20" ></td>
                                         <td><input type="text" class="form-control input-sm"
-                                                   data-ng-model="guest.FirstName"></td>
+                                                   data-ng-model="guest.FirstName" maxlength="20"></td>
                                         <td><span data-ng-show="!guest.Adult"><select class="form-control input-sm"
                                                                                       data-ng-model="guest.Age">
                                             <option>0</option>
@@ -201,7 +201,7 @@
                                             <option>Dr</option>
                                         </select><span data-ng-show="!guest.Adult">{{"CHILD"|translate}}</span></td>
                                         <td><input type="text" class="form-control input-sm"
-                                                   data-ng-model="guest.Phone" data-ng-show="guest.Adult"></td>
+                                                   data-ng-model="guest.Phone" data-ng-show="guest.Adult" maxlength="20"></td>
                                         <td><a href data-ng-click="removeGuest($index)" data-ng-show="guest.deletable"><i
                                                 class="glyphicon glyphicon-remove main-red"></i></a></td>
                                     </tr>
@@ -240,7 +240,7 @@
                                             <td>{{"ROOM"|translate}} #</td>
                                             <td>{{"PRICE"|translate}}</td>
                                             <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"OTHER_GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -274,7 +274,7 @@
                                             <td>{{"CATEGORY"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
                                             <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"OTHER_GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -308,7 +308,7 @@
                                             <td>{{"NIGHTS"|translate}}</td>
                                             <td>{{"PRICE"|translate}}</td>
                                             <td style="width:200px;">{{"PRIMARY_GUEST"|translate}}</td>
-                                            <td style="width:200px;">{{"GUESTS"|translate}}</td>
+                                            <td style="width:200px;">{{"OTHER_GUESTS"|translate}}</td>
                                         </tr>
                                         </thead>
                                         <tbody>

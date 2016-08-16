@@ -93,6 +93,7 @@
   "FINANCE_INFO":"财务信息",
   "ID":"编号",
   "PRIMARY_GUEST":"主要游客",
+  "OTHER_GUESTS":"其他游客",
   "GUESTS":"游客",
   "GUEST":"游客",
   "START_DATE":"开始日期",
