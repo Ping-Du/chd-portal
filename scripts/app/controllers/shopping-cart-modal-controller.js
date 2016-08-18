@@ -541,9 +541,11 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         return true;
                 }
 
+                var assignedGuests = [];
                 function checkGuestAssignment() {
                     var i, j, k;
 
+                    assignedGuests = [];
                     var total = $scope.bookingInfo.Guests.length;
                     var primaryOk = false;
                     for (i = 0; i < $scope.bookingInfo.Hotels.length; i++) {
@@ -552,6 +554,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             primaryOk = false;
                             if(!checkGuestsForOneProduct(hotel.Rooms[j].Guests.GuestIds))
                                 return false;
+                            assignedGuests = _.union(assignedGuests, hotel.Rooms[j].Guests.GuestIds);
                             for (k = 0; k < hotel.Rooms[j].Guests.GuestIds.length; k++) {
                                 if (hotel.Rooms[j].Guests.GuestIds[k] == 0 || hotel.Rooms[j].Guests.GuestIds[k] > total) {
                                     return false;
@@ -573,6 +576,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         primaryOk = false;
                         if(!checkGuestsForOneProduct(service.Guests.GuestIds))
                             return false;
+                        assignedGuests = _.union(assignedGuests, service.Guests.GuestIds);
                         for (j = 0; j < service.Guests.GuestIds.length; j++) {
                             if (service.Guests.GuestIds[j] == 0 || service.Guests.GuestIds[j] > total)
                                 return false;
@@ -591,6 +595,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             primaryOk = false;
                             if(!checkGuestsForOneProduct(pkg.Rooms[j].Guests.GuestIds))
                                 return false;
+                            assignedGuests = _.union(assignedGuests, pkg.Rooms[j].Guests.GuestIds);
                             for (k = 0; k < pkg.Rooms[j].Guests.GuestIds.length; k++) {
                                 if (pkg.Rooms[j].Guests.GuestIds[k] == 0 || pkg.Rooms[j].Guests.GuestIds[k] > total) {
                                     return false;
@@ -605,6 +610,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             }
                         }
                     }
+
+                    if(assignedGuests.length != $scope.bookingInfo.Guests.length)
+                        return false;
 
                     return true;
                 }
