@@ -16,6 +16,8 @@ define(['app/services/hotel-service',
             function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
+                //console.info('url:' + $location.url());
+                //console.info('absurl:' + $location.absUrl());
                 $scope.path = $location.path();
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
                 if (languageId && languageId != SessionService.languageId()) {
@@ -31,6 +33,7 @@ define(['app/services/hotel-service',
                     }
                 });
 
+                $scope.hideSearchBar = ($location.absUrl().indexOf("hotelinfo.html") >= 0);
 
                 $scope.searchLocations = [];
 

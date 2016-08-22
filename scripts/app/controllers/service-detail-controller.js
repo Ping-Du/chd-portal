@@ -21,6 +21,8 @@ define(['app/services/services-service',
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
                 }
 
+                $scope.hideSearchBar = ($location.absUrl().indexOf("serviceinfo.html") >= 0);
+
                 function parseService(hash) {
                     var temp = hash.split('/');
                     if (temp.length >= 2 && temp[0] == '')
