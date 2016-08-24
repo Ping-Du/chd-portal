@@ -1,4 +1,4 @@
-<form class="search-main">
+<form class="search-main" data-ng-show="!hideSearchBar">
     <div class="container">
         <div class=" row">
             <!--<div class="col-md-4 relative">-->
@@ -98,7 +98,7 @@
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
                 <div class="pos-map">
-                    <a href onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>
+                    <a href onclick="scrollToControl('category')" data-ng-show="!hideSearchBar"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>
                     <!--<a href onclick="scrollToControl('detail')" data-ng-show="packageItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
                     <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
                     <br><br>
@@ -110,14 +110,14 @@
             <nav class="container">
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
-                    <li class="menu-item"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
+                    <li class="menu-item" data-ng-show="!hideSearchBar"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{detailTitle}}</a></li>
                     <li class="menu-item" data-ng-show="packageItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{packageItem.Warnings[0].Title}}</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
             </nav>
         </div>
-        <section class="detail-wrap" id="category">
+        <section class="detail-wrap" id="category" data-ng-show="!hideSearchBar">
             <!--<h3>Categories&nbsp;&nbsp;&nbsp;&nbsp;<small data-ng-show="!packageItem.AvailabilityCategories"><a href onclick="scrollToControl('top')">Fill out information to check availability</a></small></h3>-->
             <div class="row">
                 <div class="col-sm-3 col-md-3">

@@ -23,6 +23,8 @@ define(['app/services/package-service',
                     $rootScope.$broadcast('RequireChangeLanguage', languageId);
                 }
 
+                $scope.hideSearchBar = ($location.absUrl().indexOf("packageinfo.html") >= 0);
+
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
