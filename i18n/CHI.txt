@@ -241,5 +241,6 @@
   "LOW_PRICE":"最低价",
   "HIGH_PRICE":"最高价",
   "REMARK":"备注",
-  "NOTIFY_SUPPORT":"向技术人员报告此问题"
+  "NOTIFY_SUPPORT":"向技术人员报告此问题",
+  "RATE_PLAN":"收费计划"
 }

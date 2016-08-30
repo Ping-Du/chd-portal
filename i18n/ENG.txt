@@ -241,5 +241,6 @@
   "LOW_PRICE":"Low Price",
   "HIGH_PRICE":"High Price",
   "REMARK":"Remark",
-  "NOTIFY_SUPPORT":"Notify tech support of this problem"
+  "NOTIFY_SUPPORT":"Notify tech support of this problem",
+  "RATE_PLAN":"Rate Plan"
 }
