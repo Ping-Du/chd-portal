@@ -62,7 +62,7 @@
         </div>
         <br>
         <div class="text-right">
-            <input class="btn btn-primary" type="button" value="{{'ADD_ROOM'|translate}}" data-ng-click="$parent.addRoom()">
+            <input class="btn btn-primary" type="button" value="{{'ADD_ROOM'|translate}}" data-ng-disabled="!addRoomBtn" data-ng-click="$parent.addRoom()">
             <input class="btn btn-warning" type="button" value="{{'CLOSE'|translate}}" data-ng-click="$parent.closeGuests()">
         </div>
     </div>

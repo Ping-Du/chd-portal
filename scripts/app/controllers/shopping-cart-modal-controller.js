@@ -412,6 +412,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                 ];
 
                 function calShowName() {
+                    var maxGuestsAllowed = 99;
                     var validateResult = true;
                     var firstGuest = true;
 
@@ -443,7 +444,10 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             $scope.bookingInfo.Minors++;
                     }
 
-                    return validateResult;
+                    if($scope.bookingInfo.Guests.length > maxGuestsAllowed)
+                        return false;
+                    else
+                        return validateResult;
                 }
 
                 function reCalculateGuestId(index) {
@@ -944,9 +948,14 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             function (data) {
                                 //$scope.message = data.Message;
                                 //swal(failed, data.Message, "error");
+                                var showToUser;
+                                if(data.ModelState && data.ModelState.key.ShowToUser)
+                                    showToUser = data.ModelState.key.Message;
+                                else
+                                    showToUser = data.Message;
                                 swal({
                                     title: failed,
-                                    text: data.Message,
+                                    text: showToUser,
                                     type: "error",
                                     showCancelButton: true,
                                     confirmButtonColor: "#DD6B55",

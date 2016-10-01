@@ -7,11 +7,11 @@
                       template-url="templates/ui-bootstrap/carousel.html">
             <uib-slide ng-repeat="item in banners" active="item.active" index="item.ProductId"
                        template-url="templates/ui-bootstrap/slide.html">
+                <a data-ng-href="{{item.Link}}">
                 <img ng-src="{{item.ImageURI}}" style="margin:auto;">
-
+                </a>
                 <div class="carousel-caption">
                     <h1>{{item.Title}}</h1>
-
                     <p>{{item.SubTitle}}</p>
                 </div>
             </uib-slide>

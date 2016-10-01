@@ -1,6 +1,6 @@
 define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'inputmask','angular-loading', 'angular-messages', 'ui-grid', 'angular-appinsights'], function (_, angular) {
 
-    var services = angular.module('chd.services', ['ngCookies','LocalStorageModule', 'ngSanitize', 'pascalprecht.translate', 'angular.css.injector', 'angular-appinsights']);
+    var services = angular.module('chd.services', ['ngCookies','LocalStorageModule', /*'ngSanitize',*/ 'pascalprecht.translate', 'angular.css.injector', 'angular-appinsights']);
     var filters = angular.module('chd.filters', []);
     var interceptors = angular.module('chd.interceptors',[services.name]);
     var directives = angular.module('chd.directives', ["angucomplete-alt", "green.inputmask4angular", 'ngMessages']);
@@ -9,6 +9,10 @@ define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'i
 
     services.factory('_', ['$window', function ($window) {
         return $window._;
+    }]);
+
+    services.config(['$sceProvider', function($sceProvider){
+        $sceProvider.enabled(false);
     }]);
 
     return {

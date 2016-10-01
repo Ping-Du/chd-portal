@@ -424,16 +424,23 @@ define(['app/services/hotel-service',
                     $scope.roomsInfo = GetHotelGuestsInfo($scope.guests, $scope.languageId);
                 };
 
+                var maxRoomAllowed = 9;
+                $scope.addRoomBtn = true;
                 $scope.addRoom = function () {
-                    $scope.guests.push({
-                        Adults: '2',
-                        Minors: '0',
-                        MinorAges: []
-                    });
+                    if($scope.guests.length < maxRoomAllowed) {
+                        $scope.guests.push({
+                            Adults: '2',
+                            Minors: '0',
+                            MinorAges: []
+                        });
+                    } else {
+                        $scope.addRoomBtn = false;
+                    }
                 };
 
                 $scope.deleteRoom = function (index) {
                     $scope.guests.splice(index, 1);
+                    $scope.addRoomBtn = ($scope.guests.length < maxRoomAllowed);
                 };
 
                 $scope.minorsChange = function (index) {
