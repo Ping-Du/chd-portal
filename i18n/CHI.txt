@@ -242,5 +242,8 @@
   "HIGH_PRICE":"最高价",
   "REMARK":"备注",
   "NOTIFY_SUPPORT":"向技术人员报告此问题",
-  "RATE_PLAN":"收费计划"
+  "RATE_PLAN":"收费计划",
+  "BEDS":"床",
+  "SUPPLEMENTS":"补充说明",
+  "PAY_AT_HOTEL":"现场交费"
 }

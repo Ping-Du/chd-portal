@@ -8,9 +8,9 @@ define(['app/services/banner-service',
 
     modules.controllers
         .controller("HomeController", ['$rootScope', '$scope', '$cookieStore', 'SessionService',
-            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService','$window','PackageService',
+            'BannerService', 'DestinationService', 'HotelService', 'ServicesService', '$log', '$location', 'LanguageService','$window','PackageService','$routeParams',
             function ($rootScope, $scope, $cookieStore, SessionService, BannerService, DestinationService, HotelService, ServicesService,
-                      $log, $location, LanguageService, $window, PackageService) {
+                      $log, $location, LanguageService, $window, PackageService, $routeParams) {
 
                 console.info('path:' + $location.path());
                 var languageId = LanguageService.determineLanguageIdFromPath($location.path());
@@ -168,6 +168,10 @@ define(['app/services/banner-service',
                 }
 
                 load();
+
+                if($routeParams.login) {
+                    $rootScope.$broadcast('OpenLoginModal');
+                }
 
             }]);
 

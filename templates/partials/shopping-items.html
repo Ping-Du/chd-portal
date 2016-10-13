@@ -23,7 +23,7 @@
                         <td>{{item.product.AvailabilityCategories[item.index].Name}}</td>
                         <td>{{item.product.StartDate|limitTo:10}}</td>
                         <td>{{item.product.AvailabilityCategories[item.index].Rooms[0].Nights.length}}</td>
-                        <td>{{item.product.EndDate|limitTo:10}}</td>
+                        <td>{{item.product.CheckOutDate|limitTo:10}}</td>
                         <td>{{item.totalGuests}}</td>
                         <td>${{item.product.AvailabilityCategories[item.index].Price| number:2}}</td>
                         <td>

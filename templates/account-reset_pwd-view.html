@@ -16,7 +16,7 @@
                 <h4 class="text-danger" data-ng-show="message">{{message}}</h4>
             </div>
             <div class="panel-footer text-right">
-                <button type="button" class="btn btn-red" data-ng-click="resetPassword()">{{"OK"|translate}}</button>
+                <button type="button" class="btn btn-red" data-ng-click="resetPassword()" data-ng-disabled="{{disableBtn}}">{{btnText|translate}}</button>
             </div>
         </div>
         </form>

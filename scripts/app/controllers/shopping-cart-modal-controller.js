@@ -142,7 +142,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Note: '',
                             AvailabilityLevel: category.AvailabilityLevel,
                             Price: category.Price,
-                            Rooms: []
+                            Rooms: [],
+                            Supplements:[]
                         });
                         productGuests = 0;
                         startPos = $scope.bookingInfo.Guests.length;
@@ -156,11 +157,19 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                                     GuestIds: [],
                                     PrimaryGuestId: 0
                                 },
-                                Price: room.Price
+                                Price: room.Price,
+                                Supplements:room.Supplements,
+                                Beds:room.Beds
                             });
+
+                            $scope.bookingInfo.Hotels[i].Supplements = $scope.bookingInfo.Hotels[i].Supplements.concat(room.Supplements);
+                            angular.forEach(room.Nights, function(val, key){
+                                $scope.bookingInfo.Hotels[i].Supplements = $scope.bookingInfo.Hotels[i].Supplements.concat(val.Supplements);
+                            });
+
                             var adults = 0, minors = 0;
                             for (k = 0; k < room.Guests.length; k++) {
-
+                                $scope.bookingInfo.Hotels[i].Supplements = $scope.bookingInfo.Hotels[i].Supplements.concat(room.Guests[k].Supplements);
                                 if (room.Guests[k].Type == 'ADULT' && room.Guests[k].Age == null) {
                                     adults++;
                                     //if (i == 0) {
@@ -664,8 +673,10 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Note: h.Note,
                             AvailabilityLevel: h.AvailabilityLevel,
                             Price: h.Price,
-                            Rooms: h.Rooms
+                            Rooms: h.Rooms,
+                            Supplements: h.Supplements
                         });
+
                     }
                     for (i = 0; i < $scope.bookingInfo.Services.length; i++) {
                         var s = $scope.bookingInfo.Services[i];
@@ -717,6 +728,10 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             BankAccountInfo: (p.PaymentMethod == 'ECheck' ? p.BankAccountInfo : null),
                             SaveInProfile: p.SaveInProfile
                         };
+
+                        if(p.SaveInProfile && profile && p.PaymentMethod == 'CreditCard' && $scope.bookingInfo.paymentProfile == 'existing') {
+                            param.PaymentInfo.CreditCardInfo.CardNumber = profile.LastDigits;
+                        }
                     }
                     return param;
                 }

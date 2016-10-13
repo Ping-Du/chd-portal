@@ -208,9 +208,11 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.currentCategory = [];
+                $scope.totalPayAtHotel = 0;
                 $scope.showHidePrice = function (index) {
                     var i, j, k;
                     $scope.currentCategory = [];
+                    $scope.totalPayAtHotel = 0;
                     for (i = 0; i < $scope.hotelItem.AvailabilityCategories.length; i++) {
                         if (i == index)
                             continue;
@@ -225,28 +227,75 @@ define(['app/services/hotel-service',
                     var category = $scope.hotelItem.AvailabilityCategories[index];
                     //$scope.currentCategory = $scope.hotelItem.AvailabilityCategories[index];
 
+                    var m;
+                    var totalPayAtHotel = 0;
                     for (i = 0; i < category.Rooms.length; i++) {
                         var room = category.Rooms[i];
+                        var roomSupplements = '';
+                        var payAtHotel = 0;
+                        for(m = 0; m < room.Supplements.length; m++) {
+                            if(roomSupplements != '')
+                                roomSupplements += '<br>';
+                            roomSupplements += room.Supplements[m].Description + ' - $' + room.Supplements[m].Price;
+                            if(room.Supplements[m].AtProperty) {
+                                roomSupplements += " - Pay at hotel";
+                                payAtHotel +=  room.Supplements[m].Price;
+                                $scope.totalPayAtHotel += room.Supplements[m].Price;
+                            }
+                        }
+
                         for (j = 0; j < room.Nights.length; j++) {
                             var night = room.Nights[j];
+                            var nightSupplements = '';
+                            for(m = 0; m < night.Supplements.length; m++) {
+                                if(nightSupplements != '')
+                                    nightSupplements += '<br>';
+                                nightSupplements += night.Supplements[m].Description + ' - $' + night.Supplements[m].Price;
+                                if(night.Supplements[m].AtProperty) {
+                                    nightSupplements += " - Pay at hotel";
+                                    payAtHotel += night.Supplements[m].Price;
+                                    $scope.totalPayAtHotel += night.Supplements[m].Price;
+                                }
+                            }
                             for (k = 0; k < room.Guests.length; k++) {
                                 var guest = room.Guests[k];
+                                var guestSupplements = '';
+                                for(m = 0; m < guest.Supplements.length; m++) {
+                                    if(guestSupplements != '')
+                                        guestSupplements += '<br>';
+                                    guestSupplements += guest.Supplements[m].Description + ' - $' + guest.Supplements[m].Price;
+                                    if(guest.Supplements[m].AtProperty) {
+                                        guestSupplements += " - Pay at hotel";
+                                        payAtHotel += guest.Supplements[m].Price;
+                                        $scope.totalPayAtHotel += guest.Supplements[m].Price;
+                                    }
+                                }
                                 $scope.currentCategory.push({
+                                    beds:room.Beds,
+                                    roomSupplements:roomSupplements,
                                     roomId: room.RoomId + 1,
                                     roomPrice: room.Price,
                                     roomSpan: room.Guests.length * room.Nights.length,
                                     roomShow: (j == 0 && k == 0),
                                     nightId: night.NightId + 1,
                                     nightPrice: night.Price,
+                                    nightPayAtHotel: 0,
                                     nightSpan: room.Guests.length,
                                     nightShow: (k == 0),
+                                    nightSupplements:nightSupplements,
                                     guestId: guest.GuestId,
                                     guestType: guest.Type,
                                     guestAge: guest.Age,
                                     guestPrice: guest.Nights[j].Price,
+                                    guestSupplements:guestSupplements,
                                     totalPrice: category.Price
                                 });
                             }
+
+                            for(k = 0; k < room.Guests.length; k++) {
+                                $scope.currentCategory[$scope.currentCategory.length - k - 1].nightPayAtHotel = payAtHotel;
+                            }
+                            payAtHotel = 0;
                         }
                     }
                 };
@@ -319,6 +368,57 @@ define(['app/services/hotel-service',
 
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
+                            //for(var i = 0; i < data[0].AvailabilityCategories.length; i++) {
+                            //    for(var j = 0; j < data[0].AvailabilityCategories[i].Rooms.length; j++) {
+                            //        data[0].AvailabilityCategories[i].Rooms[j].Supplements = [
+                            //            {
+                            //                "Description": "Cleaning Fee",
+                            //                "Price": 8,
+                            //                "SupplementId": "1200028",
+                            //                "IsBoard": false,
+                            //                "AtProperty": true,
+                            //                "RoomId": 0,
+                            //                "GuestId": null,
+                            //                "NightId": null
+                            //            },
+                            //            {
+                            //                "Description": "Continental Breakfast",
+                            //                "Price": 0,
+                            //                "SupplementId": "1",
+                            //                "IsBoard": true,
+                            //                "AtProperty": false,
+                            //                "RoomId": 0,
+                            //                "GuestId": null,
+                            //                "NightId": null
+                            //            }
+                            //        ];
+                            //        data[0].AvailabilityCategories[i].Rooms[j].Beds = 1;
+                            //        for(var k = 0; k < data[0].AvailabilityCategories[i].Rooms[j].Nights.length; k++) {
+                            //            data[0].AvailabilityCategories[i].Rooms[j].Nights[k].Supplements = [{
+                            //                "Description": "Test ",
+                            //                "Price": 5,
+                            //                "SupplementId": "1000615",
+                            //                "IsBoard": false,
+                            //                "AtProperty": true,
+                            //                "RoomId": null,
+                            //                "GuestId": 1,
+                            //                "NightId": null
+                            //            }];
+                            //        }
+                            //        for(var m = 0; m < data[0].AvailabilityCategories[i].Rooms[j].Guests.length; m++) {
+                            //            data[0].AvailabilityCategories[i].Rooms[j].Guests[m].Supplements = [{
+                            //                "Description": "City Tax ",
+                            //                "Price": 10,
+                            //                "SupplementId": "1000615",
+                            //                "IsBoard": false,
+                            //                "AtProperty": true,
+                            //                "RoomId": null,
+                            //                "GuestId": 1,
+                            //                "NightId": null
+                            //            }];
+                            //        }
+                            //    }
+                            //}
                             $scope.hotelItem = data[0];
                             setDetailTitle(data[0]);
                             if ($scope.hotelItem.AvailabilityCategories == null)
