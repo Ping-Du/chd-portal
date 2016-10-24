@@ -17,8 +17,8 @@ define([], function () {
         //appInsightsKey: '6791db7f-193c-4370-8c23-763a233b35be', // hk key
 
         apiUser: 'apiuser',
-        //apiPassword: 'I^Rf23i!VoV6',
-        apiPassword: '9F*U&fvp7b', // demo
+        apiPassword: 'I^Rf23i!VoV6',
+        //apiPassword: '9F*U&fvp7b', // demo
         secretCode: 'T0pS3cr3t',
         provider: 'CHD',
         dateFormat: 'yyyy-mm-dd'
