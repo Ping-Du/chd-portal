@@ -7,7 +7,7 @@
                 <span uib-dropdown dropdown-append-to-body data-ng-controller="LanguageController" data-ng-show="showLanguage">
                     <a href uib-dropdown-toggle>
                         <i class="language-icon" style="background: url({{currentLanguage.FlagImageURI}}) no-repeat -5px -3px;"></i>{{currentLanguage.LocalName==''?currentLanguage.Name:currentLanguage.LocalName}}
-                        <i class="icon-caret-down"></i>
+                        <i class="icon-caret-down" ></i>
                     </a>
                     <ul class="uib-dropdown-menu" style="min-width: 120px; margin-left:-20px">
                         <li role="menuitem" data-ng-repeat="item in availableLanguages">
@@ -29,9 +29,9 @@
                 <a href data-ng-click="openLoginModal()">{{"LOGIN"|translate}}</a>
             </li>
         </ul>
-        <div class="top-tel text-right">
-            <i class="icon-phone-hang-up"></i>&nbsp;1-877-509-1550
-        </div>
+        <!--<div class="top-tel text-right">-->
+            <!--<i class="icon-phone-hang-up"></i>&nbsp;1-877-509-1550-->
+        <!--</div>-->
     </div>
 </div>
 <div class="search-position" data-ng-show="showSearchBox" uib-dropdown dropdown-append-to-body is-open="showSearchResult">

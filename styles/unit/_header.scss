@@ -1,75 +1,119 @@
+.cdh-logo {
+  width: 180px;
+  height: 60px;
+  min-width: 180px;
+  margin-bottom: 15px;
+}
+
 /*nav*/
-.navbar-default{
-  background-color: $white;
-  border-bottom: 2px solid $main-red;
-  .navbar-nav{
-    >li{
-      >a {
-        color:$font-darkgray;
+.navbar-default {
+  background-color: $main-red;
+  border-bottom: 2px solid $white;
+  .navbar-nav {
+    > li {
+      > a {
+        color: $white;
         font-size: 15px;
         font-weight: 600;
         line-height: 40px;
       }
-      >a:hover{color: $main-red;}
+      > a:hover {
+        color: $main-red;
+        background-color: $white;
+      }
     }
-    >.active{
-      >a,>a:focus,>a:hover {
-        color: $white;
-        background-color: $main-red;}
+    > .active {
+      > a, > a:focus, > a:hover {
+        color: $main-red;
+        background-color: $white;
+      }
     }
   }
 
 }
 
 /*header-top*/
-header{
+header {
   margin-top: 15px;
-  ul.top-menu{
+  ul.top-menu {
     width: 100%;
     clear: both;
     overflow: hidden;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    li{
+    li {
       float: right;
       margin-left: 30px;
     }
   }
-  .top-tel{
+  .top-tel {
     width: 100%;
     text-align: right;
   }
-  .search-wrap{
+  .search-wrap {
     position: relative;
-    i{ font-size: 20px; position: absolute; right: 15px; top: 10px; cursor: pointer}
+    i {
+      font-size: 20px;
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      cursor: pointer
+    }
   }
-  .top-menu{
-    a{color: $font-black;}
-    .icon-caret-down{margin-left: 6px}
+  .top-menu {
+    a {
+      color: $font-black;
+    }
+    .icon-caret-down {
+      margin-left: 6px
+    }
   }
-  .language-cn{background: url("../images/language.png") no-repeat -6px -3px;  }
-  .language-en{background: url("../images/language.png") no-repeat -6px -29px;}
-  .language-icon{
+  .language-cn {
+    background: url("../images/language.png") no-repeat -6px -3px;
+  }
+  .language-en {
+    background: url("../images/language.png") no-repeat -6px -29px;
+  }
+  .language-icon {
     display: block;
     width: 24px;
     height: 20px;
     float: left;
   }
-  .top-tel{
+  .top-tel {
     color: $main-red;
     font-size: 24px;
     font-weight: 600;
     position: relative;
     margin: 10px 0;
-    .icon-phone-hang-up{ font-size: 30px; position: relative; top:3px; }
+    .icon-phone-hang-up {
+      font-size: 30px;
+      position: relative;
+      top: 3px;
+    }
   }
-  .shopping-car{
+  .shopping-car {
     cursor: pointer;
-    .icon-cart, .s-car-amount, .btn {position: absolute;}
-    .icon-cart{font-size: 22px; margin-top: 5px; color: $font-darkgray;}
-    .s-car-amount{font-size:14px; font-weight: 600;
-      width: 28px; height: 28px; line-height: 28px; border-radius: 14px; background-color:$main-red; text-align: center; color: $white;}
+    .icon-cart, .s-car-amount, .btn {
+      position: absolute;
+    }
+    .icon-cart {
+      font-size: 22px;
+      margin-top: 5px;
+      color: $font-darkgray;
+    }
+    .s-car-amount {
+      font-size: 14px;
+      font-weight: 600;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 14px;
+      background-color: $main-red;
+      text-align: center;
+      color: $white;
+    }
   }
 }
 
@@ -79,13 +123,15 @@ header{
   height: 20px;
   border-width: 3px;
 }
+
 .carousel-indicators .active {
   width: 20px;
-  height: 20px;}
+  height: 20px;
+}
 
 /*content slider arrows*/
-.carousel-control{
-  .icon-chevron-thin-left,.icon-chevron-thin-right {
+.carousel-control {
+  .icon-chevron-thin-left, .icon-chevron-thin-right {
     position: absolute;
     top: 50%;
     z-index: 5;
@@ -93,8 +139,12 @@ header{
     margin-top: -10px;
     font-size: 80px;
   }
-  .icon-chevron-thin-left{left:40%;}
-  .icon-chevron-thin-right{right:40%;}
+  .icon-chevron-thin-left {
+    left: 40%;
+  }
+  .icon-chevron-thin-right {
+    right: 40%;
+  }
 }
 
 .popover {

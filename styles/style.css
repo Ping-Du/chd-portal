@@ -12,34 +12,41 @@
   margin-bottom: 20px; }
 
 .thumbnail:hover, .list-product:hover {
-  border: 1px solid rgba(237, 104, 91, 0.7);
+  border: 1px solid rgba(255, 3, 3, 0.7);
   box-shadow: 2px 5px 8px #a6a6a6; }
 
 .thumbnail .caption > ul.hotel .price, .price {
   font-size: 16px;
-  color: #ed685b; }
+  color: #ff0303; }
 
 .search-main [class^="icon-"], .search-main [class*=" icon-"], .order-form [class^="icon-"], .order-form [class*=" icon-"], .head-crumb [class^="icon-"], .head-crumb [class*=" icon-"], .input-icon [class^="icon-"], .input-icon [class*=" icon-"], .quick-search [class^="icon-"], .quick-search [class*=" icon-"] {
   position: absolute;
   color: rgba(153, 153, 153, 0.8); }
 
 .main-red {
-  color: #ed685b; }
+  color: #ff0303; }
+
+.cdh-logo {
+  width: 180px;
+  height: 60px;
+  min-width: 180px;
+  margin-bottom: 15px; }
 
 /*nav*/
 .navbar-default {
-  background-color: #fff;
-  border-bottom: 2px solid #ed685b; }
+  background-color: #ff0303;
+  border-bottom: 2px solid #fff; }
   .navbar-default .navbar-nav > li > a {
-    color: #666;
+    color: #fff;
     font-size: 15px;
     font-weight: 600;
     line-height: 40px; }
   .navbar-default .navbar-nav > li > a:hover {
-    color: #ed685b; }
+    color: #ff0303;
+    background-color: #fff; }
   .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
-    color: #fff;
-    background-color: #ed685b; }
+    color: #ff0303;
+    background-color: #fff; }
 
 /*header-top*/
 header {
@@ -79,7 +86,7 @@ header {
     height: 20px;
     float: left; }
   header .top-tel {
-    color: #ed685b;
+    color: #ff0303;
     font-size: 24px;
     font-weight: 600;
     position: relative;
@@ -103,7 +110,7 @@ header {
       height: 28px;
       line-height: 28px;
       border-radius: 14px;
-      background-color: #ed685b;
+      background-color: #ff0303;
       text-align: center;
       color: #fff; }
 
@@ -562,12 +569,12 @@ a {
       margin-bottom: -3px;
       border-bottom: 3px solid transparent; }
     .thumbnail-part .head-menu > a:hover, .thumbnail-part .head-menu > a:focus, .thumbnail-part .head-menu .active {
-      border-bottom: 3px solid #ed685b;
+      border-bottom: 3px solid #ff0303;
       text-decoration: none;
-      color: #ed685b; }
+      color: #ff0303; }
 
 .text-red {
-  color: #ed685b; }
+  color: #ff0303; }
 
 .text-light-grey {
   color: #CCCCFF; }
@@ -722,7 +729,7 @@ a {
   color: #f2f2f2; }
 
 .search-main {
-  background-color: #ed685b;
+  background-color: #ff0303;
   padding: 3px 0; }
   .search-main a, .search-main .input {
     width: 100%;
@@ -779,7 +786,7 @@ a {
       float: left;
       width: 80px; }
       .filter-box > dl > dt i {
-        color: #ed685b;
+        color: #ff0303;
         margin-right: 5px; }
     .filter-box > dl > dd {
       margin-left: 120px; }
@@ -790,7 +797,7 @@ a {
       line-height: 26px;
       float: left; }
     .filter-box > dl > dd a:hover, .filter-box > dl > dd a:active, .filter-box > dl > dd a:focus, .filter-box > dl > dd a.active {
-      color: #ed685b;
+      color: #ff0303;
       text-decoration: none; }
 
 .relative, .input-icon {
@@ -833,7 +840,7 @@ a {
     padding: 0 20px; }
     .list-product .pro-separator .price {
       font-size: 28px;
-      color: #ed685b; }
+      color: #ff0303; }
     .list-product .pro-separator [class^="icon-"], .list-product .pro-separator [class*=" icon-"] {
       font-size: 24px;
       color: #5a4b4b; }
@@ -865,9 +872,9 @@ a {
     color: #333;
     border: 1px solid #e6e6e6; }
   .pagination > li.active > a, .pagination > li.active > a:focus, .pagination > li.active > a:hover, .pagination > li.active > span, .pagination > li.active > span:focus, .pagination > li.active > span:hover {
-    background-color: #ed685b;
+    background-color: #ff0303;
     color: #fff;
-    border-color: #e83e2d; }
+    border-color: #cf0000; }
 
 .detail-nav-wrap, .sortbar {
   overflow: hidden;
@@ -888,7 +895,7 @@ a {
     width: 100%;
     height: 100%; }
   .detail-nav-wrap .active > a, .detail-nav-wrap .active > a:focus {
-    color: #ed685b;
+    color: #ff0303;
     text-decoration: none;
     background-color: #fff; }
 
@@ -913,7 +920,7 @@ a {
     float: right;
     margin-top: 15px; }
     .sortbar span b {
-      color: #ed685b;
+      color: #ff0303;
       margin-right: 5px; }
 
 .breadcrumb {
@@ -984,11 +991,11 @@ a {
   .detail-wrap .more-link {
     padding-top: 20px; }
     .detail-wrap .more-link a {
-      color: #ed685b;
+      color: #ff0303;
       text-decoration: none;
       font-size: 14px; }
     .detail-wrap .more-link a:hover {
-      color: #ed685b;
+      color: #ff0303;
       text-decoration: underline; }
 
 .comment-media {
@@ -1031,7 +1038,7 @@ a {
       color: #666;
       line-height: 28px; }
   .dl-horizontal .icon-check-alt {
-    color: #ed685b;
+    color: #ff0303;
     margin-right: 3px; }
 
 .comment-score {
@@ -1097,7 +1104,7 @@ a {
   border: 1px solid #e6e6e6;
   cursor: pointer; }
 .modal-content .modal-body .sel-time span:hover, .modal-content .modal-body .sel-time span:active, .modal-content .modal-body .sel-time .active {
-  background-color: #ed685b;
+  background-color: #ff0303;
   color: #fff; }
 .modal-content .modal-body .m-total {
   font-size: 16px; }
@@ -1139,7 +1146,7 @@ a {
     .cdh-product .media-body h2 {
       color: #333; }
     .cdh-product .media-body a {
-      color: #ed685b; }
+      color: #ff0303; }
   .cdh-product p {
     margin-top: 10px; }
   .cdh-product .media2 {
@@ -1154,7 +1161,7 @@ a {
       font-weight: 600;
       text-shadow: 1px 1px 2px #fff; }
       .cdh-product .media2 p b {
-        color: #e32b19;
+        color: #b60000;
         font-size: 30px; }
     .cdh-product .media2 button {
       padding: 12px 30px; }
@@ -1182,10 +1189,10 @@ a {
 .service-detail-info {
   margin-bottom: 15px;
   padding: 15px 5px;
-  background-color: rgba(237, 104, 91, 0.1); }
+  background-color: rgba(255, 3, 3, 0.1); }
   .service-detail-info .caption {
     font-size: 30px;
-    color: #ed685b; }
+    color: #ff0303; }
 
 .price-bg-part, .xlbtn-wrap {
   overflow: hidden;
@@ -1215,7 +1222,7 @@ a {
 
 .price-bg-part {
   margin-bottom: 15px;
-  background-color: rgba(237, 104, 91, 0.1);
+  background-color: rgba(255, 3, 3, 0.1);
   border: 1px solid #e6e6e6; }
 
 .pos-map {
@@ -1301,10 +1308,10 @@ a {
   color: #999;
   margin-top: 5px; }
   .table-content .tax i {
-    color: #ed685b;
+    color: #ff0303;
     font-style: normal; }
 .table-content .icon-checkmark {
-  color: #ed685b;
+  color: #ff0303;
   margin-right: 5px; }
 
 .btn {
@@ -1335,13 +1342,13 @@ a {
 
 .btn-red {
   color: #fff;
-  background-color: #ed685b;
-  border-color: #ed685b; }
+  background-color: #ff0303;
+  border-color: #ff0303; }
 
 .btn-red:focus, .btn-red:hover {
   color: #fff;
-  background-color: #ea5344;
-  border-color: #e83e2d; }
+  background-color: #e90000;
+  border-color: #cf0000; }
 
 .form-control {
   border-radius: 0;
@@ -1389,7 +1396,7 @@ a {
   padding-left: 50px; }
 
 .validate-error {
-  color: #ed685b; }
+  color: #ff0303; }
 
 .slider-wrap .loading, .city-slider .loading, .slider-wrap .loading-icon, .city-slider .loading-icon, .slider-wrap .thum-wrap .p, .slider-wrap .thum-wrap .thum, .slider-wrap .thum-wrap .layer {
   position: absolute;
@@ -1519,11 +1526,6 @@ a {
     padding: 15px 10px; }
   .sortbar span {
     display: none; }
-
-  .cdh-logo {
-    width: 100%;
-    height: 100%;
-    min-width: 180px; }
 
   .detail-nav-wrap li a {
     padding: 17px 10px;
@@ -1812,7 +1814,7 @@ footer {
   font-size: 18px;
   line-height: 30px; }
 .text-info-wrap .icon-check-alt {
-  color: #ed685b;
+  color: #ff0303;
   margin-right: 10px; }
 .text-info-wrap h3 {
   font-weight: 600;
@@ -1829,7 +1831,7 @@ footer {
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
   z-index: 2;
   color: #fff;
-  background-color: #ed685b; }
+  background-color: #ff0303; }
 
 .list-group-item {
   margin-bottom: 2px;
@@ -1845,7 +1847,7 @@ footer {
 a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover {
   color: #fff;
   text-decoration: none;
-  background-color: rgba(237, 104, 91, 0.8); }
+  background-color: rgba(255, 3, 3, 0.8); }
 
 .hotel-search-box {
   background-color: rgba(255, 255, 255, 0.5);
@@ -1858,7 +1860,7 @@ a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, 
     width: 50px; }
 
 .hotel-search-form {
-  background-color: #ed685b;
+  background-color: #ff0303;
   padding: 5px; }
   .hotel-search-form label {
     color: whitesmoke; }

@@ -5,7 +5,7 @@
   padding: 0; }
 
 .cart-wrap .icon-bin:hover, .cart-wrap .icon-pencil2:hover {
-  color: #ed685b; }
+  color: #ff0303; }
 
 .order-wrap {
   background-color: #fff;
@@ -94,7 +94,7 @@
       font-weight: 600;
       color: #333; }
     .cart-wrap .title-name a:hover {
-      color: #ed685b; }
+      color: #ff0303; }
   .cart-wrap .icon-pencil2 {
     font-size: 16px;
     margin-right: 10px; }
@@ -119,7 +119,7 @@
       padding: 17px 0; }
   .cart-footer .sumprice {
     font-size: 22px;
-    color: #ed685b;
+    color: #ff0303;
     font-weight: 700; }
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
@@ -189,7 +189,7 @@
   font-size: 14px;
   line-height: 2.2; }
   .side-nav dl dt a {
-    color: #ed685b; }
+    color: #ff0303; }
 
 .side-nav dl i {
   margin-right: 10px;
@@ -206,7 +206,7 @@
   margin-right: 0; }
 
 .side-nav dl dd a:hover, .side-nav dl dd .active {
-  color: #ed685b; }
+  color: #ff0303; }
 
 .side-nav dl:last-child {
   border-bottom: 0; }
