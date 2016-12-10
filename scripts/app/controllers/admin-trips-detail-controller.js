@@ -117,6 +117,20 @@ define(['app/services/account-service',
                     //}
                 };
 
+                $scope.checkHotelCancelInfo = function(index) {
+                    var item = $scope.trip.Hotels[index];
+                    TripService.getCancellationPolicies($scope.trip.TripId, item.TripItemId, $scope.trip.PrimaryGuestName).then(function(data){
+                            $scope.trip.Hotels[index].CancelInfo = data;
+                        });
+                };
+
+                $scope.checkServiceCancelInfo = function(index) {
+                    var item = $scope.trip.Services[index];
+                    TripService.getCancellationPolicies($scope.trip.TripId, item.TripItemId, $scope.trip.PrimaryGuestName).then(function(data){
+                        $scope.trip.Services[index].CancelInfo = data;
+                    });
+                };
+
                 $scope.getGuest = function (guestId) {
                     for (var i = 0; i < $scope.trip.Passengers.length; i++) {
                         if ($scope.trip.Passengers[i].GuestId == guestId)

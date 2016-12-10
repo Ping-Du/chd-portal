@@ -203,7 +203,10 @@
                                              tooltip-placement="bottom" tooltip-class="customClass"
                                              uib-tooltip-template="'myTooltipTemplate.html'" data-ng-click="showHidePrice($index)"></i>
                                 </td>
-                                <td>{{item.CancelBy | limitTo:10}}</td>
+                                <td>
+                                    <span data-ng-show="item.CancelInfo == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="item.CancelInfo != null">{{item.CancelInfo.CancelBy | limitTo:10}}</span>
+                                </td>
                                 <td>
                                     <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="font-size:32px; color:#99cc33;" data-ng-show="item.AvailabilityLevel == 'Available'"></span>
                                     <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" style="font-size:32px; color:#ff9900;" data-ng-show="item.AvailabilityLevel == 'NotAvailable'"></span>

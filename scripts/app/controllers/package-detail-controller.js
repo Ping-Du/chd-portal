@@ -248,10 +248,24 @@ define(['app/services/package-service',
                         if(reload) {
                             scrollToControl('category');
                         }
+
+                        //angular.forEach($scope.packageItem.AvailabilityCategories, function(item, index){
+                        //    item.CancelInfo = null;
+                        //});
+
                     }, function () {
+                        $scope.packageItem.AvailabilityCategories = [];
                         $scope.showNotAvailable = true;
                     });
 
+                };
+
+                $scope.checkCancelInfo = function(index) {
+                    var item = $scope.packageItem.AvailabilityCategories[index];
+                    PackageService.getCancellationPolicies($scope.packageItem.ProductId, item.Id,
+                        $scope.packageItem.StartDate).then(function(data){
+                            $scope.packageItem.AvailabilityCategories[index].CancelInfo = data;
+                        });
                 };
 
                 function add(product, index) {

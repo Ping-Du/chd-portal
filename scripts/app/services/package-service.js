@@ -58,6 +58,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 },
                 getAvailability:function(requestData){
                     return invoke('/availability', 'POST', requestData);
+                },
+                getCancellationPolicies: function(productId, categoryId, startDate) {
+                    return invoke('/cancellationpolicies/'+productId+'/'+categoryId+'/'+startDate, 'GET', null);
                 }
 
             };

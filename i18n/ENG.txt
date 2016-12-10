@@ -245,5 +245,6 @@
   "RATE_PLAN":"Rate Plan",
   "BEDS":"Beds",
   "SUPPLEMENTS":"Supplements",
-  "PAY_AT_HOTEL":"Pay At Hotel"
+  "PAY_AT_HOTEL":"Pay At Hotel",
+  "VIEW_INFO":"View Info"
 }

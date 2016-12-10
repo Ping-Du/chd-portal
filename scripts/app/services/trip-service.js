@@ -51,6 +51,9 @@ define(['app/services/session-service'], function (modules) {
                 },
                 getBarcodeImage:function(barcode, title) {
                     return invoke('/barcodeimage/'+barcode+'/'+title, 'GET');
+                },
+                getCancellationPolicies: function(tripId, itemId, primaryGuestName) {
+                    return invoke('/cancellationpolicies/'+tripId+'/items/'+itemId+'/'+primaryGuestName, 'GET', null);
                 }
             };
         }]);

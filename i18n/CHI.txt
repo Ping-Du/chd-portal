@@ -245,5 +245,6 @@
   "RATE_PLAN":"收费计划",
   "BEDS":"床",
   "SUPPLEMENTS":"补充说明",
-  "PAY_AT_HOTEL":"现场交费"
+  "PAY_AT_HOTEL":"现场交费",
+  "VIEW_INFO":"查看信息"
 }

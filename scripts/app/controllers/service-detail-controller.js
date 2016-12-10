@@ -245,14 +245,27 @@ define(['app/services/services-service',
                             clearEmptyAddress(data[0].Address);
                             if (!reload)
                                 doAdditionalProcess(data[0]);
+
+                            //angular.forEach($scope.serviceItem.AvailabilityCategories, function(item, index){
+                            //    item.CancelInfo = null;
+                            //});
                         }
                         if(reload) {
                             scrollToControl('category');
                         }
                     }, function () {
+                        $scope.serviceItem.AvailabilityCategories = [];
                         $scope.showNotAvailable = true;
                     });
 
+                };
+
+                $scope.checkCancelInfo = function(index) {
+                    var item = $scope.serviceItem.AvailabilityCategories[index];
+                    ServicesService.getCancellationPolicies($scope.serviceItem.ProductId, item.Id,
+                        $scope.serviceItem.StartDate).then(function(data){
+                            $scope.serviceItem.AvailabilityCategories[index].CancelInfo = data;
+                        });
                 };
 
                 $scope.load = function(reload) {

@@ -430,6 +430,10 @@ define(['app/services/hotel-service',
                             clearEmptyAddress(data[0].Address);
                             if (!reload)
                                 doAdditionalProcess(data[0]);
+
+                            //angular.forEach($scope.hotelItem.AvailabilityCategories, function(item, index){
+                            //    item.CancelInfo = null;
+                            //});
                         }
                         if (reload) {
                             scrollToControl('category');
@@ -439,6 +443,14 @@ define(['app/services/hotel-service',
                         $scope.showNotAvailable = true;
                     });
 
+                };
+
+                $scope.checkCancelInfo = function(index) {
+                    var item = $scope.hotelItem.AvailabilityCategories[index];
+                    HotelService.getCancellationPolicies($scope.hotelItem.ProductId, item.Id,
+                        $scope.hotelItem.StartDate, item.Rooms[0].Nights.length).then(function(data){
+                        $scope.hotelItem.AvailabilityCategories[index].CancelInfo = data;
+                    });
                 };
 
                 function add(product, index) {

@@ -77,13 +77,17 @@
                                 <div class="col-md-3"><strong>{{"CHECK_OUT"|translate}}: </strong>{{hotel.CheckOutDate|limitTo:10}}</div>
                                 <div class="col-md-3"><strong>{{"NIGHTS"|translate}}: </strong>{{hotel.Nights}}</div>
                                 <div class="col-md-3"><strong>{{"PRICE"|translate}}: </strong><span class="text-danger">${{hotel.Price}}</span></div>
-                                <div class="col-md-3"><strong>{{"AVAILABILITY"|translate}}: </strong>{{hotel.AvailabilityLevel}}</div>
+                                <div class="col-md-6"><strong>{{"AVAILABILITY"|translate}}: </strong>{{hotel.AvailabilityLevel}}</div>
+                                <div class="col-md-6"><strong>{{"CANCEL_BY"|translate}}:</strong>
+                                    <span data-ng-show="hotel.CancelInfo == null"><a href data-ng-click="checkHotelCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="hotel.CancelInfo != null">{{item.CancelInfo.CancelBy | limitTo:10}}</span>
+                                </div>
                             </div>
                             <br>
                             <h3 class="text-info">{{"CATEGORY"|translate}}</h3>
                             <div class="row">
-                                <div class="col-md-4"><strong>{{"ROOM_TYPE"|translate}}:</strong>{{hotel.Category.Name}}</div>
-                                <div class="col-md-4"><strong>{{"ROOMS"|translate}}:</strong>{{hotel.Rooms.length}}</div>
+                                <div class="col-md-6"><strong>{{"ROOM_TYPE"|translate}}:</strong>{{hotel.Category.Name}}</div>
+                                <div class="col-md-6"><strong>{{"ROOMS"|translate}}:</strong>{{hotel.Rooms.length}}</div>
                             </div>
                             <br>
                             <h3 class="text-info">{{"GUESTS"|translate}}</h3>
@@ -113,6 +117,10 @@
                                 <div class="col-md-3"><strong>{{"END_DATE"|translate}}: </strong>{{service.EndDate|limitTo:10}}</div>
                                 <div class="col-md-3"><strong>{{"PRICE"|translate}}: </strong><span class="text-danger">${{service.Price}}</span></div>
                                 <div class="col-md-3"><strong>{{"AVAILABILITY"|translate}}: </strong>{{service.AvailabilityLevel}}</div>
+                                <div class="col-md-3"><strong>{{"CANCEL_BY"|translate}}: </strong>
+                                    <span data-ng-show="service.CancelInfo == null"><a href data-ng-click="checkServiceCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="service.CancelInfo != null">{{item.CancelInfo.CancelBy | limitTo:10}}</span>
+                                </div>
                             </div>
                             <br>
                             <h3 class="text-info">{{"CATEGORY"|translate}}</h3>
