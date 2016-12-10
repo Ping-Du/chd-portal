@@ -435,6 +435,7 @@ define(['app/services/hotel-service',
                             scrollToControl('category');
                         }
                     }, function () {
+                        $scope.hotelItem.AvailabilityCategories = [];
                         $scope.showNotAvailable = true;
                     });
 

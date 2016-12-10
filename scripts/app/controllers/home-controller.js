@@ -54,15 +54,46 @@ define(['app/services/banner-service',
                     return slides;
                 }
 
-                $scope.destinations = [];
+                $scope.topDestinations = [];
+                $scope.hotelDestinations = [];
+                $scope.tourDestinations = [];
+                $scope.transportationDestinations = [];
+                $scope.activityDestinations = [];
+                $scope.packageDestinations = [];
                 function loadDestinations() {
-                    DestinationService.getTopDestinations().then(function (data) {
-                        $scope.destinations = data;
+                    DestinationService.getTopDestinations().then(function(data){
+                        $scope.topDestinations = data;
                         initSlider(fillSlideData(data));
-                        $scope.loadHotels(data[0]);
-                        $scope.loadActivities(data[0]);
-                        $scope.loadTours(data[0]);
-                        $scope.loadPackages(data[0]);
+                    });
+
+                    var maxDest = 10;
+                    DestinationService.getDestinationsByLanguageId().then(function (data) {
+                        angular.forEach(data, function(value, key){
+                            if(value.Products.Hotels > 0 && $scope.hotelDestinations.length <  maxDest ) {
+                                $scope.hotelDestinations.push(value);
+                            }
+                            if(value.Products.Tours > 0 && $scope.tourDestinations.length <  maxDest) {
+                                $scope.tourDestinations.push(value)
+                            }
+                            if(value.Products.Transportation > 0 && $scope.transportationDestinations.length <  maxDest) {
+                                $scope.transportationDestinations.push(value)
+                            }
+                            if(value.Products.Activities > 0 && $scope.activityDestinations.length <  maxDest) {
+                                $scope.activityDestinations.push(value)
+                            }
+                            if(value.Products.Packages > 0 && $scope.packageDestinations.length <  maxDest) {
+                                $scope.packageDestinations.push(value)
+                            }
+                        });
+
+                        if($scope.hotelDestinations.length > 0)
+                            $scope.loadHotels($scope.hotelDestinations[0]);
+                        if($scope.activityDestinations.length > 0)
+                            $scope.loadActivities($scope.activityDestinations[0]);
+                        if($scope.tourDestinations.length > 0)
+                            $scope.loadTours($scope.tourDestinations[0]);
+                        if($scope.packageDestinations.length > 0)
+                            $scope.loadPackages($scope.packageDestinations[0]);
                     });
                 }
 

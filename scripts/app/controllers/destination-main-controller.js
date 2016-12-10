@@ -22,30 +22,45 @@ define(['app/services/language-service',
                     $scope.showFeaturedDestinations = true;
                     var featuredItems = [];
                     $scope.allItems = [];
+
+                    function isFeaturedDestination(productId) {
+                        for(var i = 0; i < featuredItems.length; i++) {
+                            if(featuredItems[i].id == productId)
+                                return true;
+                        }
+                        return false;
+                    }
+
                     function loadAllItems() {
                         $scope.allItems = [];
                         featuredItems = [];
-                        DestinationService.getDestinationsByLanguageId().then(function (data) {
+
+                        DestinationService.getTopDestinations().then(function (data) {
                             _.each(data, function (item, index) {
-                                item.DetailsURI = 'destinations.html#/'+item.ProductId+'/'+$scope.languageId;
-                                if (item.Featured) {
-                                    featuredItems.push({
-                                        url: item.DetailsURI,
-                                        caption: item.Name,
-                                        image: item.MainInformation.LargeImageURI
-                                    });
-                                } else {
-                                    $scope.allItems.push(item);
-                                }
+                                featuredItems.push({
+                                    id: item.ProductId,
+                                    url: item.DetailsURI,
+                                    caption: item.Name,
+                                    image: item.MainInformation.LargeImageURI
+                                });
                             });
 
-                            if(featuredItems.length > 0) {
-                                $scope.showFeaturedDestinations = true;
-                                initSlider(featuredItems);
-                            } else {
-                                $scope.showFeaturedDestinations = false;
-                            }
-                        }, function () {
+                            DestinationService.getDestinationsByLanguageId().then(function (data) {
+                                _.each(data, function (item, index) {
+                                    item.DetailsURI = 'destinations.html#/' + item.ProductId + '/' + $scope.languageId;
+                                    if(!isFeaturedDestination(item.ProductId))
+                                        $scope.allItems.push(item);
+                                });
+
+                                if (featuredItems.length > 0) {
+                                    $scope.showFeaturedDestinations = true;
+                                    initSlider(featuredItems);
+                                } else {
+                                    $scope.showFeaturedDestinations = false;
+                                }
+                            }, function () {
+                            });
+
                         });
                     }
 

@@ -163,12 +163,16 @@ function DayDiff(startDate, endDate) {
     if(startDate === null || endDate === null)
         return 0;
     else
-        return (endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000);
+        return Math.round((endDate.getTime() - startDate.getTime()) / (24 * 3600 * 1000));
 }
 
 function addDays(startDate, days) {
     var now = (startDate?startDate:addDays(new Date(), 1));
-    return new Date(now.valueOf() + days * 24 * 3600000);
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    return new Date(now.getTime() + days * 24 * 3600000);
 }
 
 function makePriceString(lowPrice, highPrice) {
