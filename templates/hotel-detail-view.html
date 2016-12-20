@@ -250,7 +250,7 @@
                                     <!--</div>-->
                                     <!--</div>-->
                                     <span><strong>{{item.Name}}</strong></span>
-                                    <br><span>{{"ID"|translate}}: {{item.Id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span data-ng-show="item.RatePlan.DisplayName != ''">{{"RATE_PLAN"|translate}}: {{item.RatePlan.DisplayName}}</span>
+                                    <br><span>{{"ID"|translate}}: {{item.Id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span data-ng-show="item.RatePlan.Name != ''">{{"RATE_PLAN"|translate}}: {{item.RatePlan.Id}}-{{item.RatePlan.Name}}</span>
                                 </td>
                                 <td>
                                     <span class="price">${{item.Price}}</span>
