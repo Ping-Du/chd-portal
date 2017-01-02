@@ -120,7 +120,7 @@ define(['app/services/services-service',
                     }
                 }
 
-                $scope.detailTitle = "";
+                $scope.detailTitle = (SessionService.languageId() == 'ENG'?'Details':'详细介绍');
                 function setDetailTitle(data) {
                     _.each(data.AdditionalInformation, function(item, index){
                         if(item.Section == 'HDFULLDESC') {

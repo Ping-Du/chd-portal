@@ -81,15 +81,13 @@
                 <div class="service-detail-info">
                         <span class="caption">{{serviceItem.Name}}</span>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span >{{serviceItem.MainInformation.PlainText | limitTo: 100}} ...</span></a></div>
-                <br/>
                 <div class="row tab-list">
                     <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}：</span>{{serviceItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"> <span>{{"TYPE"|translate}}：</span>{{serviceItem.ServiceType.Name}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"ADDRESS"|translate}}：</span>{{serviceItem.Address.Address1}}</div>
-                    <div class="col-xs-6 col-md-6"> <span>{{"CITY"|translate}}：</span>{{serviceItem.Address.City}}</div>
+                    <!--<div class="col-xs-6 col-md-6"> <span>{{"ADDRESS"|translate}}：</span>{{serviceItem.Address.Address1}}</div>-->
+                    <!--<div class="col-xs-6 col-md-6"> <span>{{"CITY"|translate}}：</span>{{serviceItem.Address.City}}</div>-->
                 </div>
-                <br/>
+                <div><a href onclick="scrollToControl('detail')" >{{serviceItem.MainInformation.PlainText}}</a></div>
                 <!--<div class="tax-com-part">-->
                     <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                     <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
@@ -226,9 +224,11 @@
         </section>
         <section class="detail-wrap" id="detail" data-ng-show="serviceItem.AdditionalInformation.length > 0">
             <h3>{{detailTitle}}</h3>
-            <div class="content">
-                <!--<h4>{{item.Title}}</h4>-->
-                <p data-ng-repeat="item in serviceItem.AdditionalInformation" data-ng-bind-html="item.FormattedText"></p>
+            <div class="content" data-ng-repeat="item in serviceItem.AdditionalInformation" data-ng-show="item.Section != serviceItem.MainInformation.Section && item.Section != 'HDBRIEFDESC'">
+                <h4 class="text-red">{{item.Title}}</h4>
+                <hr>
+                <p data-ng-bind-html="item.FormattedText">
+                </p>
             </div>
         </section>
         <section class="detail-wrap" id="term" data-ng-show="serviceItem.Warnings.length > 0">

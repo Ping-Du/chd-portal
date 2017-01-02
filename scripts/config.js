@@ -2,9 +2,9 @@ define([], function () {
     'use strict';
 
     return {
-        webRoot:'https://www.chdestination.com/', // production web US
+        //webRoot:'https://www.chdestination.com/', // production web US
         //webRoot:'https://chdtraceweb-hk.azurewebsites.net/', // production web HK
-        //webRoot: 'http://localhost:63342/chd-portal/', // local host
+        webRoot: 'http://localhost:63342/chd-portal/', // local host
         //webRoot: 'https://chdtracewebdemo.azurewebsites.net/', // demo site
 
         // -- apiRoot:'https://link.chdestination.com/', // production api US, not work
