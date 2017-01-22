@@ -209,10 +209,29 @@ define(['app/services/hotel-service',
 
                 $scope.currentCategory = [];
                 $scope.totalPayAtHotel = 0;
+                $scope.showRoomSupplements = false;
+                $scope.showNightSupplements = false;
+                $scope.showGuestSupplements = false;
+                $scope.showBeds = false;
+                $scope.totalColSpan = 6;
+                $scope.currentIndex = -1;
+
+                $scope.closePrice = function() {
+                    if($scope.currentIndex >= 0) {
+                        $scope.showHidePrice($scope.currentIndex);
+                    }
+                };
+
                 $scope.showHidePrice = function (index) {
                     var i, j, k;
                     $scope.currentCategory = [];
                     $scope.totalPayAtHotel = 0;
+                    $scope.showRoomSupplements = false;
+                    $scope.showNightSupplements = false;
+                    $scope.showGuestSupplements = false;
+                    $scope.showBeds = false;
+                    $scope.totalColSpan = 6;
+                    $scope.currentIndex = index;
                     for (i = 0; i < $scope.hotelItem.AvailabilityCategories.length; i++) {
                         if (i == index)
                             continue;
@@ -229,10 +248,13 @@ define(['app/services/hotel-service',
 
                     var m;
                     var totalPayAtHotel = 0;
+
                     for (i = 0; i < category.Rooms.length; i++) {
                         var room = category.Rooms[i];
                         var roomSupplements = '';
                         var payAtHotel = 0;
+                        $scope.showRoomSupplements = (room.Supplements.length > 0);
+                        $scope.showBeds = (room.Beds && room.Beds != 0);
                         for(m = 0; m < room.Supplements.length; m++) {
                             if(roomSupplements != '')
                                 roomSupplements += '<br>';
@@ -244,9 +266,11 @@ define(['app/services/hotel-service',
                             }
                         }
 
+
                         for (j = 0; j < room.Nights.length; j++) {
                             var night = room.Nights[j];
                             var nightSupplements = '';
+                            $scope.showNightSupplements = (night.Supplements.length > 0);
                             for(m = 0; m < night.Supplements.length; m++) {
                                 if(nightSupplements != '')
                                     nightSupplements += '<br>';
@@ -260,6 +284,7 @@ define(['app/services/hotel-service',
                             for (k = 0; k < room.Guests.length; k++) {
                                 var guest = room.Guests[k];
                                 var guestSupplements = '';
+                                $scope.showGuestSupplements = (guest.Supplements.length > 0);
                                 for(m = 0; m < guest.Supplements.length; m++) {
                                     if(guestSupplements != '')
                                         guestSupplements += '<br>';
@@ -298,6 +323,15 @@ define(['app/services/hotel-service',
                             payAtHotel = 0;
                         }
                     }
+
+                    if($scope.showRoomSupplements)
+                        $scope.totalColSpan ++;
+                    if($scope.showNightSupplements)
+                        $scope.totalColSpan ++;
+                    if($scope.showGuestSupplements)
+                        $scope.totalColSpan ++;
+                    if($scope.showBeds)
+                        $scope.totalColSpan++;
                 };
 
                 var searchAfterLogin = false;

@@ -178,43 +178,43 @@
                 <div class="table-content">
                     <div class="table-responsive">
                         <script type="text/ng-template" id="myTooltipTemplate.html">
-                            <table class="table table-bordered" style="margin-bottom:0;">
+                            <table class="table table-bordered" style="margin-bottom:0;" click-outside="closePrice()">
                                 <thead>
                                     <tr>
                                         <td >{{'ROOM'|translate}} #</td>
-                                        <td>{{"BEDS"|translate}}</td>
-                                        <td>{{"SUPPLEMENTS"|translate}}</td>
+                                        <td data-ng-show="showBeds">{{"BEDS"|translate}}</td>
+                                        <td data-ng-show="showRoomSupplements">{{"SUPPLEMENTS"|translate}}</td>
                                         <td>{{'NIGHT'|translate}} #</td>
-                                        <td>{{"SUPPLEMENTS"|translate}}</td>
+                                        <td data-ng-show="showNightSupplements" >{{"SUPPLEMENTS"|translate}}</td>
                                         <td>{{'GUEST'|translate}} #</td>
                                         <td>{{'TYPE'|translate}}</td>
                                         <td>{{'AGE'|translate}}</td>
-                                        <td>{{"SUPPLEMENTS"|translate}}</td>
+                                        <td data-ng-show="showGuestSupplements">{{"SUPPLEMENTS"|translate}}</td>
                                         <td>{{'GUEST'|translate}} {{'PRICE'|translate}}</td>
                                         <!--<td>{{'NIGHT'|translate}} {{'PRICE'|translate}}</td>-->
-                                        <td>{{'PAY_AT_HOTEL'|translate}}</td>
+                                        <td data-ng-show="totalPayAtHotel > 0">{{'PAY_AT_HOTEL'|translate}}</td>
                                         <td>{{"SUBTOTAL"|translate}}</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr data-ng-repeat="item in currentCategory">
                                         <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow">{{item.roomId}}</td>
-                                        <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow">{{item.beds}}</td>
-                                        <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow"  class="text-left" data-ng-bind-html="item.roomSupplements"></td>
+                                        <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow && showBeds ">{{item.beds}}</td>
+                                        <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow && showRoomSupplements"  class="text-left" data-ng-bind-html="item.roomSupplements"></td>
                                         <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow">{{item.nightId}}</td>
-                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow"  class="text-left" data-ng-bind-html="item.nightSupplements"></td>
+                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow && showNightSupplements"  class="text-left" data-ng-bind-html="item.nightSupplements"></td>
                                         <td>{{item.guestId}}</td>
                                         <td>{{item.guestType}}</td>
                                         <td>{{item.guestAge}}</td>
-                                        <td class="text-left" data-ng-bind-html="item.guestSupplements"></td>
+                                        <td class="text-left" data-ng-bind-html="item.guestSupplements" data-ng-show="showGuestSupplements"></td>
                                         <td class="text-info">${{item.guestPrice}}</td>
                                         <!--<td class="text-warning" rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow" >${{item.nightPrice}}</td>-->
-                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow" >${{item.nightPayAtHotel}}</td>
+                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow && totalPayAtHotel > 0" >${{item.nightPayAtHotel}}</td>
                                         <td class="text-red" rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow">${{item.roomPrice}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-right" colspan="10">{{"TOTAL"|translate}}</td>
-                                        <td >${{totalPayAtHotel}}</td>
+                                        <td class="text-right" colspan="{{totalColSpan}}">{{"TOTAL"|translate}}</td>
+                                        <td data-ng-show="totalPayAtHotel" >${{totalPayAtHotel}}</td>
                                         <td class="text-red">${{currentCategory[0].totalPrice}}</td>
                                     </tr>
                                 </tbody>
@@ -248,13 +248,13 @@
                                 </td>
                                 <td>
                                     <span class="price">${{item.Price}}</span>
-                                    &nbsp;<i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
-                                             tooltip-trigger="none"
-                                             tooltip-is-open="hotelItem.AvailabilityCategories[$index].showPrice"
-                                             tooltip-placement="bottom" tooltip-class="customClass"
-                                             uib-tooltip-template="'myTooltipTemplate.html'"
-                                             data-ng-click="showHidePrice($index)"
-                                             > </i>
+                                    &nbsp;
+                                    <i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
+                                       tooltip-trigger="none"
+                                       tooltip-is-open="hotelItem.AvailabilityCategories[$index].showPrice"
+                                       tooltip-placement="bottom" tooltip-class="customClass"
+                                       uib-tooltip-template="'myTooltipTemplate.html'"
+                                       data-ng-click="showHidePrice($index)"></i>
                                 </td>
                                 <td>
                                     <span data-ng-show="item.CancelInfo == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>

@@ -1,9 +1,9 @@
-define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'inputmask','angular-loading', 'angular-messages', 'ui-grid', 'angular-appinsights'], function (_, angular) {
+define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'inputmask','angular-loading', 'angular-messages', 'ui-grid', 'angular-appinsights','clickoutside'], function (_, angular) {
 
     var services = angular.module('chd.services', ['ngCookies','LocalStorageModule', /*'ngSanitize',*/ 'pascalprecht.translate', 'angular.css.injector', 'angular-appinsights']);
     var filters = angular.module('chd.filters', []);
     var interceptors = angular.module('chd.interceptors',[services.name]);
-    var directives = angular.module('chd.directives', ["angucomplete-alt", "green.inputmask4angular", 'ngMessages']);
+    var directives = angular.module('chd.directives', ["angucomplete-alt", "green.inputmask4angular", 'ngMessages', 'angular-click-outside']);
     var controllers = angular.module('chd.controllers', [services.name, 'darthwade.dwLoading']);
     var app = angular.module('chd', ['ui.bootstrap','ngRoute','ui.grid', filters.name, directives.name, services.name, interceptors.name, controllers.name]);
 

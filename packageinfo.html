@@ -25,6 +25,12 @@
     <script src="scripts/libs/respond.min.js"></script>
     <![endif]-->
     <!--<script type="text/javascript" src="https://maps.google.cn/maps/api/js?sensor=false"></script>-->
+    <script type="text/javascript">
+        var require = {
+            waitSeconds: 0,
+            urlArgs : "bust="+new Date().getTime()
+        };
+    </script>
     <script type="text/javascript" src="scripts/libs/require.min.js" data-main="scripts/main"
             data-bootstrap="app/bootstrap/packageinfo"></script>
     <!-- other js -->
