@@ -2,13 +2,13 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
     'use strict';
 
     modules.controllers
-        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService','$rootScope','ServicesService',
-            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService, $rootScope, ServicesService) {
+        .controller('HeaderController', ['_', '$scope', 'HeaderService', '$location', 'SessionService', '$window', '$http', '$q', 'SearchService','$loading','localStorageService','$rootScope','$timeout','ServicesService',
+            function (_, $scope, HeaderService, $location, SessionService, $window, $http, $q, SearchService, $loading, localStorageService, $rootScope, $timeout, ServicesService) {
                 $scope.showLanguage = HeaderService.showLanguage;
                 $scope.showAccount = HeaderService.showAccount;
                 $scope.showSearchBox = HeaderService.showSearchBox;
 
-                $scope.keyword = ''; //($location.search().keyword ? $location.search().keyword : '');
+                $scope.keyword = ($location.search().keyword ? $location.search().keyword : '');
                 $scope.results = null;
                 $scope.webRoot = SessionService.config().webRoot;
                 $scope.languageId = SessionService.languageId();
@@ -20,7 +20,7 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     if (word != '' && !isSearchPage) {
                         localStorageService.remove('searchResult');
                         localStorageService.set('searchResult', $scope.results);
-                        $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId;// + '?keyword=' + word;
+                        $window.location.href = $scope.webRoot + 'search.html#/' + $scope.languageId + '?keyword=' + word;
                     } else {
                         $rootScope.$broadcast("SearchResult:Change", $scope.results);
                         $scope.showSearchResult = false;
@@ -85,11 +85,9 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                 $scope.onClick = function (e) {
                     //if(isSearchPage)
                     //    return;
-
                     $scope.showSearchResult = true;
 
                 };
-
 
                 function cancelHttpRequest() {
                     if (httpCanceller) {
@@ -98,37 +96,12 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     }
                 }
 
-                $scope.searched = false;
-                $scope.destinations = [];
-                $scope.hotels = [];
-                $scope.activities = [];
-                $scope.packages = [];
-                $scope.tours = [];
-                $scope.transportation = [];
-
-                $scope.$watch('keyword', function (newValue, oldValue, scope) {
-                    //if(isSearchPage || newValue == oldValue)
-                        if(newValue == oldValue)
-                        return;
-
-                    $scope.destinations = [];
-                    $scope.hotels = [];
-                    $scope.activities = [];
-                    $scope.packages =[];
-                    $scope.tours = [];
-                    $scope.transportation = [];
-
-                    if (newValue.length < 1) {
-                        $scope.showSearchResult = true;
-                        $scope.searched = false;
-                        return;
-                    }
-
+                function startSearech(keywords) {
                     $scope.searched = true;
                     $scope.showSearchResult = true;
                     cancelHttpRequest();
                     //$loading.start('search-loading');
-                    httpCanceller = SearchService.searchForKeyword(newValue);
+                    httpCanceller = SearchService.searchForKeyword(keywords);
                     httpCanceller.promise.then(function (data) {
                         $loading.finish('search-loading');
                         $scope.results = [];
@@ -168,6 +141,44 @@ define(['app/services/header-service', 'app/services/search-service', 'app/utils
                     }, function (data) {
                         //$loading.finish('search-loading');
                     });
+                }
+
+                $scope.searched = false;
+                $scope.destinations = [];
+                $scope.hotels = [];
+                $scope.activities = [];
+                $scope.packages = [];
+                $scope.tours = [];
+                $scope.transportation = [];
+
+                var timeoutPromise = null;
+
+                $scope.$watch('keyword', function (newValue, oldValue, scope) {
+                    //if(isSearchPage || newValue == oldValue)
+                    if(newValue == oldValue)
+                        return;
+
+                    $scope.destinations = [];
+                    $scope.hotels = [];
+                    $scope.activities = [];
+                    $scope.packages =[];
+                    $scope.tours = [];
+                    $scope.transportation = [];
+
+                    if (newValue.length < 3) {
+                        $scope.showSearchResult = true;
+                        $scope.searched = false;
+                        return;
+                    }
+
+                    if(timeoutPromise != null) {
+                        $timeout.cancel(timeoutPromise);
+                        timeoutPromise = null;
+                    }
+                    timeoutPromise = $timeout(function(){
+                        timeoutPromise = null;
+                        startSearech(newValue);
+                    }, 500);
 
                 });
             }]);

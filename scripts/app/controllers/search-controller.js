@@ -127,7 +127,7 @@ define(['app/services/search-service', 'app/utils', 'app/services/services-servi
                 }
 
                 function init() {
-                    if (!$scope.results)
+                    if (!$scope.results || $scope.results.length == 0 )
                         load();
                     else
                         populateData($scope.results);
