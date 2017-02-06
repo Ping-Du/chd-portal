@@ -194,6 +194,53 @@ define(['app/services/hotel-service',
 
                 $scope.hotelItem = null;
                 $scope.showMap = false;
+
+                $scope.scrollToControl = function(controlId) {
+                    scrollToControl(''+controlId);
+                };
+
+                function prepareInformation() {
+                    var i, j;
+                    var parts = {};
+
+                    parts['0'] = 'top';
+                    parts["1"] = 'category';
+
+                    // remove main info
+                    for(i = 0; i < $scope.hotelItem.AdditionalInformation.length; i++) {
+                        if($scope.hotelItem.AdditionalInformation[i].InformationId == $scope.hotelItem.MainInformation.InformationId) {
+                            $scope.hotelItem.AdditionalInformation.splice(i, 1);
+                        }
+                    }
+
+                    // remove duplicated info
+                    if($scope.hotelItem.Warnings) {
+                        for (i = 0; i < $scope.hotelItem.Warnings.length; i++) {
+                            for (j = 0; j < $scope.hotelItem.AdditionalInformation.length; j++) {
+                                if ($scope.hotelItem.Warnings[i].InformationId == $scope.hotelItem.AdditionalInformation[j].InformationId) {
+                                    $scope.hotelItem.AdditionalInformation.splice(j, 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    for(i = 0; i < $scope.hotelItem.AdditionalInformation.length; i++) {
+                        parts[""+(i+2)] = "" + $scope.hotelItem.AdditionalInformation[i].InformationId;
+                    }
+
+                    parts[""+(2+$scope.hotelItem.AdditionalInformation.length)] = "term";
+                    parts[""+(2+$scope.hotelItem.AdditionalInformation.length+1)] = "map";
+
+                    $timeout(function() {
+                        $('.detail-nav-wrap').stickUp({
+                            parts: parts,
+                            itemClass: 'menu-item',
+                            itemHover: 'active'
+                        });
+                    }, 1000);
+                }
+
                 function loadHotel(reload) {
                     $scope.showNotAvailable = false;
                     HotelService.getHotelDetail($routeParams.hotelId).then(function (data) {
@@ -201,6 +248,7 @@ define(['app/services/hotel-service',
                         setDetailTitle(data);
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
+                        prepareInformation();
                         clearEmptyAddress(data.Address);
                         if (!reload)
                             doAdditionalProcess(data);
@@ -211,6 +259,7 @@ define(['app/services/hotel-service',
                 $scope.totalPayAtHotel = 0;
                 $scope.showRoomSupplements = false;
                 $scope.showNightSupplements = false;
+                $scope.showGuestPrice = false;
                 $scope.showGuestSupplements = false;
                 $scope.showBeds = false;
                 $scope.totalColSpan = 6;
@@ -295,6 +344,9 @@ define(['app/services/hotel-service',
                                         $scope.totalPayAtHotel += guest.Supplements[m].Price;
                                     }
                                 }
+
+                                //guest.Nights[j].Price = 0;
+
                                 $scope.currentCategory.push({
                                     beds:room.Beds,
                                     roomSupplements:roomSupplements,
@@ -315,6 +367,10 @@ define(['app/services/hotel-service',
                                     guestSupplements:guestSupplements,
                                     totalPrice: category.Price
                                 });
+
+                                if(guest.Nights[j].Price != 0) {
+                                    $scope.showGuestPrice = true;
+                                }
                             }
 
                             for(k = 0; k < room.Guests.length; k++) {
@@ -331,6 +387,8 @@ define(['app/services/hotel-service',
                     if($scope.showGuestSupplements)
                         $scope.totalColSpan ++;
                     if($scope.showBeds)
+                        $scope.totalColSpan++;
+                    if($scope.showGuestPrice)
                         $scope.totalColSpan++;
                 };
 
@@ -402,57 +460,7 @@ define(['app/services/hotel-service',
 
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
-                            //for(var i = 0; i < data[0].AvailabilityCategories.length; i++) {
-                            //    for(var j = 0; j < data[0].AvailabilityCategories[i].Rooms.length; j++) {
-                            //        data[0].AvailabilityCategories[i].Rooms[j].Supplements = [
-                            //            {
-                            //                "Description": "Cleaning Fee",
-                            //                "Price": 8,
-                            //                "SupplementId": "1200028",
-                            //                "IsBoard": false,
-                            //                "AtProperty": true,
-                            //                "RoomId": 0,
-                            //                "GuestId": null,
-                            //                "NightId": null
-                            //            },
-                            //            {
-                            //                "Description": "Continental Breakfast",
-                            //                "Price": 0,
-                            //                "SupplementId": "1",
-                            //                "IsBoard": true,
-                            //                "AtProperty": false,
-                            //                "RoomId": 0,
-                            //                "GuestId": null,
-                            //                "NightId": null
-                            //            }
-                            //        ];
-                            //        data[0].AvailabilityCategories[i].Rooms[j].Beds = 1;
-                            //        for(var k = 0; k < data[0].AvailabilityCategories[i].Rooms[j].Nights.length; k++) {
-                            //            data[0].AvailabilityCategories[i].Rooms[j].Nights[k].Supplements = [{
-                            //                "Description": "Test ",
-                            //                "Price": 5,
-                            //                "SupplementId": "1000615",
-                            //                "IsBoard": false,
-                            //                "AtProperty": true,
-                            //                "RoomId": null,
-                            //                "GuestId": 1,
-                            //                "NightId": null
-                            //            }];
-                            //        }
-                            //        for(var m = 0; m < data[0].AvailabilityCategories[i].Rooms[j].Guests.length; m++) {
-                            //            data[0].AvailabilityCategories[i].Rooms[j].Guests[m].Supplements = [{
-                            //                "Description": "City Tax ",
-                            //                "Price": 10,
-                            //                "SupplementId": "1000615",
-                            //                "IsBoard": false,
-                            //                "AtProperty": true,
-                            //                "RoomId": null,
-                            //                "GuestId": 1,
-                            //                "NightId": null
-                            //            }];
-                            //        }
-                            //    }
-                            //}
+
                             $scope.hotelItem = data[0];
                             setDetailTitle(data[0]);
                             if ($scope.hotelItem.AvailabilityCategories == null)
@@ -460,6 +468,8 @@ define(['app/services/hotel-service',
                             if (data[0].AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }
+
+                            prepareInformation();
 
                             clearEmptyAddress(data[0].Address);
                             if (!reload)

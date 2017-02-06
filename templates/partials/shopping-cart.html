@@ -43,7 +43,7 @@
                                             <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.Name}}</td>
                                             <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Name}}</td>
                                             <td data-ng-show="$even" style="color:red">
-                                                ${{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Price}}
+                                                ${{shoppingItems.hotels[$index/2].product.AvailabilityCategories[shoppingItems.hotels[$index/2].index].Price| number: 2}}
                                             </td>
                                             <td data-ng-show="$even">{{shoppingItems.hotels[$index/2].product.StartDate | limitTo:10 }}</td>
                                             <td data-ng-show="$even">
@@ -86,7 +86,7 @@
                                             <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].Name}}</td>
                                             <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.StartDate | limitTo:10 }}</td>
                                             <td data-ng-show="$even" style="color:red">
-                                                ${{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].Price}}
+                                                ${{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].Price | number: 2}}
                                             </td>
                                             <td data-ng-show="$even">{{shoppingItems.services[$index/2].product.AvailabilityCategories[shoppingItems.services[$index/2].index].guestsInfo}}
                                             </td>
@@ -121,7 +121,7 @@
                                             <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].StartDate | limitTo:10 }}</td>
                                             <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].EndDate | limitTo:10 }}</td>
                                             <td data-ng-show="$even" style="color:red">
-                                                ${{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].Price}}
+                                                ${{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].Price| number: 2}}
                                             </td>
                                             <td data-ng-show="$even">{{shoppingItems.packages[$index/2].product.AvailabilityCategories[shoppingItems.packages[$index/2].index].guestsInfo}}
                                             </td>
@@ -247,7 +247,7 @@
                                         <tr data-ng-repeat="room in hotel.Rooms">
                                             <td>{{hotel.CategoryName}}</td>
                                             <td>{{$index+1}}</td>
-                                            <td style="color:red">${{room.Price}}</td>
+                                            <td style="color:red">${{room.Price | number: 2}}</td>
                                             <td><select class="form-control input-sm"
                                                         data-ng-model="room.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
@@ -281,7 +281,7 @@
                                         <tr data-ng-repeat="service in bookingInfo.Services">
                                             <td>{{service.ServiceName}}</td>
                                             <td>{{service.CategoryName}}</td>
-                                            <td style="color:red">${{service.Price}}</td>
+                                            <td style="color:red">${{service.Price| number: 2}}</td>
                                             <td><select class="form-control input-sm"
                                                         data-ng-model="service.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
@@ -315,7 +315,7 @@
                                         <tr data-ng-repeat="room in package.Rooms">
                                             <td>{{$index+1}}</td>
                                             <td>{{package.Nights}}</td>
-                                            <td style="color:red">${{room.Price}}</td>
+                                            <td style="color:red">${{room.Price| number: 2}}</td>
                                             <td><select class="form-control input-sm"
                                                         data-ng-model="room.Guests.PrimaryGuestId"
                                                         data-ng-options="guest.GuestId as guest.ShowName for guest in bookingInfo.Guests"
@@ -345,14 +345,14 @@
                                 </p>
                                 <div data-ng-show="bookingInfo.Hotels.length > 0">
                                     <hr>
-                                    <strong>{{"HOTELS"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.HotelPrice}}</strong>
+                                    <strong>{{"HOTELS"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.HotelPrice| number: 2}}</strong>
                                     <p data-ng-repeat="hotel in bookingInfo.Hotels">{{"NAME"|translate}}: {{hotel.HotelName}}&nbsp;&nbsp;&nbsp;&nbsp;{{"CATEGORY"|translate}}:
                                         {{hotel.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;{{"ROOMS"|translate}}: {{hotel.Rooms.length}}&nbsp;&nbsp;&nbsp;&nbsp;{{"CHECK_IN"|translate}}: {{hotel.StartDate | limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;{{"NIGHTS"|translate}}:
-                                        {{hotel.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{hotel.Price}}</p>
+                                        {{hotel.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{hotel.Price| number: 2}}</p>
                                 </div>
                                 <div data-ng-show="bookingInfo.Services.length > 0">
                                     <hr>
-                                    <strong>{{"SERVICES"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.ServicePrice}}</strong>
+                                    <strong>{{"SERVICES"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.ServicePrice| number: 2}}</strong>
                                     <p data-ng-repeat="service in bookingInfo.Services">
                                         {{"NAME"|translate}}: {{service.ServiceName}}
                                         &nbsp;&nbsp;&nbsp;&nbsp;{{"CATEGORY"|translate}}: {{service.CategoryName}}
@@ -360,15 +360,15 @@
                                         <span data-ng-show="service.DropoffShowName != ''">&nbsp;&nbsp;&nbsp;&nbsp;{{"DROP_OFF"|translate}}: {{service.DropoffShowName}}</span>
                                         &nbsp;&nbsp;&nbsp;&nbsp;{{"START_DATE"|translate}}: {{service.StartDate | limitTo:10}}
                                         <span data-ng-show="service.ServiceTime != ''">&nbsp;&nbsp;&nbsp;&nbsp;{{"TIME"|translate}}: {{service.ServiceTime}}</span>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{service.Price}}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{service.Price| number: 2}}
                                     </p>
                                 </div>
                                 <div data-ng-show="bookingInfo.Packages.length > 0">
                                     <hr>
-                                    <strong>{{"PACKAGES"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.PackagePrice}}</strong>
+                                    <strong>{{"PACKAGES"|translate}} - {{"SUBTOTAL"|translate}}: ${{bookingInfo.PackagePrice| number: 2}}</strong>
                                     <p data-ng-repeat="package in bookingInfo.Packages">{{"NAME"|translate}}: {{package.Name}}&nbsp;&nbsp;&nbsp;&nbsp;{{"CATEGORY"|translate}}:
                                         {{package.CategoryName}}&nbsp;&nbsp;&nbsp;&nbsp;{{"ROOMS"|translate}}: {{package.Rooms.length}}&nbsp;&nbsp;&nbsp;&nbsp;{{"START_DATE"|translate}}: {{package.StartDate | limitTo:10}}&nbsp;&nbsp;&nbsp;&nbsp;{{"NIGHTS"|translate}}:
-                                        {{package.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{package.Price}}</p>
+                                        {{package.Nights}}&nbsp;&nbsp;&nbsp;&nbsp;{{"PRICE"|translate}}: ${{package.Price| number: 2}}</p>
                                 </div>
                                 <hr>
                             </div>

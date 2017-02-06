@@ -93,21 +93,23 @@
                     <div class="col-xs-6 col-md-6"><span>{{"ID"|translate}}: </span>{{hotelItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"><span>{{"TYPE"|translate}}: </span>{{hotelItem.HotelType.Name}}</div>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.MainInformation.PlainText}}</span></a>
+                <!--<div><a href onclick="scrollToControl('detail')"><span>{{hotelItem.MainInformation.PlainText}}</span></a>-->
+                <!--</div>-->
+                <div>{{hotelItem.MainInformation.PlainText}}
                 </div>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                 <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
-                <div class="pos-map">
-                    <a href data-ng-show="!hideSearchBar" onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"ROOM_TYPE"|translate}}</a>
-                    <!--<a href onclick="scrollToControl('detail')" data-ng-show="hotelItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
-                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
-                    <br><br>
-                    <a href onclick="scrollToControl('term')" data-ng-show="hotelItem.Warnings.length > 0"><i
-                            class="glyphicon glyphicon-info-sign"></i>&nbsp;{{hotelItem.Warnings[0].Title}}</a>
-                </div>
+                <!--<div class="pos-map">-->
+                    <!--<a href data-ng-show="!hideSearchBar" onclick="scrollToControl('category')"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"ROOM_TYPE"|translate}}</a>-->
+                    <!--&lt;!&ndash;<a href onclick="scrollToControl('detail')" data-ng-show="hotelItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>&ndash;&gt;-->
+                    <!--<a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>-->
+                    <!--<br><br>-->
+                    <!--<a href onclick="scrollToControl('term')" data-ng-show="hotelItem.Warnings.length > 0"><i-->
+                            <!--class="glyphicon glyphicon-info-sign"></i>&nbsp;{{hotelItem.Warnings[0].Title}}</a>-->
+                <!--</div>-->
                 <!--<div class="row">-->
                 <!--<div class="price-btn-part">-->
                 <!--<div class="col-xs-12 col-md-12 text-right">-->
@@ -122,8 +124,11 @@
                     <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="!hideSearchBar"><a href onclick="scrollToControl('category')">{{"ROOM_TYPE"|translate}}</a>
                     </li>
-                    <li class="menu-item" data-ng-show="hotelItem.AdditionalInformation.length > 0"><a href
-                                                                                                       onclick="scrollToControl('detail')">{{detailTitle}}</a>
+                    <!--<li class="menu-item" data-ng-show="hotelItem.AdditionalInformation.length > 0" ><a href-->
+                                                                                                       <!--onclick="scrollToControl('detail')">{{detailTitle}}</a>-->
+                    <!--</li>-->
+                    <li class="menu-item" data-ng-repeat="item in hotelItem.AdditionalInformation" ><a href
+                                                                                                        data-ng-click="scrollToControl(item.InformationId)">{{item.Title}}</a>
                     </li>
                     <li class="menu-item" data-ng-show="hotelItem.Warnings.length > 0"><a href
                                                                                           onclick="scrollToControl('term')">{{hotelItem.Warnings[0].Title}}</a>
@@ -185,12 +190,13 @@
                                         <td data-ng-show="showBeds">{{"BEDS"|translate}}</td>
                                         <td data-ng-show="showRoomSupplements">{{"SUPPLEMENTS"|translate}}</td>
                                         <td>{{'NIGHT'|translate}} #</td>
+                                        <td>{{'PRICE'|translate}}</td>
                                         <td data-ng-show="showNightSupplements" >{{"SUPPLEMENTS"|translate}}</td>
                                         <td>{{'GUEST'|translate}} #</td>
                                         <td>{{'TYPE'|translate}}</td>
                                         <td>{{'AGE'|translate}}</td>
                                         <td data-ng-show="showGuestSupplements">{{"SUPPLEMENTS"|translate}}</td>
-                                        <td>{{'GUEST'|translate}} {{'PRICE'|translate}}</td>
+                                        <td data-ng-show="showGuestPrice">{{'PRICE'|translate}}</td>
                                         <!--<td>{{'NIGHT'|translate}} {{'PRICE'|translate}}</td>-->
                                         <td data-ng-show="totalPayAtHotel > 0">{{'PAY_AT_HOTEL'|translate}}</td>
                                         <td>{{"SUBTOTAL"|translate}}</td>
@@ -202,20 +208,21 @@
                                         <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow && showBeds ">{{item.beds}}</td>
                                         <td rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow && showRoomSupplements"  class="text-left" data-ng-bind-html="item.roomSupplements"></td>
                                         <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow">{{item.nightId}}</td>
+                                        <td class="text-info" rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow">${{item.nightPrice| number: 2}}</td>
                                         <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow && showNightSupplements"  class="text-left" data-ng-bind-html="item.nightSupplements"></td>
                                         <td>{{item.guestId}}</td>
                                         <td>{{item.guestType}}</td>
                                         <td>{{item.guestAge}}</td>
                                         <td class="text-left" data-ng-bind-html="item.guestSupplements" data-ng-show="showGuestSupplements"></td>
-                                        <td class="text-info">${{item.guestPrice}}</td>
+                                        <td class="text-info" data-ng-show="showGuestPrice">${{item.guestPrice| number: 2}}</td>
                                         <!--<td class="text-warning" rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow" >${{item.nightPrice}}</td>-->
-                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow && totalPayAtHotel > 0" >${{item.nightPayAtHotel}}</td>
-                                        <td class="text-red" rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow">${{item.roomPrice}}</td>
+                                        <td rowspan="{{item.nightSpan}}" data-ng-show="item.nightShow && totalPayAtHotel > 0" >${{item.nightPayAtHotel| number: 2}}</td>
+                                        <td class="text-red" rowspan="{{item.roomSpan}}" data-ng-show="item.roomShow">${{item.roomPrice| number: 2}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-right" colspan="{{totalColSpan}}">{{"TOTAL"|translate}}</td>
-                                        <td data-ng-show="totalPayAtHotel" >${{totalPayAtHotel}}</td>
-                                        <td class="text-red">${{currentCategory[0].totalPrice}}</td>
+                                        <td data-ng-show="totalPayAtHotel" >${{totalPayAtHotel| number: 2}}</td>
+                                        <td class="text-red">${{currentCategory[0].totalPrice| number: 2}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -247,7 +254,7 @@
                                     <br><span>{{"ID"|translate}}: {{item.Id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span data-ng-show="item.RatePlan.Name != ''">{{"RATE_PLAN"|translate}}: {{item.RatePlan.Id}}-{{item.RatePlan.Name}}</span>
                                 </td>
                                 <td>
-                                    <span class="price">${{item.Price}}</span>
+                                    <span class="price">${{item.Price | number: 2}}</span>
                                     &nbsp;
                                     <i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
                                        tooltip-trigger="none"
@@ -288,17 +295,25 @@
                 </div>
             </div>
         </section>
-        <section class="detail-wrap" id="detail" data-ng-show="hotelItem.AdditionalInformation.length > 0">
-            <h3>{{detailTitle}}</h3>
 
-            <div class="content" data-ng-repeat="item in hotelItem.AdditionalInformation" data-ng-show="item.Section != hotelItem.MainInformation.Section && item.Section != 'HDBRIEFDESC'">
-                <h4 class="text-red">{{item.Title}}</h4>
-                <hr>
+        <!--<section class="detail-wrap" id="detail" data-ng-show="hotelItem.AdditionalInformation.length > 0">-->
+            <!--<h3>{{detailTitle}}</h3>-->
+            <!--<div class="content" data-ng-repeat="item in hotelItem.AdditionalInformation" >-->
+                <!--<h4 class="text-red">{{item.Title}}</h4>-->
+                <!--<hr>-->
+                <!--<p data-ng-bind-html="item.FormattedText">-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</section>-->
+
+        <section class="detail-wrap" data-ng-repeat="item in hotelItem.AdditionalInformation" id="{{item.InformationId}}" data-ng-show="hotelItem.AdditionalInformation.length > 0">
+            <h3>{{item.Title}}</h3>
+            <div class="content">
                 <p data-ng-bind-html="item.FormattedText">
                 </p>
             </div>
-
         </section>
+
         <section class="detail-wrap" id="term" data-ng-show="hotelItem.Warnings.length > 0">
             <h3>{{hotelItem.Warnings[0].Title}}</h3>
 
@@ -394,22 +409,24 @@
 
     }
 
-    //initiating jQuery
-    jQuery(function ($) {
-        $(document).ready(function () {
-            // 为 '.navbar-wrapper' class 启用stickUp插件
-            $('.detail-nav-wrap').stickUp({
-                parts: {
-                    0: 'top',
-                    1: 'category',
-                    2: 'detail',
-                    3: 'term',
-                    4: 'map'
-                },
-                itemClass: 'menu-item',
-                itemHover: 'active'
-            });
-        });
-    });
+//    var parts = {
+////        0: 'top',
+////        1: 'category',
+////        2: 'detail',
+////        3: 'term',
+////        4: 'map'
+//    };
+//
+//    //initiating jQuery
+//    jQuery(function ($) {
+//        $(document).ready(function () {
+//            // 为 '.navbar-wrapper' class 启用stickUp插件
+//            $('.detail-nav-wrap').stickUp({
+//                parts: parts ,
+//                itemClass: 'menu-item',
+//                itemHover: 'active'
+//            });
+//        });
+//    });
 
 </script>

@@ -198,7 +198,7 @@ define(['app/services/account-service',
                             'Guests': item.PassengerCount,
                             'Start': $filter('limitTo')(item.ServicesBegin, 10),
                             'End': $filter('limitTo')(item.ServicesEnd, 10),
-                            'Price': item.Price,
+                            'Price': item.Price.toFixed(2),
                             'Create': $filter('limitTo')(item.CreatedOn, 10),
                             'Availability': item.AvailabilityLevel,
                             'Status': item.Status

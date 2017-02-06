@@ -131,6 +131,53 @@ define(['app/services/services-service',
 
                 $scope.serviceItem = null;
                 $scope.showMap = false;
+
+                $scope.scrollToControl = function(controlId) {
+                    scrollToControl(''+controlId);
+                };
+
+                function prepareInformation() {
+                    var i, j;
+                    var parts = {};
+
+                    parts['0'] = 'top';
+                    parts["1"] = 'category';
+
+                    // remove main info
+                    for(i = 0; i < $scope.serviceItem.AdditionalInformation.length; i++) {
+                        if($scope.serviceItem.AdditionalInformation[i].InformationId == $scope.serviceItem.MainInformation.InformationId) {
+                            $scope.serviceItem.AdditionalInformation.splice(i, 1);
+                        }
+                    }
+
+                    // remove duplicated info
+                    if($scope.serviceItem.Warnings) {
+                        for (i = 0; i < $scope.serviceItem.Warnings.length; i++) {
+                            for (j = 0; j < $scope.serviceItem.AdditionalInformation.length; j++) {
+                                if ($scope.serviceItem.Warnings[i].InformationId == $scope.serviceItem.AdditionalInformation[j].InformationId) {
+                                    $scope.serviceItem.AdditionalInformation.splice(j, 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    for(i = 0; i < $scope.serviceItem.AdditionalInformation.length; i++) {
+                        parts[""+(i+2)] = "" + $scope.serviceItem.AdditionalInformation[i].InformationId;
+                    }
+
+                    parts[""+(2+$scope.serviceItem.AdditionalInformation.length)] = "term";
+                    parts[""+(2+$scope.serviceItem.AdditionalInformation.length+1)] = "map";
+
+                    $timeout(function() {
+                        $('.detail-nav-wrap').stickUp({
+                            parts: parts,
+                            itemClass: 'menu-item',
+                            itemHover: 'active'
+                        });
+                    }, 1000);
+                }
+
                 function loadService(reload) {
                     $scope.showNotAvailable = false;
                     ServicesService.getServiceDetail($routeParams.serviceId).then(function (data) {
@@ -138,15 +185,24 @@ define(['app/services/services-service',
                         setDetailTitle(data);
                         $scope.selectedLocation = data.Location.Id;
                         $scope.selectedLocationName = data.Location.Name;
+                        prepareInformation();
                         clearEmptyAddress(data.Address);
                         if (!reload)
                             doAdditionalProcess(data);
                     });
                 }
 
+                $scope.currentIndex = -1;
+                $scope.closePrice = function() {
+                    if($scope.currentIndex >= 0) {
+                        $scope.showHidePrice($scope.currentIndex);
+                    }
+                };
+
                 $scope.currentCategory = null;
                 $scope.showHidePrice = function(index) {
                     $scope.currentCategory = null;
+                    $scope.currentIndex = index;
                     for (var i = 0; i < $scope.serviceItem.AvailabilityCategories.length; i++) {
                         if (i == index)
                             continue;
@@ -242,6 +298,9 @@ define(['app/services/services-service',
                             if(data[0].AvailabilityCategories.length == 0) {
                                 $scope.showNotAvailable = true;
                             }
+
+                            prepareInformation();
+
                             clearEmptyAddress(data[0].Address);
                             if (!reload)
                                 doAdditionalProcess(data[0]);

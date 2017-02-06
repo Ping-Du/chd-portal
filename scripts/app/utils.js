@@ -178,9 +178,9 @@ function addDays(startDate, days) {
 function makePriceString(lowPrice, highPrice) {
 
     if (lowPrice == highPrice)
-        return '$' + lowPrice;
+        return '$' + lowPrice.toFixed(2);
     else
-        return '$' + lowPrice + ' - $' + highPrice;
+        return '$' + lowPrice.toFixed(2) + ' - $' + highPrice.toFixed(2);
 }
 
 function clearEmptyAddress(address) {

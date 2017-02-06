@@ -90,19 +90,20 @@
                     <div class="col-xs-6 col-md-6"> <span>{{"ID"|translate}}: </span>{{packageItem.ProductId}}</div>
                     <div class="col-xs-6 col-md-6"> <span>{{"TYPE"|translate}}: </span>{{packageItem.PackageType.Name}}</div>
                 </div>
-                <div><a href onclick="scrollToControl('detail')"><span>{{packageItem.MainInformation.PlainText}}</span></a></div>
+                <!--<div><a href onclick="scrollToControl('detail')"><span>{{packageItem.MainInformation.PlainText}}</span></a></div>-->
+                <div>{{packageItem.MainInformation.PlainText}}</div>
                 <!--<div class="tax-com-part">-->
                 <!--<div class="col-xs-6 col-md-6"><span>9.5</span><a href="#">300 comments</a></div>-->
                 <!--<div class="col-xs-6 col-md-6"><span>12%</span><p>Tax & Service</p></div>-->
                 <!--</div>-->
                 <!--<div class="clearfix"></div>-->
-                <div class="pos-map">
-                    <a href onclick="scrollToControl('category')" data-ng-show="!hideSearchBar"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>
-                    <!--<a href onclick="scrollToControl('detail')" data-ng-show="packageItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>-->
-                    <a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>
-                    <br><br>
-                    <a href onclick="scrollToControl('term')" data-ng-show="packageItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{packageItem.Warnings[0].Title}}</a>
-                </div>
+                <!--<div class="pos-map">-->
+                    <!--<a href onclick="scrollToControl('category')" data-ng-show="!hideSearchBar"><i class="glyphicon glyphicon-th-list"></i>&nbsp;{{"CATEGORIES"|translate}}</a>-->
+                    <!--&lt;!&ndash;<a href onclick="scrollToControl('detail')" data-ng-show="packageItem.AdditionalInformation.length > 0"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Detail</a>&ndash;&gt;-->
+                    <!--<a href onclick="scrollToControl('map')"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;{{"LOCATION"|translate}}</a>-->
+                    <!--<br><br>-->
+                    <!--<a href onclick="scrollToControl('term')" data-ng-show="packageItem.Warnings.length > 0"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;{{packageItem.Warnings[0].Title}}</a>-->
+                <!--</div>-->
             </section>
         </div>
         <div class="detail-nav-wrap is-stuck">
@@ -110,7 +111,9 @@
                 <ul>
                     <li class="menu-item"><a href onclick="scrollToControl('top')">{{"TOP"|translate}}</a></li>
                     <li class="menu-item" data-ng-show="!hideSearchBar"><a href onclick="scrollToControl('category')">{{"CATEGORIES"|translate}}</a></li>
-                    <li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{detailTitle}}</a></li>
+                    <!--<li class="menu-item" data-ng-show="packageItem.AdditionalInformation.length > 0"><a href onclick="scrollToControl('detail')">{{detailTitle}}</a></li>-->
+                    <li class="menu-item" data-ng-repeat="item in packageItem.AdditionalInformation" ><a href
+                                                                                                         data-ng-click="scrollToControl(item.InformationId)">{{item.Title}}</a>
                     <li class="menu-item" data-ng-show="packageItem.Warnings.length > 0"><a href onclick="scrollToControl('term')">{{packageItem.Warnings[0].Title}}</a></li>
                     <li class="menu-item"><a href onclick="scrollToControl('map')">{{"LOCATION"|translate}}</a></li>
                 </ul>
@@ -149,7 +152,7 @@
                 <div class="table-content">
                     <div class="table-responsive">
                         <script type="text/ng-template" id="myTooltipTemplate.html">
-                            <table class="table table-bordered" style="margin-bottom:0;">
+                            <table class="table table-bordered" style="margin-bottom:0;" click-outside="closePrice()">
                                 <thead>
                                 <tr>
                                     <td>{{'GUEST'|translate}} #</td>
@@ -163,11 +166,11 @@
                                     <td>{{$index + 1}}</td>
                                     <td>{{guest.Type}}</td>
                                     <td>{{guest.Age}}</td>
-                                    <td>${{guest.Price}}</td>
+                                    <td>${{guest.Price| number: 2}}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-right" colspan="3">{{"TOTAL"|translate}}</td>
-                                    <td class="text-red">${{currentCategory.Price}}</td>
+                                    <td class="text-red">${{currentCategory.Price | number: 2}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -201,7 +204,7 @@
                                     <br><span>{{"ID"|translate}}:{{item.Id}}</span>
                                 </td>
                                 <td>
-                                    <span class="price">${{item.Price}}</span>
+                                    <span class="price">${{item.Price | number: 2}}</span>
                                     &nbsp;<i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
                                              tooltip-trigger="none"
                                              tooltip-is-open="packageItem.AvailabilityCategories[$index].showPrice"
@@ -233,19 +236,27 @@
                 </div>
             </div>
         </section>
-        <section class="detail-wrap" id="detail" data-ng-show="packageItem.AdditionalInformation.length > 0">
-            <h3>{{detailTitle}}</h3>
+        <!--<section class="detail-wrap" id="detail" data-ng-show="packageItem.AdditionalInformation.length > 0">-->
+            <!--<h3>{{detailTitle}}</h3>-->
+            <!--<div class="content">-->
+                <!--&lt;!&ndash;<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>&ndash;&gt;-->
+                <!--<p data-ng-repeat="item in packageItem.PrimaryAlternates">{{item}}</p>-->
+                <!--<div class="content" data-ng-repeat="item in packageItem.AdditionalInformation">-->
+                    <!--<h4 class="text-red">{{item.Title}}</h4>-->
+                    <!--<hr>-->
+                    <!--<p data-ng-bind-html="item.FormattedText">-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</section>-->
+        <section class="detail-wrap" data-ng-repeat="item in packageItem.AdditionalInformation" id="{{item.InformationId}}" data-ng-show="packageItem.AdditionalInformation.length > 0">
+            <h3>{{item.Title}}</h3>
             <div class="content">
-                <!--<h4>{{hotelItem.AdditionalInformation[1].Title}}</h4>-->
-                <p data-ng-repeat="item in packageItem.PrimaryAlternates">{{item}}</p>
-                <div class="content" data-ng-repeat="item in packageItem.AdditionalInformation" data-ng-show="item.Section != packageItem.MainInformation.Section && item.Section != 'HDBRIEFDESC'">
-                    <h4 class="text-red">{{item.Title}}</h4>
-                    <hr>
-                    <p data-ng-bind-html="item.FormattedText">
-                    </p>
-                </div>
+                <p data-ng-bind-html="item.FormattedText">
+                </p>
             </div>
         </section>
+
         <section class="detail-wrap" id="term" data-ng-show="packageItem.Warnings.length > 0">
             <h3>{{packageItem.Warnings[0].Title}}</h3>
             <div class="content">
@@ -317,20 +328,23 @@
 
     }
 
-    //initiating jQuery
-    jQuery(function($) {
-        $(document).ready( function() {
-            // 为 '.navbar-wrapper' class 启用stickUp插件
-            $('.detail-nav-wrap').stickUp({
-                parts: {
-                    0:'top',
-                    1: 'category',
-                    2: 'detail',
-                    3:'term',
-                    4: 'map'},
-                itemClass: 'menu-item',
-                itemHover: 'active' });
-        });
-    });
+//    var parts = {
+////        0: 'top',
+////        1: 'category',
+////        2: 'detail',
+////        3: 'term',
+////        4: 'map'
+//    };
+//
+//    //initiating jQuery
+//    jQuery(function($) {
+//        $(document).ready( function() {
+//            // 为 '.navbar-wrapper' class 启用stickUp插件
+//            $('.detail-nav-wrap').stickUp({
+//                parts: parts,
+//                itemClass: 'menu-item',
+//                itemHover: 'active' });
+//        });
+//    });
 
 </script>
