@@ -122,7 +122,7 @@
   "NIGHT":"Night",
   "CATEGORY":"Category",
   "CATEGORIES":"Categories",
-  "ROOM_TYPE":"Room Type",
+  "ROOM_TYPE":"Room Types",
   "ROOMS":"Rooms",
   "ROOM":"Room",
   "SERVICES":"Services",

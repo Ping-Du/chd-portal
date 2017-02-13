@@ -79,8 +79,8 @@
                                 <div class="col-md-3"><strong>{{"PRICE"|translate}}: </strong><span class="text-danger">${{hotel.Price| number: 2}}</span></div>
                                 <div class="col-md-6"><strong>{{"AVAILABILITY"|translate}}: </strong>{{hotel.AvailabilityLevel}}</div>
                                 <div class="col-md-6"><strong>{{"CANCEL_BY"|translate}}:</strong>
-                                    <span data-ng-show="hotel.CancelInfo == null"><a href data-ng-click="checkHotelCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
-                                    <span data-ng-show="hotel.CancelInfo != null">{{hotel.CancelInfo.CancelBy | limitTo:10}}</span>
+                                    <span data-ng-show="hotel.CancelInfo == null || hotel.CancelInfo.CancelBy == null"><a href data-ng-click="checkHotelCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="hotel.CancelInfo != null && hotel.CancelInfo.CancelBy != null ">{{hotel.CancelInfo.CancelBy | limitTo:10}}</span>
                                 </div>
                             </div>
                             <br>
@@ -118,8 +118,8 @@
                                 <div class="col-md-3"><strong>{{"PRICE"|translate}}: </strong><span class="text-danger">${{service.Price| number: 2}}</span></div>
                                 <div class="col-md-3"><strong>{{"AVAILABILITY"|translate}}: </strong>{{service.AvailabilityLevel}}</div>
                                 <div class="col-md-3"><strong>{{"CANCEL_BY"|translate}}: </strong>
-                                    <span data-ng-show="service.CancelInfo == null"><a href data-ng-click="checkServiceCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
-                                    <span data-ng-show="service.CancelInfo != null">{{service.CancelInfo.CancelBy | limitTo:10}}</span>
+                                    <span data-ng-show="service.CancelInfo == null || service.CancelInfo.CancelBy == null"><a href data-ng-click="checkServiceCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="service.CancelInfo != null && service.CancelInfo.CancelBy != null">{{service.CancelInfo.CancelBy | limitTo:10}}</span>
                                 </div>
                             </div>
                             <br>

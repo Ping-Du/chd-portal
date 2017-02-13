@@ -63,7 +63,7 @@
         <li role="menuitem" data-ng-repeat="item in destinations">
             <div class="row">
                 <div class="col-sm-1">
-                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" data-ng-show="item.MainInformation.ThumbnailImageURI != ''">
                 </div>
                 <div class="col-sm-7">
                     <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
@@ -83,7 +83,7 @@
         <li role="menuitem" data-ng-repeat="item in hotels">
             <div class="row">
                 <div class="col-sm-1">
-                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" data-ng-show="item.MainInformation.ThumbnailImageURI != ''">
                 </div>
                 <div class="col-sm-7">
                     <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
@@ -103,7 +103,7 @@
         <li role="menuitem" data-ng-repeat="item in activities">
             <div class="row">
                 <div class="col-sm-1">
-                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" data-ng-show="item.MainInformation.ThumbnailImageURI != ''">
                 </div>
                 <div class="col-sm-7">
                     <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
@@ -146,7 +146,7 @@
         <li role="menuitem" data-ng-repeat="item in transportation">
             <div class="row">
                 <div class="col-sm-1">
-                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" data-ng-show="item.MainInformation.ThumbnailImageURI != ''">
                 </div>
                 <div class="col-sm-7">
                     <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
@@ -167,7 +167,7 @@
         <li role="menuitem" data-ng-repeat="item in packages">
             <div class="row">
                 <div class="col-sm-1">
-                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}">
+                    <img class="image-size-16" data-ng-src="{{item.MainInformation.ThumbnailImageURI}}" data-ng-show="item.MainInformation.ThumbnailImageURI != ''">
                 </div>
                 <div class="col-sm-7">
                     <a href data-ng-href="{{item.DetailsURI}}">{{item.Name}}<i data-ng-class="item.starClass"></i></a>
