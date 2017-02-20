@@ -143,7 +143,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             AvailabilityLevel: category.AvailabilityLevel,
                             Price: category.Price,
                             Rooms: [],
-                            Supplements:[]
+                            Supplements:[],
+                            ConnectionId:category.ConnectionId,
+                            ProductMappingId:category.ProductMappingId
                         });
                         productGuests = 0;
                         startPos = $scope.bookingInfo.Guests.length;
@@ -253,6 +255,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Note: '',
                             AvailabilityLevel: serviceCategory.AvailabilityLevel,
                             Price: serviceCategory.Price,
+                            ConnectionId:serviceCategory.ConnectionId,
+                            ProductMappingId:serviceCategory.ProductMappingId,
                             Guests: {
                                 GuestIds: [],
                                 PrimaryGuestId: serviceGuestId
@@ -313,7 +317,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Price: category.Price,
                             Rooms: [],
                             TransportationServices: [],
-                            Nights: category.Nights
+                            Nights: category.Nights,
+                            ConnectionId:category.ConnectionId,
+                            ProductMappingId:category.ProductMappingId
                         });
                         for (j = 0; j < category.Services.length; j++) {
                             $scope.bookingInfo.Packages[i].TransportationServices.push({
@@ -674,7 +680,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             AvailabilityLevel: h.AvailabilityLevel,
                             Price: h.Price,
                             Rooms: h.Rooms,
-                            Supplements: h.Supplements
+                            Supplements: h.Supplements,
+                            ConnectionId:h.ConnectionId,
+                            ProductMappingId:h.ProductMappingId
                         });
 
                     }
@@ -693,7 +701,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Note: s.Note,
                             AvailabilityLevel: s.AvailabilityLevel,
                             Price: s.Price,
-                            Guests: s.Guests
+                            Guests: s.Guests,
+                            ConnectionId:s.ConnectionId,
+                            ProductMappingId:s.ProductMappingId
                         });
                     }
                     for (i = 0; i < $scope.bookingInfo.Packages.length; i++) {
@@ -707,7 +717,9 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             AvailabilityLevel: pkg.AvailabilityLevel,
                             Price: pkg.Price,
                             Rooms: pkg.Rooms,
-                            TransportationServices: pkg.TransportationServices
+                            TransportationServices: pkg.TransportationServices,
+                            ConnectionId:pkg.ConnectionId,
+                            ProductMappingId:pkg.ProductMappingId
                         });
                         //for(j = 0; j < param.Packages[i].Rooms.length; j++) {
                         //    param.Packages[i].Rooms[j].

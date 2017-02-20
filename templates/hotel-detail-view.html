@@ -227,7 +227,21 @@
                                 </tbody>
                             </table>
                         </script>
-                        <table class="table table-hover">
+                        <table class="table table-hover" data-ng-show="!hotelItem.AvailabilityCategories">
+                            <thead>
+                            <tr class="thead">
+                                <td class="tlist-3">{{"NAME"|translate}}</td>
+                                <td>{{"INFORMATION"|translate}}</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="item in hotelItem.Categories" data-ng-show="item.Information.length == 1">
+                                <td><strong>{{item.Name}}</strong></td>
+                                <td data-ng-bind-html="item.Information[0].FormattedText"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-hover" data-ng-show="hotelItem.AvailabilityCategories">
                             <thead>
                             <tr class="thead">
                                 <td>{{"NAME"|translate}}</td>
@@ -238,7 +252,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-ng-repeat="item in hotelItem.AvailabilityCategories"
+                            <tr data-ng-repeat-start="item in hotelItem.AvailabilityCategories"
                                 data-ng-class="{'active':item.AvailabilityLevel=='NotAvailable'}">
                                 <td>
                                     <!--<div class="media media-roomlist">-->
@@ -250,7 +264,7 @@
                                     <!--<p class="p-detail">Product ID: {{item.Id}}</p>-->
                                     <!--</div>-->
                                     <!--</div>-->
-                                    <span><strong>{{item.Name}}</strong></span>
+                                    <span><strong><a href data-ng-click="item.show = !item.show">{{item.Name}}</a></strong></span>
                                     <br><span>{{"ID"|translate}}: {{item.Id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span data-ng-show="item.RatePlan.Name != ''">{{"RATE_PLAN"|translate}}: {{item.RatePlan.Id}}-{{item.RatePlan.Name}}</span>
                                 </td>
                                 <td>
@@ -285,6 +299,9 @@
                                         <span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}
                                     </button>
                                 </td>
+                            </tr>
+                            <tr data-ng-repeat-end data-ng-show="item.Information.length == 1 && item.show" >
+                                <td colspan="5" data-ng-bind-html="item.Information[0].FormattedText"></td>
                             </tr>
                             </tbody>
                         </table>

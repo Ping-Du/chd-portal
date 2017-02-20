@@ -11,9 +11,9 @@ define(['app/services/hotel-service',
     'use strict';
 
     modules.controllers
-        .controller('HotelDetailController', ['$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
+        .controller('HotelDetailController', ['_','$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
             'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore', '$timeout', 'ShoppingService',
-            function ($rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
+            function (_, $rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
 
                 console.info('path:' + $location.path());
                 //console.info('url:' + $location.url());
@@ -462,6 +462,9 @@ define(['app/services/hotel-service',
                         if (data.length > 0) {
 
                             $scope.hotelItem = data[0];
+                            _.each(data[0].AvailabilityCategories, function(item, index){
+                                item.show = false;
+                            });
                             setDetailTitle(data[0]);
                             if ($scope.hotelItem.AvailabilityCategories == null)
                                 $scope.hotelItem.AvailabilityCategories = [];
@@ -492,7 +495,7 @@ define(['app/services/hotel-service',
                 $scope.checkCancelInfo = function(index) {
                     var item = $scope.hotelItem.AvailabilityCategories[index];
                     HotelService.getCancellationPolicies($scope.hotelItem.ProductId, item.Id,
-                        $scope.hotelItem.StartDate, item.Rooms[0].Nights.length).then(function(data){
+                        $scope.hotelItem.StartDate, item.Rooms[0].Nights.length, item.ConnectionId).then(function(data){
                         $scope.hotelItem.AvailabilityCategories[index].CancelInfo = data;
                     });
                 };
