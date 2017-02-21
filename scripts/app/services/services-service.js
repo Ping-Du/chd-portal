@@ -44,6 +44,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 getServicesByLanguageId:function() {
                     return invoke('/languages/'+SessionService.languageId(), 'GET');
                 },
+                getServiceNamesByLanguageId:function() {
+                    return invoke('/list/languages/'+SessionService.languageId(), 'GET');
+                },
                 getFeaturedServices:function() {
                     return invoke('/featured/languages/'+SessionService.languageId(), 'GET');
                 },

@@ -36,8 +36,16 @@ define(['app/services/hotel-service',
 
                     SearchService.getLocations().then(function (data) {
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        HotelService.getHotelsByLanguageId().then(function (hotelList) {
-                            allItems = data.concat(hotelList);
+                        //HotelService.getHotelsByLanguageId().then(function (hotelList) {
+                        HotelService.getHotelNamesByLanguageId().then(function (hotelList) {
+                            allItems = data.concat([]);
+                            _.each(hotelList, function(item, index){
+                                allItems.push({
+                                    ProductId: item.Id,
+                                    Name: item.Name,
+                                    ProductType:item.Type
+                                });
+                            });
                             $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });

@@ -38,6 +38,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 getPackagesByLanguageId: function () {
                     return invoke('/languages/'+SessionService.languageId(), 'GET', null);
                 },
+                getPackageNamesByLanguageId: function () {
+                    return invoke('/list/languages/'+SessionService.languageId(), 'GET', null);
+                },
                 getFeaturedPackages:function() {
                     return invoke('/featured/languages/'+SessionService.languageId(), 'GET', null);
                 },

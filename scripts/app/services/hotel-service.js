@@ -41,6 +41,9 @@ define(['app/services/session-service', 'app/services/cache-service'], function 
                 getHotelsByLanguageId: function () {
                     return invoke('/languages/' + SessionService.languageId(), 'GET', null);
                 },
+                getHotelNamesByLanguageId: function () {
+                    return invoke('/list/languages/' + SessionService.languageId(), 'GET', null);
+                },
                 getFeaturedHotels: function () {
                     return invoke('/featured/languages/' + SessionService.languageId(), 'GET', null);
                 },

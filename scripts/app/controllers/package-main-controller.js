@@ -34,9 +34,17 @@ define(['app/services/package-service',
                     var allItems = [];
                     SearchService.getLocations().then(function (data) {
                         //$scope.searchLocations = $filter('orderBy')(data, '+Name', false);
-                        PackageService.getPackagesByLanguageId().then(function(pkgList){
-                            allItems = data.concat(pkgList);
-                            $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
+                        //PackageService.getPackagesByLanguageId().then(function(pkgList){
+                        PackageService.getPackageNamesByLanguageId().then(function(pkgList){
+                            //allItems = data.concat(pkgList);
+                            allItems = data.concat([]);
+                            _.each(pkgList, function(item, index){
+                                allItems.push({
+                                    ProductId: item.Id,
+                                    Name: item.Name,
+                                    ProductType:item.Type
+                                });
+                            });
                         });
                     });
                 }
