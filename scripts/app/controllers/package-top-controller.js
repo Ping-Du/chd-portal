@@ -35,9 +35,11 @@ define(['app/services/package-service',
                         var locationId = SessionService.options('package.top.location');
                         var selected = 0;
                         _.each(data, function (item, index) {
-                            $scope.destinations.push(item);
-                            if(item.ProductId == locationId)
-                                selected = index;
+                            if(item.Products.Packages > 0) {
+                                $scope.destinations.push(item);
+                                if (item.ProductId == locationId)
+                                    selected = $scope.destinations.length-1;
+                            }
                         });
                         if(data.length > 0) {
                             $scope.loadPackages(data[selected]);

@@ -15,6 +15,14 @@ define(['underscore', 'angular', 'angular-local-storage', "angucomplete-alt", 'i
         $sceProvider.enabled(false);
     }]);
 
+    filters.filter('capitalize',function(){
+        return function(input){
+            if (input) {
+                return input[0].toUpperCase() + input.slice(1);
+            }
+        }
+    });
+
     return {
         angular: angular,
         app: app,

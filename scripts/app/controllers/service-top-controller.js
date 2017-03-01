@@ -53,10 +53,13 @@ define(['app/services/services-service',
                     DestinationService.getTopDestinations().then(function (data) {
                         var locationId = SessionService.options('service.top.location');
                         var selected = 0;
+                        var productType = $filter('capitalize')(serviceType);
                         _.each(data, function (item, index) {
-                            $scope.destinations.push(item);
-                            if(item.ProductId == locationId)
-                                selected = index;
+                            if(item.Products[productType] > 0) {
+                                $scope.destinations.push(item);
+                                if (item.ProductId == locationId)
+                                    selected = $scope.destinations.length - 1;
+                            }
                         });
                         if(data.length > 0) {
                             $scope.loadServices(data[selected]);
