@@ -161,6 +161,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                                 },
                                 Price: room.Price,
                                 Supplements:room.Supplements,
+                                SupplierData:room.SupplierData,
                                 Beds:room.Beds
                             });
 

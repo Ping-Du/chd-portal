@@ -205,7 +205,7 @@
                                              uib-tooltip-template="'myTooltipTemplate.html'" data-ng-click="showHidePrice($index)"></i>
                                 </td>
                                 <td>
-                                    <span data-ng-show="item.CancelInfo == null || item.CancelInfo.CancelBy == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <!--<span data-ng-show="item.CancelInfo == null || item.CancelInfo.CancelBy == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>-->
                                     <span data-ng-show="item.CancelInfo != null && item.CancelInfo.CancelBy != ''">{{item.CancelInfo.CancelBy | limitTo:10}}</span>
                                 </td>
                                 <td>

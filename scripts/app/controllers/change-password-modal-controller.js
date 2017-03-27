@@ -34,27 +34,35 @@ define(['app/services/account-service'], function (modules) {
                 }
 
                 $scope.ok = function () {
-                    //if($scope.oldPassword != SessionService.password()) {
-                    //    translate("OLD_PASSWORD_WRONG");
+
+                    //if($scope.userName == "") {
+                    //    translate('INPUT_USER_NAME');
                     //    return;
                     //}
-                    if ($scope.newPassword == '' || $scope.newPassword != $scope.confirmPassword) {
-                        translate('PASSWORD_NOT_MATCH');
-                        return;
-                    }
 
-                    if ($scope.newPassword.length < 6) {
-                        translate('PASSWORD_LENGTH');
-                        return;
-                    }
-
-
-                    var promise = AccountService.setPassword($scope.newPassword, $scope.confirmPassword);
-                    promise.then(function (data) {
-                        $uibModalInstance.close('ok');
-                    }, function (status) {
+                    AccountService.forgotPassword($scope.user).then(function(){
+                        translate('PASSWORD_RESET_OK');
+                    }, function(){
                         translate('API_FAILED');
                     });
+
+                    //if ($scope.newPassword == '' || $scope.newPassword != $scope.confirmPassword) {
+                    //    translate('PASSWORD_NOT_MATCH');
+                    //    return;
+                    //}
+                    //
+                    //if ($scope.newPassword.length < 6) {
+                    //    translate('PASSWORD_LENGTH');
+                    //    return;
+                    //}
+                    //
+                    //
+                    //var promise = AccountService.setPassword($scope.newPassword, $scope.confirmPassword);
+                    //promise.then(function (data) {
+                    //    $uibModalInstance.close('ok');
+                    //}, function (status) {
+                    //    translate('API_FAILED');
+                    //});
                 };
 
                 $scope.cancel = function () {

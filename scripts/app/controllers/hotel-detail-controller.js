@@ -12,8 +12,8 @@ define(['app/services/hotel-service',
 
     modules.controllers
         .controller('HotelDetailController', ['_','$rootScope', '$scope', '$location', '$routeParams', '$log', 'SessionService',
-            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore', '$timeout', 'ShoppingService',
-            function (_, $rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService) {
+            'HotelService', 'LanguageService', '$translate', '$window', '$cookieStore', '$timeout', 'ShoppingService','$filter',
+            function (_, $rootScope, $scope, $location, $routeParams, $log, SessionService, HotelService, LanguageService, $translate, $window, $cookieStore, $timeout, ShoppingService, $filter) {
 
                 console.info('path:' + $location.path());
                 //console.info('url:' + $location.url());
@@ -61,6 +61,40 @@ define(['app/services/hotel-service',
                         $scope.showTooltip = false;
                     }, 5000);
                 }
+
+                $scope.availabilityFilter = '0';
+                $scope.myFilter = function(v1, v2) {
+                    if(v2 === '1')
+                        return v1 === 'Available';
+                    else if(v2 === '2')
+                        return v1 === 'Requestable';
+                    else if(v2 === '3')
+                        return v1 !== 'NotAvailable';
+                    else
+                        return true;
+                };
+
+                $scope.myComparator = function(v1, v2) {
+                    if(v1.AvailabilityLevel === v2.AvailabilityLevel) {
+                        if(v1.Price === v2.Price)
+                            return 0;
+                        else if(v1.Price < v2.Price)
+                            return -1;
+                        else
+                            return 1;
+                    } else {
+                        if(v1.AvailabilityLevel === 'Available')
+                            return -1;
+                        else if(v1.AvailabilityLevel === 'Requestable') {
+                            if(v2.AvailabilityLevel === 'Available')
+                                return 1;
+                            else
+                                return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                };
 
                 $scope.$watch('checkOutDate', function (newVal, oldVal) {
                     if (newVal == oldVal) {
@@ -460,6 +494,7 @@ define(['app/services/hotel-service',
 
                     HotelService.getAvailability(param).then(function (data) {
                         if (data.length > 0) {
+
 
                             $scope.hotelItem = data[0];
                             _.each(data[0].AvailabilityCategories, function(item, index){

@@ -246,5 +246,7 @@
   "BEDS":"床",
   "SUPPLEMENTS":"补充说明",
   "PAY_AT_HOTEL":"现场交费",
-  "VIEW_INFO":"查看信息"
+  "VIEW_INFO":"查看信息",
+  "NO_NOT_AVAILABLE":"排除不可用的",
+  "REQUESTABLE":"仅供查询"
 }
