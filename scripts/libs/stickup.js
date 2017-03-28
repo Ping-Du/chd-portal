@@ -62,7 +62,7 @@ jQuery(
                 }
                 stickyHeight = parseInt($(this).height());
                 stickyMarginB = parseInt($(this).css('margin-bottom'));
-                currentMarginT = parseInt($(this).next().closest('div').css('margin-top'));
+                currentMarginT = 0;//parseInt($(this).next().closest('div').css('margin-top'));
                 vartop = parseInt($(this).offset().top);
                 //$(this).find('*').removeClass(itemHover);
                 //console.log('vartop:' + vartop);
@@ -119,6 +119,9 @@ jQuery(
                     vartop = parseInt($('.stuckMenu').offset().top);
                 }
                 //console.log('varscroll:' + varscroll + ' vartop:' + vartop);
+                if(Math.abs(varscroll-vartop) < 10) {
+                    varscroll += 20;
+                }
                 if (vartop < varscroll + topMargin) {
                     $('.stuckMenu').addClass('isStuck');
                     $('.stuckMenu').next().closest('div').css({
