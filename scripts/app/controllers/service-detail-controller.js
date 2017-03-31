@@ -69,6 +69,40 @@ define(['app/services/services-service',
                     }, 5000);
                 }
 
+                $scope.availabilityFilter = '0';
+                $scope.myFilter = function(v1, v2) {
+                    if(v2 === '1')
+                        return v1 === 'Available';
+                    else if(v2 === '2')
+                        return v1 === 'Requestable';
+                    else if(v2 === '3')
+                        return v1 !== 'NotAvailable';
+                    else
+                        return true;
+                };
+
+                $scope.myComparator = function(v1, v2) {
+                    if(v1.AvailabilityLevel === v2.AvailabilityLevel) {
+                        if(v1.Price === v2.Price)
+                            return 0;
+                        else if(v1.Price < v2.Price)
+                            return -1;
+                        else
+                            return 1;
+                    } else {
+                        if(v1.AvailabilityLevel === 'Available')
+                            return -1;
+                        else if(v1.AvailabilityLevel === 'Requestable') {
+                            if(v2.AvailabilityLevel === 'Available')
+                                return 1;
+                            else
+                                return -1;
+                        } else {
+                            return 1;
+                        }
+                    }
+                };
+
                 $scope.showGuests = false;
                 $scope.showGuests1 = false;
                 $scope.guestsTemplateUrl = "templates/partials/guests-service-popover.html";//"GuestsTemplate.html";
