@@ -17,6 +17,7 @@ define(['app/services/package-service',
                 }
 
                 $scope.webRoot = SessionService.config().webRoot;
+                $scope.apiRoot = SessionService.config().apiRoot;
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
@@ -209,6 +210,10 @@ define(['app/services/package-service',
                     $scope.showPackagesMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
 
+                $scope.focusIn = function() {
+                   $('#searchLocation_value').select();
+                };
+
                 $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
                     if (newVal == oldVal)
                         return;
@@ -222,7 +227,7 @@ define(['app/services/package-service',
                 });
 
                 function load() {
-                    loadSearchLocations();
+                    //loadSearchLocations();
                     loadDestinations();
                 }
 

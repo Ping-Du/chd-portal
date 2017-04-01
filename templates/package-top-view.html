@@ -4,17 +4,31 @@
             <div class="col-md-4 relative">
                 <i class="icon-location2"></i>
                 <!--<input type="text" class="form-control" placeholder="Location">-->
+                <!--<div angucomplete-alt id="searchLocation"-->
+                     <!--placeholder="Location"-->
+                     <!--pause="1000"-->
+                     <!--selected-object="selectedSearchLocation"-->
+                     <!--local-data="searchLocations"-->
+                     <!--search-fields="Name,ProductId"-->
+                     <!--title-field="Name"-->
+                     <!--minlength="1"-->
+                     <!--input-class="form-control input"-->
+                     <!--match-class="highlight">-->
+                     <!--&lt;!&ndash;initial-value="selectedLocationName">&ndash;&gt;-->
+                <!--</div>-->
                 <div angucomplete-alt id="searchLocation"
                      placeholder="Location"
                      pause="1000"
                      selected-object="selectedSearchLocation"
-                     local-data="searchLocations"
-                     search-fields="Name,ProductId"
+                     remote-url="{{apiRoot}}packages/search/languages/{{languageId}}?phrase="
                      title-field="Name"
-                     minlength="1"
+                     minlength="3"
+                     text-searching="{{'SEARCHING'|translate}}"
+                     text-no-results="{{'NO_RESULT'|translate}}"
+                     focus-in="focusIn()"
                      input-class="form-control input"
                      match-class="highlight">
-                     <!--initial-value="selectedLocationName">-->
+                    <!--initial-value="selectedLocationName">-->
                 </div>
             </div>
             <div class="col-md-2 relative">

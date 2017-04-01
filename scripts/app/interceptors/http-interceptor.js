@@ -9,6 +9,9 @@ define(['app/services/session-service'], function (modules) {
                     return;
                 }
 
+                if(cfg.url.indexOf("?phrase=") > 0)
+                    return;
+
                 if (cfg.url.indexOf(SessionService.config().apiRoot) >= 0) {
                     //if (cfg.url.indexOf('/account/') < 0) {
                         if(show) {

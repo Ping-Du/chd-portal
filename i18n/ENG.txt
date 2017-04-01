@@ -248,5 +248,7 @@
   "PAY_AT_HOTEL":"Pay At Hotel",
   "VIEW_INFO":"View Info",
   "NO_NOT_AVAILABLE":"No NotAvailable",
-  "REQUESTABLE":"Requestable"
+  "REQUESTABLE":"Requestable",
+  "SEARCHING":"Searching...",
+  "NO_RESULT":"No results found"
 }

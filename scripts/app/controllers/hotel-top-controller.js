@@ -18,6 +18,7 @@ define(['app/services/hotel-service',
                 }
 
                 $scope.webRoot = SessionService.config().webRoot;
+                $scope.apiRoot = SessionService.config().apiRoot;
 
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
@@ -98,7 +99,6 @@ define(['app/services/hotel-service',
                             $scope.searchLocations = allItems; //$filter('orderBy')(allItems, '+Name', false);
                         });
                     });
-
                 }
 
                 var criteria = $cookieStore.get('hotelCriteria');
@@ -239,6 +239,10 @@ define(['app/services/hotel-service',
                     $scope.showHotelMainPage($scope.selectedLocation, $scope.selectedLocationName);
                 };
 
+                $scope.focusIn = function() {
+                    $('#searchLocation_value').select();
+                };
+
                 $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
                     if (newVal == oldVal)
                         return;
@@ -252,7 +256,7 @@ define(['app/services/hotel-service',
                 });
 
                 function load() {
-                    loadSearchLocations();
+                    //loadSearchLocations();
                     loadDestinations();
                 }
 

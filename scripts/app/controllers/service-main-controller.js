@@ -35,6 +35,8 @@ define(['app/services/services-service',
                 $scope.imageName = getImageByServiceType(serviceType);
 
                 $scope.webRoot = SessionService.config().webRoot;
+                $scope.apiRoot = SessionService.config().apiRoot;
+
                 $scope.languageId = SessionService.languageId();
                 $scope.$on('LanguageChanged', function (event, data) {
                     if ($scope.languageId != data) {
@@ -228,6 +230,9 @@ define(['app/services/services-service',
                 });
 
 
+                $scope.focusIn = function() {
+                    $('#searchLocation_value').select();
+                };
                 $scope.$watch('selectedSearchLocation', function (newVal, oldVal) {
                     if (newVal == oldVal)
                         return;
@@ -435,8 +440,8 @@ define(['app/services/services-service',
                 }
 
                 function load(loadLocations) {
-                    if (loadLocations)
-                        loadSearchLocations();
+                    //if (loadLocations)
+                    //    loadSearchLocations();
 
                     if (servicesDestination) {
                         loadAll(servicesDestination.ProductId);
