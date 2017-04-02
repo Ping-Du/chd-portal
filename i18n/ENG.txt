@@ -250,5 +250,7 @@
   "NO_NOT_AVAILABLE":"No NotAvailable",
   "REQUESTABLE":"Requestable",
   "SEARCHING":"Searching...",
-  "NO_RESULT":"No results found"
+  "NO_RESULT":"No results found",
+  "WEIGHT":"Weight(KG)",
+  "GUESTS_WEIGHT": "Please input guest(s) weight"
 }

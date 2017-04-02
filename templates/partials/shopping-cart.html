@@ -157,7 +157,8 @@
                                         <td>{{"ID"|translate}}</td>
                                         <td>{{"LAST_NAME"|translate}}</td>
                                         <td>{{"FIRST_NAME"|translate}}</td>
-                                        <td>{{"AGE"|translate}}</td>
+                                        <td style="width:100px;">{{"AGE"|translate}}</td>
+                                        <td style="width:100px;">{{"WEIGHT"|translate}}</td>
                                         <td>{{"GUEST_TITLE"|translate}}</td>
                                         <td>{{"PHONE"|translate}}</td>
                                         <td></td>
@@ -193,6 +194,9 @@
                                             <option>16</option>
                                             <option>17</option>
                                         </select></span></td>
+                                        <td>
+                                            <input type="text" class="form-control input-sm" data-ng-model="guest.Weight" onKeypress="return (/[\d.]/.test(String.fromCharCode(event.keyCode)))" >
+                                        </td>
                                         <td><select class="form-control input-sm" data-ng-model="guest.Title"
                                                     data-ng-show="guest.Adult">
                                             <option>Mr</option>

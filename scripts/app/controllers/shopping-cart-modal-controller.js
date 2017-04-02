@@ -28,9 +28,12 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
         .controller('ShoppingCartModalInstanceController', ['_', '$rootScope', '$scope', '$uibModalInstance', '$translate', 'ShoppingService', '$window', 'AccountService', 'SessionService', '$timeout', 'MessageService',
             function (_, $rootScope, $scope, $uibModalInstance, $translate, ShoppingService, $window, AccountService, SessionService, $timeout, MessageService) {
 
-                function translate(key) {
+                function translate(key, extraMessage) {
                     $translate(key).then(function (translation) {
-                        $scope.message = translation;
+                        $scope.message = translation ;
+                        if(extraMessage) {
+                            $scope.message += " : " + extraMessage;
+                        }
                     });
                 }
 
@@ -85,7 +88,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         PrimaryGuest: primaryGuest,
                         Adult: adult,
                         ShowName: '',
-                        deletable: true
+                        deletable: true,
+                        Weight:null
                     });
                 }
 
@@ -258,6 +262,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Price: serviceCategory.Price,
                             ConnectionId:serviceCategory.ConnectionId,
                             ProductMappingId:serviceCategory.ProductMappingId,
+                            PassengerWeightRequired:service.PassengerWeightRequired,
                             Guests: {
                                 GuestIds: [],
                                 PrimaryGuestId: serviceGuestId
@@ -534,8 +539,17 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             translate('ASSIGN_GUESTS');
                             return false;
                         }
-                    }
 
+                        var temp = checkGuestsWeight();
+                        if (temp != "") {
+                            translate('GUESTS_WEIGHT', temp);
+                            $scope.tabs[$scope.activeTabIndex].active = false;
+                            $scope.activeTabIndex = $scope.activeTabIndex - 1;
+                            $scope.tabs[$scope.activeTabIndex].active = true;
+                            setButtons();
+                            return false;
+                        }
+                    }
 
                     $scope.message = '';
                     //$scope.tabs[$scope.activeTabIndex].disabled = true;
@@ -559,6 +573,28 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         return false;
                     else
                         return true;
+                }
+
+                function checkGuestsWeight() {
+                    var temp = "";
+                    for (var i = 0; i < $scope.bookingInfo.Services.length; i++) {
+                        var service = $scope.bookingInfo.Services[i];
+                        if(service.PassengerWeightRequired) {
+                            for (var j = 0; j < service.Guests.GuestIds.length; j++) {
+                                for(var k = 0; k < $scope.bookingInfo.Guests.length; k++) {
+                                    if($scope.bookingInfo.Guests[k].GuestId == service.Guests.GuestIds[j]) {
+                                        if(!$scope.bookingInfo.Guests[k].Weight || parseFloat($scope.bookingInfo.Guests[k].Weight) <= 0) {
+                                            if (temp != "")
+                                                temp += ",";
+                                            temp += service.Guests.GuestIds[j];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return temp;
                 }
 
                 var assignedGuests = [];
@@ -661,7 +697,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Title: g.Title,
                             Phone: g.Phone,
                             Age: (g.Adult ? null : parseInt(g.Age)),
-                            PrimaryGuest: (g.PrimaryGuest && !hasPrimaryGuest)
+                            PrimaryGuest: (g.PrimaryGuest && !hasPrimaryGuest),
+                            Weight: (g.Weight?parseFloat(g.Weight):0)
                         });
                         if (g.PrimaryGuest && !hasPrimaryGuest) {
                             hasPrimaryGuest = true;
