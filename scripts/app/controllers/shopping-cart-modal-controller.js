@@ -77,7 +77,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                     paymentProfile: 'new'
                 };
 
-                function addEmptyGuest(guestId, primaryGuest, age, adult) {
+                function addEmptyGuest(guestId, primaryGuest, age, adult, weightRequired) {
                     $scope.bookingInfo.Guests.push({
                         GuestId: guestId,
                         FirstName: '',
@@ -89,7 +89,8 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                         Adult: adult,
                         ShowName: '',
                         deletable: true,
-                        Weight:null
+                        Weight:null,
+                        weightRequired: weightRequired
                     });
                 }
 
@@ -278,7 +279,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             if (guest.Type == 'ADULT' && guest.Age == null) {
                                 serviceAdults++;
                                 //if (i == 0) {
-                                addEmptyGuest(serviceGuestId, j == 0, guest.Age, true);
+                                addEmptyGuest(serviceGuestId, j == 0, guest.Age, true, service.PassengerWeightRequired);
                                 $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
                                 if (j == 0)
                                     $scope.bookingInfo.Services[i].Guests.PrimaryGuestId = serviceGuestId;
@@ -288,7 +289,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             else {
                                 serviceMinors++;
                                 //if (i == 0) {
-                                addEmptyGuest(serviceGuestId, false, guest.Age, false);
+                                addEmptyGuest(serviceGuestId, false, guest.Age, false, service.PassengerWeightRequired);
                                 $scope.bookingInfo.Services[i].Guests.GuestIds.push(serviceGuestId);
                                 serviceGuestId++;
                                 //}
@@ -539,14 +540,19 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             translate('ASSIGN_GUESTS');
                             return false;
                         }
+                    }
 
+                    if($scope.activeTabIndex == 1 || $scope.activeTabIndex == 2) {
                         var temp = checkGuestsWeight();
                         if (temp != "") {
                             translate('GUESTS_WEIGHT', temp);
-                            $scope.tabs[$scope.activeTabIndex].active = false;
-                            $scope.activeTabIndex = $scope.activeTabIndex - 1;
-                            $scope.tabs[$scope.activeTabIndex].active = true;
-                            setButtons();
+                            if ($scope.activeTabIndex == 2) {
+                                $scope.tabs[$scope.activeTabIndex].active = false;
+                                $scope.activeTabIndex = $scope.activeTabIndex - 1;
+                                $scope.tabs[$scope.activeTabIndex].active = true;
+
+                                setButtons();
+                            }
                             return false;
                         }
                     }
@@ -577,12 +583,17 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
 
                 function checkGuestsWeight() {
                     var temp = "";
-                    for (var i = 0; i < $scope.bookingInfo.Services.length; i++) {
+                    var i = 0;
+                    for(i = 0; i < $scope.bookingInfo.Guests.length; i++) {
+                        $scope.bookingInfo.Guests[i].weightRequired = false;
+                    }
+                    for (i = 0; i < $scope.bookingInfo.Services.length; i++) {
                         var service = $scope.bookingInfo.Services[i];
                         if(service.PassengerWeightRequired) {
                             for (var j = 0; j < service.Guests.GuestIds.length; j++) {
                                 for(var k = 0; k < $scope.bookingInfo.Guests.length; k++) {
                                     if($scope.bookingInfo.Guests[k].GuestId == service.Guests.GuestIds[j]) {
+                                        $scope.bookingInfo.Guests[k].weightRequired = true;
                                         if(!$scope.bookingInfo.Guests[k].Weight || parseFloat($scope.bookingInfo.Guests[k].Weight) <= 0) {
                                             if (temp != "")
                                                 temp += ",";
@@ -698,7 +709,7 @@ define(['app/services/account-service', 'app/services/message-service', 'app/ser
                             Phone: g.Phone,
                             Age: (g.Adult ? null : parseInt(g.Age)),
                             PrimaryGuest: (g.PrimaryGuest && !hasPrimaryGuest),
-                            Weight: (g.Weight?parseFloat(g.Weight):0)
+                            Weight: (g.Weight?parseFloat(g.Weight):null)
                         });
                         if (g.PrimaryGuest && !hasPrimaryGuest) {
                             hasPrimaryGuest = true;

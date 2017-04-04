@@ -195,7 +195,7 @@
                                             <option>17</option>
                                         </select></span></td>
                                         <td>
-                                            <input type="text" class="form-control input-sm" data-ng-model="guest.Weight" onKeypress="return (/[\d.]/.test(String.fromCharCode(event.keyCode)))" >
+                                            <input type="text" class="form-control input-sm" data-ng-show="guest.weightRequired" data-ng-model="guest.Weight" onKeypress="return (/[\d.]/.test(String.fromCharCode(event.keyCode)))" >
                                         </td>
                                         <td><select class="form-control input-sm" data-ng-model="guest.Title"
                                                     data-ng-show="guest.Adult">
