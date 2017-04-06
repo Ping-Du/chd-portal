@@ -226,15 +226,25 @@ define(['app/services/services-service',
                     });
                 }
 
+                $scope.getIndexByCategoryId = function(categoryId) {
+                    for (var i = 0; i < $scope.serviceItem.AvailabilityCategories.length; i++) {
+                        if ($scope.serviceItem.AvailabilityCategories[i].Id == categoryId)
+                            return i;
+                    }
+
+                    return -1;
+                };
+
                 $scope.currentIndex = -1;
                 $scope.closePrice = function() {
                     if($scope.currentIndex >= 0) {
-                        $scope.showHidePrice($scope.currentIndex);
+                        $scope.showHidePrice($scope.serviceItem.AvailabilityCategories[$scope.currentIndex].Id);
                     }
                 };
 
                 $scope.currentCategory = null;
-                $scope.showHidePrice = function(index) {
+                $scope.showHidePrice = function(categoryId) {
+                    var index = $scope.getIndexByCategoryId(categoryId);
                     $scope.currentCategory = null;
                     $scope.currentIndex = index;
                     for (var i = 0; i < $scope.serviceItem.AvailabilityCategories.length; i++) {
@@ -353,7 +363,8 @@ define(['app/services/services-service',
 
                 };
 
-                $scope.checkCancelInfo = function(index) {
+                $scope.checkCancelInfo = function(categoryId) {
+                    var index = $scope.getIndexByCategoryId(categoryId);
                     var item = $scope.serviceItem.AvailabilityCategories[index];
                     ServicesService.getCancellationPolicies($scope.serviceItem.ProductId, item.Id,
                         $scope.serviceItem.StartDate).then(function(data){
@@ -382,7 +393,8 @@ define(['app/services/services-service',
                     $rootScope.$broadcast('ShoppingCart:Animate');
                 }
 
-                $scope.addToShoppingCart = function (categoryIndex) {
+                $scope.addToShoppingCart = function (categoryId) {
+                    var categoryIndex = $scope.getIndexByCategoryId(categoryId);
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {

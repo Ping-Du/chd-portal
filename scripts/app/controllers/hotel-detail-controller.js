@@ -301,12 +301,21 @@ define(['app/services/hotel-service',
 
                 $scope.closePrice = function() {
                     if($scope.currentIndex >= 0) {
-                        $scope.showHidePrice($scope.currentIndex);
+                        $scope.showHidePrice($scope.hotelItem.AvailabilityCategories[$scope.currentIndex].Id);
                     }
                 };
 
-                $scope.showHidePrice = function (index) {
-                    var i, j, k;
+                $scope.getIndexByCategoryId = function(categoryId) {
+                    for (var i = 0; i < $scope.hotelItem.AvailabilityCategories.length; i++) {
+                        if ($scope.hotelItem.AvailabilityCategories[i].Id == categoryId)
+                            return i;
+                    }
+
+                    return -1;
+                };
+
+                $scope.showHidePrice = function (categoryId) {
+                    var i, j, k, index = $scope.getIndexByCategoryId(categoryId);
                     $scope.currentCategory = [];
                     $scope.totalPayAtHotel = 0;
                     $scope.showRoomSupplements = false;
@@ -527,7 +536,8 @@ define(['app/services/hotel-service',
 
                 };
 
-                $scope.checkCancelInfo = function(index) {
+                $scope.checkCancelInfo = function(categoryId) {
+                    var index = $scope.getIndexByCategoryId(categoryId);
                     var item = $scope.hotelItem.AvailabilityCategories[index];
                     HotelService.getCancellationPolicies($scope.hotelItem.ProductId, item.Id,
                         $scope.hotelItem.StartDate, item.Rooms[0].Nights.length, item.ConnectionId).then(function(data){
@@ -541,7 +551,8 @@ define(['app/services/hotel-service',
                     $rootScope.$broadcast('ShoppingCart:Animate');
                 }
 
-                $scope.addToShoppingCart = function (categoryIndex) {
+                $scope.addToShoppingCart = function (categoryId) {
+                    var categoryIndex = $scope.getIndexByCategoryId(categoryId);
                     if (SessionService.user() == null) {
                         $rootScope.$broadcast("OpenLoginModal");
                     } else {

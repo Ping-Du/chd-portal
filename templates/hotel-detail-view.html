@@ -285,13 +285,13 @@
                                     &nbsp;
                                     <i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
                                        tooltip-trigger="none"
-                                       tooltip-is-open="hotelItem.AvailabilityCategories[$index].showPrice"
+                                       tooltip-is-open="hotelItem.AvailabilityCategories[getIndexByCategoryId(item.Id)].showPrice"
                                        tooltip-placement="bottom" tooltip-class="customClass"
                                        uib-tooltip-template="'myTooltipTemplate.html'"
-                                       data-ng-click="showHidePrice($index)"></i>
+                                       data-ng-click="showHidePrice(item.Id)"></i>
                                 </td>
                                 <td>
-                                    <span data-ng-show="item.CancelInfo == null || item.CancelInfo.CancelBy == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>
+                                    <span data-ng-show="item.CancelInfo == null || item.CancelInfo.CancelBy == null"><a href data-ng-click="checkCancelInfo(item.Id)">{{"VIEW_INFO"|translate}}</a></span>
                                     <span data-ng-show="item.CancelInfo != null && item.CancelInfo.CancelBy != null">{{item.CancelInfo.CancelBy | limitTo:10}}</span>
                                 </td>
                                 <td>
@@ -308,7 +308,7 @@
                                     <button type="button"
                                             data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
                                             data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}"
-                                            data-ng-click="addToShoppingCart($index)">
+                                            data-ng-click="addToShoppingCart(item.Id)">
                                         <span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}
                                     </button>
                                 </td>

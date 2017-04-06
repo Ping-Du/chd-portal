@@ -210,9 +210,9 @@
                                     <span class="price" >${{item.Price| number: 2}}</span>
                                     &nbsp;<i class="icon-price-tags" style="color:lightblue;cursor:pointer;"
                                              tooltip-trigger="none"
-                                             tooltip-is-open="serviceItem.AvailabilityCategories[$index].showPrice"
+                                             tooltip-is-open="serviceItem.AvailabilityCategories[getIndexByCategoryId(item.Id)].showPrice"
                                              tooltip-placement="bottom" tooltip-class="customClass"
-                                             uib-tooltip-template="'myTooltipTemplate.html'" data-ng-click="showHidePrice($index)"></i>
+                                             uib-tooltip-template="'myTooltipTemplate.html'" data-ng-click="showHidePrice(item.Id)"></i>
                                 </td>
                                 <td>
                                     <!--<span data-ng-show="item.CancelInfo == null || item.CancelInfo.CancelBy == null"><a href data-ng-click="checkCancelInfo($index)">{{"VIEW_INFO"|translate}}</a></span>-->
@@ -224,7 +224,7 @@
                                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true" style="font-size:32px; color:#ffcc00;" data-ng-show="item.AvailabilityLevel == 'Requestable'"></span>
                                 </td>
                                 <td><button type="button" data-ng-class="{'btn':true, 'btn-red':(item.AvailabilityLevel != 'NotAvailable'), 'btn-default':(item.AvailabilityLevel == 'NotAvailable') }"
-                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart($index)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}</button></td>
+                                            data-ng-disabled="{{item.AvailabilityLevel=='NotAvailable'}}" data-ng-click="addToShoppingCart(item.Id)"><span class="icon-cart" aria-hidden="true"></span>&nbsp;&nbsp;{{"ADD"|translate}}</button></td>
                             </tr>
                             </tbody>
                         </table>
